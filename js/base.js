@@ -5,9 +5,8 @@ var appVersion = "v1.0";  //app当前版本
 
 
 var API_URL = {};
-API_URL.ApiSmsSendCode = apiHost + "/api/sms/sendCode"; //发送短信接口
-API_URL.ApiMemberRegister = apiHost + "/api/member/register"; //注册接口
-API_URL.ApiMemberLogin = apiHost + "/api/member/login"; //登录接口
+API_URL.ApiAdminSendCode = apiHost + "/api/admin/sendCode"; //发送短信接口
+API_URL.ApiAdminQuickLogin = apiHost + "/api/admin/quickLogin"; //登录接口
 
 
 var PAGE_URL = {};
