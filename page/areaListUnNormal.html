@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>我的充电桩</title>
+    <title>片区列表</title>
     <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
@@ -17,20 +17,13 @@
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
     <style type="text/css">
-        .topInfoBox{
-            text-align: center;
-            padding-top: 10px;
-        }
-        .topInfoBox h1{
-            color: #F17E38;
-            font-size: 4rem;
-            font-weight: 400;
-        }
-        .topInfoBox small{
-            font-size: .8rem;
-            color: #9D9D9D;
-        }
 
+        .midRow{
+
+        }
+        .midRow .item{
+            float: left;
+        }
         .tabBox{
             text-align: center;
             padding-top: 20px;
@@ -57,6 +50,24 @@
             background: transparent;
             font-size: .9rem;
         }
+
+        #dataTable{
+            white-space: nowrap;
+            font-size: .9rem;
+        }
+        #dataTable thead{
+            background: #F0F1F3;
+            padding: 10px;
+        }
+        #dataTable thead td{
+            padding: 10px;
+        }
+        #dataTable tbody tr{
+            border-bottom: #EEF0F3 solid 1px;
+        }
+        #dataTable tbody tr td{
+            padding: 10px;
+        }
     </style>
 
 </head>
@@ -64,41 +75,26 @@
 
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">我的充电桩</h1>
+    <h1 class="mui-title">片区名称</h1>
 </header>
 
 <div class="mui-content" style="background: #fff">
 
-    <div class="topInfoBox">
-        <h1>324</h1>
-        <small>我的充电桩总数(台)</small>
-    </div>
 
-    <div class="tabBox">
-        <span class="tabItem select" onclick="clicked('myCdz.html')">正常充电桩(<span>320</span>)</span>
-        <span class="tabItem" onclick="clicked('myCdzUnNormal.html')">异常充电桩(<span>4</span>)</span>
-    </div>
-
-    <div class="midRow">
-        <div class="left">片区(<span>4</span>)</div>
-        <div class="right">月收入(<span>元</span>)</div>
-        <div class="clearfix"></div>
-    </div>
-
-    <ul class="mui-table-view dataList">
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                <span class="mui-badge">566.00</span>
-                片区名称:1100
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                <span class="mui-badge">566.00</span>
-                片区名称:1100
-            </a>
-        </li>
-    </ul>
+    <table class="mui-table" id="dataTable">
+        <thead>
+            <tr>
+                <td>桩号</td>
+                <td>异常时间</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>A</td>
+                <td>2018.05.10 00:00</td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>
 
