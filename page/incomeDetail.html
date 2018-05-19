@@ -61,7 +61,7 @@
 <div class="mui-content">
 
     <div class="topBox">
-        <div class="row1">2018年05月 <i class="iconfont icon-xiala1"></i> </div>
+        <div class="row1 selectDate">2018年05月 <i class="iconfont icon-xiala1"></i> </div>
         <div class="row2">
             <div class="left">总收入 : 333.00元</div>
             <div class="right">明细</div>
@@ -97,6 +97,19 @@
 
 <script type="text/javascript">
     mui.init();
+
+    $(".selectDate").click(function () {
+
+        var options = {
+            'type':'month'
+        }
+
+        var dtPicker = new mui.DtPicker(options);
+        dtPicker.show(function (selectItems) {
+            console.log(selectItems.y);//{text: "2016",value: 2016}
+            console.log(selectItems.m);//{text: "05",value: "05"}
+        })
+    })
 </script>
 </body>
 </html>
