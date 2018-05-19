@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+
+    <style type="text/css">
+        .topBox{
+            position: relative;
+        }
+
+        #avatorImg{
+            position: absolute;
+            bottom: -30px;
+            width:80px;
+            height: 80px;
+            border-radius: 50%;
+            left: 3rem;
+        }
+        #mobileBox{
+            position: absolute;
+            left: 3rem;
+            bottom: -60px;
+        }
+
+        .menuList{
+            padding-top: 100px;
+            margin-left: 3rem;
+        }
+        .menuList .menu-item{
+            margin-bottom: 20px;
+            height: 30px;
+            line-height: 30px;
+        }
+        .menuList img{
+            display: inline-block;
+            vertical-align: middle;
+            width: 25px;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+
+<body style="background: #fff">
+
+
+<div class="mui-content" style="padding-top: 0;background: #fff">
+
+    <div class="topBox">
+        <img src="../images/menu/home.png" style="display: block;width: 100%">
+        <img src="../images/app_10.png" id="avatorImg">
+        <span id="mobileBox">18770090755</span>
+    </div>
+
+    <div class="menuList">
+        <div class="menu-item" onclick="clicked('../index.html')">
+            <img src="../images/menu/rongyubang.png"> 荣誉榜
+        </div>
+        <div class="menu-item" onclick="clicked('myCdz.html')">
+            <img src="../images/menu/chongdian.png"> 我的充电桩
+        </div>
+        <div class="menu-item">
+            <img src="../images/menu/shouru.png"> 我的收入
+        </div>
+        <div class="menu-item">
+            <img src="../images/menu/qianbao.png"> 我的钱包
+        </div>
+        <div class="menu-item">
+            <img src="../images/menu/shezhi.png"> 账户设置
+        </div>
+        <div class="menu-item">
+            <img src="../images/menu/kefu.png"> 客服中心
+        </div>
+    </div><!-- /.menuList -->
+
+</div>
+
+<script src="../js/mui.min.js"></script>
+<script type="text/javascript">
+    mui.init()
+</script>
+</body>
+
+</html>

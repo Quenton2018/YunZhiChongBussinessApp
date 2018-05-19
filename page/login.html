@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>登入</title>
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/iconfont.css">
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../plugins/layer/layer.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/base.js"></script>
+		<style type="text/css">
+			body{
+				margin:0 ;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			.mui-content{
+				background-color: #ffffff;
+			}
+			.loginBox{
+				overflow: hidden;
+				margin-bottom: 0;
+				margin: 15px;
+				padding-top: 1rem;
+			}
+			.loginBox .inputBox{
+				position: relative;
+				margin-bottom: 10px;
+				font-size: 1.2rem;
+			}
+			.loginBox .inputBox i{
+				font-size: 1rem;
+				position: absolute;
+				left: 10px;
+				line-height: 2.5rem;
+				color: #000;
+			}
+			.loginBox input{
+                display: block;
+                border: none;
+                background: #F0F1F3;
+                padding-left: 80px;
+                border-radius: 20px;
+                font-size: .9rem;
+			}
+			.loginBox input:focus{
+				outline: none;
+			}
+			.getCode{
+				position: absolute;
+				right: 10px;
+				top: .7rem;
+				color: #333;
+                font-size: .8rem;
+			}
+            .Button-Img{
+                width: 80%;
+                display: block;
+                margin: 0 auto;
+            }
+			.mui-content-padded {
+				 margin: 0px;
+			}
+		</style>
+	</head>
+	<body style="background: #ffffff;">
+            <header class="mui-bar mui-bar-nav">
+                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+                <h1 class="mui-title">手机快捷登入</h1>
+            </header>
+
+			<div class="mui-content">
+
+				<div class="loginBox">
+					<div class="inputBox">
+						<i class="iconfont">手机号</i>
+						<input type="number" name="regMobile" placeholder="+86 请输入手机号" />
+					</div>
+					<div class="inputBox">
+						<i class="iconfont">验证码</i>
+						<input type="text" name="code" placeholder="请输入验证码" />
+						<span class="getCode">获取验证码</span>
+					</div>
+					<h5 class="mui-content-padded" style="text-align: center">云智充合伙人可直接登入,无需注册</h5>
+				</div>
+
+				<div style="margin:0 15px;margin-top: 30px">
+					<img class="Button-Img loingBtn"  src="../images/loginBtn.png" style="width: 100%" />
+				</div>
+				<h5 class="mui-content-padded" style="text-align: center;padding: 10px;">或</h5>
+				<div style="margin:0 15px">
+					<img class="Button-Img registerBtn"  src="../images/jiaruBtn.png" style="width: 100%" />
+				</div>
+			</div>
+
+
+		<script type="application/javascript">
+
+
+            var $getCodeBtn = $(".getCode");
+            var isLock = false; //是否锁定
+            var time = 60; //倒计时
+            var timeInterval; //定时器
+            /**
+             * 定时器
+             */
+            function showTime(){
+                timeInterval = setInterval(function(){
+                    time--;
+                    if(time <= 0){
+                        isLock = false;
+                        time = 60;
+                        clearInterval(timeInterval);
+                        $getCodeBtn.text('获取验证码');
+                        return;
+                    }else{
+                        $getCodeBtn.text(time);
+                    }
+                },1000)
+            }
+
+            /**
+             * 获取
+             */
+            $(".getCode").click(function(){
+                var mobile = $("input[name='regMobile']").val();
+                if(!vaildeParam(mobile)){
+                    layer.msg("手机号不能为空");
+                    return;
+                }
+                if(!isPoneAvailable(mobile)){
+                    layer.msg("手机格式不正确");
+                    return;
+                }
+                if(isLock){
+                    return;
+                }
+                isLock = true;
+                $getCodeBtn.text(time);
+                showTime();
+                postJSON(API_URL.ApiSmsSendCode,{"mobile":mobile},function(res){
+                    if("0" == res.code){
+                        layer.msg("发送成功");
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                })
+            })
+
+//          (function(w){
+//              plus.key.addEventListener('backbutton',function(){
+//                  w.close();
+//              },false);
+//          })(window);
+
+            if(window.plus){
+                pagePlusReady();
+            }else{
+                document.addEventListener('plusready',pagePlusReady,false);
+            }
+
+            function pagePlusReady() {
+
+                plus.key.addEventListener("backbutton",function(){
+					plus.runtime.quit();
+                });
+
+                /**
+                 * 注册
+                 */
+                $(".loingBtn").click(function(){
+                    var mobile = $("input[name='regMobile']").val();
+                    if(!vaildeParam(mobile)){
+                        layer.msg("手机号不能为空");
+                        return;
+                    }
+                    var code = $("input[name='code']").val();
+                    if(!vaildeParam(code)){
+                        layer.msg("验证码不能为空");
+                        return;
+                    }
+                    var password = $("input[name='regPassword']").val();
+                    if(!vaildeParam(password)){
+                        layer.msg("密码不能为空");
+                        return;
+                    }
+                    if(password.length!=8){
+                        layer.msg("密码长度必须为8位");
+                        return;
+                    }
+                    if(!isPoneAvailable(mobile)){
+                        layer.msg("手机格式不正确");
+                        return;
+                    }
+
+                    var clientInfo = plus.push.getClientInfo().clientid;
+
+                    var postData = {
+                        "clientInfo":clientInfo,
+                        "mobile":mobile,
+                        "password":password,
+                        "code":code
+                    }
+                    postJSON(API_URL.ApiMemberRegister,postData,function(res){
+                        if("0" == res.code){
+                            layer.msg("注册成功，正在跳转...");
+                            setLoginData(res.data.uuid,res.data.mobile);
+                            //setLoginDataNew(res);
+                            setTimeout(function(){
+                                clicked('../index.html')
+                            },2000);
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                    })
+
+                })
+
+                /**
+                 * 登入
+                 */
+                $(".loginBtn").click(function(){
+                    var mobile = $("input[name='mobile']").val();
+                    if(!vaildeParam(mobile)){
+                        layer.msg("手机号不能为空");
+                        return;
+                    }
+                    var password = $("input[name='password']").val();
+                    if(!vaildeParam(password)){
+                        layer.msg("密码不能为空");
+                        return;
+                    }
+                    if(!isPoneAvailable(mobile)){
+                        layer.msg("手机格式不正确");
+                        return;
+                    }
+
+                    var clientInfo = plus.push.getClientInfo().clientid;
+
+                    var postData = {
+                        "clientInfo":clientInfo,
+                        "mobile":mobile,
+                        "password":password,
+                    }
+                    postJSON(API_URL.ApiMemberLogin,postData,function(res){
+                        if("0" == res.code){
+                            layer.msg("登录成功，正在跳转...");
+                            setLoginData(res.data.uuid,res.data.mobile);
+                            //setLoginDataNew(res);
+                            setTimeout(function(){
+                                clicked('../index.html')
+                            },2000);
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                    })
+                })
+
+            }
+
+            /**
+			 * 校验手机号码
+             * @param str
+             * @returns {boolean}
+             */
+            function isPoneAvailable(str) {
+                var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                if (!myreg.test(str)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+		</script>
+		
+	</body>
+</html>

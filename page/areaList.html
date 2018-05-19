@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>片区列表</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        .midRow{
+
+        }
+        .midRow .item{
+            float: left;
+        }
+        .tabBox{
+            text-align: center;
+            padding-top: 20px;
+        }
+        .tabBox span{
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: .8rem;
+        }
+        .tabBox span.select{
+            border-bottom: #EC8131 solid 2px;
+        }
+        .midRow{
+            background: #F0F1F3;
+            padding: 10px 5px;
+            font-size: .8rem;
+            color: #979797;
+        }
+
+        .dataList{
+            font-size: .9rem;
+        }
+        .dataList .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+        }
+
+        #dataTable{
+            white-space: nowrap;
+            text-align: center;
+            font-size: .9rem;
+        }
+        #dataTable thead{
+            background: #F0F1F3;
+            padding: 10px 0;
+        }
+        #dataTable thead td{
+            padding: 10px 0;
+        }
+        #dataTable tbody tr{
+            border-bottom: #EEF0F3 solid 1px;
+        }
+        #dataTable tbody tr td{
+            padding: 10px 0;
+        }
+    </style>
+
+</head>
+<body style="background: #fff">
+
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">片区名称</h1>
+</header>
+
+<div class="mui-content" style="background: #fff">
+
+
+    <table class="mui-table" id="dataTable">
+        <thead>
+            <tr>
+                <td style="width: 15%">桩号</td>
+                <td>近30天使用率</td>
+                <td>日收入(元)</td>
+                <td>月收入(元)</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>A</td>
+                <td>76%</td>
+                <td>0.00</td>
+                <td>34.33</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+    mui.init();
+</script>
+</body>
+</html>

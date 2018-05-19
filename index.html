@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>主页</title>
+	<link rel="stylesheet" href="css/mui.min.css">
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+	<link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="plugins/layer/layer.js"></script>
+	<script src="js/hammer.min.js"></script>
+	<script src="js/jquery.hammer.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/base.js"></script>
+    <script src="js/mui.min.js"></script>
+    <style type="text/css">
+        .myHead{
+            background:transparent;
+            box-shadow:none;
+            color: #fff;
+        }
+        .myHead a{
+            color: #fff;
+        }
+
+        .myNavBox{
+            padding: 2rem;
+        }
+        .myNavBox img{
+            vertical-align:middle;
+            width: 50px;
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .myNavBox .myNavItem{
+            padding-top: 50px;
+        }
+    </style>
+
+</head>
+<body style="background: #fff">
+
+    <header class="mui-bar mui-bar-nav myHead">
+        <a class="mui-pull-left" style="line-height: 44px;" onclick="clicked('page/menu.html')">
+            <img src="images/app_10.png" style="display: inline-block;width: 30px;height: 30px;vertical-align: middle">
+            <span id="mobileBox" style="display: inline-block">18770090755</span>
+        </a>
+        <h1 class="mui-title">&nbsp;</h1>
+        <a id="info" class="mui-pull-right" style="line-height: 54px;">
+            <img src="images/xiaoxi.png" style="width: 15px">
+        </a>
+    </header>
+
+    <div class="mui-content" style="padding-top: 0;background: #fff">
+        <img src="images/rongyubang.png" style="display: block;width: 100%" id="page/login.html" onclick="clicked(this.id)">
+
+        <div class="myNavBox">
+
+            <div class="myNavItem"  >
+                <img src="images/cdz.png"> 我的充电桩
+            </div>
+            <div class="myNavItem">
+                <img src="images/shouru.png"> 我的收入
+            </div>
+            <div class="myNavItem">
+                <img src="images/qianbao.png"> 我的钱包
+            </div>
+        </div>
+
+    </div>
+
+	<script type="text/javascript">
+        mui.init();
+
+
+	</script>
+</body>
+</html>
