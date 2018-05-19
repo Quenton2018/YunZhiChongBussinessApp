@@ -96,13 +96,12 @@
 				</div>
 				<h5 class="mui-content-padded" style="text-align: center;padding: 10px;">或</h5>
 				<div style="margin:0 15px">
-					<img class="Button-Img registerBtn"  src="../images/jiaruBtn.png" style="width: 100%" />
+					<img class="Button-Img registerBtn"  src="../images/jiaruBtn.png" onclick="clicked('applyPartner.html')" style="width: 100%" />
 				</div>
 			</div>
 
 
 		<script type="application/javascript">
-
 
             var $getCodeBtn = $(".getCode");
             var isLock = false; //是否锁定
@@ -145,7 +144,7 @@
                 isLock = true;
                 $getCodeBtn.text(time);
                 showTime();
-                postJSON(API_URL.ApiSmsSendCode,{"mobile":mobile},function(res){
+                postJSON(API_URL.ApiAdminSendCode,{"mobile":mobile},function(res){
                     if("0" == res.code){
                         layer.msg("发送成功");
                     }else{
@@ -153,12 +152,6 @@
                     }
                 })
             })
-
-//          (function(w){
-//              plus.key.addEventListener('backbutton',function(){
-//                  w.close();
-//              },false);
-//          })(window);
 
             if(window.plus){
                 pagePlusReady();
@@ -173,7 +166,7 @@
                 });
 
                 /**
-                 * 注册
+                 * 登入
                  */
                 $(".loingBtn").click(function(){
                     var mobile = $("input[name='regMobile']").val();
@@ -186,15 +179,6 @@
                         layer.msg("验证码不能为空");
                         return;
                     }
-                    var password = $("input[name='regPassword']").val();
-                    if(!vaildeParam(password)){
-                        layer.msg("密码不能为空");
-                        return;
-                    }
-                    if(password.length!=8){
-                        layer.msg("密码长度必须为8位");
-                        return;
-                    }
                     if(!isPoneAvailable(mobile)){
                         layer.msg("手机格式不正确");
                         return;
@@ -205,14 +189,12 @@
                     var postData = {
                         "clientInfo":clientInfo,
                         "mobile":mobile,
-                        "password":password,
                         "code":code
                     }
-                    postJSON(API_URL.ApiMemberRegister,postData,function(res){
+                    postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
                         if("0" == res.code){
                             layer.msg("注册成功，正在跳转...");
-                            setLoginData(res.data.uuid,res.data.mobile);
-                            //setLoginDataNew(res);
+                            setLoginData(res.data.uuid,res.data.username);
                             setTimeout(function(){
                                 clicked('../index.html')
                             },2000);
@@ -221,46 +203,6 @@
                         }
                     })
 
-                })
-
-                /**
-                 * 登入
-                 */
-                $(".loginBtn").click(function(){
-                    var mobile = $("input[name='mobile']").val();
-                    if(!vaildeParam(mobile)){
-                        layer.msg("手机号不能为空");
-                        return;
-                    }
-                    var password = $("input[name='password']").val();
-                    if(!vaildeParam(password)){
-                        layer.msg("密码不能为空");
-                        return;
-                    }
-                    if(!isPoneAvailable(mobile)){
-                        layer.msg("手机格式不正确");
-                        return;
-                    }
-
-                    var clientInfo = plus.push.getClientInfo().clientid;
-
-                    var postData = {
-                        "clientInfo":clientInfo,
-                        "mobile":mobile,
-                        "password":password,
-                    }
-                    postJSON(API_URL.ApiMemberLogin,postData,function(res){
-                        if("0" == res.code){
-                            layer.msg("登录成功，正在跳转...");
-                            setLoginData(res.data.uuid,res.data.mobile);
-                            //setLoginDataNew(res);
-                            setTimeout(function(){
-                                clicked('../index.html')
-                            },2000);
-                        }else{
-                            layer.msg(res.msg);
-                        }
-                    })
                 })
 
             }
