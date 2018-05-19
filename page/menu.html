@@ -30,6 +30,15 @@
             border-radius: 50%;
             left: 3rem;
         }
+        .backImg{
+            position: absolute;
+            width: 46px;
+            height: 44px;
+            border-radius: 50%;
+            left: 1rem;
+            margin-top: 10px;
+        }
+
         #mobileBox{
             position: absolute;
             left: 3rem;
@@ -57,9 +66,12 @@
 <body style="background: #fff">
 
 
+
 <div class="mui-content" style="padding-top: 0;background: #fff">
 
     <div class="topBox">
+      <!--  <img src="../images/back.png" id="backImg">-->
+        <img src="../images/app_back.png" class="backImg"  id="back"  onclick="back()" >
         <img src="../images/menu/home.png" style="display: block;width: 100%">
         <img src="../images/app_10.png" id="avatorImg">
         <span id="mobileBox">18770090755</span>
