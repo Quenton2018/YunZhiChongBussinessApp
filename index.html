@@ -95,21 +95,13 @@
             if(!vaildeParam(uuid)){
                 return;
             }
-            getUserInfo();
 
-            var mobile = plus.storage.getItem("mobile");
-            var headImage = plus.storage.getItem("headImage");
-            $("#mobileBox").text(mobile);
-            if(vaildeParam(headImage)){
-                console.log("## headImage ## : "+headImage);
-                document.getElementById('head-img').src = headImage;
-            }
+            getUserInfo();
 
 
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
             }, false );
-
             ws=plus.webview.currentWebview();
             if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
                 topoffset=Math.round(plus.navigator.getStatusbarHeight());
@@ -119,7 +111,6 @@
 
         // 刷新页面
         function onRefresh(){
-
             getUserInfo();
             ws.endPullToRefresh();
         }
@@ -144,12 +135,12 @@
                         plus.storage.setItem( "nickname", nickname);
                         plus.storage.setItem( "phone", phone);
 
+                        mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
                         $("#mobileBox").text(mobile);
                         if(vaildeParam(headImage)){
                             console.log("## headImage ## : "+headImage);
                             document.getElementById('head-img').src = headImage;
                         }
-
                     }else{
                         layer.msg(res.msg);
                         clearLogin();

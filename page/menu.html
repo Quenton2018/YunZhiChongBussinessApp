@@ -76,7 +76,7 @@
         <div class="left" id="back"  onclick="back()" > <img src="../images/app_back.png" class="backImg"  ></div>
         <img src="../images/menu/home.png" style="display: block;width: 100%">
         <img src="../images/app_10.png" id="avatorImg"  onclick="clicked('userInfo.html')">
-        <span id="mobileBox">18770090755</span>
+        <span id="mobileBox"></span>
     </div>
 
     <div class="menuList">
@@ -105,6 +105,40 @@
 <script src="../js/mui.min.js"></script>
 <script type="text/javascript">
     mui.init()
+
+    if(window.plus){
+        getUserInfo();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+        checkLogin();
+        getUserInfo();
+    }
+
+
+    /**
+     * 获取用户信息
+     */
+    function getUserInfo(){
+        var uuid = plus.storage.getItem("uuid");
+        if(vaildeParam(uuid)){
+            var mobile = plus.storage.getItem("mobile");
+            var headImage = plus.storage.getItem("headImage");
+            mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
+            $("#mobileBox").text(mobile);
+            if(vaildeParam(headImage)){
+                console.log("## headImage ## : "+headImage)
+                document.getElementById('avatorImg').src = headImage;
+            }
+
+        }else{
+            layer.msg(res.msg);
+            clearLogin();
+            clicked("page/login.html");
+        }
+    }
+
 </script>
 </body>
 
