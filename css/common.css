@@ -27,3 +27,22 @@
 .clearfix{
     clear: both;
 }
+
+.myList .right {
+    float: right;
+}
+
+.myList .listItem {
+    height: 50px;
+    line-height: 50px;
+    clear: both;
+}
+
+.myList img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 40px;
+}
+.myList .listItem i {
+    color: #CECECE;
+}
