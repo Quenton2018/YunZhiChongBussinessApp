@@ -9,6 +9,10 @@ API_URL.ApiAdminSendCode = apiHost + "/api/admin/sendCode"; //发送短信接口
 API_URL.ApiAdminQuickLogin = apiHost + "/api/admin/quickLogin"; //登录接口
 API_URL.ApiAdminInfo = apiHost + "/api/admin/info"; //获取用户信息
 
+API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApplyBusiness"; //获取用户信息
+
+
+
 var PAGE_URL = {};
 PAGE_URL.INVITATION = apiHost + '/page/view/invitation'  //邀请页面
 

@@ -71,19 +71,19 @@
         <div class="formBox">
             <div class="formItem">
                 <label>联系人</label>
-                <input type="text">
+                <input type="text" name="contacts" >
             </div>
             <div class="formItem">
                 <label>联系电话</label>
-                <input type="text">
+                <input type="text"  name="mobile">
             </div>
             <div class="formItem">
                 <label>预估安装数量</label>
-                <input type="text">
+                <input type="text" name="numbers">
             </div>
             <div class="formItem">
                 <label>申请发展地区</label>
-                <input type="text">
+                <input type="text" name="installAddress">
             </div>
         </div>
 
@@ -97,6 +97,64 @@
 
 	<script type="text/javascript">
         mui.init();
+
+        if(window.plus){
+            pagePlusReady();
+        }else{
+            document.addEventListener('plusready',pagePlusReady,false);
+        }
+        function pagePlusReady(){
+
+           // uploadLoginInfo();
+
+        }
+
+        $("#submitBtn").click(function(){
+            var uuid = plus.storage.getItem("uuid");
+
+            if(!vaildeParam(uuid)){
+                layer.msg("uuid错误");
+                return;
+            }
+            var contacts = $("input[name='contacts']").val();
+            if(!vaildeParam(contacts)){
+                layer.msg("联系人不能为空");
+                return;
+            }
+            var mobile = $("input[name='mobile']").val();
+            if(!vaildeParam(mobile)){
+                layer.msg("联系电话不能为空");
+                return;
+            }
+            var numbers = $("input[name='numbers']").val();
+            if(!vaildeParam(numbers)){
+                layer.msg("预估安装数量不能为空");
+                return;
+            }
+            var installAddress = $("input[name='installAddress']").val();
+            if(!vaildeParam(installAddress)){
+                layer.msg("申请发展地区不能为空");
+                return;
+            }
+            var data = {
+                "uuid":uuid,
+                "contacts":contacts,
+                "mobile":mobile,
+                "numbers":numbers,
+                "installAddress":installAddress
+            }
+            postJSON(API_URL.ApiApplyBusinessSaveApplyBusiness,data,function(res){
+                if("0" == res.code){
+                    layer.msg("您的申请，我们已经收到，请耐心等候");
+                    setTimeout(function(){
+                        back();
+                    },3000);
+                }else{
+                    layer.msg(res.msg);
+                }
+            });
+        });
+
 	</script>
 </body>
 </html>
