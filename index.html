@@ -75,7 +75,6 @@
 	<script type="text/javascript">
         mui.init();
 
-
         var ws=null;
         // 处理沉浸式状态栏
         var topoffset=0;
@@ -90,18 +89,15 @@
             document.addEventListener('plusready',pagePlusReady,false);
         }
 
-
         function pagePlusReady(){
             checkLogin('page/login.html');
-
             var uuid = plus.storage.getItem("uuid");
             if(!vaildeParam(uuid)){
                 return;
             }
-
            // uploadLoginInfo('page/login.html');  //上传用户信息
 
-            getUserInfo(); //获取用户信息
+          // getUserInfo(); //获取用户信息
 
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
@@ -114,11 +110,19 @@
             ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
         }
 
+        // 刷新页面
+        function onRefresh(){
+           // getUserInfo();
+            ws.endPullToRefresh();
+        }
         /**
          * 获取用户信息
          */
-        function getUserInfo(){
+      /*  function getUserInfo(){
             var uuid = plus.storage.getItem("uuid");
+            if(!vaildeParam(uuid)){
+                return;
+            }
             if(vaildeParam(uuid)){
                 postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                     if("0" == res.code){
@@ -135,7 +139,7 @@
                     }
                 })
             }
-        }
+        }*/
 
 	</script>
 </body>
