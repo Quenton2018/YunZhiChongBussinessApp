@@ -45,8 +45,8 @@
 
     <header class="mui-bar mui-bar-nav myHead">
         <a class="mui-pull-left" style="line-height: 44px;" onclick="clicked('page/menu.html')">
-            <img src="images/app_10.png" style="display: inline-block;width: 30px;height: 30px;vertical-align: middle">
-            <span id="mobileBox" style="display: inline-block">18770090755</span>
+            <img src="images/app_10.png" id="head-img"  style="display: inline-block;width: 30px;height: 30px;vertical-align: middle">
+            <span id="mobileBox" style="display: inline-block"></span>
         </a>
         <h1 class="mui-title">&nbsp;</h1>
         <a id="info" class="mui-pull-right" style="line-height: 54px;">
@@ -95,9 +95,14 @@
             if(!vaildeParam(uuid)){
                 return;
             }
-           // uploadLoginInfo('page/login.html');  //上传用户信息
 
-          // getUserInfo(); //获取用户信息
+            var mobile = plus.storage.getItem("mobile");
+            var headImage = plus.storage.getItem("headImage");
+            $("#mobileBox").text(mobile);
+            if(vaildeParam(headImage)){
+                console.log("## headImage ## : "+headImage);
+                document.getElementById('head-img').src = headImage;
+            }
 
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
@@ -112,13 +117,15 @@
 
         // 刷新页面
         function onRefresh(){
-           // getUserInfo();
+
+            getUserInfo();
             ws.endPullToRefresh();
         }
+
         /**
          * 获取用户信息
          */
-      /*  function getUserInfo(){
+       function getUserInfo(){
             var uuid = plus.storage.getItem("uuid");
             if(!vaildeParam(uuid)){
                 return;
@@ -132,6 +139,13 @@
                         plus.storage.setItem( "mobile", mobile);
                         plus.storage.setItem( "headImage", headImage);
                         plus.storage.setItem( "nickname", nickname);
+
+                        $("#mobileBox").text(mobile);
+                        if(vaildeParam(headImage)){
+                            console.log("## headImage ## : "+headImage);
+                            document.getElementById('head-img').src = headImage;
+                        }
+
                     }else{
                         layer.msg(res.msg);
                         clearLogin();
@@ -139,7 +153,7 @@
                     }
                 })
             }
-        }*/
+        }
 
 	</script>
 </body>

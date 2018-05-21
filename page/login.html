@@ -193,7 +193,7 @@
                     }
                     postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
                         if("0" == res.code){
-                            layer.msg("注册成功，正在跳转...");
+                            layer.msg("登入成功，正在跳转...");
                             setLoginData(res.data.uuid,res.data.username);
                             setTimeout(function(){
                                 clicked('../index.html')
