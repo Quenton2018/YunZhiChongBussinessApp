@@ -55,12 +55,12 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="listItem">
-                        <div class="left">手机号</div>
+                        <div class="left">用户名</div>
                         <div class="right"><span class="text-muted" id="mobileBox"></span></div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="listItem" onclick="clicked('../page/nickName.html')">
-                        <div class="left">备用联系手机</div>
+                        <div class="left">备用联系方式</div>
                         <div class="right"><span class="text-muted" id="phoneBox"></span><i class="iconfont icon-youjiantou1"></i></div>
                         <div class="clearfix"></div>
                     </div>
@@ -286,7 +286,7 @@
             var imgData = getBase64Image(image);
             console.log("imgData"+imgData);
             /*在这里调用上传接口*/
-            mui.ajax(API_URL.ApiUploadPicture, {
+            mui.ajax(API_URL.ApiAdminUploadPicture, {
                 data: { img: imgData,uuid:uid },
                 dataType: 'json',
                 type: 'post',
