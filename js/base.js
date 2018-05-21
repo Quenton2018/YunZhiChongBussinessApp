@@ -11,6 +11,9 @@ API_URL.ApiAdminInfo = apiHost + "/api/admin/info"; //获取用户信息
 API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApplyBusiness"; //获取用户信息
 
 API_URL.ApiAdminUploadPicture = apiHost + "/api/admin/uploadPicture"; //用户上传头像数据
+API_URL.ApiAdminUpdataAdminInfo = apiHost + "/api/admin/updataAdminInfo"; //用户上传联系方式
+
+
 
 var PAGE_URL = {};
 PAGE_URL.INVITATION = apiHost + '/page/view/invitation'  //邀请页面

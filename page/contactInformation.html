@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>备用联系方式</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+
+    <style type="text/css">
+        .pageBigTitle{
+            float: right;
+            line-height: inherit;
+            margin-left: 20px;
+        }
+        .textBox .inputBox{
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            margin-bottom: 10px;
+            margin-top: 3rem;
+        }
+        .textBox input{
+            -webkit-user-select:text;
+            text-align:left;
+            border: 0px;
+            border-radius: 0.5rem;
+            font-size:16px;
+            width:100%;
+            outline:none;
+            line-height: 2.5rem;
+            padding-left: 10px;
+            margin: 0.3rem;
+        }
+        .textBox input:focus{
+            outline: none;
+        }
+
+        .Button-Img{
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body style="background: #EDEDED">
+
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">备用联系方式</h1>
+</header>
+
+
+<div class="mui-content" >
+
+    <div class="textBox">
+        <div class="inputBox">
+            <input type="text" name="phone" placeholder="联系方式" />
+        </div>
+    </div>
+
+    <div style="margin-top: 100px">
+        <img class="Button-Img modifyBtn"  src="../images/editPs/app_03.png" />
+    </div>
+
+
+</div>
+<script type="text/javascript">
+    mui.init();
+
+
+    /**
+     * 修改
+     */
+    $(".modifyBtn").click(function(){
+        var uuid = plus.storage.getItem("uuid");
+        var phone = $("input[name='phone']").val();
+        if(!vaildeParam(nickname)){
+            layer.msg("联系方式不能为空");
+            return;
+        }
+        var data = {
+            "uuid":uuid,
+            "phone":phone
+        }
+        postJSON(API_URL.ApiAdminUpdataAdminInfo,data,function(res){
+            if("0" == res.code){
+                layer.msg(res.msg);
+                plus.storage.setItem( "phone", phone); //回写姓名
+                setTimeout(function(){
+                    var ws=plus.webview.currentWebview();
+
+                    //父窗口
+                    var wo = ws.opener();
+                    var parentUrl = wo.getURL();
+                    wo.evalJS('getUserInfoDateBase()');
+
+                    back();
+
+                },2000);
+            }else{
+                layer.msg(res.msg);
+            }
+        });
+    })
+
+
+
+
+</script>
+
+</body>
+
+</html>
