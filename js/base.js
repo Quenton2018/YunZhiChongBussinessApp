@@ -11,7 +11,7 @@ API_URL.ApiAdminInfo = apiHost + "/api/admin/info"; //获取用户信息
 
 API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApplyBusiness"; //获取用户信息
 
-
+API_URL.ApiUploadPicture = apiHost + "/api/member/uploadPicture"; //用户上传头像数据
 
 var PAGE_URL = {};
 PAGE_URL.INVITATION = apiHost + '/page/view/invitation'  //邀请页面
@@ -173,6 +173,30 @@ function setLoginData(uuid,mobile){
 	plus.storage.setItem( "mobile", mobile );
 	plus.storage.setItem( "login_date", date);
 	
+}
+/**
+ * 保存登入数据New
+ * @param {Object} userID
+ * @param {Object} mobile
+ */
+function setLoginDataNew(uuid,mobile,headImage,phone){
+
+    console.log("## setLoginData ## uuid : " + uuid);
+    console.log("## setLoginData ## mobile : " + mobile);
+    console.log("## setLoginData ## headImage : " + headImage);
+    console.log("## setLoginData ## phone : " + phone);
+
+    var date = formatDate(new Date(),"yyyy-mm-dd HH-mm-ss");
+    console.log("## setLoginData ## date : " + date);
+
+    plus.storage.setItem( "uuid", uuid);
+    plus.storage.setItem( "mobile", mobile );
+    plus.storage.setItem( "headImage", headImage);
+    plus.storage.setItem( "phone", phone);
+
+    plus.storage.setItem( "login_date", date);
+
+
 }
 
 

@@ -72,7 +72,7 @@
 	</head>
 	<body style="background: #ffffff;">
             <header class="mui-bar mui-bar-nav">
-                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+              <!--  <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
                 <h1 class="mui-title">手机快捷登入</h1>
             </header>
 
@@ -194,7 +194,7 @@
                     postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
                         if("0" == res.code){
                             layer.msg("登入成功，正在跳转...");
-                            setLoginData(res.data.uuid,res.data.username);
+                            setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile);
                             setTimeout(function(){
                                 clicked('../index.html')
                             },2000);

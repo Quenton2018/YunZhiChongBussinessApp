@@ -49,9 +49,9 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="listItem" onclick="clicked('../page/nickName.html')">
+                    <div class="listItem">
                         <div class="left">姓名</div>
-                        <div class="right"><span class="text-muted"  id="nicknameBox"></span> <i class="iconfont icon-youjiantou1"></i></div>
+                        <div class="right"><span class="text-muted"  id="nicknameBox"></span> </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="listItem">
@@ -59,9 +59,9 @@
                         <div class="right"><span class="text-muted" id="mobileBox"></span></div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="listItem">
+                    <div class="listItem" onclick="clicked('../page/nickName.html')">
                         <div class="left">备用联系手机</div>
-                        <div class="right"><span class="text-muted" ></span></div>
+                        <div class="right"><span class="text-muted" id="phoneBox"></span><i class="iconfont icon-youjiantou1"></i></div>
                         <div class="clearfix"></div>
                     </div>
             </div>
@@ -130,7 +130,7 @@
             var mobile = plus.storage.getItem("mobile");
             var headImage = plus.storage.getItem("headImage");
             var nickname = plus.storage.getItem("nickname");
-            var gender = plus.storage.getItem("gender");
+            var phone = plus.storage.getItem("phone");
             $("#mobileBox").text(mobile);
             if(vaildeParam(headImage)){
                 console.log("## headImage ## : "+headImage);
@@ -139,8 +139,8 @@
             if(vaildeParam(nickname)){
                 $("#nicknameBox").text(nickname);
             }
-            if(vaildeParam(gender)){  //性别置为选中
-                $(":radio[name='gender'][value='" + gender + "']").prop("checked", "checked");
+            if(vaildeParam(phone)){
+                $("#phoneBox").text(phone);
             }
         }else{
             layer.msg(res.msg);
@@ -151,26 +151,21 @@
     /**
      * 获取用户信息
      */
-    /* function getUserInfoDateBase(){
+     function getUserInfoDateBase(){
         var uuid = plus.storage.getItem("uuid");
         console.log("## getUserInfoDateBase ## uuid:"+uuid);
         if(vaildeParam(uuid)){
-            postJSON(API_URL.ApiMemberInfo,{"uuid":uuid},function(res){
+            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                 if("0" == res.code){
-                    var mobile = res.data.mobile;
+                    var mobile = res.data.username;
                     var headImage = res.data.headImage;
-                    var nickname = res.data.nickname;
-                    var gender = res.data.gender;
-                    var homeAddress = res.data.homeAddress;
-                    var totalMoney = res.data.totalMoney;
-                    var points = res.data.points;  //云钻
+                    var nickname = res.data.realname;
+                    var phone = res.data.mobile;
                     plus.storage.setItem( "mobile", mobile);
                     plus.storage.setItem( "headImage", headImage);
                     plus.storage.setItem( "nickname", nickname);
-                    plus.storage.setItem( "gender", gender);
-                    plus.storage.setItem( "homeAddress", homeAddress);
-                    plus.storage.setItem( "totalMoney", totalMoney);
-                    plus.storage.setItem( "points", points);
+                    plus.storage.setItem( "phone", phone);
+
                     $("#mobileBox").text(mobile);
                     if(vaildeParam(headImage)){
                         console.log("## headImage ## : "+headImage);
@@ -179,8 +174,8 @@
                     if(vaildeParam(nickname)){
                         $("#nicknameBox").text(nickname);
                     }
-                    if(vaildeParam(gender)){  //性别置为选中
-                        $(":radio[name='gender'][value='" + gender + "']").prop("checked", "checked");
+                    if(vaildeParam(phone)){
+                        $("#phoneBox").text(phone);
                     }
 
                 }else{
@@ -191,43 +186,7 @@
             })
         }
     }
-*/
 
-    /*/!**
-     * 性别选中事件
-     *!/
-    $(function(){
-        var genderRadio=$('input[name="gender"]');
-       // $(":radio").click(function(){
-        genderRadio.change(function(){
-    	  var gender =  $(this).val();
-    	  var uuid = plus.storage.getItem("uuid");
-            var btnArray = ['否', '是'];
-            mui.confirm('确认要修改么？', '性别', btnArray, function(e) {
-                if (e.index == 1) {
-                        var data = {
-                            "uuid":uuid,
-                            "gender":gender,
-                            "nickname":'',
-                            "homeAddress":''
-                        }
-                        postJSON(API_URL.ApiUpdateMemberInfo,data,function(res){
-                            if("0" == res.code){
-                                layer.msg(res.msg);
-                                plus.storage.setItem( "gender", gender); //回写性别
-                            }else{
-                                layer.msg(res.msg);
-                                var storageGender = plus.storage.getItem("gender");
-                                $(":radio[name='gender'][value='" + storageGender + "']").prop("checked", "checked");
-                            }
-                        });
-                } else {
-                  /!*  var storageGender = plus.storage.getItem("gender");
-                    $(":radio[name='gender'][value='" + storageGender + "']").prop("checked", "checked");*!/
-                }
-            });
-        });
-    });*/
 
 
     /*点击头像触发*/
