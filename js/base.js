@@ -1,6 +1,6 @@
 //var apiHost = "http://api.9n.jxyunge.com";
 var appVersion = "v1.0";  //app当前版本
-var apiHost = "http://192.168.1.115:8181";
+var apiHost = "http://192.168.1.117:8181";
 
 
 var API_URL = {};
@@ -13,8 +13,8 @@ API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApp
 API_URL.ApiAdminUploadPicture = apiHost + "/api/admin/uploadPicture"; //用户上传头像数据
 API_URL.ApiAdminUpdataAdminInfo = apiHost + "/api/admin/updataAdminInfo"; //用户上传联系方式
 
-
-
+API_URL.ApiArticleCategoryList = apiHost + "/api/article/getArticleCategoryList"; //获取文章分类
+API_URL.ApiArticleContentBYID = apiHost + "/api/article/getArticleByCategoryTwoId";
 var PAGE_URL = {};
 PAGE_URL.INVITATION = apiHost + '/page/view/invitation'  //邀请页面
 
