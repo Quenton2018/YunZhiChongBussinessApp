@@ -98,8 +98,16 @@
                 return;
             }
 
-            getUserInfo();
+            var mobile = plus.storage.getItem("mobile");
+            var headImage = plus.storage.getItem("headImage");
+            mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
+            $("#mobileBox").text(mobile);
+            if(vaildeParam(headImage)){
+                console.log("## headImage ## : "+headImage);
+                document.getElementById('head-img').src = headImage;
+            }
 
+            getUserInfo();
 
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
