@@ -64,47 +64,129 @@
                 <td style="width: 15%">排名</td>
                 <td>手机号码</td>
                 <td>合伙人收入</td>
-                <td>转化率</td>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="dataList">
             <tr>
                 <td><img src="../images/1.png"></td>
                 <td>18770090755</td>
                 <td class="colorTd">120.00</td>
-                <td>34%</td>
             </tr>
             <tr>
                 <td><img src="../images/2.png"></td>
                 <td>18770090755</td>
                 <td class="colorTd">120.00</td>
-                <td>34%</td>
             </tr>
             <tr>
                 <td><img src="../images/3.png"></td>
                 <td>18770090755</td>
                 <td class="colorTd">120.00</td>
-                <td>34%</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>18770090755</td>
-                <td class="colorTd">120.00</td>
-                <td>34%</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>18770090755</td>
-                <td class="colorTd">120.00</td>
-                <td>34%</td>
             </tr>
         </tbody>
     </table>
 
 </div>
 
+<script type="text/html" id="dataTmpl">
+        <tr>
+            <td>{{ranking}}</td>
+            <td>{{username}}</td>
+            <td class="colorTd">{{money}}</td>
+        </tr>
+</script>
+
+
 <script type="text/javascript">
     mui.init();
+
+    var ws=null;
+    // 处理沉浸式状态栏
+    var topoffset=0;
+    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if(ms&&ms.length>=3){
+        topoffset=parseFloat(ms[2]);
+    }
+
+    var pageNumber = 1;
+    var pageSize = 10;
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+
+    function pagePlusReady(){
+        console.log("pagePlusReady==================");
+
+        getList();
+        ws=plus.webview.currentWebview();
+        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+        }
+        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+    }
+
+
+    // 刷新页面
+    function onRefresh(){
+        console.log("onRefresh==================");
+        pageNumber = 1;
+        $(".dataList").html("");
+        getList();
+        ws.endPullToRefresh();
+    }
+
+    function getList(){
+        var dataParam = {
+            "pageSize":pageSize,
+            "pageNumber":pageNumber,
+        }
+
+        postJSON(API_URL.ApiHonorGetHonorList,dataParam,function(res){
+            if("0" == res.code){
+
+                var data = res.data.pagedata.content;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                $.each(data, function(index,item) {
+                    index++;
+                    var imgText;
+                    if(1==index){
+                        imgText = '<img src="../images/1.png">';
+                    }else if(2==index) {
+                        imgText = '<img src="../images/2.png">';
+                    }else if(3==index) {
+                        imgText = '<img src="../images/3d.png">';
+                    }else{
+                        imgText =index;
+                    }
+                    var username = item.username;
+                    var totalIncome = item.totalIncome;
+                    var id = item.id;
+                    html += tmpl.replace(/{{username}}/g,username)
+                        .replace(/{{money}}/g,totalIncome)
+                        .replace(/{{ranking}}/g,imgText);
+                });
+                if(1 == pageSize){
+                    $(".dataList").html("");
+                }
+                $(".dataList").append(html);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getList();
+    })
+
+
+
+
+
 </script>
 </body>
 </html>

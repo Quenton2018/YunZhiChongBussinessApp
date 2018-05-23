@@ -15,8 +15,17 @@ API_URL.ApiAdminUpdataAdminInfo = apiHost + "/api/admin/updataAdminInfo"; //用�
 
 API_URL.ApiArticleCategoryList = apiHost + "/api/article/getArticleCategoryList"; //获取文章分类
 API_URL.ApiArticleContentBYID = apiHost + "/api/article/getArticleByCategoryTwoId";
+
+API_URL.ApiHonorGetHonorList = apiHost + "/api/honor/getHonorList"; //获取荣誉榜
+
+
+
+
+
 var PAGE_URL = {};
 PAGE_URL.INVITATION = apiHost + '/page/view/invitation'  //邀请页面
+
+
 
 function checkNumber(theObj) {
   var reg = /^[0-9]+.?[0-9]*$/;
