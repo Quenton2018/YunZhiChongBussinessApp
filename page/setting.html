@@ -51,8 +51,8 @@
 
         <ul class="mui-table-view" style="margin-top: 20px;">
             <li class="mui-table-view-cell">账号<span class="right username">右边</span></li>
-            <li class="mui-table-view-cell">银行卡<span class="right bnank">右边</span></li>
-            <li class="mui-table-view-cell">所属银行<span class="right bnankCode">右边</span></li>
+            <li class="mui-table-view-cell">银行卡<span class="right bankCode"></span></li>
+            <li class="mui-table-view-cell">所属银行<span class="right bank"></span></li>
         </ul>
 
         <ul class="mui-table-view"  style="margin-top: 20px;">
@@ -104,9 +104,10 @@
         var bank = plus.storage.getItem("bank");
         var bankCode = plus.storage.getItem("bankCode");
 
-        $("#username").text(mobile);
-        $("#bank").text(bank);
-        $("#bankCode").text(bankCode);
+        bankCode  = bankCode.substr(0, 6) + '****' + bankCode.substr(7);
+        $(".username").text(mobile);
+        $(".bank").text(bank);
+        $(".bankCode").text(bankCode);
     }
 
     //登出
