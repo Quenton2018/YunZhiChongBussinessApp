@@ -67,21 +67,7 @@
             </tr>
         </thead>
         <tbody class="dataList">
-            <tr>
-                <td><img src="../images/1.png"></td>
-                <td>18770090755</td>
-                <td class="colorTd">120.00</td>
-            </tr>
-            <tr>
-                <td><img src="../images/2.png"></td>
-                <td>18770090755</td>
-                <td class="colorTd">120.00</td>
-            </tr>
-            <tr>
-                <td><img src="../images/3.png"></td>
-                <td>18770090755</td>
-                <td class="colorTd">120.00</td>
-            </tr>
+
         </tbody>
     </table>
 
@@ -156,11 +142,14 @@
                     }else if(2==index) {
                         imgText = '<img src="../images/2.png">';
                     }else if(3==index) {
-                        imgText = '<img src="../images/3d.png">';
+                        imgText = '<img src="../images/3.png">';
                     }else{
                         imgText =index;
                     }
                     var username = item.username;
+                    if(username.length>11){
+                        username  = username.substr(0, 3) + '****' + username.substr(7);
+                    }
                     var totalIncome = item.totalIncome;
                     var id = item.id;
                     html += tmpl.replace(/{{username}}/g,username)
