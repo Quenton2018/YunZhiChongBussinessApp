@@ -1,6 +1,6 @@
 //var apiHost = "http://api.9n.jxyunge.com";
 var appVersion = "v1.0";  //app当前版本
-var apiHost = "http://192.168.1.117:8181";
+var apiHost = "http://192.168.1.107:8181";
 
 
 var API_URL = {};

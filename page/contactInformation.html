@@ -86,7 +86,7 @@
     $(".modifyBtn").click(function(){
         var uuid = plus.storage.getItem("uuid");
         var phone = $("input[name='phone']").val();
-        if(!vaildeParam(nickname)){
+        if(!vaildeParam(phone)){
             layer.msg("联系方式不能为空");
             return;
         }
