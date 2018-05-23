@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>设置</title>
+    <title>客服中心</title>
     <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
@@ -42,43 +42,50 @@
 
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">设置</h1>
+    <h1 class="mui-title">客服中心</h1>
 </header>
 
 <div class="mui-content" style="    padding-bottom: 60px;">
 
     <div class="">
 
-        <ul class="mui-table-view" style="margin-top: 20px;">
-            <li class="mui-table-view-cell">账号<span class="right username">右边</span></li>
-            <li class="mui-table-view-cell">银行卡<span class="right bankCode"></span></li>
-            <li class="mui-table-view-cell">所属银行<span class="right bank"></span></li>
+        <ul class="mui-table-view"  style="margin-top: 20px;">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">绑卡及提现</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">修改账号</a>
+            </li>
         </ul>
 
         <ul class="mui-table-view"  style="margin-top: 20px;">
             <li class="mui-table-view-cell">
-                <a class="mui-navigate-right">意见反馈</a>
-            </li>
-            <li class="mui-table-view-cell">
-                <a class="mui-navigate-right">联系我们</a>
-            </li>
-            <li class="mui-table-view-cell">
-                <a class="mui-navigate-right">检查新版本</a>
+                <a class="mui-navigate-right">设备及售后问题</a>
             </li>
         </ul>
 
         <ul class="mui-table-view"  style="margin-top: 20px;">
-            <li class="mui-table-view-cell" onclick="clicked('customerService.html')" >
-                <a class="mui-navigate-right">客服中心</a>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">个人账号</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">荣耀版</a>
             </li>
         </ul>
 
-
-        <ul id="logOutBtn" class="mui-table-view" style="margin-top: 20px;">
-            <li class="mui-table-view-cell" style="text-align: center; color: #FE0000">退出账号</li>
+        <ul class="mui-table-view"  style="margin-top: 20px;">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">充电桩使用说明</a>
+            </li>
         </ul>
+
+        <ul class="mui-table-view"  style="margin-top: 20px;">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">客服热线</a>
+            </li>
+        </ul>
+
     </div>
-
 
 </div>
 
@@ -100,26 +107,10 @@
             return;
         }
 
-        var mobile = plus.storage.getItem("mobile");
-        var bank = plus.storage.getItem("bank");
-        var bankCode = plus.storage.getItem("bankCode");
 
-        bankCode  = bankCode.substr(0, 6) + '****' + bankCode.substr(7);
-        $(".username").text(mobile);
-        $(".bank").text(bank);
-        $(".bankCode").text(bankCode);
+
+
     }
-
-    //登出
-    $("#logOutBtn").click(function(){
-        plus.storage.clear();
-        layer.msg("退出登录成功");
-        setTimeout(function(){
-            clicked('login.html');
-        },1000)
-    });
-
-
 
 
 
