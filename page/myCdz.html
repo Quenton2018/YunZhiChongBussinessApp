@@ -75,8 +75,8 @@
     </div>
 
     <div class="tabBox">
-        <span class="tabItem select" onclick="clicked('myCdz.html')">正常充电桩(<span>320</span>)</span>
-        <span class="tabItem" onclick="clicked('myCdzUnNormal.html')">异常充电桩(<span>4</span>)</span>
+        <span id="normal" class="tabItem select">正常充电桩(<span>320</span>)</span>
+        <span id="abnormal"  class="tabItem ">异常充电桩(<span>4</span>)</span>
     </div>
 
     <div class="midRow">
@@ -84,26 +84,78 @@
         <div class="right">月收入(<span>元</span>)</div>
         <div class="clearfix"></div>
     </div>
+    <div  class="normal" style="display: block" >
+        <ul class="mui-table-view dataList">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
+                    <span class="mui-badge">566.00</span>
+                    片区名称:1100
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
+                    <span class="mui-badge">566.00</span>
+                    片区名称:1100
+                </a>
+            </li>
+        </ul>
+    </div>
 
-    <ul class="mui-table-view dataList">
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                <span class="mui-badge">566.00</span>
-                片区名称:1100
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                <span class="mui-badge">566.00</span>
-                片区名称:1100
-            </a>
-        </li>
-    </ul>
+    <div  class="abnormal" style="display: none">
+        <ul class="mui-table-view dataList1">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
+                    <span class="mui-badge">111.00</span>
+                    片区名称:2200
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
+                    <span class="mui-badge">111.00</span>
+                    片区名称:2200
+                </a>
+            </li>
+        </ul>
+    </div>
 
 </div>
 
+
 <script type="text/javascript">
     mui.init();
+
+
+    var btnType ="0";  //正常：0 异常：1
+    var pageNumber = 1;
+    var pageNumber1 = 1;
+    var pageSize = 10;
+
+    //点击正常充电桩
+    $("#normal").click(function(){
+        $(this).addClass("select");
+        $("#abnormal").removeClass("select");
+
+        pageNumber = 1;
+        btnType = "0";
+        $(".dataList").html("");
+        //getList();
+    });
+
+    //点击异常充电桩
+    $("#abnormal").click(function(){
+        $(this).addClass("select");
+        $("#normal").removeClass("select");
+
+        pageNumber1 = 1;
+        btnType = "1";
+        $(".dataList1").html("");
+       // getList();
+    });
+
+
+
+
 </script>
 </body>
+
 </html>
