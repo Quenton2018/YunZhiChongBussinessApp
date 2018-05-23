@@ -194,7 +194,7 @@
                     postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
                         if("0" == res.code){
                             layer.msg("登入成功，正在跳转...");
-                            setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile);
+                            setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode);
                             setTimeout(function(){
                                 clicked('../index.html')
                             },2000);

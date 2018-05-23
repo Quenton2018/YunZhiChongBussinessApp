@@ -68,11 +68,11 @@
 
         </div>
 </div>
-
+<!--
     <div class="myContent" style="margin: 0 2rem;">
         <img id="logOutBtn" src="../images/logout/app_03.png" style="width: 100%;margin-top: 20px">
     </div>
-
+-->
 
 </div>
 <script type="text/javascript">
@@ -98,13 +98,14 @@
 
         getUserInfo();
 
-        $("#logOutBtn").click(function(){
+      /*  $("#logOutBtn").click(function(){
             plus.storage.clear();
             layer.msg("退出登录成功");
             setTimeout(function(){
                 clicked('login.html');
             },1000)
-        });
+        });*/
+
         ws=plus.webview.currentWebview();
         if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
             topoffset=Math.round(plus.navigator.getStatusbarHeight());
@@ -165,6 +166,9 @@
                     plus.storage.setItem( "headImage", headImage);
                     plus.storage.setItem( "nickname", nickname);
                     plus.storage.setItem( "phone", phone);
+                    plus.storage.setItem( "bankCode", bankCode);
+                    plus.storage.setItem( "bank", bank);
+
 
                     $("#mobileBox").text(mobile);
                     if(vaildeParam(headImage)){

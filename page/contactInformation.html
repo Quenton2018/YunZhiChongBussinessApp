@@ -79,7 +79,14 @@
 <script type="text/javascript">
     mui.init();
 
-
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+        // uploadLoginInfo();
+    }
     /**
      * 修改
      */

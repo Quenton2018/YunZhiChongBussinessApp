@@ -140,10 +140,14 @@
                         var headImage = res.data.headImage;
                         var nickname = res.data.realname;
                         var phone = res.data.mobile;
+                        var bankCode = res.data.bankCode;
+                        var bank = res.data.bank;
                         plus.storage.setItem( "mobile", mobile);
                         plus.storage.setItem( "headImage", headImage);
                         plus.storage.setItem( "nickname", nickname);
                         plus.storage.setItem( "phone", phone);
+                        plus.storage.setItem( "bankCode", bankCode);
+                        plus.storage.setItem( "bank", bank);
 
                         mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
                         $("#mobileBox").text(mobile);

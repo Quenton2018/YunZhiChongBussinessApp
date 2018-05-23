@@ -1,6 +1,6 @@
 //var apiHost = "http://api.9n.jxyunge.com";
 var appVersion = "v1.0";  //app当前版本
-var apiHost = "http://192.168.1.107:8181";
+var apiHost = "http://192.168.43.39:8181";
 
 
 var API_URL = {};
@@ -190,12 +190,14 @@ function setLoginData(uuid,mobile){
  * @param {Object} userID
  * @param {Object} mobile
  */
-function setLoginDataNew(uuid,mobile,headImage,phone){
+function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode){
 
     console.log("## setLoginData ## uuid : " + uuid);
     console.log("## setLoginData ## mobile : " + mobile);
     console.log("## setLoginData ## headImage : " + headImage);
     console.log("## setLoginData ## phone : " + phone);
+    console.log("## setLoginData ## bank : " + bank);
+    console.log("## setLoginData ## bankCode : " + bankCode);
 
     var date = formatDate(new Date(),"yyyy-mm-dd HH-mm-ss");
     console.log("## setLoginData ## date : " + date);
@@ -204,6 +206,8 @@ function setLoginDataNew(uuid,mobile,headImage,phone){
     plus.storage.setItem( "mobile", mobile );
     plus.storage.setItem( "headImage", headImage);
     plus.storage.setItem( "phone", phone);
+    plus.storage.setItem( "bank", bank);
+    plus.storage.setItem( "bankCode", bankCode);
 
     plus.storage.setItem( "login_date", date);
 
