@@ -25,6 +25,8 @@ API_URL.ApiWithdrawalSendCode = apiHost + "/api/withdrawal/sendCode";//提现申
 API_URL.ApiWithdrawalApplyWithdrawals = apiHost + "/api/withdrawal/ApplyWithdrawals"; //提现申请
 API_URL.ApiWithdrawalGetWithdrawalsList = apiHost + "/api/withdrawal/getWithdrawalsList"; //提现列表
 
+API_URL.APIPartnerFeedbackSavePartnerFeedback= apiHost + "/api/partnerFeedback/savePartnerFeedback";  //反馈报修
+
 
 var PAGE_URL = {};
 PAGE_URL.INVITATION = apiHost + '/page/view/invitation'  //邀请页面
