@@ -19,34 +19,7 @@
     <style type="text/css">
 
         .topBox{
-            position: relative;
-            padding-top: 30px;
             background-color: #fff;
-            padding-bottom: 20px;
-        }
-        .topBox .logo-img{
-            display: block;
-            width: 20%;
-            vertical-align: middle;
-            dispaly: block;
-            margin: 0 auto;
-        }
-        .topBox h3{
-            display: block;
-            width: 100%;
-            text-align: center;
-            font-weight: 300;
-            color:#333333;
-            margin-top: 10px;
-            margin-bottom: 5px;
-
-        }
-        .topBox h1{
-            display: block;
-            width: 100%;
-            text-align: center;
-            font-weight: 500;
-            color: #333333;;
         }
 
         .dataList{
@@ -65,13 +38,55 @@
             margin-top: 20px;
             margin-bottom: 30px;
         }
+        .mui-table-view .mui-media-object {
+            max-width: 70px;
+        }
+
+        .textBox .inputBox{
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            margin-bottom: 10px;
+           /* margin-top: 3rem;*/
+        }
+        .textBox .inputBox i{
+            font-size: 1rem;
+            position: absolute;
+            left: 10px;
+            line-height: 2.5rem;
+            color: #000;
+            margin: 0.3rem;
+        }
+
+        .textBox input{
+            -webkit-user-select:text;
+            text-align:left;
+            border: 0px;
+            border-radius: 0.5rem;
+            font-size:16px;
+            width:100%;
+            outline:none;
+            line-height: 2.5rem;
+          /*  padding-left: 10px;*/
+            padding-left: 80px;
+            margin: 0.3rem;
+        }
+        .textBox input:focus{
+            outline: none;
+        }
+
         .Button-Img{
             width: 80%;
             display: block;
             margin: 0 auto;
         }
-        .mui-table-view .mui-media-object {
-            max-width: 70px;
+
+        .rightText{
+            position: absolute;
+            right: 10px;
+            top: .7rem;
+            color: #333;
+         /*   font-size: .8rem;*/
         }
     </style>
 
@@ -83,74 +98,49 @@
     <h1 class="mui-title">提现</h1>
 </header>
 
-<div class="mui-content" style="    padding-bottom: 60px;">
+<div class="mui-content" style="      margin-top: 20px;">
     
     <div class="topBox">
-        <img class="logo-img" src="../images/qianbao2.png">
-        <h3>我的钱包</h3>
-        <h1>&yen;<span id="moneyAmountBox"></span></h1>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-media">
+                <a href="javascript:;">
+                    <img class="mui-media-object mui-pull-left" src="../images/yinghang.png">
+                    <div class="mui-media-body">
+                        中国银行
+                        <p class='mui-ellipsis'>6666***77732323</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h5 class="mui-content-padded">可提现余额<span>100.00</span>元</h5>
+    </div>
 
-        <div class="Box-tixian">
-            <img class="Button-Img putForwardBtn"  src="../images/tixian.png" />
+
+        <div class="textBox">
+            <div class="inputBox">
+                <i class="iconfont">提现金额</i>
+                <input type="text" name="money" placeholder="请输入金额" />
+                <span class="rightText">元</span>
+            </div>
+
+            <div class="inputBox">
+                <i class="iconfont">验证码</i>
+                <input type="text" name="code" placeholder="请输入验证码" />
+                <span class="getCode rightText">获取验证码</span>
+            </div>
+
         </div>
-    </div>
 
-
-    <div class="">
-
-
-        <ul class="mui-table-view" style="margin-top: 30px;">
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                    <div class="mui-media-object mui-pull-right">提现中</div>
-                    <div class="mui-media-body">
-                        <span>500.00</span>
-                        <p class="mui-ellipsis">2018-08-09 12:12:11</p>
-                    </div>
-                </a>
-            </li>
-
-
-        </ul>
-
-        <ul class="mui-table-view" style="margin-top: 20px;">
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                    <div class="mui-media-object mui-pull-right">提现完成</div>
-                    <div class="mui-media-body">
-                        <span>500.00</span>
-                        <p class="mui-ellipsis">2018-08-09 12:12:11</p>
-                    </div>
-                </a>
-            </li>
-
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                    <div class="mui-media-object mui-pull-right">提现完成</div>
-                    <div class="mui-media-body">
-                        <span>500.00</span>
-                        <p class="mui-ellipsis">两小时前</p>
-                    </div>
-                </a>
-            </li>
-        </ul>
-
-    </div>
-
+        <div style="margin-top: 50px">
+            <img class="Button-Img tixianBtn"  src="../images/tixian.png" />
+        </div>
 
 </div>
 
 <script type="text/javascript">
     mui.init();
-
-    var ws=null;
-    // 处理沉浸式状态栏
-    var topoffset=0;
-    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if(ms&&ms.length>=3){
-        topoffset=parseFloat(ms[2]);
-    }
-
 
     if(window.plus){
         pagePlusReady();
@@ -159,56 +149,121 @@
     }
     function pagePlusReady(){
 
-        checkLogin();
-        getUserInfoDateBase();
-
-        ws=plus.webview.currentWebview();
-        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+        var $getCodeBtn = $(".getCode");
+        var isLock = false; //是否锁定
+        var time = 60; //倒计时
+        var timeInterval; //定时器
+        /**
+         * 定时器
+         */
+        function showTime(){
+            timeInterval = setInterval(function(){
+                time--;
+                if(time <= 0){
+                    isLock = false;
+                    time = 60;
+                    clearInterval(timeInterval);
+                    $getCodeBtn.text('获取验证码');
+                    return;
+                }else{
+                    $getCodeBtn.text(time);
+                }
+            },1000)
         }
-        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-    }
 
-
-
-
-
-
-    // 刷新页面
-    function onRefresh(){
-        getUserInfoDateBase();
-        ws.endPullToRefresh();
-    }
-
-    /**
-     * 获取用户信息
-     */
-    function getUserInfoDateBase(){
-        var uuid = plus.storage.getItem("uuid");
-        console.log("## getUserInfoDateBase ## uuid:"+uuid);
-        if(vaildeParam(uuid)){
-            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+        /**
+         * 获取
+         */
+        $(".getCode").click(function(){
+            var uuid = plus.storage.getItem("uuid");
+            if(!vaildeParam(uuid)){
+                layer.msg("用户数据异常");
+                return;
+            }
+            if(isLock){
+                return;
+            }
+            isLock = true;
+            $getCodeBtn.text(time);
+            showTime();
+            postJSON(API_URL.ApiWithdrawalSendCode,{"uuid":uuid,"type":"2"},function(res){
                 if("0" == res.code){
-                    var moneyAmount = res.data.moneyAmount;
-                    var bankCode = res.data.bankCode;
-                    var bank = res.data.bank;
-                    plus.storage.setItem( "moneyAmount", moneyAmount); //可提现余额
-                    plus.storage.setItem( "bankCode", bankCode);
-                    plus.storage.setItem( "bank", bank);
-
-                    $("#moneyAmountBox").text(moneyAmount);
-
+                    layer.msg("发送成功");
                 }else{
                     layer.msg(res.msg);
-                    clearLogin();
-                    clicked("page/login.html");
                 }
             })
-        }
+        })
+
+
+
+
+
+
+
+
+        /**
+         * 提现
+         */
+        $(".tixianBtn").click(function(){
+            var uuid = plus.storage.getItem("uuid");
+            var money = $("input[name='money']").val();
+            if(!vaildeParam(money)){
+                layer.msg("金额不能为空");
+                return;
+            }
+            var code = $("input[name='code']").val();
+            if(!vaildeParam(code)){
+                layer.msg("验证码不能为空");
+                return;
+            }
+            if(!checkFloatNum(money)){
+                layer.msg("金额必须大于零的数字");
+                return;
+            }
+            var postData = {
+                "uuid":uuid,
+                "money":money,
+                "code":code
+            }
+            postJSON(API_URL.ApiWithdrawalApplyWithdrawals,postData,function(res){
+                if("0" == res.code){
+                    layer.msg("操作成功，正在跳转...");
+                    setTimeout(function(){
+                        clicked('index.html')
+                    },2000);
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
 
+
+
+    function checkFloatNum(str){
+        var reg_zs = /^[1-9]\d*(\.\d+)?$/i;
+        if (!reg_zs.test(str)) {
+            return false;
+        }
+        return true;
+    }
 
 
 
