@@ -21,13 +21,17 @@ API_URL.ApiArticleContentBYName = apiHost + "/api/article/getArticleByName";
 
 API_URL.ApiHonorGetHonorList = apiHost + "/api/honor/getHonorList"; //获取荣誉榜
 
-API_URL.ApiGetCdzdList = apiHost + "/api/chargingBusiness/getChargingGroup"; //获取合伙人片区
+API_URL.ApiGetChargingGroup = apiHost + "/api/chargingBusiness/getChargingGroup"; //获取合伙人片区
+API_URL.ApiChargingGetChargingCountByPartner = apiHost + "/api/charging/getChargingCountByPartner"; //获取合伙人片区
+API_URL.ApiGetSumMoney = apiHost + "/api/admin/getSumMoney"; //获取合伙人片区
 
 API_URL.ApiWithdrawalSendCode = apiHost + "/api/withdrawal/sendCode";//提现申请SMS
 API_URL.ApiWithdrawalApplyWithdrawals = apiHost + "/api/withdrawal/ApplyWithdrawals"; //提现申请
 API_URL.ApiWithdrawalGetWithdrawalsList = apiHost + "/api/withdrawal/getWithdrawalsList"; //提现列表
 
 API_URL.APIPartnerFeedbackSavePartnerFeedback= apiHost + "/api/partnerFeedback/savePartnerFeedback";  //反馈报修
+
+
 
 
 
@@ -476,3 +480,29 @@ function clickedTongYong(item,categoryName){
     plus.storage.setItem( "categoryName", categoryName);
     clicked(item);
 }
+
+
+/**
+ * 获取当前月的第一天
+ * @returns {Date}
+ */
+function getCurrentMonthFirst(){
+    var date=new Date();
+    date.setDate(1);
+    return date;
+}
+
+
+/**
+ * 获取当前月的最后一天
+ * @returns {Date}
+ */
+function getCurrentMonthLast(){
+    var date=new Date();
+    var currentMonth=date.getMonth();
+    var nextMonth=++currentMonth;
+    var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+    var oneDay=1000*60*60*24;
+    return new Date(nextMonthFirstDay-oneDay);
+}
+
