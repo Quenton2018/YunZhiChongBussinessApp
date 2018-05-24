@@ -196,13 +196,12 @@
             var dataParam= {
                 "uuid":uuid,
                 "recordType":"0",
-                "consumptionType":consumptionType,
+                "btnType":btnType,
                 "pageSize":pageSize,
                 "pageNumber":nember
             }
             postJSON(API_URL.ApiDetailRecordGetDetailRecordList,dataParam,function(res){
                 if("0" == res.code){
-
 
                     var data = res.data.pagedata.content;
 
