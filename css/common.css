@@ -12,6 +12,7 @@
 
 .mui-bar-nav{
     background: #fff;
+    box-shadow:none;
 }
 .mui-bar-nav a{
     color: #333;
