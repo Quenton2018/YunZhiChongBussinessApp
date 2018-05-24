@@ -1,6 +1,6 @@
 //var apiHost = "http://api.9n.jxyunge.com";
 var appVersion = "v1.0";  //app当前版本
-var apiHost = "http://192.168.43.39:8181";
+var apiHost = "http://192.168.1.115:8181";
 
 
 var API_URL = {};
@@ -18,7 +18,7 @@ API_URL.ApiArticleContentBYID = apiHost + "/api/article/getArticleByCategoryTwoI
 
 API_URL.ApiHonorGetHonorList = apiHost + "/api/honor/getHonorList"; //获取荣誉榜
 
-
+API_URL.ApiGetCdzdList = apiHost + "/api/chargingBusiness/getChargingGroup"; //获取合伙人片区
 
 
 

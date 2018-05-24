@@ -50,13 +50,32 @@
             color: #979797;
         }
 
-        .dataList{
+        .mui-table-view{
             font-size: .9rem;
         }
-        .dataList .mui-badge{
+        .mui-table-view .mui-badge{
             background: transparent;
             font-size: .9rem;
         }
+
+        #loadMore{
+            background: #eaeaea;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+
     </style>
 
 </head>
@@ -86,71 +105,169 @@
     </div>
     <div  class="normal" style="display: block" >
         <ul class="mui-table-view dataList">
-            <li class="mui-table-view-cell">
-                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                    <span class="mui-badge">566.00</span>
-                    片区名称:1100
-                </a>
-            </li>
-            <li class="mui-table-view-cell">
-                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                    <span class="mui-badge">566.00</span>
-                    片区名称:1100
-                </a>
-            </li>
+
+
         </ul>
+        <div id="loadMore" class="loadMore">加载更多</div>
+        <div id="noMore" class="noMore">没有更多了</div>
     </div>
 
-    <div  class="abnormal" style="display: none">
+    <div  class="abnormal" style="display: none" >
         <ul class="mui-table-view dataList1">
-            <li class="mui-table-view-cell">
-                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                    <span class="mui-badge">111.00</span>
-                    片区名称:2200
-                </a>
-            </li>
-            <li class="mui-table-view-cell">
-                <a class="mui-navigate-right" onclick="clicked('areaList.html')">
-                    <span class="mui-badge">111.00</span>
-                    片区名称:2200
-                </a>
-            </li>
+
         </ul>
+        <div id="loadMore1" class="loadMore">加载更多</div>
+        <div id="noMore1" class="noMore">没有更多了</div>
     </div>
 
 </div>
 
 
+<script type="text/html" id="dataTmpl">
+    <li class="mui-table-view-cell">
+        <a class="mui-navigate-right" onclick="clicked('areaList.html')">
+            <span class="mui-badge">{{money}}</span>
+            片区名称:{{groupName}}
+        </a>
+    </li>
+</script>
+
+
 <script type="text/javascript">
     mui.init();
-
 
     var btnType ="0";  //正常：0 异常：1
     var pageNumber = 1;
     var pageNumber1 = 1;
     var pageSize = 10;
 
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+        getList();
+    }
+
+
+
     //点击正常充电桩
     $("#normal").click(function(){
         $(this).addClass("select");
         $("#abnormal").removeClass("select");
+        $(".abnormal").css("display","none");
+        $(".normal").css("display","block");
 
         pageNumber = 1;
         btnType = "0";
-        $(".dataList").html("");
-        //getList();
+       $(".dataList").html("");
+
+        getList();
     });
 
     //点击异常充电桩
     $("#abnormal").click(function(){
         $(this).addClass("select");
         $("#normal").removeClass("select");
+        $(".abnormal").css("display","block");
+        $(".normal").css("display","none");
 
         pageNumber1 = 1;
         btnType = "1";
         $(".dataList1").html("");
-       // getList();
+
+       getList();
     });
+
+
+    /**
+     抓取数据
+     */
+    function getList(){
+        var uuid = plus.storage.getItem("uuid");
+        if(vaildeParam(uuid)){
+            var nember = 1 ;
+            if("0"==btnType){
+                nember = pageNumber;
+            }else{
+                nember = pageNumber1;
+            }
+            var dataParam= {
+                "uuid":uuid,
+                "recordType":"0",
+                "consumptionType":consumptionType,
+                "pageSize":pageSize,
+                "pageNumber":nember
+            }
+            postJSON(API_URL.ApiDetailRecordGetDetailRecordList,dataParam,function(res){
+                if("0" == res.code){
+
+
+                    var data = res.data.pagedata.content;
+
+                    var html = '';
+                    $.each(data, function(index,item) {
+                        var  tmpl = $("#dataTmpl2").html();
+                        var createDate = new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss");
+                        var  title = item.title;
+                        var amount = item.amount;
+                        html += tmpl.replace(/{{createDate}}/g,createDate)
+                            .replace(/{{amount}}/g,item.amount)
+                            .replace(/{{title}}/g,title);
+                    });
+                    if(1 == pageSize){
+                        if("1"==consumptionType){
+                            $(".dataList").html("");
+                        }else{
+                            $(".dataList1").html("");
+                        }
+                    }
+                    if("1"==consumptionType){
+                        $(".dataList").append(html);
+                    }else{
+                        $(".dataList1").append(html);
+                    }
+
+                    if(true == res.data.pagedata.last){
+                        if("1"==consumptionType){
+                            $("#loadMore").css({"display":"none"});
+                            $("#noMore").css({"display":"block"});
+                        }else{
+                            $("#loadMore1").css({"display":"none"});
+                            $("#noMore1").css({"display":"block"});
+                        }
+                    }else{
+                        if("1"==consumptionType){
+                            $("#loadMore").css({"display":"block"});
+                            $("#noMore").css({"display":"none"});
+                        }else{
+                            $("#loadMore1").css({"display":"block"})
+                            $("#noMore1").css({"display":"none"});
+                        }
+                    }
+
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+        }
+    }
+
+
+    $(".loadMore").click(function(){
+        if("1"==consumptionType){
+            pageNumber++;
+        }else{
+            pageNumber1++;
+        }
+        getList();
+    })
+
+
+
+
+
 
 
 
