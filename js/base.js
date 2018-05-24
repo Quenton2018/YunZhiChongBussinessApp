@@ -23,6 +23,7 @@ API_URL.ApiGetCdzdList = apiHost + "/api/chargingBusiness/getChargingGroup"; //�
 
 API_URL.ApiWithdrawalSendCode = apiHost + "/api/withdrawal/sendCode";//提现申请SMS
 API_URL.ApiWithdrawalApplyWithdrawals = apiHost + "/api/withdrawal/ApplyWithdrawals"; //提现申请
+API_URL.ApiWithdrawalGetWithdrawalsList = apiHost + "/api/withdrawal/getWithdrawalsList"; //提现列表
 
 
 var PAGE_URL = {};
@@ -193,7 +194,7 @@ function setLoginData(uuid,mobile){
  * @param {Object} userID
  * @param {Object} mobile
  */
-function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode){
+function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode,moneyAmount){
 
     console.log("## setLoginData ## uuid : " + uuid);
     console.log("## setLoginData ## mobile : " + mobile);
@@ -201,7 +202,7 @@ function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode){
     console.log("## setLoginData ## phone : " + phone);
     console.log("## setLoginData ## bank : " + bank);
     console.log("## setLoginData ## bankCode : " + bankCode);
-
+    console.log("## setLoginData ## moneyAmount : " + moneyAmount);
     var date = formatDate(new Date(),"yyyy-mm-dd HH-mm-ss");
     console.log("## setLoginData ## date : " + date);
 
@@ -211,9 +212,8 @@ function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode){
     plus.storage.setItem( "phone", phone);
     plus.storage.setItem( "bank", bank);
     plus.storage.setItem( "bankCode", bankCode);
-
+    plus.storage.setItem( "amountMoney", moneyAmount);
     plus.storage.setItem( "login_date", date);
-
 
 }
 

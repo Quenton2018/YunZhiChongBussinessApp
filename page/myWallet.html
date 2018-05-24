@@ -93,50 +93,37 @@
         <div class="Box-tixian" onclick="clicked('putforward.html')">
             <img class="Button-Img putForwardBtn"  src="../images/tixian.png" />
         </div>
+
     </div>
 
 
     <div class="">
 
-        <ul class="mui-table-view" style="margin-top: 30px;">
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                    <div class="mui-media-object mui-pull-right">提现中</div>
-                    <div class="mui-media-body">
-                        <span>500.00</span>
-                        <p class="mui-ellipsis">2018-08-09 12:12:11</p>
-                    </div>
-                </a>
-            </li>
+        <ul class="mui-table-view dataList" style="margin-top: 30px;">
+
 
         </ul>
 
-        <ul class="mui-table-view" style="margin-top: 20px;">
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                    <div class="mui-media-object mui-pull-right">提现完成</div>
-                    <div class="mui-media-body">
-                        <span>500.00</span>
-                        <p class="mui-ellipsis">2018-08-09 12:12:11</p>
-                    </div>
-                </a>
-            </li>
+        <ul class="mui-table-view dataList1" style="margin-top: 20px;">
 
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                    <div class="mui-media-object mui-pull-right">提现完成</div>
-                    <div class="mui-media-body">
-                        <span>500.00</span>
-                        <p class="mui-ellipsis">两小时前</p>
-                    </div>
-                </a>
-            </li>
+
         </ul>
 
     </div>
 
-
 </div>
+
+<script type="text/html" id="dataTmpl">
+    <li class="mui-table-view-cell mui-media">
+        <a href="javascript:;">
+            <div class="mui-media-object mui-pull-right">{{status}}</div>
+            <div class="mui-media-body">
+                <span>{{money}}</span>
+                <p class="mui-ellipsis">{{time}}</p>
+            </div>
+        </a>
+    </li>
+</script>
 
 <script type="text/javascript">
     mui.init();
@@ -149,6 +136,8 @@
         topoffset=parseFloat(ms[2]);
     }
 
+    var pageNumber = 1;
+    var pageSize = 10;
 
     if(window.plus){
         pagePlusReady();
@@ -156,9 +145,11 @@
         document.addEventListener('plusready',pagePlusReady,false);
     }
     function pagePlusReady(){
-
         checkLogin();
+
         getUserInfoDateBase();
+
+        getList();
 
         ws=plus.webview.currentWebview();
         if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
@@ -168,11 +159,70 @@
     }
 
 
+    function getList(){
+        var uuid = plus.storage.getItem("uuid");
+        var dataParam = {
+            "uuid":uuid,
+            "type":1,
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
+        }
+        postJSON(API_URL.ApiWithdrawalGetWithdrawalsList,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data.pagedata.content;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                $.each(data, function(index,item) {
+                    var money = item.money;
+                    var status = item.status;
+                    var createDate = jsDateDiff(item.createDate / 1000);
+                    html += tmpl.replace(/{{money}}/g,money)
+                        .replace(/{{status}}/g,status)
+                        .replace(/{{time}}/g,createDate);
+                });
+                $(".dataList").html("");
+                $(".dataList").append(html);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+
+
+
+    }
+
+
+
     // 刷新页面
     function onRefresh(){
+        console.log("onRefresh==================");
+        $("#loadMore").css({"display":"none"});
+        $("#noMore").css({"display":"none"});
+        pageNumber = 1;
+        $(".dataList").html("");
+        $(".dataList1").html("");
+
         getUserInfoDateBase();
+        getList();
         ws.endPullToRefresh();
     }
+
+
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getList();
+    })
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 获取用户信息
@@ -186,7 +236,7 @@
                     var moneyAmount = res.data.moneyAmount;
                     var bankCode = res.data.bankCode;
                     var bank = res.data.bank;
-                    plus.storage.setItem( "moneyAmount", moneyAmount); //可提现余额
+                    plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
                     plus.storage.setItem( "bankCode", bankCode);
                     plus.storage.setItem( "bank", bank);
 

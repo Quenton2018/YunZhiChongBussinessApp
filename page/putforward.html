@@ -106,15 +106,15 @@
                 <a href="javascript:;">
                     <img class="mui-media-object mui-pull-left" src="../images/yinghang.png">
                     <div class="mui-media-body">
-                        中国银行
-                        <p class='mui-ellipsis'>6666***77732323</p>
+                        <span class="bank"></span>
+                        <p class='mui-ellipsis bankCode'></p>
                     </div>
                 </a>
             </li>
         </ul>
     </div>
     <div>
-        <h5 class="mui-content-padded">可提现余额<span>100.00</span>元</h5>
+        <h5 class="mui-content-padded">可提现余额<span id="moneyAmountBox"></span>元</h5>
     </div>
 
 
@@ -148,6 +148,7 @@
         document.addEventListener('plusready',pagePlusReady,false);
     }
     function pagePlusReady(){
+        getUserInfoDateBase();
 
         var $getCodeBtn = $(".getCode");
         var isLock = false; //是否锁定
@@ -195,13 +196,6 @@
             })
         })
 
-
-
-
-
-
-
-
         /**
          * 提现
          */
@@ -228,10 +222,9 @@
             }
             postJSON(API_URL.ApiWithdrawalApplyWithdrawals,postData,function(res){
                 if("0" == res.code){
-                    layer.msg("操作成功，正在跳转...");
                     setTimeout(function(){
-                        clicked('index.html')
-                    },2000);
+                        clicked('success.html')
+                    },1000);
                 }else{
                     layer.msg(res.msg);
                 }
@@ -239,23 +232,35 @@
         })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
 
+    function getUserInfoDateBase(){
+        var uuid = plus.storage.getItem("uuid");
+        console.log("## getUserInfoDateBase ## uuid:"+uuid);
+        if(vaildeParam(uuid)){
+            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+                if("0" == res.code){
+                    var moneyAmount = res.data.moneyAmount;
+                    var bankCode = res.data.bankCode;
+                    var bank = res.data.bank;
+                    plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
+                    plus.storage.setItem( "bankCode", bankCode);
+                    plus.storage.setItem( "bank", bank);
+                    bankCode  = bankCode.substr(0, 6) + '****' + bankCode.substr(7);
+                    $(".bank").text(bank);
+                    $(".bankCode").text(bankCode);
+                    $("#moneyAmountBox").text(moneyAmount);
 
+                }else{
+                    layer.msg(res.msg);
+                    clearLogin();
+                    clicked("page/login.html");
+                }
+            })
+        }
+    }
 
     function checkFloatNum(str){
         var reg_zs = /^[1-9]\d*(\.\d+)?$/i;
