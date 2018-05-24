@@ -31,7 +31,7 @@ API_URL.ApiWithdrawalGetWithdrawalsList = apiHost + "/api/withdrawal/getWithdraw
 
 API_URL.APIPartnerFeedbackSavePartnerFeedback= apiHost + "/api/partnerFeedback/savePartnerFeedback";  //反馈报修
 
-
+API_URL.AppVersionPartnerGetNewest =apiHost +"/api/AppVersionPartner/getNewest";//检查版本
 
 
 
