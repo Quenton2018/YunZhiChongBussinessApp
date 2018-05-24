@@ -16,6 +16,8 @@ API_URL.ApiAdminUpdataAdminInfo = apiHost + "/api/admin/updataAdminInfo"; //用�
 
 API_URL.ApiArticleCategoryList = apiHost + "/api/article/getArticleCategoryList"; //获取文章分类
 API_URL.ApiArticleContentBYID = apiHost + "/api/article/getArticleByCategoryTwoId";
+API_URL.ApiArticleContentBYName = apiHost + "/api/article/getArticleByName";
+
 
 API_URL.ApiHonorGetHonorList = apiHost + "/api/honor/getHonorList"; //获取荣誉榜
 
@@ -26,6 +28,7 @@ API_URL.ApiWithdrawalApplyWithdrawals = apiHost + "/api/withdrawal/ApplyWithdraw
 API_URL.ApiWithdrawalGetWithdrawalsList = apiHost + "/api/withdrawal/getWithdrawalsList"; //提现列表
 
 API_URL.APIPartnerFeedbackSavePartnerFeedback= apiHost + "/api/partnerFeedback/savePartnerFeedback";  //反馈报修
+
 
 
 var PAGE_URL = {};
@@ -460,4 +463,16 @@ function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
+}
+
+
+/**
+ * 绑定的点击事件
+ * @param {Object} item 跳转路径 ， 以及存好文章名称
+ * @param {Object} dataId
+ */
+function clickedTongYong(item,categoryName){
+    console.log(item+":"+categoryName);
+    plus.storage.setItem( "categoryName", categoryName);
+    clicked(item);
 }
