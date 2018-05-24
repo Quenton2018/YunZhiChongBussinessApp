@@ -49,15 +49,6 @@
             color: #333333;;
         }
 
-        .dataList{
-            font-size: .9rem;
-        }
-        .dataList .mui-badge{
-            background: transparent;
-            font-size: .9rem;
-            color: #EF7F35;
-            font-weight: 300;
-        }
         .dataList .mui-badge b{
             font-weight: 300;
         }
@@ -72,6 +63,30 @@
         }
         .mui-table-view .mui-media-object {
             max-width: 70px;
+        }
+        .mui-table-view:after{
+         background-color: inherit;
+            height:0px;
+        }
+        .mui-table-view:before{
+            height:0px;
+        }
+        #loadMore{
+            background: #eaeaea;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
         }
     </style>
 
@@ -108,6 +123,8 @@
 
 
         </ul>
+        <div id="loadMore">加载更多</div>
+        <div id="noMore" class="noMore">没有更多了</div>
 
     </div>
 
@@ -149,8 +166,9 @@
 
         getUserInfoDateBase();
 
-        getList();
+        getList(); //审核中
 
+        getListTwo(); //审核通过
         ws=plus.webview.currentWebview();
         if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
             topoffset=Math.round(plus.navigator.getStatusbarHeight());
@@ -164,8 +182,8 @@
         var dataParam = {
             "uuid":uuid,
             "type":1,
-            "pageSize":pageSize,
-            "pageNumber":pageNumber
+            "pageSize":10000,
+            "pageNumber":1
         }
         postJSON(API_URL.ApiWithdrawalGetWithdrawalsList,dataParam,function(res){
             if("0" == res.code){
@@ -186,11 +204,47 @@
                 layer.msg(res.msg);
             }
         })
-
-
-
     }
 
+
+    function getListTwo(){
+        var uuid = plus.storage.getItem("uuid");
+        var dataParam = {
+            "uuid":uuid,
+            "type":2,
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
+        }
+        postJSON(API_URL.ApiWithdrawalGetWithdrawalsList,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data.pagedata.content;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                $.each(data, function(index,item) {
+                    var money = item.money;
+                    var status = item.status;
+                    var createDate = jsDateDiff(item.createDate / 1000);
+                    html += tmpl.replace(/{{money}}/g,money)
+                        .replace(/{{status}}/g,status)
+                        .replace(/{{time}}/g,createDate);
+                });
+                if(1 == pageSize){
+                    $(".dataList1").html("");
+                }
+                $(".dataList1").append(html);
+
+                if(true == res.data.pagedata.last){
+                    $("#loadMore").css({"display":"none"});
+                    $("#noMore").css({"display":"block"});
+                }else{
+                    $("#loadMore").css({"display":"block"});
+                    $("#noMore").css({"display":"none"});
+                }
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
 
 
     // 刷新页面
@@ -204,6 +258,7 @@
 
         getUserInfoDateBase();
         getList();
+        getListTwo();
         ws.endPullToRefresh();
     }
 
@@ -211,15 +266,8 @@
 
     $("#loadMore").click(function(){
         pageNumber++;
-        getList();
+        getListTwo();
     })
-
-
-
-
-
-
-
 
 
 
