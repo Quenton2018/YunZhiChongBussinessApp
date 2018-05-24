@@ -31,16 +31,16 @@
             font-weight: 300;
         }
 
-        .dataList{
+        .mui-table-view{
             font-size: .9rem;
         }
-        .dataList .mui-badge{
+        .mui-table-view .mui-badge{
             background: transparent;
             font-size: .9rem;
             color: #EF7F35;
             font-weight: 300;
         }
-        .dataList .mui-badge b{
+        .mui-table-view .mui-badge b{
             font-weight: 300;
         }
     </style>
@@ -57,47 +57,156 @@
     
     <div class="topBox">
         <img src="../images/shouru2.png" style="display: block;width: 100%">
-        <h1><small>&yen;</small> <span>6542.00</span></h1>
+        <h1><small>&yen;</small> <span id="totalIncomeBox"></span></h1>
     </div>
 
-    <ul class="mui-table-view dataList">
+    <ul class="mui-table-view dataListNow">
         <li class="mui-table-view-cell">
             <a class="mui-navigate-right">
-                本月收入 <span class="mui-badge"><b>333.00</b>元</span>
+                本月收入 <span class="mui-badge" ><b id="benyuemoney"></b>元</span>
             </a>
         </li>
         <li class="mui-table-view-divider" style="text-align: center;font-size: .8rem">历史月收入</li>
-
     </ul>
 
     <ul class="mui-table-view dataList">
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right">
-                1月份 <span class="mui-badge"><b>333.00</b>元</span>
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right">
-                2月份 <span class="mui-badge"><b>333.00</b>元</span>
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right">
-                3月份 <span class="mui-badge"><b>333.00</b>元</span>
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="mui-navigate-right">
-                4月份 <span class="mui-badge"><b>333.00</b>元</span>
-            </a>
-        </li>
+
     </ul>
 
 
 </div>
 
+
+<script type="text/html" id="dataTmpl">
+
+    <li class="mui-table-view-cell" onclick="clickedMonth('incomeDetail.html','{{montt}}')">
+        <a class="mui-navigate-right">
+            {{montt}}月份 <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
+        </a>
+    </li>
+
+</script>
+
 <script type="text/javascript">
     mui.init();
+
+    var ws=null;
+    // 处理沉浸式状态栏
+    var topoffset=0;
+    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if(ms&&ms.length>=3){
+        topoffset=parseFloat(ms[2]);
+    }
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+
+    function pagePlusReady(){
+        checkLogin();
+
+        getUserInfoDateBase();
+
+        getList(); //
+
+        ws=plus.webview.currentWebview();
+        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+        }
+        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+    }
+
+    // 刷新页面
+    function onRefresh(){
+        console.log("onRefresh==================");
+        $(".dataList").html("");
+        getList();
+        ws.endPullToRefresh();
+    }
+
+    function getList(){
+        var uuid = plus.storage.getItem("uuid");
+        var dataParam = {
+            "uuid":uuid
+        }
+
+        postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncome,dataParam,function(res){
+            if("0" == res.code){
+
+                var data = res.data;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                var htmlNow = '';
+                $.each(data, function(index,item) {
+
+                    var parnterMoney = item.parnterMoney;
+                    var montt = item.montt;
+                    var sameMonth = item.sameMonth;
+                        html += tmpl.replace(/{{parnterMoney}}/g,parnterMoney)
+                        .replace(/{{montt}}/g,montt);
+
+                    if("1"==sameMonth){
+                        $("#benyuemoney").text(parnterMoney);
+                    }
+                });
+
+                $(".dataList").html("");
+                $(".dataList").append(html);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+
+
+
+
+
+    /**
+     * 获取用户信息
+     */
+    function getUserInfoDateBase(){
+        var totalIncome = plus.storage.getItem("totalIncome");
+        console.log("totalIncome:"+totalIncome);
+        $("#totalIncomeBox").text(totalIncome);
+        var uuid = plus.storage.getItem("uuid");
+        console.log("## getUserInfoDateBase ## uuid:"+uuid);
+
+        if(vaildeParam(uuid)){
+            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+                if("0" == res.code){
+                    var totalIncome = res.data.totalIncome;
+                    plus.storage.setItem( "totalIncome", totalIncome); //累计收入
+                    $("#totalIncomeBox").text(totalIncome);
+                }else{
+                    layer.msg(res.msg);
+                    clearLogin();
+                    clicked("page/login.html");
+                }
+            })
+        }
+    }
+
+
+
+
+
+    /**
+     * 绑定的点击事件
+     * @param {Object} item 跳转路径 ， 以及存好文章名称
+     * @param {Object} dataId
+     */
+    function clickedMonth(item,Month){
+        console.log("clickedMonth"+item+":"+Month);
+        plus.storage.setItem( "month", Month);
+        clicked(item);
+    }
+
+
+
 </script>
 </body>
 </html>

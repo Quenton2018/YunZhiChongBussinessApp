@@ -1,6 +1,6 @@
-var apiHost = "http://api.9n.jxyunge.com";
+//var apiHost = "http://api.9n.jxyunge.com";
 var appVersion = "v1.0";  //app当前版本
-//var apiHost = "http://192.168.1.115:8181";
+var apiHost = "http://192.168.1.115:8181";
 
 
 var API_URL = {};
@@ -8,6 +8,7 @@ API_URL.ApiAdminSendCode = apiHost + "/api/admin/sendCode"; //发送短信接口
 
 API_URL.ApiAdminQuickLogin = apiHost + "/api/admin/quickLogin"; //登录接口
 API_URL.ApiAdminInfo = apiHost + "/api/admin/info"; //获取用户信息
+
 
 API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApplyBusiness"; //获取用户信息
 
@@ -22,6 +23,9 @@ API_URL.ApiArticleContentBYName = apiHost + "/api/article/getArticleByName";
 API_URL.ApiHonorGetHonorList = apiHost + "/api/honor/getHonorList"; //获取荣誉榜
 
 API_URL.ApiGetCdzdList = apiHost + "/api/chargingBusiness/getChargingGroup"; //获取合伙人片区
+
+API_URL.ApiChargingBusinessGetAMonthlyIncome = apiHost + "/api/chargingBusiness/GetAMonthlyIncome"; //获取合伙人片区
+
 
 API_URL.ApiWithdrawalSendCode = apiHost + "/api/withdrawal/sendCode";//提现申请SMS
 API_URL.ApiWithdrawalApplyWithdrawals = apiHost + "/api/withdrawal/ApplyWithdrawals"; //提现申请
