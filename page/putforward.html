@@ -121,7 +121,7 @@
         <div class="textBox">
             <div class="inputBox">
                 <i class="iconfont">提现金额</i>
-                <input type="text" name="money" placeholder="请输入金额" />
+                <input type="text" name="money" placeholder="请输入金额(整数)" />
                 <span class="rightText">元</span>
             </div>
 
@@ -155,7 +155,7 @@
 
         var $getCodeBtn = $(".getCode");
         var isLock = false; //是否锁定
-        var time = 60; //倒计时
+        var time = 180; //倒计时
         var timeInterval; //定时器
         /**
          * 定时器
@@ -165,7 +165,7 @@
                 time--;
                 if(time <= 0){
                     isLock = false;
-                    time = 60;
+                    time = 180;
                     clearInterval(timeInterval);
                     $getCodeBtn.text('获取验证码');
                     return;
@@ -224,7 +224,7 @@
             }
             if(!checkFloatNum(money)){
                 canPostFlag = true;
-                layer.msg("金额必须大于零的数字");
+                layer.msg("金额必须大于零的整数");
                 return;
             }
             var postData = {

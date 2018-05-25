@@ -176,6 +176,9 @@
                         username  = username.substr(0, 3) + '****' + username.substr(7);
                     }
                     var totalIncome = item.totalIncome;
+                    if(!vaildeParam(totalIncome)){
+                        totalIncome = 0;
+                    }
                     var id = item.id;
                     html += tmpl.replace(/{{username}}/g,username)
                         .replace(/{{money}}/g,totalIncome)
