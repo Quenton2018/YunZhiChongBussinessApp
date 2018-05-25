@@ -121,7 +121,7 @@
         <div class="textBox">
             <div class="inputBox">
                 <i class="iconfont">提现金额</i>
-                <input type="text" name="money" placeholder="请输入金额" />
+                <input type="text" name="money" placeholder="请输入金额(整数)" />
                 <span class="rightText">元</span>
             </div>
 
@@ -147,12 +147,15 @@
     }else{
         document.addEventListener('plusready',pagePlusReady,false);
     }
+
+    var canPostFlag = true;
     function pagePlusReady(){
         getUserInfoDateBase();
 
+
         var $getCodeBtn = $(".getCode");
         var isLock = false; //是否锁定
-        var time = 60; //倒计时
+        var time = 180; //倒计时
         var timeInterval; //定时器
         /**
          * 定时器
@@ -162,7 +165,7 @@
                 time--;
                 if(time <= 0){
                     isLock = false;
-                    time = 60;
+                    time = 180;
                     clearInterval(timeInterval);
                     $getCodeBtn.text('获取验证码');
                     return;
@@ -200,19 +203,28 @@
          * 提现
          */
         $(".tixianBtn").click(function(){
+            if(!canPostFlag){
+                layer.msg("已提交,不可重复提交！");
+                return;
+            }
+            canPostFlag = false;
+
             var uuid = plus.storage.getItem("uuid");
             var money = $("input[name='money']").val();
             if(!vaildeParam(money)){
+                canPostFlag = true;
                 layer.msg("金额不能为空");
                 return;
             }
             var code = $("input[name='code']").val();
             if(!vaildeParam(code)){
+                canPostFlag = true;
                 layer.msg("验证码不能为空");
                 return;
             }
             if(!checkFloatNum(money)){
-                layer.msg("金额必须大于零的数字");
+                canPostFlag = true;
+                layer.msg("金额必须大于零的整数");
                 return;
             }
             var postData = {
