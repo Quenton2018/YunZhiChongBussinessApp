@@ -1,4 +1,4 @@
-﻿{
+{
     "@platforms": ["android", "iPhone", "iPad"],
     "id": "yunzhichongbusiness",/*应用的标识，创建应用时自动生成，勿手动修改*/
     "name": "云智充商家",/*应用名称，程序桌面图标名称*/
@@ -135,5 +135,149 @@
                 }
             }
         }
-    }
+    },
+	"dependencies": {
+		"pages": {
+			"index.html": {
+				"resources": [],
+				"refer": [
+					"page/menu.html",
+					"page/login.html",
+					"page/myCdz.html",
+					"page/honorList.html"
+				],
+				"priority": 0
+			},
+			"page/login.html": {
+				"resources": [],
+				"refer": [
+					"page/applyPartner.html",
+					"index.html"
+				],
+				"priority": 0
+			},
+			"page/menu.html": {
+				"resources": [],
+				"refer": [
+					"page/userInfo.html",
+					"page/myCdz.html"
+				],
+				"priority": 0
+			},
+			"page/userInfo.html": {
+				"resources": [],
+				"refer": [
+					"page/login.html",
+					"page/contactInformation.html"
+				],
+				"priority": 0
+			},
+			"page/applyPartner.html": {
+				"resources": [],
+				"refer": [
+					"page/myCdz.html",
+					"page/articleList.html"
+				],
+				"priority": 0
+			},
+			"page/myCdzUnNormal.html": {
+				"resources": [],
+				"refer": [
+					"page/myCdz.html",
+					"page/areaListUnNormal.html"
+				],
+				"priority": 0
+			},
+			"page/myCdz.html": {
+				"resources": [],
+				"refer": [
+					"page/myCdzUnNormal.html",
+					"page/areaList.html"
+				],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf",
+				"page/articleContent.html",
+				"css/public.css",
+				"page/myIncome.html",
+				"images/shouru.png",
+				"css/iconfont.eot",
+				"css/iconfont.svg",
+				"images/yingdaoye.png",
+				"images/qianbao.png",
+				"js/common.js",
+				"images/3.png",
+				"css/iconfont.css",
+				"js/bootstrap.min.js",
+				"js/jquery-3.3.1.min.js",
+				"css/iconfont.woff",
+				"css/mui.picker.min.css",
+				"README.md",
+				"plugins/font-awesome-4.7.0/fonts/FontAwesome.otf",
+				"images/menu/kefu.png",
+				"js/qrcode.min.js",
+				"js/mui.pullToRefresh.material.js",
+				"fonts/mui.ttf",
+				"images/rongyubang2.png",
+				"plugins/layer/theme/default/icon-ext.png",
+				"images/rongyubang.png",
+				"js/immersed.js",
+				"images/menu/shouru.png",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.woff",
+				"images/menu/rongyubang.png",
+				"plugins/layer/mobile/layer.js",
+				"images/menu/chongdian.png",
+				"css/iconfont.ttf",
+				"images/jiaruBtn.png",
+				"images/menu/qianbao.png",
+				"plugins/layer/layer.js",
+				"plugins/layer/theme/default/icon.png",
+				"js/update.js",
+				"plugins/layer/theme/default/loading-2.gif",
+				"page/incomeDetail.html",
+				"plugins/swiper-4.2.2/swiper-4.2.2.min.js",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.eot",
+				"js/update.json",
+				"images/qianbao2.png",
+				"js/hammer.min.js",
+				"plugins/swiper-4.2.2/swiper-4.2.2.min.css",
+				"images/cdz.png",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.svg",
+				"js/mui.min.js",
+				"plugins/layer/theme/default/layer.css",
+				"css/common.css",
+				"plugins/layer/theme/default/loading-1.gif",
+				"images/menu/home.png",
+				"css/mui.poppicker.css",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2",
+				"plugins/layer/theme/default/loading-0.gif",
+				"plugins/font-awesome-4.7.0/css/font-awesome.css",
+				"js/mui.pullToRefresh.js",
+				"images/shouru2.png",
+				"plugins/layer/mobile/need/layer.css",
+				"images/app_back.png",
+				"images/wancheng.png",
+				"plugins/font-awesome-4.7.0/css/font-awesome.min.css",
+				"css/iconfont.js",
+				"js/mui.picker.all.js",
+				"images/tixian.png",
+				"images/tijiaoshenqing.png",
+				"images/back.png",
+				"js/base.js",
+				"images/yesIcon.png",
+				"images/xiaoxi.png",
+				"images/2.png",
+				"images/menu/shezhi.png",
+				"images/1.png",
+				"css/mui.min.css",
+				"images/app_10.png",
+				"js/jquery.hammer.js",
+				"images/loginBtn.png",
+				"js/shortcut.js"
+			]
+		}
+	}
 }

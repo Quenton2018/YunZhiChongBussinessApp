@@ -1,6 +1,6 @@
-//var apiHost = "http://api.9n.jxyunge.com";
+var apiHost = "http://api.9n.jxyunge.com";
 var appVersion = "v1.0";  //app当前版本
-var apiHost = "http://192.168.1.115:8181";
+//var apiHost = "http://192.168.1.113:8181";
 
 
 var API_URL = {};
@@ -26,7 +26,8 @@ API_URL.ApiGetChargingGroup = apiHost + "/api/chargingBusiness/getChargingGroup"
 API_URL.ApiChargingGetChargingCountByPartner = apiHost + "/api/charging/getChargingCountByPartner"; //获取合伙人片区
 API_URL.ApiGetSumMoney = apiHost + "/api/admin/getSumMoney"; //获取合伙人片区
 
-API_URL.ApiChargingBusinessGetAMonthlyIncome = apiHost + "/api/chargingBusiness/GetAMonthlyIncome"; //获取合伙人片区
+API_URL.ApiChargingBusinessGetAMonthlyIncome = apiHost + "/api/chargingBusiness/GetAMonthlyIncome"; //获取合伙人收入
+API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail = apiHost + "/api/chargingBusiness/GetAMonthlyIncomeDetail";
 
 
 API_URL.ApiWithdrawalSendCode = apiHost + "/api/withdrawal/sendCode";//提现申请SMS

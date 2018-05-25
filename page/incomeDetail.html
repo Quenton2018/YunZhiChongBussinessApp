@@ -49,6 +49,20 @@
             padding-bottom: 5px;
         }
 
+        #loadMore{
+            background: #eaeaea;
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            display: none;
+        }
+
     </style>
 
 </head>
@@ -62,54 +76,127 @@
 <div class="mui-content">
 
     <div class="topBox">
-        <div class="row1 selectDate">2018年05月 <i class="iconfont icon-xiala1"></i> </div>
+        <div class="row1 selectDate"> <i class="iconfont icon-xiala1"></i> </div>
         <div class="row2">
-            <div class="left">总收入 : 333.00元</div>
+            <div class="left">总收入 : <span id="benyuemoney"></span>元</div>
             <div class="right">明细</div>
             <div class="clearfix"></div>
         </div>
     </div>
 
     <ul class="mui-table-view dataList">
-        <li class="mui-table-view-cell">
-            <a class="">
-                片区名称:0001 <span class="mui-badge"><b>333.00</b></span>
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="">
-                片区名称:0001 <span class="mui-badge"><b>333.00</b></span>
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="">
-                片区名称:0001 <span class="mui-badge"><b>333.00</b></span>
-            </a>
-        </li>
-        <li class="mui-table-view-cell">
-            <a class="">
-                片区名称:0001 <span class="mui-badge"><b>333.00</b></span>
-            </a>
-        </li>
+
+
     </ul>
 
-
+<!--    <div id="loadMore">加载更多</div>
+    <div id="noMore" class="noMore">没有更多了</div>-->
 </div>
+
+<script type="text/html" id="dataTmpl">
+
+    <li class="mui-table-view-cell">
+        <a class="">
+            片区名称:{{chargingGroupName}} <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
+        </a>
+    </li>
+</script>
 
 <script type="text/javascript" src="../js/mui.picker.all.js"></script>
 <script type="text/javascript">
     mui.init();
 
-    $(".selectDate").click(function () {
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
 
+    function pagePlusReady(){
+        checkLogin();
+
+        getList();
+
+    }
+
+    function getList(){
+        var uuid = plus.storage.getItem("uuid");
+        var month = plus.storage.getItem("month");
+        var parnterMoney = plus.storage.getItem("parnterMoney");
+        var year =  new Date().getFullYear();
+
+        $("#benyuemoney").text(parnterMoney);
+        $(".selectDate").text(year+"年"+month+"月");
+
+        var dataParam = {
+            "uuid":uuid,
+            "month":month,
+            "year":year
+        }
+        console.log("getList:year:"+year);
+        console.log("getList:UUid:"+uuid);
+        console.log("getList:month:"+month);
+        console.log("getList:parnterMoney:"+parnterMoney);
+        postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data.listRet;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                var htmlNow = '';
+                $.each(data, function(index,item) {
+                    var parnterMoney = item.parnterMoney;
+                    var chargingGroupName = item.chargingGroupName;
+                    html += tmpl.replace(/{{parnterMoney}}/g,parnterMoney)
+                        .replace(/{{chargingGroupName}}/g,chargingGroupName);
+                });
+                $(".dataList").html("");
+                $(".dataList").append(html);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+
+
+
+    $(".selectDate").click(function () {
         var options = {
             'type':'month'
         }
-
         var dtPicker = new mui.DtPicker(options);
         dtPicker.show(function (selectItems) {
             console.log(selectItems.y);//{text: "2016",value: 2016}
             console.log(selectItems.m);//{text: "05",value: "05"}
+            var uuid = plus.storage.getItem("uuid");
+            var month = selectItems.m.value;
+            var year = selectItems.y.value;
+            $(".selectDate").text(year+"年"+month+"月");
+
+            postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
+                if("0" == res.code){
+                    var parnterMoneyToTal = res.data.parnterMoneyToTal;
+                    var data = res.data.listRet;
+                    var tmpl = $("#dataTmpl").html();
+                    var html = '';
+                    var htmlNow = '';
+                    $.each(data, function(index,item) {
+                        var parnterMoney = item.parnterMoney;
+                        var chargingGroupName = item.chargingGroupName;
+                        html += tmpl.replace(/{{parnterMoney}}/g,parnterMoney)
+                            .replace(/{{chargingGroupName}}/g,chargingGroupName);
+                    });
+                    $("#benyuemoney").text(parnterMoneyToTal);
+                    $(".dataList").html("");
+                    $(".dataList").append(html);
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+
+
+
+
         })
     })
 </script>

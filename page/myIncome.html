@@ -61,7 +61,7 @@
     </div>
 
     <ul class="mui-table-view dataListNow">
-        <li class="mui-table-view-cell">
+        <li class="mui-table-view-cell" onclick="clickedMonthNow('incomeDetail.html')">
             <a class="mui-navigate-right">
                 本月收入 <span class="mui-badge" ><b id="benyuemoney"></b>元</span>
             </a>
@@ -79,7 +79,7 @@
 
 <script type="text/html" id="dataTmpl">
 
-    <li class="mui-table-view-cell" onclick="clickedMonth('incomeDetail.html','{{montt}}')">
+    <li class="mui-table-view-cell" onclick="clickedMonth('incomeDetail.html','{{montt}}','{{parnterMoney}}')">
         <a class="mui-navigate-right">
             {{montt}}月份 <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
         </a>
@@ -199,9 +199,23 @@
      * @param {Object} item 跳转路径 ， 以及存好文章名称
      * @param {Object} dataId
      */
-    function clickedMonth(item,Month){
+    function clickedMonth(item,Month,parnterMoney){
         console.log("clickedMonth"+item+":"+Month);
         plus.storage.setItem( "month", Month);
+        plus.storage.setItem( "parnterMoney", parnterMoney);
+        clicked(item);
+    }
+    /**
+     * 绑定的点击事件 当月
+     * @param {Object} item 跳转路径 ， 以及存好文章名称
+     * @param {Object} dataId
+     */
+    function clickedMonthNow(item){
+        var month =  new Date().getMonth()+1;
+        console.log("clickedMonth"+item+"month:"+month);
+        var parnterMoney =  $("#benyuemoney").text();
+        plus.storage.setItem( "month", month);
+        plus.storage.setItem( "parnterMoney", parnterMoney);
         clicked(item);
     }
 
