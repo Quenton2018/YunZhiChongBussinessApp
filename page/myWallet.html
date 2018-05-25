@@ -228,6 +228,11 @@
                 $.each(data, function(index,item) {
                     var money = item.money;
                     var status = item.status;
+
+                    if(item.playStatus == '已打款'){
+                        status = item.playStatus;
+                    }
+
                     var createDate = jsDateDiff(item.createDate / 1000);
                     html += tmpl.replace(/{{money}}/g,money)
                         .replace(/{{status}}/g,status)
