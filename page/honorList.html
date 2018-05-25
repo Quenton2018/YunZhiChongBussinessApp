@@ -180,6 +180,10 @@
                         totalIncome = 0;
                     }
                     var id = item.id;
+
+                    var reg = /^(\d{3})\d{4}(\d{4})$/;
+                    var username = username.replace(reg, "$1****$2");
+
                     html += tmpl.replace(/{{username}}/g,username)
                         .replace(/{{money}}/g,totalIncome)
                         .replace(/{{ranking}}/g,imgText);
