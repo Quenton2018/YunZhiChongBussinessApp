@@ -71,18 +71,85 @@
                 <td>异常时间</td>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>A</td>
-                <td>2018.05.10 00:00</td>
-            </tr>
+        <tbody id="dataList">
+            <tr><td colspan="2" style="text-align: center">加载中...</td></tr>
         </tbody>
     </table>
 
 </div>
 
+
+<script type="text/html" id="dataTmpl">
+    <tr>
+        <td>{{shellId}}</td>
+        <td>{{lastUseTime}}</td>
+    </tr>
+</script>
+
 <script type="text/javascript">
     mui.init();
+
+    var uuid = '';
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+
+        uuid = plus.storage.getItem("uuid");
+
+        getChargingList();
+    }
+
+
+    /**
+     * 获取充电桩
+     */
+    function getChargingList(){
+        var groupID = getQueryString("id");
+
+        postJSON(API_URL.ApiGetChargingList,{'id':groupID,'type':2},function (res) {
+
+            if("0" == res.code){
+
+                var data = res.data;
+
+                if(!vaildeParam(data) || data.length == 0){
+                    $("#dataList").html('<tr><td colspan="2" style="text-align: center">暂无数据</td></tr>');
+                }
+
+                var html = '';
+                var tmpl = $("#dataTmpl").html();
+
+                var ids = '';
+                $.each(data,function (index,item) {
+
+                    var lastUseTime = item.lastUseTime;
+
+                    if(!vaildeParam(lastUseTime)){
+                        lastUseTime = '暂无';
+                    }else{
+                        lastUseTime = new Date(lastUseTime).format("yyyy-MM-dd hh:mm:ss")
+                    }
+                    html += tmpl.replace(/{{shellId}}/g,item.shellId.substr(0,1))
+                        .replace(/{{id}}/g,item.id)
+                        .replace(/{{daysNoUse}}/g,item.daysNoUse)
+                        .replace(/{{lastUseTime}}/g,lastUseTime);
+
+                    ids += item.id + ',';
+                })
+
+                $("#dataList").html(html);
+
+            }else{
+                layer.msg(res.msg);
+            }
+
+        })
+
+    }
 </script>
 </body>
 </html>
