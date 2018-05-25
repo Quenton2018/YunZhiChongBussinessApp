@@ -112,6 +112,7 @@
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
             }, false );
+
             ws=plus.webview.currentWebview();
             if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
                 topoffset=Math.round(plus.navigator.getStatusbarHeight());
