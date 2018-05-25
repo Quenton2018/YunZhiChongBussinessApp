@@ -172,7 +172,11 @@
             var month = selectItems.m.value;
             var year = selectItems.y.value;
             $(".selectDate").text(year+"年"+month+"月");
-
+            var dataParam = {
+                "uuid":uuid,
+                "month":month,
+                "year":year
+            }
             postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
                 if("0" == res.code){
                     var parnterMoneyToTal = res.data.parnterMoneyToTal;
