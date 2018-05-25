@@ -147,8 +147,11 @@
     }else{
         document.addEventListener('plusready',pagePlusReady,false);
     }
+
+    var canPostFlag = true;
     function pagePlusReady(){
         getUserInfoDateBase();
+
 
         var $getCodeBtn = $(".getCode");
         var isLock = false; //是否锁定
@@ -200,18 +203,27 @@
          * 提现
          */
         $(".tixianBtn").click(function(){
+            if(!canPostFlag){
+                layer.msg("已提交,不可重复提交！");
+                return;
+            }
+            canPostFlag = false;
+
             var uuid = plus.storage.getItem("uuid");
             var money = $("input[name='money']").val();
             if(!vaildeParam(money)){
+                canPostFlag = true;
                 layer.msg("金额不能为空");
                 return;
             }
             var code = $("input[name='code']").val();
             if(!vaildeParam(code)){
+                canPostFlag = true;
                 layer.msg("验证码不能为空");
                 return;
             }
             if(!checkFloatNum(money)){
+                canPostFlag = true;
                 layer.msg("金额必须大于零的数字");
                 return;
             }
