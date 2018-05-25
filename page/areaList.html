@@ -86,25 +86,161 @@
         <thead>
             <tr>
                 <td style="width: 15%">桩号</td>
-                <td>近30天使用率</td>
                 <td>日收入(元)</td>
                 <td>月收入(元)</td>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>A</td>
-                <td>76%</td>
-                <td>0.00</td>
-                <td>34.33</td>
-            </tr>
+        <tbody id="dataList">
+            <tr><td colspan="3" style="text-align: center">加载中...</td></tr>
         </tbody>
     </table>
 
 </div>
 
+<script type="text/html" id="dataTmpl">
+    <tr>
+        <td>{{shellId}}</td>
+        <td class="moneyDay" data-id="{{id}}"><img src="../images/5-121204194028.gif" height="15"></td>
+        <td class="moneyMonth" data-id="{{id}}"><img src="../images/5-121204194028.gif" height="15"></td>
+    </tr>
+</script>
+
 <script type="text/javascript">
     mui.init();
+
+    var uuid = '';
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+
+        uuid = plus.storage.getItem("uuid");
+
+        getChargingList();
+    }
+
+
+    /**
+     * 活动充电桩
+     */
+    function getChargingList(){
+        var groupID = getQueryString("id");
+
+
+        postJSON(API_URL.ApiGetChargingList,{'id':groupID,'type':1},function (res) {
+
+            if("0" == res.code){
+
+                var data = res.data;
+
+                if(!vaildeParam(data) || data.length == 0){
+                    $("#dataList").html('<tr><td colspan="3" style="text-align: center">暂无数据</td></tr>');
+                }
+
+                var html = '';
+                var tmpl = $("#dataTmpl").html();
+
+                var ids = '';
+                $.each(data,function (index,item) {
+                    html += tmpl.replace(/{{shellId}}/g,item.shellId.substr(0,1))
+                        .replace(/{{id}}/g,item.id);
+
+                    ids += item.id + ',';
+                })
+
+                $("#dataList").html(html);
+
+                getDayMoney(ids);
+                getDayMonth(ids);
+            }else{
+                layer.msg(res.msg);
+            }
+
+        })
+
+    }
+
+    function getDayMoney(ids) {
+
+        if(!vaildeParam(ids)){
+            return;
+        }
+
+        var idsArr = ids.split(",");
+
+        $.each(idsArr,function (index,item) {
+
+            if(vaildeParam(item)){
+
+                var startDate = new Date().format("yyyy-MM-dd") + ' 00:00:00';
+                var endDate = new Date().format("yyyy-MM-dd") + ' 23:59:59';
+
+                var param = {
+                    'uuid':uuid,
+                    'chargingID':item,
+                    'startDate':startDate,
+                    'endDate':endDate
+                }
+
+                postJSON(API_URL.ApiGetSumMoney,param,function (res) {
+
+                    if("0" == res.code){
+                        $(".moneyDay[data-id='"+item+"']").text(res.data);
+                    }
+
+                })
+
+            }
+
+        })
+
+    }
+
+    function getDayMonth(ids) {
+
+        if(!vaildeParam(ids)){
+            return;
+        }
+
+        var idsArr = ids.split(",");
+
+        $.each(idsArr,function (index,item) {
+
+            if(vaildeParam(item)){
+
+                var startDate = getCurrentMonthFirst().format("yyyy-MM-dd") + ' 00:00:00';
+                var endDate = getCurrentMonthLast().format("yyyy-MM-dd") + ' 23:59:59';
+
+                var param = {
+                    'uuid':uuid,
+                    'chargingID':item,
+                    'startDate':startDate,
+                    'endDate':endDate
+                }
+
+                postJSON(API_URL.ApiGetSumMoney,param,function (res) {
+
+                    if("0" == res.code){
+                        $(".moneyMonth[data-id='"+item+"']").text(res.data);
+                    }
+
+                })
+
+            }
+
+        })
+
+
+    }
+
+
+
+
+
+
 </script>
 </body>
 </html>
