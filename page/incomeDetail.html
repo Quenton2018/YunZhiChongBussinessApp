@@ -76,7 +76,7 @@
 <div class="mui-content">
 
     <div class="topBox">
-        <div class="row1 selectDate"> <i class="iconfont icon-xiala1"></i> </div>
+        <div class="row1 selectDate"><span></span> <i class="iconfont icon-xiala1"></i> </div>
         <div class="row2">
             <div class="left">总收入 : <span id="benyuemoney"></span>元</div>
             <div class="right">明细</div>
@@ -126,7 +126,7 @@
         var year =  new Date().getFullYear();
 
         $("#benyuemoney").text(parnterMoney);
-        $(".selectDate").text(year+"年"+month+"月");
+        $(".selectDate span").text(year+"年"+month+"月");
 
         var dataParam = {
             "uuid":uuid,
@@ -171,7 +171,7 @@
             var uuid = plus.storage.getItem("uuid");
             var month = selectItems.m.value;
             var year = selectItems.y.value;
-            $(".selectDate").text(year+"年"+month+"月");
+            $(".selectDate span").text(year+"年"+month+"月");
 
             postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
                 if("0" == res.code){
