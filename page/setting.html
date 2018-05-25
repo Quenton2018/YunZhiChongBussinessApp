@@ -103,8 +103,10 @@
         var mobile = plus.storage.getItem("mobile");
         var bank = plus.storage.getItem("bank");
         var bankCode = plus.storage.getItem("bankCode");
+        if(bankCode.length>8){
+            bankCode =  bankCode.substr(0,4)+"********"+bankCode.substr(-4);
+        }
 
-        bankCode  = bankCode.substr(0, 6) + '****' + bankCode.substr(7);
         $(".username").text(mobile);
         $(".bank").text(bank);
         $(".bankCode").text(bankCode);

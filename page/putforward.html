@@ -248,7 +248,9 @@
                     plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
                     plus.storage.setItem( "bankCode", bankCode);
                     plus.storage.setItem( "bank", bank);
-                    bankCode  = bankCode.substr(0, 6) + '****' + bankCode.substr(7);
+                    if(bankCode.length>8){
+                        bankCode =  bankCode.substr(0,4)+"********"+bankCode.substr(-4);
+                    }
                     $(".bank").text(bank);
                     $(".bankCode").text(bankCode);
                     $("#moneyAmountBox").text(moneyAmount);
