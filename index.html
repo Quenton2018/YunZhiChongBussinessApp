@@ -109,6 +109,8 @@
 
             getUserInfo();
 
+            checkVersion();
+
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
             }, false );
@@ -124,6 +126,29 @@
         function onRefresh(){
             getUserInfo();
             ws.endPullToRefresh();
+        }
+
+
+        /**
+         * 检查版本
+         */
+        function checkVersion() {
+            var osName = plus.os.name;
+            var version = appVersion;
+
+            postJSON(API_URL.AppVersionPartnerGetNewest,{"appType":osName},function (res) {
+
+                if('0' == res.code){
+                    if(vaildeParam(res.data)){
+
+                        var v = res.data.version;
+                        console.log("v:"+v);
+                        if(version != v){
+                            clicked('page/edition.html')
+                        }
+                    }
+                }
+            })
         }
 
         /**
