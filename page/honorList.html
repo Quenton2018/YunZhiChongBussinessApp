@@ -69,7 +69,7 @@
 </head>
 <body style="background: #fff">
 
-<header class="mui-bar mui-bar-nav">
+<header class="mui-bar mui-bar-nav" style="box-shadow: none;">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">荣誉榜</h1>
 </header>
@@ -115,7 +115,7 @@
     }
 
     var pageNumber = 1;
-    var pageSize = 10;
+    var pageSize = 15;
     if(window.plus){
         pagePlusReady();
     }else{
@@ -180,6 +180,10 @@
                         totalIncome = 0;
                     }
                     var id = item.id;
+
+                    var reg = /^(\d{3})\d{4}(\d{4})$/;
+                    var username = username.replace(reg, "$1****$2");
+
                     html += tmpl.replace(/{{username}}/g,username)
                         .replace(/{{money}}/g,totalIncome)
                         .replace(/{{ranking}}/g,imgText);

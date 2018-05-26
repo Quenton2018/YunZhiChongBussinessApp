@@ -118,7 +118,7 @@
     <li class="mui-table-view-cell">
         <a class="mui-navigate-right" onclick="clicked('areaList.html?id={{id}}')" data-id="{{id}}">
             <span class="mui-badge moneyBox" data-id="{{id}}">{{money}}</span>
-            片区名称:{{groupName}}
+            {{groupName}}-{{sn}}
         </a>
     </li>
 </script>
@@ -223,6 +223,7 @@
                     var createDate = new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss");
                     html += tmpl.replace(/{{createDate}}/g,createDate)
                         .replace(/{{groupName}}/g,item.name)
+                        .replace(/{{sn}}/g,item.sn)
                         .replace(/{{id}}/g,item.id)
                         .replace(/{{money}}/g,'<img src="../images/5-121204194028.gif" height="15">');
                     ids += item.id+",";

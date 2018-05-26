@@ -45,8 +45,8 @@
 </head>
 <body style="background: #fff">
 
-    <header class="mui-bar mui-bar-nav myHead">
-        <a class="mui-pull-left" style="line-height: 44px;" onclick="clicked('page/menu.html')">
+    <header class="mui-bar mui-bar-nav myHead" onclick="clicked('page/menu.html')">
+        <a class="mui-pull-left" style="line-height: 44px;" >
             <img src="images/app_10.png" id="head-img"  style="display: inline-block;width: 38px;height: 38px;vertical-align: middle   ; border-radius: 50%;">
             <span id="mobileBox" style="display: inline-block"></span>
         </a>
@@ -109,9 +109,12 @@
 
             getUserInfo();
 
+            checkVersion();
+
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
             }, false );
+
             ws=plus.webview.currentWebview();
             if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
                 topoffset=Math.round(plus.navigator.getStatusbarHeight());
@@ -123,6 +126,29 @@
         function onRefresh(){
             getUserInfo();
             ws.endPullToRefresh();
+        }
+
+
+        /**
+         * 检查版本
+         */
+        function checkVersion() {
+            var osName = plus.os.name;
+            var version = appVersion;
+
+            postJSON(API_URL.AppVersionPartnerGetNewest,{"appType":osName},function (res) {
+
+                if('0' == res.code){
+                    if(vaildeParam(res.data)){
+
+                        var v = res.data.version;
+                        console.log("v:"+v);
+                        if(version != v){
+                            clicked('page/edition.html')
+                        }
+                    }
+                }
+            })
         }
 
         /**
