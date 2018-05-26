@@ -211,10 +211,10 @@
      * @param {Object} dataId
      */
     function clickedMonthNow(item){
-        var month =  new Date().getMonth()+1;
-        console.log("clickedMonth"+item+"month:"+month);
+        var Month =  new Date().getMonth()+1+"";
+        console.log("clickedMonth"+item+"Month:"+Month);
         var parnterMoney =  $("#benyuemoney").text();
-        plus.storage.setItem( "month", month);
+        plus.storage.setItem( "month", Month+"");
         plus.storage.setItem( "parnterMoney", parnterMoney);
         clicked(item);
     }
