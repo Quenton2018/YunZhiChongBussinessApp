@@ -85,7 +85,11 @@
                 <td>合伙人收入</td>
             </tr>
         </thead>
-        <tbody class="dataList">
+        <tbody class="dataList">	
+        	
+        		<tr>
+        			<td colspan="3" style="text-align: center;">暂未开放</td>
+        		</tr>
 
         </tbody>
     </table>
@@ -125,7 +129,7 @@
     function pagePlusReady(){
         console.log("pagePlusReady==================");
 
-        getList();
+//      getList();
         ws=plus.webview.currentWebview();
         if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
             topoffset=Math.round(plus.navigator.getStatusbarHeight());
@@ -136,13 +140,13 @@
 
     // 刷新页面
     function onRefresh(){
-        console.log("onRefresh==================");
-        $("#loadMore").css({"display":"none"});
-        $("#noMore").css({"display":"none"});
-        pageNumber = 1;
-        $(".dataList").html("");
-        getList();
-        ws.endPullToRefresh();
+//      console.log("onRefresh==================");
+//      $("#loadMore").css({"display":"none"});
+//      $("#noMore").css({"display":"none"});
+//      pageNumber = 1;
+//      $(".dataList").html("");
+//      getList();
+//      ws.endPullToRefresh();
     }
 
     function getList(){
