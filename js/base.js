@@ -1,13 +1,14 @@
-//var apiHost = "http://api.9n.jxyunge.com";
-   var apiHost = "http://api.jx9n.com";
+var apiHost = "http://api.9n.jxyunge.com";
+  // var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-// var apiHost = "http://192.168.1.115:8181";
+//var apiHost = "http://192.168.1.118:8181";
 
 
 var API_URL = {};
 API_URL.ApiAdminSendCode = apiHost + "/api/admin/sendCode"; //发送短信接口
 
 API_URL.ApiAdminQuickLogin = apiHost + "/api/admin/quickLogin"; //登录接口
+API_URL.ApiAdminPasswordlogin = apiHost + "/api/admin/passwordlogin"; //密码登录接口
 API_URL.ApiAdminInfo = apiHost + "/api/admin/info"; //获取用户信息
 
 

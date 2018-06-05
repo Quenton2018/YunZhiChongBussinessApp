@@ -72,8 +72,8 @@
 	</head>
 	<body style="background: #ffffff;">
             <header class="mui-bar mui-bar-nav">
-              <!--  <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
-                <h1 class="mui-title">手机快捷登入</h1>
+              <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+                <h1 class="mui-title">密码登入</h1>
             </header>
 
 			<div class="mui-content">
@@ -84,78 +84,18 @@
 						<input type="number" name="regMobile" placeholder="请输入手机号" />
 					</div>
 					<div class="inputBox">
-						<i class="iconfont">验证码</i>
-						<input type="text" name="code" placeholder="请输入验证码" />
-						<span class="getCode">获取验证码</span>
+						<i class="iconfont">密码</i>
+						<input type="password" name="password"  placeholder="请输入密码"/>
 					</div>
-					<h5 class="mui-content-padded" style="text-align: center">云智充合伙人可直接登入,无需注册</h5>
 				</div>
 
 				<div style="margin:0 15px;margin-top: 30px">
 					<img class="Button-Img loingBtn"  src="../images/loginBtn.png" style="width: 100%" />
 				</div>
-				<h5 class="mui-content-padded" style="text-align: center;padding: 10px;">或</h5>
-				<div  style="margin:0 15px" onclick="clicked('loginTwo.html')">
-					<img class="Button-Img "  src="../images/loginTow.png" style="width: 100%" />
-				</div>
-				<h5 class="mui-content-padded" style="text-align: center;padding: 10px;">或</h5>
-				<div style="margin:0 15px">
-					<img class="Button-Img registerBtn"  src="../images/jiaruBtn.png" onclick="clicked('applyPartner.html')" style="width: 100%" />
-				</div>
 			</div>
 
 
 		<script type="application/javascript">
-
-            var $getCodeBtn = $(".getCode");
-            var isLock = false; //是否锁定
-            var time = 180; //倒计时
-            var timeInterval; //定时器
-            /**
-             * 定时器
-             */
-            function showTime(){
-                timeInterval = setInterval(function(){
-                    time--;
-                    if(time <= 0){
-                        isLock = false;
-                        time = 180;
-                        clearInterval(timeInterval);
-                        $getCodeBtn.text('获取验证码');
-                        return;
-                    }else{
-                        $getCodeBtn.text(time);
-                    }
-                },1000)
-            }
-
-            /**
-             * 获取
-             */
-            $(".getCode").click(function(){
-                var mobile = $("input[name='regMobile']").val();
-                if(!vaildeParam(mobile)){
-                    layer.msg("手机号不能为空");
-                    return;
-                }
-                if(!isPoneAvailable(mobile)){
-                    layer.msg("手机格式不正确");
-                    return;
-                }
-                if(isLock){
-                    return;
-                }
-                isLock = true;
-                $getCodeBtn.text(time);
-                showTime();
-                postJSON(API_URL.ApiAdminSendCode,{"mobile":mobile,"type":"1"},function(res){
-                    if("0" == res.code){
-                        layer.msg("发送成功");
-                    }else{
-                        layer.msg(res.msg);
-                    }
-                })
-            })
 
             if(window.plus){
                 pagePlusReady();
@@ -178,9 +118,9 @@
                         layer.msg("手机号不能为空");
                         return;
                     }
-                    var code = $("input[name='code']").val();
-                    if(!vaildeParam(code)){
-                        layer.msg("验证码不能为空");
+                    var password = $("input[name='password']").val();
+                    if(!vaildeParam(password)){
+                        layer.msg("密码不能为空");
                         return;
                     }
                     if(!isPoneAvailable(mobile)){
@@ -193,9 +133,9 @@
                     var postData = {
                         "clientInfo":clientInfo,
                         "mobile":mobile,
-                        "code":code
+                        "password":password
                     }
-                    postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
+                    postJSON(API_URL.ApiAdminPasswordlogin,postData,function(res){
                         if("0" == res.code){
                             layer.msg("登入成功，正在跳转...");
                             setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
