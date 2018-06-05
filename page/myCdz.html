@@ -147,6 +147,7 @@
         document.addEventListener('plusready',pagePlusReady,false);
     }
     function pagePlusReady(){
+        checkLogin();
 
         uuid = plus.storage.getItem("uuid");
 

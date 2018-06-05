@@ -111,6 +111,7 @@
     mui.init()
 
     if(window.plus){
+        checkLogin();
         getUserInfo();
     }else{
         document.addEventListener('plusready',pagePlusReady,false);
