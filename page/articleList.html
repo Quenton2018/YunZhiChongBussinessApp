@@ -50,7 +50,7 @@
 
 	</div>
 
-	<a class="wentiBtn">有疑问? <span style="color: #FC1919">请联系在线客服>> </span></a>
+	<a class="wentiBtn">有疑问? <span style="color: #FC1919" id ="telephone">请联系在线客服>> </span></a>
 </div>
 
 <script type="text/html" id="dataTmpl">
@@ -84,6 +84,17 @@
 
     function pagePlusReady(){
         console.log("pagePlusReady==================");
+        //拨打电话
+        document.getElementById("telephone").addEventListener('tap',function(){
+            var btnArray=['拨打','取消'];
+            var phone="4008251068";
+            mui.confirm('是否拨打'+phone+'?','提示',btnArray,function(e){
+                if(e.index == 0){
+                    plus.device.dial(phone,false);
+                }
+            });
+        });
+
 
         getList();
         ws=plus.webview.currentWebview();
@@ -99,6 +110,7 @@
         pageNumber = 1;
         $(".dataList").html("")
         getList();
+
         ws.endPullToRefresh();
     }
     function getList(){
