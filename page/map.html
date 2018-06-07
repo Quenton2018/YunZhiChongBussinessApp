@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>地图</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=L3L8GMqHN9GxRH8ZSS5KTaxrh3nSxYwD"></script>
+
+
+    <style type="text/css">
+        #l-map{height:400px;width:100%;}
+        #searchLocation{
+            position: absolute;
+            top:20px;
+            right: 20px;
+            z-index: 999;
+            display: inline-block;
+            width: 200px;
+            padding-left: 10px;
+            outline: none;
+        }
+        #searchLocation:focus{
+            outline: none;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div id="mapBox" style="position: relative">
+    <div id="l-map">
+    </div>
+    <input type="text" name="searchLocation" id="searchLocation" placeholder="搜索">
+</div>
+
+<div class="panel-body">
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <label class="sr-only" for="address">地理位置</label>
+            <input type="text" class="form-control"  name="address" id="address" placeholder="地理位置">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="latitude">经度</label>
+            <input type="text" class="form-control"  name="latitude" id="latitude" placeholder="经度">
+        </div>
+        <div class="form-group m-l-10">
+            <label class="sr-only" for="longitude">纬度</label>
+            <input type="text"  class="form-control" name="longitude" id="longitude" placeholder="纬度">
+        </div>
+        <button id="save" class="btn btn-success waves-effect waves-light m-l-10">确定</button>
+    </form>
+</div>
+
+
+
+<script>
+
+    mui.init();
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+
+        $().ready(function() {
+            //当你在iframe页面关闭自身时
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            $("#save").click(function () {
+                parent.$("#latitude").val($("#latitude").val());
+                parent.$("#longitude").val($("#longitude").val());
+                parent.$("#address").val($("#address").val());
+                parent.layer.close(index); //再执行关闭
+            });
+
+            var latitude=parent.$("#latitude").val();
+            var longitude=parent.$("#longitude").val();
+            var address=parent.$("#address").val();
+
+            $("#latitude").val(latitude);
+            $("#longitude").val(longitude);
+            $("#address").val(address);
+
+            // 百度地图API功能
+            var map = new BMap.Map("l-map");
+
+            var geoc = new BMap.Geocoder();   //地址解析对象
+
+            var point = new BMap.Point(116.400244,39.92556);
+            if(latitude!=null&&longitude!=null&&latitude!=""&&longitude!=""){
+                point = new BMap.Point(latitude,longitude);
+            }
+
+            map.centerAndZoom(point, 12);
+
+            if(latitude!=null&&longitude!=null&&latitude!=""&&longitude!=""){
+                addMarker(point);
+            }
+
+            map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+            var size = new BMap.Size(10, 20);
+            map.addControl(new BMap.CityListControl({
+                anchor: BMAP_ANCHOR_TOP_LEFT,
+                offset: size,
+                // 切换城市之间事件
+                // onChangeBefore: function(){
+                //    alert('before');
+                // },
+                // 切换城市之后事件
+                // onChangeAfter:function(){
+                //   alert('after');
+                // }
+            }));
+
+            //给地图添加点击事件
+            map.addEventListener("click", showInfo);
+
+
+            //地图上标注
+            function addMarker(point) {
+                var marker = new BMap.Marker(point);
+                map.clearOverlays();
+                map.addOverlay(marker);
+            }
+
+            //智能搜索
+            function G(id) {
+                return document.getElementById(id);
+            }
+
+            //建立一个自动完成的对象
+            var ac = new BMap.Autocomplete({"input": "searchLocation", "location": map});
+            ac.addEventListener("onhighlight", function (e) { //鼠标放在下拉列表上的事件
+            });
+
+            var myValue;
+            ac.addEventListener("onconfirm", function (e) { //鼠标点击下拉列表后的事件
+                var _value = e.item.value;
+                myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+                setPlace();
+            });
+
+            function setPlace() {
+                map.clearOverlays(); //清除地图上所有覆盖物
+                function myFun() {
+                    var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+                    map.centerAndZoom(pp, 15);
+
+                    addMarker(pp)
+
+                    console.log(pp)
+
+                    $("#latitude").val(pp.lng);
+                    $("#longitude").val(pp.lat);
+                    $("#address").val(myValue);
+
+                }
+
+                var local = new BMap.LocalSearch(map, { //智能搜索
+                    onSearchComplete: myFun
+                });
+                local.search(myValue);
+            }
+
+
+            //点击地图事件处理
+            function showInfo(e) {
+                document.getElementById('latitude').value = e.point.lng;
+                document.getElementById('longitude').value =  e.point.lat;
+                geoc.getLocation(e.point, function (rs) {
+                    var addComp = rs.addressComponents;
+                    var address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+                    document.getElementById('address').value = address;
+                });
+                addMarker(e.point);
+            }
+
+            function myFun(result){
+                var cityName = result.name;
+                map.setCenter(cityName);
+            }
+            if(latitude==null||longitude==null||latitude==""||longitude=="") {
+
+                var myCity = new BMap.LocalCity();
+                myCity.get(myFun);
+            }
+        });
+
+
+
+
+    }
+
+</script>
+
+</body>
+</html>

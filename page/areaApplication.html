@@ -21,37 +21,54 @@
             font-size: .8rem;
             padding: 15px;
         }
-        .formBox{
-            padding: 15px;
+        .mui-content{
+            background-color: #ffffff;
         }
-        .formBox .formItem{
-
+        .application-Box{
+            overflow: hidden;
+            margin-bottom: 0;
+            margin: 15px;
+            padding-top: 1rem;
         }
-        .formBox .formItem label{
-            display: block;
+        .application-Box .inputBox{
+            position: relative;
             margin-bottom: 10px;
+            font-size: 1.2rem;
         }
-        .formBox .formItem input{
+        .application-Box .inputBox i{
+            font-size: 1rem;
+            position: absolute;
+            left: 10px;
+            line-height: 2.5rem;
+            color: #000;
+        }
+        .application-Box input{
             display: block;
-            background: #F0F1F3;
             border: none;
-            border-radius: 15px;
-        }
-
-        .wentiBtn{
-            display: block;
-            color: #A7A7A7;
-            text-align: center;
+            background: #F0F1F3;
+            padding-left: 80px;
+            border-radius: 20px;
             font-size: .9rem;
-            text-decoration: underline;
-
         }
+        .application-Box input:focus{
+            outline: none;
+        }
+        .getCode{
+            position: absolute;
+            right: 10px;
+            top: .7rem;
+            color: #333;
+            font-size: .8rem;
+        }
+
         #submitBtn{
             display: block;
             width: 100%;
             position: fixed;
             bottom: 0;
         }
+
+
 
 
     </style>
@@ -70,24 +87,25 @@
             请正确填写信息，信息提交后，客服人员会与您取得联系
         </div>
 
-        <div class="formBox">
-            <div class="formItem">
-                <label>片区名称</label>
-                <input type="text" name="contacts" >
+        <div class="application-Box">
+            <div class="inputBox">
+                <i class="iconfont">片区名称</i>
+                <input type="number" name="regMobile" placeholder="请输入片区名称" />
             </div>
-            <div class="formItem">
-                <label>地理位置</label>
-                <input type="text"  name="mobile">
+            <div class="inputBox">
+                <i class="iconfont">地理位置</i>
+                <input type="text" name="code" placeholder="请选择" />
+                <span class="getCode" id="map">选择位置</span>
             </div>
-            <div class="formItem">
-                <label>预估安装数量</label>
-                <input type="text" name="numbers">
+            <div class="inputBox">
+                <i class="iconfont">片区名称</i>
+                <input type="number" name="regMobile" placeholder="请输入片区名称" />
             </div>
-            <div class="formItem">
-                <label>申请发展地区</label>
-                <input type="text" name="installAddress">
-            </div>
+
         </div>
+
+
+
 
         <img src="../images/tijiaoshenqing.png" id="submitBtn">
 
@@ -102,8 +120,22 @@
             document.addEventListener('plusready',pagePlusReady,false);
         }
         function pagePlusReady(){
-
            // uploadLoginInfo();
+
+
+
+            $("#map").click(function () {
+                layer.open({
+                    type: 1,
+                    title: '地图设置',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['100%', '100%'],
+                    content: map.html
+                });
+            });
+
+
 
         }
 
