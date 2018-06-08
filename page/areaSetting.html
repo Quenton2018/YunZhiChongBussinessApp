@@ -84,7 +84,7 @@
 
     <header class="mui-bar mui-bar-nav">
         <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">片区申请</h1>
+        <h1 class="mui-title">片区申请设置</h1>
     </header>
 
     <div class="mui-content" style="background: #fff;    padding-bottom: 100px;">
@@ -177,11 +177,11 @@
             }
 
             //服务校验参数 然后保存
-            plus.storage.setItem( "app_name", name);
-            plus.storage.setItem( "app_address", address );
-            plus.storage.setItem( "app_latitude", latitude);
-            plus.storage.setItem( "app_longitude", longitude);
-            plus.storage.setItem( "app_electricPrice", electricPrice);
+            plus.storage.setItem( "name", name);
+            plus.storage.setItem( "address", address );
+            plus.storage.setItem( "latitude", latitude);
+            plus.storage.setItem( "longitude", longitude);
+            plus.storage.setItem( "electricPrice", electricPrice);
 
             clicked('areaSetting.html');  //下一步
 
