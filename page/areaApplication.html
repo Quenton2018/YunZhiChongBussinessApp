@@ -66,6 +66,9 @@
             width: 100%;
             position: fixed;
             bottom: 0;
+            background-color: #FF7546;
+            height: 60px;
+            color: #ffff;
         }
 
 
@@ -108,12 +111,15 @@
                 <input type="text"  id="longitude" name="longitude" placeholder="请输入纬度" />
             </div>
 
+            <div class="inputBox">
+                <i class="iconfont">电价</i>
+                <input type="text"  id="electricPrice" name="electricPrice" placeholder="请输入电价" value="0.8" onclick="validationNumber(this,2)" />
+            </div>
         </div>
 
-
-
-        <img src="../images/tijiaoshenqing.png" id="submitBtn">
-
+        <button id="submitBtn">
+                下一步
+        </button>
     </div>
 
 	<script type="text/javascript">
