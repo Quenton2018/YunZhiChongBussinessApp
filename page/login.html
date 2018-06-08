@@ -145,10 +145,7 @@
                     layer.msg("手机号不能为空");
                     return;
                 }
-                if(!isPoneAvailable(mobile)){
-                    layer.msg("手机号码格式不正确");
-                    return;
-                }
+
                 if(isLock){
                     return;
                 }
@@ -190,10 +187,7 @@
                         layer.msg("验证码不能为空");
                         return;
                     }
-                    if(!isPoneAvailable(mobile)){
-                        layer.msg("手机格式不正确");
-                        return;
-                    }
+
 
                     var clientInfo = plus.push.getClientInfo().clientid;
 
