@@ -88,40 +88,105 @@
     </header>
 
     <div class="mui-content" style="background: #fff;    padding-bottom: 100px;">
-
         <div class="topAlertIfo">
-            请正确填写信息，信息提交后，客服人员会与您取得联系
+            请正确填写信息合伙人信息
         </div>
+        <div  id="dataList">
+            <form class="mui-input-group">
+                <div class="mui-input-row">
+                    <label>合伙人姓名</label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入合伙人姓名">
+                </div>
+                <div class="mui-input-row">
+                    <label>合伙人手机</label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入合伙人手机">
+                </div>
+                <div class="mui-input-row">
+                    <label>第一年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+                <div class="mui-input-row">
+                    <label>第二年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+            </form>
+            <form class="mui-input-group">
+                <div class="mui-input-row">
+                    <label>合伙人姓名</label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入合伙人姓名">
+                </div>
+                <div class="mui-input-row">
+                    <label>合伙人手机</label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入合伙人手机">
+                </div>
+                <div class="mui-input-row">
+                    <label>第一年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+                <div class="mui-input-row">
+                    <label>第二年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+            </form>
+            <form class="mui-input-group">
+                <div class="mui-input-row">
+                    <label>合伙人姓名</label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入合伙人姓名">
+                </div>
+                <div class="mui-input-row">
+                    <label>合伙人手机</label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入合伙人手机">
+                </div>
+                <div class="mui-input-row">
+                    <label>第一年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+                <div class="mui-input-row">
+                    <label>第二年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+            </form>
 
-        <div class="application-Box">
-            <div class="inputBox">
-                <i class="iconfont">片区名称</i>
-                <input type="text" name="name" placeholder="请输入片区名称" />
-            </div>
-            <div class="inputBox">
-                <i class="iconfont">地理位置</i>
-                <input type="text" id="address" name="address" placeholder="请选择" />
-                <span class="getCode" id="map"  onclick="clicked('map.html')">选择位置</span>
-            </div>
 
-            <div class="inputBox">
-                <i class="iconfont">经度</i>
-                <input type="text" id="latitude" name="latitude" placeholder="请输经度" />
-            </div>
-
-            <div class="inputBox">
-                <i class="iconfont">纬度</i>
-                <input type="text"  id="longitude" name="longitude" placeholder="请输入纬度" />
-            </div>
-
-            <div class="inputBox">
-                <i class="iconfont">电价</i>
-                <input type="text"  id="electricPrice" name="electricPrice" placeholder="请输入电价" value="0.8" onclick="validationNumber(this,2)" />
-            </div>
         </div>
-
         <button id="submitBtn">
-                下一步
+                提交
         </button>
     </div>
 
@@ -135,58 +200,35 @@
         }
         function pagePlusReady(){
 
+            $("#submitBtn").click(function(){
+                //服务校验参数 然后保存
+                var uuid = plus.storage.getItem("uuid");
+                var app_name = plus.storage.getItem("app_name");
+                var app_address = plus.storage.getItem("app_address");
+                var app_latitude = plus.storage.getItem("app_latitude");
+                var app_longitude = plus.storage.getItem("app_longitude");
+                var app_electricPrice = plus.storage.getItem("app_electricPrice");
+
+                console.log("uuid======"+uuid);
+                console.log("app_name======"+app_name);
+                console.log("app_address======"+app_address);
+                console.log("app_latitude======"+app_latitude);
+                console.log("app_longitude======"+app_longitude);
+                console.log("app_electricPrice======"+app_electricPrice);
+
+
+
+
+
+
+
+            });
+
+
 
         }
 
-        function fullAddress( latitude,longitude,address) {
-            console.log("fullAddress=========address"+address);
-            console.log("fullAddress=========latitude"+latitude);
-            console.log("fullAddress=========longitude"+longitude);
 
-            $("#latitude").val(latitude);
-            $("#longitude").val(longitude);
-            $("#address").val(address);
-        }
-
-
-        $("#submitBtn").click(function(){
-            var name = $("input[name='name']").val();
-            if(!vaildeParam(name)){
-                layer.msg("片区名称不能为空");
-                return;
-            }
-            var address = $("input[name='address']").val();
-            if(!vaildeParam(address)){
-                layer.msg("位置不能为空");
-                return;
-            }
-            var latitude = $("input[name='latitude']").val();
-            if(!vaildeParam(latitude)){
-                layer.msg("经度不能为空");
-                return;
-            }
-            var longitude = $("input[name='longitude']").val();
-            if(!vaildeParam(longitude)){
-                layer.msg("纬度不能为空");
-                return;
-            }
-            var electricPrice = $("input[name='electricPrice']").val();
-            if(!vaildeParam(electricPrice)){
-                layer.msg("电价不能为空");
-                return;
-            }
-
-            //服务校验参数 然后保存
-            plus.storage.setItem( "name", name);
-            plus.storage.setItem( "address", address );
-            plus.storage.setItem( "latitude", latitude);
-            plus.storage.setItem( "longitude", longitude);
-            plus.storage.setItem( "electricPrice", electricPrice);
-
-            clicked('areaSetting.html');  //下一步
-
-
-        });
 
 	</script>
 </body>
