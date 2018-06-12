@@ -76,6 +76,8 @@
             background-color: #FF7546;
             height: 60px;
             color: #ffff;
+            border: none;
+            border-radius: 0;
         }
 
     .btn-class{
@@ -91,6 +93,30 @@
             float: left;
             margin-left: 0px;
             width: 160px;
+        }
+
+        .mui-input-group:before{
+            background-color:transparent;
+        }
+        .mui-input-group:after{
+            background-color:transparent;
+        }
+
+        .mui-input-group .mui-input-row:last-child:after{
+            background-color:transparent;
+        }
+        .memberItem{
+            display: block;
+            margin: 10px;
+            box-shadow: 0 1px 6px #ccc;
+            padding: 10px;
+            position: relative;
+        }
+        .deleteBtn{
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 10px;
         }
     </style>
 
@@ -112,6 +138,10 @@
                 合伙人信息
             </h1>
             <form class="mui-input-group memberItem">
+
+                <i class="deleteBtn iconfont icon-shanchu"></i>
+
+
                 <div class="mui-input-row">
                     <label>合伙人姓名</label>
                     <input type="text" class="mui-input-clear" name="users" placeholder="请输入合伙人姓名">
@@ -152,6 +182,9 @@
     </div>
     <script type="text/html" id="heHuoRenTmpl">
             <form class="mui-input-group memberItem">
+
+                <i class="deleteBtn iconfont icon-shanchu"></i>
+
                 <div class="mui-input-row ">
                     <label>合伙人姓名</label>
                     <input type="text" class="mui-input-clear" name="users" placeholder="请输入合伙人姓名">
