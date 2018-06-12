@@ -110,6 +110,29 @@
             margin-left: 0px;
             width: 160px;
         }
+        .mui-input-group:before{
+            background-color:transparent;
+        }
+        .mui-input-group:after{
+            background-color:transparent;
+        }
+
+        .mui-input-group .mui-input-row:last-child:after{
+            background-color:transparent;
+        }
+        .dianjiaItem{
+            display: block;
+            margin: 10px;
+            box-shadow: 0 1px 6px #ccc;
+            padding: 10px;
+            position: relative;
+        }
+        .deleteBtn{
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
     </style>
 
 </head>
@@ -130,6 +153,7 @@
                 充电价格
             </h1>
             <form class="mui-input-group dianjiaItem">
+                <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
                 <div class="mui-input-row">
                     <label>片区价格</label>
                     <input type="text" class="mui-input-clear" name="price" value="1"  placeholder="输入数字最多2位小数">
@@ -152,6 +176,7 @@
                 </div>
             </form>
             <form class="mui-input-group dianjiaItem">
+                <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
                 <div class="mui-input-row">
                     <label>片区价格</label>
                     <input type="text" class="mui-input-clear" name="price" value="1.5"  placeholder="输入数字最多2位小数">
@@ -174,6 +199,7 @@
                 </div>
             </form>
             <form class="mui-input-group dianjiaItem">
+                <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
                 <div class="mui-input-row">
                     <label>片区价格</label>
                     <input type="text" class="mui-input-clear" name="price" value="2"  placeholder="输入数字最多2位小数">
@@ -196,6 +222,7 @@
                 </div>
             </form>
             <form class="mui-input-group dianjiaItem">
+                <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
                 <div class="mui-input-row">
                     <label>片区价格</label>
                     <input type="text" class="mui-input-clear" name="price" value="3"  placeholder="输入数字最多2位小数">
@@ -230,6 +257,7 @@
 
     <script type="text/html" id="dianJiaTmpl">
         <form class="mui-input-group dianjiaItem">
+            <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
             <div class="mui-input-row">
                 <label>片区价格</label>
                 <input type="text" class="mui-input-clear" name="price"  placeholder="输入数字最多2位小数">
@@ -344,7 +372,17 @@
             mui('.mui-numbox').numbox()
         })
 
-
+        /**
+         * 删除充电桩
+         * @param that
+         */
+        function deleteFrom(that) {
+            var $this = $(that);
+            layer.confirm("是否确定删除",function (index) {
+                $this.parents(".mui-input-group").remove();
+                layer.close(index)
+            })
+        }
 
 	</script>
 </body>

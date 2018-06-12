@@ -139,7 +139,7 @@
             </h1>
             <form class="mui-input-group memberItem">
 
-                <i class="deleteBtn iconfont icon-shanchu"></i>
+                <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
 
 
                 <div class="mui-input-row">
@@ -183,7 +183,7 @@
     <script type="text/html" id="heHuoRenTmpl">
             <form class="mui-input-group memberItem">
 
-                <i class="deleteBtn iconfont icon-shanchu"></i>
+                <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
 
                 <div class="mui-input-row ">
                     <label>合伙人姓名</label>
@@ -273,7 +273,17 @@
             $("#dataList").append(tmpl);
             mui('.mui-numbox').numbox()
         })
-
+        /**
+         * 删除充电桩
+         * @param that
+         */
+        function deleteFrom(that) {
+            var $this = $(that);
+            layer.confirm("是否确定删除",function (index) {
+                $this.parents(".mui-input-group").remove();
+                layer.close(index)
+            })
+        }
 
 	</script>
 </body>
