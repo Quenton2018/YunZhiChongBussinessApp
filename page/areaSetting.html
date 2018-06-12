@@ -20,6 +20,7 @@
         .topAlertIfo{
             font-size: .8rem;
             padding: 15px;
+            background-color: #FF7546;
         }
         .topInfo{
             font-size: 1rem;
@@ -132,7 +133,7 @@
 
     <div class="mui-content" style="background: #fff;    padding-bottom: 100px;">
         <div class="topAlertIfo">
-            请正确填写信息 合伙人手机为平台账号
+            请正确填写信息 合伙人手机为平台账号 比例为合伙人分成比例百分比
         </div>
 
         <div  id="dataList">
@@ -145,11 +146,11 @@
 
                 <div class="mui-input-row">
                     <label>合伙人姓名</label>
-                    <input type="text" class="mui-input-clear" name="users"  value="公司账号" placeholder="请输入合伙人姓名">
+                    <input type="text" class="mui-input-clear" name="users"  value="公司账号"  readonly="readonly" placeholder="请输入合伙人姓名">
                 </div>
                 <div class="mui-input-row">
                     <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear" name="mobile" value="17607009587" placeholder="请输入合伙人手机">
+                    <input type="text" class="mui-input-clear" name="mobile" value="17607009587" readonly="readonly"  placeholder="请输入合伙人手机">
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
@@ -176,11 +177,11 @@
                 <!-- <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>-->
                 <div class="mui-input-row">
                     <label>合伙人姓名</label>
-                    <input type="text" class="mui-input-clear username" name="users" value="" placeholder="请输入合伙人姓名">
+                    <input type="text" class="mui-input-clear username" name="users" value=""  readonly="readonly" placeholder="请输入合伙人姓名">
                 </div>
                 <div class="mui-input-row">
                     <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear usersmobile" name="mobile"  value="" placeholder="请输入合伙人手机">
+                    <input type="text" class="mui-input-clear usersmobile" name="mobile"  value="" readonly="readonly" placeholder="请输入合伙人手机">
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
@@ -223,7 +224,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear" name="mobile" placeholder="请输入合伙人手机">
+                    <input type="text" class="mui-input-clear" name="mobile" placeholder="合伙人手机为平台账号">
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
@@ -259,7 +260,7 @@
         }
         function pagePlusReady(){
 
-            getUserInfoDateBase()
+            getUserInfoDateBase();
 
             $("#submitBtn").click(function(){ //下一步
                     //服务校验参数 然后保存
@@ -279,12 +280,20 @@
                 var $memberItem = $(".memberItem");
                 var memberList = new Array();
                 var memberListJson = '';
+
+                var rateSum1 = 0;
+                var rateSum2 = 0;
+                var flag= false;
                 $.each($memberItem,function (index,item) {
                     var users =  $(item).find( $("input[name='users']")).val();
                     var mobile =  $(item).find( $("input[name='mobile']")).val();
                     var rate1 =  $(item).find( $("input[name='rate1']")).val();
                     var rate2 =  $(item).find( $("input[name='rate2']")).val();
-
+                    if(!vaildeParam(mobile) || !vaildeParam(users) || !vaildeParam(rate1) || !vaildeParam(rate2)){
+                        flag = true;
+                    }
+                    rateSum1 =parseInt(rateSum1)+parseInt(rate1);
+                    rateSum2 = parseInt(rateSum2)+parseInt(rate2);
                     var member = new Object();
                     member.users = users;
                     member.mobile = mobile;
@@ -292,6 +301,21 @@
                     member.rate2 = rate2;
                     memberList.push(member);
                 })
+                console.log("rateSum1:"+rateSum1);
+                console.log("rateSum2:"+rateSum2);
+                if(flag){
+                    layer.msg("请补全信息");
+                    return;
+                }
+                if(rateSum1!=100){
+                    layer.msg("合伙人第一年比例相加必须为100%");
+                    return;
+                }
+                if(rateSum2 !=100){
+                    layer.msg("合伙人第二年比例相加必须为100%");
+                    return;
+                }
+
                 memberListJson = JSON.stringify(memberList);
                 console.log("memberListJson"+memberListJson);
                 plus.storage.setItem( "memberListJson", memberListJson);

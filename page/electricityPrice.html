@@ -20,6 +20,7 @@
         .topAlertIfo{
             font-size: .8rem;
             padding: 15px;
+            background-color: #FF7546;
         }
         .topInfo{
             font-size: 1rem;
@@ -163,19 +164,15 @@
                     <span class="tips-fuhao">元</span>
                 </div>
                 <div class="mui-input-row">
-                    <label>预设用电量</label>
-                    <input type="text" class="mui-input-clear"  name="defaultPower" value="1" placeholder="输入数字最多2位小数">
-                    <span class="tips-fuhao">度</span>
-                </div>
-                <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number" value="240" name="defaultTime" />
+                        <input class="mui-numbox-input" type="number" value="4" name="defaultTime" />
                         <!-- "+"按钮，点击可增大当前数值 -->
                         <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                     </div>
+                    <span class="tips-fuhao">小时</span>
                 </div>
             </form>
             <form class="mui-input-group dianjiaItem">
@@ -186,19 +183,15 @@
                     <span class="tips-fuhao">元</span>
                 </div>
                 <div class="mui-input-row">
-                    <label>预设用电量</label>
-                    <input type="text" class="mui-input-clear"  name="defaultPower" value="1.5" placeholder="输入数字最多2位小数">
-                    <span class="tips-fuhao">度</span>
-                </div>
-                <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number" value="360" name="defaultTime" />
+                        <input class="mui-numbox-input" type="number" value="6" name="defaultTime" />
                         <!-- "+"按钮，点击可增大当前数值 -->
                         <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                     </div>
+                    <span class="tips-fuhao">小时</span>
                 </div>
             </form>
             <form class="mui-input-group dianjiaItem">
@@ -209,19 +202,15 @@
                     <span class="tips-fuhao">元</span>
                 </div>
                 <div class="mui-input-row">
-                    <label>预设用电量</label>
-                    <input type="text" class="mui-input-clear"  name="defaultPower" value="2" placeholder="输入数字最多2位小数">
-                    <span class="tips-fuhao">度</span>
-                </div>
-                <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number" value="480" name="defaultTime" />
+                        <input class="mui-numbox-input" type="number" value="8" name="defaultTime" />
                         <!-- "+"按钮，点击可增大当前数值 -->
                         <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                     </div>
+                    <span class="tips-fuhao">小时</span>
                 </div>
             </form>
             <form class="mui-input-group dianjiaItem">
@@ -232,19 +221,15 @@
                     <span class="tips-fuhao">元</span>
                 </div>
                 <div class="mui-input-row">
-                    <label>预设用电量</label>
-                    <input type="text" class="mui-input-clear"  name="defaultPower" value="3" placeholder="输入数字最多2位小数">
-                    <span class="tips-fuhao">度</span>
-                </div>
-                <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox"  data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number" value="720" name="defaultTime" />
+                        <input class="mui-numbox-input" type="number" value="12" name="defaultTime" />
                         <!-- "+"按钮，点击可增大当前数值 -->
                         <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                     </div>
+                    <span class="tips-fuhao">小时</span>
                 </div>
             </form>
         </div>
@@ -267,13 +252,8 @@
                 <span class="tips-fuhao">元</span>
             </div>
             <div class="mui-input-row">
-                <label>预设用电量</label>
-                <input type="text" class="mui-input-clear" name="defaultPower"  placeholder="输入数字最多2位小数">
-                <span class="tips-fuhao">度</span>
-            </div>
-            <div class="mui-input-row">
                 <label>预设充电时间</label>
-                <div class="mui-numbox">
+                <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
                     <!-- "-"按钮，点击可减小当前数值 -->
                     <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                     <input class="mui-numbox-input" type="number"  name="defaultTime" value="0" />
@@ -288,13 +268,17 @@
 	<script type="text/javascript">
         mui.init();
 
+        var retFalg =false;
+
         if(window.plus){
             pagePlusReady();
         }else{
             document.addEventListener('plusready',pagePlusReady,false);
         }
         function pagePlusReady(){
+
             $("#submitBtn").click(function(){
+                retFalg  =true;
                 //服务校验参数 然后保存
                 var uuid = plus.storage.getItem("uuid");
                 var app_name = plus.storage.getItem("app_name");
@@ -303,33 +287,64 @@
                 var app_longitude = plus.storage.getItem("app_longitude");
                 var app_electricPrice = plus.storage.getItem("app_electricPrice");
                 var memberListJson = plus.storage.getItem("memberListJson");
-
-                console.log("uuid======"+uuid);
-                console.log("app_name======"+app_name);
-                console.log("app_address======"+app_address);
-                console.log("app_latitude======"+app_latitude);
-                console.log("app_longitude======"+app_longitude);
-                console.log("app_electricPrice======"+app_electricPrice);
-                console.log("memberListJson======"+memberListJson);
-
+                 console.log("uuid======"+uuid);
+                 console.log("app_name======"+app_name);
+                 console.log("app_address======"+app_address);
+                 console.log("app_latitude======"+app_latitude);
+                 console.log("app_longitude======"+app_longitude);
+                 console.log("app_electricPrice======"+app_electricPrice);
+                 console.log("memberListJson======"+memberListJson);
                 var $dianjiaItem = $(".dianjiaItem");
                 var dianjiaList = new Array();
                 var dianjiaListJson = '';
+                var vaildeflag= false;
+                var priceflag= false;
+                var defaultTimeflag= false;
                 $.each($dianjiaItem,function (index,item) {
                     var price =  $(item).find( $("input[name='price']")).val();
-                    var defaultPower =  $(item).find( $("input[name='defaultPower']")).val();
                     var defaultTime =  $(item).find( $("input[name='defaultTime']")).val();
-
+                    console.log("price"+price);
+                    console.log("defaultTime"+defaultTime);
+                    if(!vaildeParam(price) || !vaildeParam(defaultTime)){
+                        vaildeflag = true;
+                        retFalg  =false;
+                        return;
+                    }
+                    //校验是数字
+                    var reg = new RegExp(/(([1-9][0-9]*)(\.[0-9]+)*)|([0.][1-9]+)/i);
+                    if(!reg.test(parseFloat(price))){
+                        priceflag = true;
+                        retFalg  =false;
+                        return;
+                    }
+                    if(!reg.test(parseFloat(defaultTime))){
+                        defaultTimeflag = true;
+                        retFalg  =false;
+                        return;
+                    }
                     var dianjia = new Object();
                     dianjia.price = price;
-                    dianjia.defaultPower = defaultPower;
                     dianjia.defaultTime = defaultTime;
                     dianjiaList.push(dianjia);
                 })
+
+                if(vaildeflag){
+                    layer.msg("请补全信息");
+                    retFalg  =false;
+                    return;
+                }
+                if(priceflag){
+                    layer.msg("片区价格必须为数字，且大零");
+                    retFalg  =false;
+                    return;
+                }
+                if(defaultTimeflag){
+                    layer.msg("充电时间必须为数字，且大零");
+                    retFalg  =false;
+                    return;
+                }
                 dianjiaListJson = JSON.stringify(dianjiaList);
                 console.log("dianjiaListJson"+dianjiaListJson);
-
-
                 var dataParam = {
                     "uuid":uuid,
                     "app_name":app_name,
@@ -340,28 +355,19 @@
                     "memberListJson":memberListJson,
                     "dianjiaListJson":dianjiaListJson
                 }
-
                 postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
                     if("0" == res.code){
                         layer.msg(res.msg);
                     }else{
+                        retFalg  =false;
                         layer.msg(res.msg);
-                        clearLogin();
-                        clicked("page/login.html");
                     }
-                })
+                });
 
             });
 
-
-
-
-
-
-
-
-
         }
+
 
 
         /**
