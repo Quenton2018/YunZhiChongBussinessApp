@@ -127,11 +127,14 @@
             padding: 10px;
             position: relative;
         }
+
         .deleteBtn{
             display: block;
             position: absolute;
-            right: 10px;
-            top: 10px;
+            right: 0px;
+            top: 0px;
+            padding: 10px;
+            z-index: 999;
         }
     </style>
 
@@ -373,7 +376,6 @@
         })
 
         /**
-         * 删除充电桩
          * @param that
          */
         function deleteFrom(that) {
