@@ -96,7 +96,7 @@
         <div class="application-Box">
             <div class="inputBox">
                 <i class="iconfont">片区名称</i>
-                <input type="text" name="name" placeholder="请输入片区名称" />
+                <input type="text" name="name" placeholder="请输入市+小区,例如：北京市XX小区"/>
             </div>
             <div class="inputBox">
                 <i class="iconfont">地理位置</i>
@@ -176,6 +176,9 @@
                 return;
             }
 
+            //校验片区名称是否重复
+            checkArea(name);
+
             //服务校验参数 然后保存
             plus.storage.setItem( "app_name", name);
             plus.storage.setItem( "app_address", address );
@@ -187,6 +190,23 @@
 
 
         });
+
+
+        /**
+         * 获取用户信息
+         */
+        function checkArea(name){
+            var uuid = plus.storage.getItem("uuid");
+            console.log("## checkArea ## uuid:"+uuid);
+            if(vaildeParam(uuid)){
+                postJSON(API_URL.ApiApplyChargingGroupCheckChargingGroup,{"uuid":uuid,"name":name},function(res){
+                    if("0" != res.code){
+                        layer.msg(res.msg);
+                        return;
+                    }
+                });
+            }
+        }
 
 	</script>
 </body>

@@ -141,23 +141,22 @@
             </h1>
             <form class="mui-input-group memberItem">
 
-                <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
-
+               <!-- <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>-->
 
                 <div class="mui-input-row">
                     <label>合伙人姓名</label>
-                    <input type="text" class="mui-input-clear" name="users" placeholder="请输入合伙人姓名">
+                    <input type="text" class="mui-input-clear" name="users"  value="公司账号" placeholder="请输入合伙人姓名">
                 </div>
                 <div class="mui-input-row">
                     <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear" name="mobile" placeholder="请输入合伙人手机">
+                    <input type="text" class="mui-input-clear" name="mobile" value="17607009587" placeholder="请输入合伙人手机">
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
                     <div class="mui-numbox">
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number"  name="rate1" />
+                        <input class="mui-numbox-input" type="number"  name="rate1" value="10" />
                         <!-- "+"按钮，点击可增大当前数值 -->
                         <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                     </div>
@@ -167,7 +166,38 @@
                     <div class="mui-numbox">
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number"  name="rate2" />
+                        <input class="mui-numbox-input" type="number"  name="rate2" value="20"/>
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+            </form>
+            <form class="mui-input-group memberItem">
+                <!-- <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>-->
+                <div class="mui-input-row">
+                    <label>合伙人姓名</label>
+                    <input type="text" class="mui-input-clear username" name="users" value="" placeholder="请输入合伙人姓名">
+                </div>
+                <div class="mui-input-row">
+                    <label>合伙人手机</label>
+                    <input type="text" class="mui-input-clear usersmobile" name="mobile"  value="" placeholder="请输入合伙人手机">
+                </div>
+                <div class="mui-input-row">
+                    <label>第一年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number"  name="rate1" value="90" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </div>
+                <div class="mui-input-row">
+                    <label>第二年比例</label>
+                    <div class="mui-numbox">
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number"  name="rate2" value="80" />
                         <!-- "+"按钮，点击可增大当前数值 -->
                         <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                     </div>
@@ -228,6 +258,9 @@
             document.addEventListener('plusready',pagePlusReady,false);
         }
         function pagePlusReady(){
+
+            getUserInfoDateBase()
+
             $("#submitBtn").click(function(){ //下一步
                     //服务校验参数 然后保存
                     var uuid = plus.storage.getItem("uuid");
@@ -236,7 +269,6 @@
                     var app_latitude = plus.storage.getItem("app_latitude");
                     var app_longitude = plus.storage.getItem("app_longitude");
                     var app_electricPrice = plus.storage.getItem("app_electricPrice");
-
                 /*  console.log("uuid======"+uuid);
                     console.log("app_name======"+app_name);
                     console.log("app_address======"+app_address);
@@ -276,7 +308,6 @@
             mui('.mui-numbox').numbox()
         })
         /**
-         *
          * @param that
          */
         function deleteFrom(that) {
@@ -287,6 +318,41 @@
             })
         }
 
-	</script>
+
+        /**
+         * 获取用户信息
+         */
+        function getUserInfoDateBase(){
+            var uuid = plus.storage.getItem("uuid");
+            console.log("## getUserInfoDateBase ## uuid:"+uuid);
+            if(vaildeParam(uuid)){
+                postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+                    if("0" == res.code){
+                        var mobile = res.data.username;
+                        var headImage = res.data.headImage;
+                        var nickname = res.data.realname;
+                        var phone = res.data.mobile;
+                        var bankCode = res.data.bankCode;
+                        var bank = res.data.bank;
+                        plus.storage.setItem( "mobile", mobile);
+                        plus.storage.setItem( "headImage", headImage);
+                        plus.storage.setItem( "nickname", nickname);
+                        plus.storage.setItem( "phone", phone);
+                        plus.storage.setItem( "bankCode", bankCode);
+                        plus.storage.setItem( "bank", bank);
+
+                        $(".username").val(nickname);
+                        $(".usersmobile").val(mobile);
+                    }else{
+                        layer.msg(res.msg);
+                        clearLogin();
+                        clicked("page/login.html");
+                    }
+                })
+            }
+        }
+
+
+    </script>
 </body>
 </html>
