@@ -115,8 +115,10 @@
         .deleteBtn{
             display: block;
             position: absolute;
-            right: 10px;
-            top: 10px;
+            right: 0px;
+            top: 0px;
+            padding: 10px;
+            z-index: 999;
         }
     </style>
 
@@ -278,6 +280,10 @@
          * @param that
          */
         function deleteFrom(that) {
+
+
+            alert('aa')
+
             var $this = $(that);
             layer.confirm("是否确定删除",function (index) {
                 $this.parents(".mui-input-group").remove();
