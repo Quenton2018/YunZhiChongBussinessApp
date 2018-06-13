@@ -171,6 +171,8 @@
                         var bank = res.data.bank;
                         var moneyAmount = res.data.moneyAmount;
 
+                        var userType = res.data.userType;
+
                         plus.storage.setItem( "mobile", mobile);
                         plus.storage.setItem( "headImage", headImage);
                         plus.storage.setItem( "nickname", nickname);
@@ -178,6 +180,9 @@
                         plus.storage.setItem( "bankCode", bankCode);
                         plus.storage.setItem( "bank", bank);
                         plus.storage.setItem( "moneyAmount", moneyAmount);
+
+                        plus.storage.setItem( "userType", userType);
+                        console.log("userType"+userType);
                         console.log("moneyAmount"+moneyAmount);
                         mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
                         $("#mobileBox").text(mobile);

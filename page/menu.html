@@ -96,7 +96,7 @@
         <div class="menu-item" onclick="clicked('myWallet.html')">
             <img src="../images/menu/qianbao.png"> 我的钱包
         </div>
-        <div class="menu-item" onclick="clicked('areaApplication.html')">
+        <div class="menu-item" id = "areaApplication"  onclick="clicked('areaApplication.html')" style="display: none;">
             <img src="../images/menu/shezhi.png"> 片区申请
         </div>
         <div class="menu-item" onclick="clicked('setting.html')">
@@ -105,6 +105,7 @@
         <div class="menu-item" onclick="clicked('customerService.html')">
             <img src="../images/menu/kefu.png"> 客服中心
         </div>
+
     </div><!-- /.menuList -->
 
 </div>
@@ -133,11 +134,15 @@
         if(vaildeParam(uuid)){
             var mobile = plus.storage.getItem("mobile");
             var headImage = plus.storage.getItem("headImage");
+            var userType = plus.storage.getItem("userType");
             mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
             $("#mobileBox").text(mobile);
             if(vaildeParam(headImage)){
                 console.log("## headImage ## : "+headImage)
                 document.getElementById('avatorImg').src = headImage;
+            }
+            if("1"==userType){
+                $("#areaApplication").css("display","block");
             }
 
         }else{
