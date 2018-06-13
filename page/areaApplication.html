@@ -178,6 +178,12 @@
             if(name.length>15){
                 layer.msg("片区名称不能大于15个字符");
             }
+            //服务校验参数 然后保存
+            plus.storage.setItem( "app_name", name);
+            plus.storage.setItem( "app_address", address );
+            plus.storage.setItem( "app_latitude", latitude);
+            plus.storage.setItem( "app_longitude", longitude);
+            plus.storage.setItem( "app_electricPrice", electricPrice);
             //校验片区名称是否重复
             checkArea(name);
         });
@@ -190,12 +196,6 @@
             if(vaildeParam(uuid)){
                 postJSON(API_URL.ApiApplyChargingGroupCheckChargingGroup,{"uuid":uuid,"name":name},function(res){
                     if("0" == res.code){
-                        //服务校验参数 然后保存
-                        plus.storage.setItem( "app_name", name);
-                        plus.storage.setItem( "app_address", address );
-                        plus.storage.setItem( "app_latitude", latitude);
-                        plus.storage.setItem( "app_longitude", longitude);
-                        plus.storage.setItem( "app_electricPrice", electricPrice);
                         clicked('areaSetting.html');  //下一步
                     }else {
                         layer.msg(res.msg);

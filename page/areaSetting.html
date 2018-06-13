@@ -154,7 +154,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number"  name="rate1" value="10" />
@@ -164,7 +164,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第二年比例</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number"  name="rate2" value="20"/>
@@ -185,7 +185,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number"  name="rate1" value="90" />
@@ -195,7 +195,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第二年比例</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number"  name="rate2" value="80" />
@@ -228,7 +228,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox"  data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number"  value="0" name="rate1" />
@@ -238,7 +238,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第二年比例</label>
-                    <div class="mui-numbox">
+                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number" value="0"  name="rate2" />
@@ -270,12 +270,12 @@
                     var app_latitude = plus.storage.getItem("app_latitude");
                     var app_longitude = plus.storage.getItem("app_longitude");
                     var app_electricPrice = plus.storage.getItem("app_electricPrice");
-                /*  console.log("uuid======"+uuid);
+                    console.log("uuid======"+uuid);
                     console.log("app_name======"+app_name);
                     console.log("app_address======"+app_address);
                     console.log("app_latitude======"+app_latitude);
                     console.log("app_longitude======"+app_longitude);
-                    console.log("app_electricPrice======"+app_electricPrice);*/
+                    console.log("app_electricPrice======"+app_electricPrice);
 
                 var $memberItem = $(".memberItem");
                 var memberList = new Array();
@@ -353,18 +353,9 @@
                 postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                     if("0" == res.code){
                         var mobile = res.data.username;
-                        var headImage = res.data.headImage;
                         var nickname = res.data.realname;
-                        var phone = res.data.mobile;
-                        var bankCode = res.data.bankCode;
-                        var bank = res.data.bank;
-                        plus.storage.setItem( "mobile", mobile);
-                        plus.storage.setItem( "headImage", headImage);
-                        plus.storage.setItem( "nickname", nickname);
-                        plus.storage.setItem( "phone", phone);
-                        plus.storage.setItem( "bankCode", bankCode);
-                        plus.storage.setItem( "bank", bank);
-
+                      /*  plus.storage.setItem( "mobile", mobile);
+                        plus.storage.setItem( "nickname", nickname);*/
                         $(".username").val(nickname);
                         $(".usersmobile").val(mobile);
                     }else{

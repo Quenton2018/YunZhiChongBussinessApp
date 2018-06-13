@@ -248,7 +248,7 @@
             <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
             <div class="mui-input-row">
                 <label>片区价格</label>
-                <input type="text" class="mui-input-clear" name="price"  placeholder="输入数字最多2位小数">
+                <input type="number" class="mui-input-clear" name="price"  placeholder="输入数字最多2位小数">
                 <span class="tips-fuhao">元</span>
             </div>
             <div class="mui-input-row">
@@ -276,17 +276,20 @@
             document.addEventListener('plusready',pagePlusReady,false);
         }
         function pagePlusReady(){
-
             $("#submitBtn").click(function(){
+                if(retFalg){
+                    layer.msg("已提交,不能重复提交");
+                    return;
+                }
                 retFalg  =true;
                 //服务校验参数 然后保存
-                var uuid = plus.storage.getItem("uuid");
-                var app_name = plus.storage.getItem("app_name");
-                var app_address = plus.storage.getItem("app_address");
-                var app_latitude = plus.storage.getItem("app_latitude");
-                var app_longitude = plus.storage.getItem("app_longitude");
-                var app_electricPrice = plus.storage.getItem("app_electricPrice");
-                var memberListJson = plus.storage.getItem("memberListJson");
+                 var uuid = plus.storage.getItem("uuid");
+                 var app_name = plus.storage.getItem("app_name");
+                 var app_address = plus.storage.getItem("app_address");
+                 var app_latitude = plus.storage.getItem("app_latitude");
+                 var app_longitude = plus.storage.getItem("app_longitude");
+                 var app_electricPrice = plus.storage.getItem("app_electricPrice");
+                 var memberListJson = plus.storage.getItem("memberListJson");
                  console.log("uuid======"+uuid);
                  console.log("app_name======"+app_name);
                  console.log("app_address======"+app_address);
@@ -310,18 +313,21 @@
                         retFalg  =false;
                         return;
                     }
+                    /*   checkNumber(price);
+                     checkNumber(defaultTime);*/
                     //校验是数字
-                    var reg = new RegExp(/(([1-9][0-9]*)(\.[0-9]+)*)|([0.][1-9]+)/i);
-                    if(!reg.test(parseFloat(price))){
+                    var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
+                    if(!reg.test(price)){
                         priceflag = true;
                         retFalg  =false;
                         return;
                     }
-                    if(!reg.test(parseFloat(defaultTime))){
+                    if(!reg.test(defaultTime)){
                         defaultTimeflag = true;
                         retFalg  =false;
                         return;
                     }
+
                     var dianjia = new Object();
                     dianjia.price = price;
                     dianjia.defaultTime = defaultTime;
@@ -334,12 +340,12 @@
                     return;
                 }
                 if(priceflag){
-                    layer.msg("片区价格必须为数字，且大零");
+                    layer.msg("片区价格必须为数字，且不能为负数");
                     retFalg  =false;
                     return;
                 }
                 if(defaultTimeflag){
-                    layer.msg("充电时间必须为数字，且大零");
+                    layer.msg("充电时间必须为数字，且不能为负数");
                     retFalg  =false;
                     return;
                 }
@@ -366,6 +372,7 @@
 
             });
 
+
         }
 
 
@@ -389,7 +396,14 @@
                 layer.close(index)
             })
         }
-
+        //验证字符串是否是数字
+        function checkNumber(theObj) {
+            var reg = /^[0-9]+.?[0-9]*$/;
+            if (reg.test(theObj)) {
+                return true;
+            }
+            return false;
+        }
 	</script>
 </body>
 </html>
