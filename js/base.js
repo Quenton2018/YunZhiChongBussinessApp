@@ -11,7 +11,7 @@ API_URL.ApiAdminQuickLogin = apiHost + "/api/admin/quickLogin"; //登录接口
 API_URL.ApiAdminPasswordlogin = apiHost + "/api/admin/passwordlogin"; //密码登录接口
 API_URL.ApiAdminInfo = apiHost + "/api/admin/info"; //获取用户信息
 
-API_URL.ApiAdminGetCompanyAccount = apiHost + "api/admin/getCompanyAccount";
+API_URL.ApiAdminGetCompanyAccount = apiHost + "/api/admin/getCompanyAccount";
 
 
 API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApplyBusiness"; //获取用户信息
@@ -47,6 +47,8 @@ API_URL.AppVersionPartnerGetNewest =apiHost +"/api/AppVersionPartner/getNewest";
 API_URL.ApiApplyChargingGroupSaveChargingGroup =apiHost +"/api/applyChargingGroup/saveChargingGroup";
 
 API_URL.ApiApplyChargingGroupCheckChargingGroup =apiHost +"/api/applyChargingGroup/checkChargingGroup";
+
+API_URL.ApiGetApplyChargingGroupList =apiHost +"/api/applyChargingGroup/getApplyChargingGroupList";
 
 
 var PAGE_URL = {};
