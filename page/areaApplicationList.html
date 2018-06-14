@@ -16,12 +16,13 @@
 	<script src="../js/common.js"></script>
 	<script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
+
+    <script src="../js/jquery-qrcode-master/qrcode.js"></script>
     <style type="text/css">
 
         .mui-content{
             background-color: #ffffff;
         }
-
 
         #submitBtn{
             display: block;
@@ -40,17 +41,9 @@
             max-width: 100px;
             height: 42px;
         }
-        .pageBigTitle{
-            float: right;
-            line-height: inherit;
-            margin-left: 20px;
-        }
         .bottom-content p{
             font-size: 18px;
             color: #000000;
-        }
-        .middle-content{
-            background:#ffffff;
         }
         .mui-table-view-cell>a:not(.mui-btn) {
             white-space: inherit;
@@ -81,11 +74,8 @@
             height: 82px;
         }
         .mui-media-body{
-            font-size: 20px;
+            font-size: 16px;
             line-height: 28px;
-        }
-        .icon-zuanshi{
-            color: #E4C133;
         }
         .loadMore{
             background: #eaeaea;
@@ -109,7 +99,17 @@
         .mui-table-view:after {
             background-color: #EFEFF4;
         }
+        .qrcodeBox{
+            text-align: center;
+            margin: 0 auto;
+        }
+        .qrcodeBox img{
+            display: block;
+            margin: 0 auto;
+        }
     </style>
+
+
 
 </head>
 <body style="background: #fff">
@@ -121,12 +121,12 @@
 
     <div class="mui-content" style="background: #fff;    padding-bottom: 100px;">
         <div class="list-item">
-            <ul class="mui-table-view"  id="dataList">
-
+            <ul class="mui-table-view dataList"  id="">
 
             </ul>
         </div>
-
+        <div id="loadMore" class="loadMore">加载更多</div>
+        <div id="noMore" class="noMore">没有更多了</div>
         <button id="submitBtn">
                新建一个申请
         </button>
@@ -134,13 +134,13 @@
 
     <script type="text/html" id="dataTmpl">
 
-
-        <li class="mui-table-view-cell mui-media">
+        <li class="mui-table-view-cell mui-media showQrcode">
             <a href="javascript:;" class="">
-                <span class="mui-media-object mui-pull-right" > {{createDate}}</span>
+                <img class="mui-media-object mui-pull-right mui-media-img " src="../images/erweimatupian.png" style="width: 40px; height: 40px;" data-id="{{id}}"  onclick="getqrCode(this)"  >
+                <!--<i class=" iconfont icon-erweima"></i>-->
                 <div class="mui-media-body">
-                    片区名称： {{name}}
-                    <p class="mui-ellipsis"> <span >{{status}}</span>  <span>{{electricPrice}}电价</span>    </br> {{address}}</p>
+                    片区名称: {{name}}
+                    <p class="mui-ellipsis"> 状态:<span style="color: red" >{{status}}</span>  <span>电价:{{electricPrice}}元</span>    </br> {{address}}</br>申请时间:{{createDate}}</p>
                 </div>
             </a>
         </li>
@@ -150,6 +150,8 @@
         mui.init();
         var pageNumber = 1;
         var pageSize = 5;
+        var shareUrl = null;
+
 
         if(window.plus){
             pagePlusReady();
@@ -160,6 +162,32 @@
             $("#loadMore").css({"display":"none"});
             $("#noMore").css({"display":"none"});
             getList();
+
+
+        }
+
+        function getqrCode(that) {
+
+            var btnArray=['确定','取消'];
+            mui.confirm('生成片区二维码?','提示',btnArray,function(e){
+                if(e.index == 0){
+                    var id = 'Qrcode_' + randomString(20);
+                    var data_id = that.attr("data-id");
+                    var timestamp = new Date().getTime();
+                    console.log("data_id:"+data_id);
+                    shareUrl = data_id +","+timestamp;
+                    layer.open({
+                        title: '片区二维码'
+                        ,content: '<div class="qrcodeBox" style="width: 300px;height: 300px" id="'+id+'"></div>',
+                        btn:{}
+                    });
+                    var qrcode = new QRCode(document.getElementById(id), {
+                        width : 300,
+                        height : 300
+                    });
+                    qrcode.makeCode(shareUrl);
+                }
+            });
 
         }
 
@@ -178,6 +206,13 @@
                         var html = '';
                         $.each(data, function(index,item) {
 
+                            var chargingGroup = item.chargingGroup;
+                            console.log("chargingGroup"+chargingGroup)
+                            var keid;
+                            if(vaildeParam(chargingGroup)){
+                                keid =chargingGroup.id;
+                            }
+                            console.log("keid:"+keid);
                             var status = item.status;
                             var areaName =  item.areaName;
                             var address =  item.address;
@@ -188,7 +223,9 @@
                                 .replace(/{{createDate}}/g,createDate)
                                 .replace(/{{status}}/g,status)
                                 .replace(/{{electricPrice}}/g,electricPrice)
-                                .replace(/{{address}}/g,address);
+                                .replace(/{{address}}/g,address)
+                            .replace(/{{id}}/g,keid);
+
                         });
                         if(1 == pageSize){
                             $(".dataList").html("");
@@ -209,14 +246,18 @@
             }
         }
 
+       /* var qrcode = new QRCode(document.getElementById("qtCodeBox"), {
+            width : 200,
+            height : 200
+        });
+        qrcode.makeCode("${setting.siteUrl}/wx/member/bind.html?invitationCode=${member.myinvitationCode}");*/
+
+
+
         $("#loadMore").click(function(){
             pageNumber++;
             getList();
         })
-
-
-
-
 
         //新建一个申请
         $("#submitBtn").click(function(){
