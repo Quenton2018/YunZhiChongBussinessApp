@@ -276,106 +276,117 @@
             document.addEventListener('plusready',pagePlusReady,false);
         }
         function pagePlusReady(){
-            $("#submitBtn").click(function(){
-                if(retFalg){
-                    layer.msg("已提交,不能重复提交");
-                    return;
-                }
-                retFalg  =true;
-                //服务校验参数 然后保存
-                 var uuid = plus.storage.getItem("uuid");
-                 var app_name = plus.storage.getItem("app_name");
-                 var app_address = plus.storage.getItem("app_address");
-                 var app_latitude = plus.storage.getItem("app_latitude");
-                 var app_longitude = plus.storage.getItem("app_longitude");
-                 var app_electricPrice = plus.storage.getItem("app_electricPrice");
-                 var memberListJson = plus.storage.getItem("memberListJson");
-                 console.log("uuid======"+uuid);
-                 console.log("app_name======"+app_name);
-                 console.log("app_address======"+app_address);
-                 console.log("app_latitude======"+app_latitude);
-                 console.log("app_longitude======"+app_longitude);
-                 console.log("app_electricPrice======"+app_electricPrice);
-                 console.log("memberListJson======"+memberListJson);
-                var $dianjiaItem = $(".dianjiaItem");
-                var dianjiaList = new Array();
-                var dianjiaListJson = '';
-                var vaildeflag= false;
-                var priceflag= false;
-                var defaultTimeflag= false;
-                $.each($dianjiaItem,function (index,item) {
-                    var price =  $(item).find( $("input[name='price']")).val();
-                    var defaultTime =  $(item).find( $("input[name='defaultTime']")).val();
-                    console.log("price"+price);
-                    console.log("defaultTime"+defaultTime);
-                    if(!vaildeParam(price) || !vaildeParam(defaultTime)){
-                        vaildeflag = true;
-                        retFalg  =false;
-                        return;
-                    }
-                    /*   checkNumber(price);
-                     checkNumber(defaultTime);*/
-                    //校验是数字
-                    var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
-                    if(!reg.test(price)){
-                        priceflag = true;
-                        retFalg  =false;
-                        return;
-                    }
-                    if(!reg.test(defaultTime)){
-                        defaultTimeflag = true;
-                        retFalg  =false;
-                        return;
-                    }
 
-                    var dianjia = new Object();
-                    dianjia.price = price;
-                    dianjia.defaultTime = defaultTime;
-                    dianjiaList.push(dianjia);
-                })
-
-                if(vaildeflag){
-                    layer.msg("请补全信息");
-                    retFalg  =false;
-                    return;
-                }
-                if(priceflag){
-                    layer.msg("片区价格必须为数字，且不能为负数");
-                    retFalg  =false;
-                    return;
-                }
-                if(defaultTimeflag){
-                    layer.msg("充电时间必须为数字，且不能为负数");
-                    retFalg  =false;
-                    return;
-                }
-                dianjiaListJson = JSON.stringify(dianjiaList);
-                console.log("dianjiaListJson"+dianjiaListJson);
-                var dataParam = {
-                    "uuid":uuid,
-                    "app_name":app_name,
-                    "app_address":app_address,
-                    "app_latitude":app_latitude,
-                    "app_longitude":app_longitude,
-                    "app_electricPrice":app_electricPrice,
-                    "memberListJson":memberListJson,
-                    "dianjiaListJson":dianjiaListJson
-                }
-                postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
-                    if("0" == res.code){
-                        layer.msg(res.msg);
-                    }else{
-                        retFalg  =false;
-                        layer.msg(res.msg);
+            //拨打电话
+            document.getElementById("submitBtn").addEventListener('tap',function(){
+                var btnArray=['确定','取消'];
+                mui.confirm('是否确定提交?','提示',btnArray,function(e){
+                    if(e.index == 0){
+                        submintBtn();
                     }
                 });
-
             });
+
+
 
 
         }
 
+        function submintBtn( ) {
+            if(retFalg){
+                layer.msg("已提交,不能重复提交");
+                return;
+            }
+            retFalg  =true;
+            //服务校验参数 然后保存
+            var uuid = plus.storage.getItem("uuid");
+            var app_name = plus.storage.getItem("app_name");
+            var app_address = plus.storage.getItem("app_address");
+            var app_latitude = plus.storage.getItem("app_latitude");
+            var app_longitude = plus.storage.getItem("app_longitude");
+            var app_electricPrice = plus.storage.getItem("app_electricPrice");
+            var memberListJson = plus.storage.getItem("memberListJson");
+            console.log("uuid======"+uuid);
+            console.log("app_name======"+app_name);
+            console.log("app_address======"+app_address);
+            console.log("app_latitude======"+app_latitude);
+            console.log("app_longitude======"+app_longitude);
+            console.log("app_electricPrice======"+app_electricPrice);
+            console.log("memberListJson======"+memberListJson);
+            var $dianjiaItem = $(".dianjiaItem");
+            var dianjiaList = new Array();
+            var dianjiaListJson = '';
+            var vaildeflag= false;
+            var priceflag= false;
+            var defaultTimeflag= false;
+            $.each($dianjiaItem,function (index,item) {
+                var price =  $(item).find( $("input[name='price']")).val();
+                var defaultTime =  $(item).find( $("input[name='defaultTime']")).val();
+                console.log("price"+price);
+                console.log("defaultTime"+defaultTime);
+                if(!vaildeParam(price) || !vaildeParam(defaultTime)){
+                    vaildeflag = true;
+                    retFalg  =false;
+                    return;
+                }
+                /*   checkNumber(price);
+                 checkNumber(defaultTime);*/
+                //校验是数字
+                var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
+                if(!reg.test(price)){
+                    priceflag = true;
+                    retFalg  =false;
+                    return;
+                }
+                if(!reg.test(defaultTime)){
+                    defaultTimeflag = true;
+                    retFalg  =false;
+                    return;
+                }
 
+                var dianjia = new Object();
+                dianjia.price = price;
+                dianjia.defaultTime = defaultTime;
+                dianjiaList.push(dianjia);
+            })
+
+            if(vaildeflag){
+                layer.msg("请补全信息");
+                retFalg  =false;
+                return;
+            }
+            if(priceflag){
+                layer.msg("片区价格必须为数字，且不能为负数");
+                retFalg  =false;
+                return;
+            }
+            if(defaultTimeflag){
+                layer.msg("充电时间必须为数字，且不能为负数");
+                retFalg  =false;
+                return;
+            }
+            dianjiaListJson = JSON.stringify(dianjiaList);
+            console.log("dianjiaListJson"+dianjiaListJson);
+            var dataParam = {
+                "uuid":uuid,
+                "app_name":app_name,
+                "app_address":app_address,
+                "app_latitude":app_latitude,
+                "app_longitude":app_longitude,
+                "app_electricPrice":app_electricPrice,
+                "memberListJson":memberListJson,
+                "dianjiaListJson":dianjiaListJson
+            }
+            postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
+                if("0" == res.code){
+                    layer.msg(res.msg);
+                }else{
+                    retFalg  =false;
+                    layer.msg(res.msg);
+                }
+            });
+
+        }
 
         /**
          * 添加一个电价

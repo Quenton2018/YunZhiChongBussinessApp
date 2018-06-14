@@ -146,11 +146,11 @@
 
                 <div class="mui-input-row">
                     <label>合伙人姓名</label>
-                    <input type="text" class="mui-input-clear" name="users"  value="公司账号"  readonly="readonly" placeholder="请输入合伙人姓名">
+                    <input type="text" class="mui-input-clear" name="users companyName"   readonly="readonly" placeholder="请输入合伙人姓名">
                 </div>
                 <div class="mui-input-row">
                     <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear" name="mobile" value="17607009587" readonly="readonly"  placeholder="请输入合伙人手机">
+                    <input type="text" class="mui-input-clear" name="mobile companyMobile"  readonly="readonly"  placeholder="请输入合伙人手机">
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
@@ -259,7 +259,7 @@
             document.addEventListener('plusready',pagePlusReady,false);
         }
         function pagePlusReady(){
-
+            GetCompanyAccount();
             getUserInfoDateBase();
 
             $("#submitBtn").click(function(){ //下一步
@@ -342,6 +342,24 @@
             })
         }
 
+        function GetCompanyAccount(){
+            var uuid = plus.storage.getItem("uuid");
+            console.log("## GetCompanyAccount ## uuid:"+uuid);
+            if(vaildeParam(uuid)){
+                postJSON(API_URL.ApiAdminGetCompanyAccount,{"uuid":uuid},function(res){
+                    if("0" == res.code){
+                        var mobile = res.data.username;
+                        var nickname = res.data.realname;
+                        $(".companyName").val(nickname);
+                        $(".companyMobile").val(mobile);
+                    }else{
+                        layer.msg(res.msg);
+                        clearLogin();
+                        clicked("page/login.html");
+                    }
+                })
+            }
+        }
 
         /**
          * 获取用户信息
