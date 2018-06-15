@@ -54,7 +54,7 @@ API_URL.ApiChargingGroupQRCodeSaveChargingGroupQRCode =apiHost +"/api/chargingGr
 
 
 var WX_URL = {};
-WX_URL.QRCode =  '/wx/addingCdz'  //
+WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接
 
 
 
