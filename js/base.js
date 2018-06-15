@@ -1,8 +1,9 @@
 //var apiHost = "http://api.9n.jxyunge.com";
 //var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-var apiHost = "http://192.168.1.112:8181";
+var apiHost = "http://192.168.1.102:8181";
 
+var weixinHost = "http://wx.jx9n.com"; //微信域名
 
 var API_URL = {};
 API_URL.ApiAdminSendCode = apiHost + "/api/admin/sendCode"; //发送短信接口
@@ -51,8 +52,8 @@ API_URL.ApiApplyChargingGroupCheckChargingGroup =apiHost +"/api/applyChargingGro
 API_URL.ApiGetApplyChargingGroupList =apiHost +"/api/applyChargingGroup/getApplyChargingGroupList";
 
 
-var PAGE_URL = {};
-PAGE_URL.INVITATION = apiHost + '/page/view/invitation'  //邀请页面
+var WX_URL = {};
+WX_URL.QRCode = weixinHost + '/wx/addingCdz'  //邀请页面
 
 
 

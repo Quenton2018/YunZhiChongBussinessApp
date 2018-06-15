@@ -172,10 +172,10 @@
             mui.confirm('生成片区二维码?','提示',btnArray,function(e){
                 if(e.index == 0){
                     var id = 'Qrcode_' + randomString(20);
-                    var data_id = that.attr("data-id");
+                    var data_id = $(that).attr("data-id");
                     var timestamp = new Date().getTime();
                     console.log("data_id:"+data_id);
-                    shareUrl = data_id +","+timestamp;
+                    shareUrl = WX_URL.QRCode+"?data_id="+data_id +"&timestamp="+timestamp;
                     layer.open({
                         title: '片区二维码'
                         ,content: '<div class="qrcodeBox" style="width: 300px;height: 300px" id="'+id+'"></div>',
