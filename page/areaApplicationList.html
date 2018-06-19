@@ -155,6 +155,15 @@
 
 	<script type="text/javascript">
         mui.init();
+
+        var ws=null;
+        // 处理沉浸式状态栏
+        var topoffset=0;
+        var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+        if(ms&&ms.length>=3){
+            topoffset=parseFloat(ms[2]);
+        }
+
         var pageNumber = 1;
         var pageSize = 5;
         var shareUrl = null;
@@ -170,11 +179,25 @@
             $("#noMore").css({"display":"none"});
             getList();
 
+            ws=plus.webview.currentWebview();
+            if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+                topoffset=Math.round(plus.navigator.getStatusbarHeight());
+            }
+            ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+        }
 
+        // 刷新页面
+        function onRefresh(){
+         console.log("onRefresh==================");
+          $("#loadMore").css({"display":"none"});
+         $("#noMore").css({"display":"none"});
+         pageNumber = 1;
+          $(".dataList").html("");
+          getList();
+         ws.endPullToRefresh();
         }
 
         function getqrCode(that) {
-
             var btnArray=['确定','取消'];
             mui.confirm('生成片区二维码?','提示',btnArray,function(e){
                 if(e.index == 0){

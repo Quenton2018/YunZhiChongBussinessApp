@@ -165,7 +165,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number"  readonly="readonly" value="4" name="defaultTime" />
@@ -184,7 +184,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number" value="6" readonly="readonly" name="defaultTime" />
@@ -203,7 +203,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number" value="8" readonly="readonly" name="defaultTime" />
@@ -222,7 +222,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>预设充电时间</label>
-                    <div class="mui-numbox"  data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
+                    <div class="mui-numbox"  data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number" value="12" readonly="readonly" name="defaultTime" />
@@ -253,7 +253,7 @@
             </div>
             <div class="mui-input-row">
                 <label>预设充电时间</label>
-                <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0' data-numbox-max='24'>
+                <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
                     <!-- "-"按钮，点击可减小当前数值 -->
                     <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                     <input class="mui-numbox-input" type="number"  name="defaultTime" readonly="readonly" value="0" />
@@ -318,6 +318,7 @@
             var vaildeflag= false;
             var priceflag= false;
             var defaultTimeflag= false;
+            var jiageling = false;
             $.each($dianjiaItem,function (index,item) {
                 var price =  $(item).find( $("input[name='price']")).val();
                 var defaultTime =  $(item).find( $("input[name='defaultTime']")).val();
@@ -342,7 +343,11 @@
                     retFalg  =false;
                     return;
                 }
-
+                if(0==parseFloat(price)){
+                    jiageling = true;
+                    retFalg  =false;
+                    return;
+                }
                 var dianjia = new Object();
                 dianjia.price = price;
                 dianjia.defaultTime = defaultTime;
@@ -364,6 +369,12 @@
                 retFalg  =false;
                 return;
             }
+            if(jiageling){
+                layer.msg("片区价格必须大于0");
+                retFalg  =false;
+                return;
+            }
+
             dianjiaListJson = JSON.stringify(dianjiaList);
             console.log("dianjiaListJson"+dianjiaListJson);
             var dataParam = {
@@ -376,14 +387,14 @@
                 "memberListJson":memberListJson,
                 "dianjiaListJson":dianjiaListJson
             }
-            postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
+          /*  postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
                 if("0" == res.code){
                     layer.msg(res.msg);
                 }else{
                     retFalg  =false;
                     layer.msg(res.msg);
                 }
-            });
+            });*/
 
         }
 

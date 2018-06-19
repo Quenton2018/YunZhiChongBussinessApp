@@ -146,11 +146,11 @@
 
                 <div class="mui-input-row">
                     <label>合伙人姓名</label>
-                    <input type="text" class="mui-input-clear companyName" name="users"   readonly="readonly" placeholder="请输入合伙人姓名">
+                    <input type="text" class="mui-input-clear companyName" name="users"  disabled="true" placeholder="请输入合伙人姓名">
                 </div>
                 <div class="mui-input-row">
                     <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear companyMobile" name="mobile"  readonly="readonly"  placeholder="请输入合伙人手机">
+                    <input type="text" class="mui-input-clear companyMobile" name="mobile" disabled="true"   placeholder="请输入合伙人手机">
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
@@ -177,11 +177,11 @@
                 <!-- <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>-->
                 <div class="mui-input-row">
                     <label>合伙人姓名</label>
-                    <input type="text" class="mui-input-clear username" name="users" value=""  readonly="readonly" placeholder="请输入合伙人姓名">
+                    <input type="text" class="mui-input-clear username" name="users" value=""  disabled="true" placeholder="请输入合伙人姓名">
                 </div>
                 <div class="mui-input-row">
                     <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear usersmobile" name="mobile"  value="" readonly="readonly" placeholder="请输入合伙人手机">
+                    <input type="text" class="mui-input-clear usersmobile" name="mobile"  value="" disabled="true" placeholder="请输入合伙人手机">
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
@@ -281,9 +281,12 @@
                 var memberList = new Array();
                 var memberListJson = '';
 
+                var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
                 var rateSum1 = 0;
                 var rateSum2 = 0;
                 var flag= false;
+                var flagMobile= false;
+                var flagMobileNumber= false;
                 $.each($memberItem,function (index,item) {
                     var users =  $(item).find( $("input[name='users']")).val();
                     var mobile =  $(item).find( $("input[name='mobile']")).val();
@@ -291,7 +294,18 @@
                     var rate2 =  $(item).find( $("input[name='rate2']")).val();
                     if(!vaildeParam(mobile) || !vaildeParam(users) || !vaildeParam(rate1) || !vaildeParam(rate2)){
                         flag = true;
+                        return;
                     }
+                    //校验是数字
+                    if(!reg.test(mobile)){
+                        flagMobileNumber = true;
+                        return;
+                    }
+                    if(mobile.length!==11){
+                        flagMobile = true;
+                        return;
+                    }
+
                     rateSum1 =parseInt(rateSum1)+parseInt(rate1);
                     rateSum2 = parseInt(rateSum2)+parseInt(rate2);
                     var member = new Object();
@@ -305,6 +319,14 @@
                 console.log("rateSum2:"+rateSum2);
                 if(flag){
                     layer.msg("请补全信息");
+                    return;
+                }
+                if(flagMobile){
+                    layer.msg("合伙人手机必须为11位");
+                    return;
+                }
+                if(flagMobileNumber){
+                    layer.msg("合伙人手机必须为数字");
                     return;
                 }
                 if(rateSum1!=100){
