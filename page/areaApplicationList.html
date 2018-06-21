@@ -141,11 +141,11 @@
 
     <script type="text/html" id="dataTmpl">
 
-        <li class="mui-table-view-cell mui-media showQrcode">
+        <li class="mui-table-view-cell mui-media showQrcode"   >
             <a href="javascript:;" class="">
                 <img class="mui-media-object mui-pull-right mui-media-img " src="../images/erweimatupian.png" style="width: 40px; height: 40px;" data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)"  >
                 <!--<i class=" iconfont icon-erweima"></i>-->
-                <div class="mui-media-body">
+                <div class="mui-media-body" data-id="{{id}}" onclick="areaApplicationDeatil(this)">
                     片区名称: {{name}}
                     <p class="mui-ellipsis"> 状态:{{status}} <span>电价:{{electricPrice}}元</span>    </br> {{address}}</br>申请时间:{{createDate}}</p>
                 </div>
@@ -196,6 +196,17 @@
           getList();
          ws.endPullToRefresh();
         }
+
+        //跳转详情页
+       function areaApplicationDeatil(that) {
+           console.log("that=========="+that);
+          var data_id = $(that).attr("data-id")+''; //片区id*/
+           console.log("areaId=========="+data_id);
+           //服务校验参数 然后保存
+           plus.storage.setItem( "areaId", data_id);
+           clicked('areaApplicationDetail.html');
+       }
+        
 
         function getqrCode(that) {
             var btnArray=['确定','取消'];
@@ -290,6 +301,7 @@
                                 .replace(/{{status}}/g,statusDiv)
                                 .replace(/{{electricPrice}}/g,electricPrice)
                                 .replace(/{{address}}/g,address)
+                                .replace(/{{id}}/g,keid)
                             .replace(/{{id}}/g,keid);
 
                         });

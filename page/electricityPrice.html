@@ -390,6 +390,9 @@
            postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
                 if("0" == res.code){
                     layer.msg(res.msg);
+                    setTimeout(function(){
+                        clicked('areaApplicationList.html');
+                    },2000);
                 }else{
                     retFalg  =false;
                     layer.msg(res.msg);
