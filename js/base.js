@@ -50,8 +50,6 @@ API_URL.ApiApplyChargingGroupCheckChargingGroup =apiHost +"/api/applyChargingGro
 
 API_URL.ApiGetApplyChargingGroupList =apiHost +"/api/applyChargingGroup/getApplyChargingGroupList";
 
-API_URL.ApiGetApplyChargingGroupById =apiHost +"/api/applyChargingGroup/getApplyChargingGroupById";
-
 API_URL.ApiChargingGroupQRCodeSaveChargingGroupQRCode =apiHost +"/api/chargingGroupQRCode/saveChargingGroupQRCode"; //保存片区二维码
 
 
