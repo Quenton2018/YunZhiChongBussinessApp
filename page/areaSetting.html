@@ -228,7 +228,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第一年比例</label>
-                    <div class="mui-numbox"  data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
+                    <div class="mui-numbox"  data-numbox-step='5' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number"  value="0" name="rate1" />
@@ -238,7 +238,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>第二年比例</label>
-                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
+                    <div class="mui-numbox" data-numbox-step='5' data-numbox-min='0' data-numbox-max='100'>
                         <!-- "-"按钮，点击可减小当前数值 -->
                         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
                         <input class="mui-numbox-input" type="number" value="0"  name="rate2" />
@@ -258,6 +258,8 @@
         }else{
             document.addEventListener('plusready',pagePlusReady,false);
         }
+
+
         function pagePlusReady(){
             GetCompanyAccount();
             getUserInfoDateBase();
@@ -290,7 +292,9 @@
                 var flagMobile= false;
                 var flagMobileNumber= false;
                 var flagMobileRepeat = false;
+                var flagHehuoren = false;
                 $.each($memberItem,function (index,item) {
+
                     var users =  $(item).find( $("input[name='users']")).val();
                     var mobile =  $(item).find( $("input[name='mobile']")).val();
                     var rate1 =  $(item).find( $("input[name='rate1']")).val();
@@ -324,7 +328,7 @@
                     member.rate1 = rate1;
                     member.rate2 = rate2;
                     memberList.push(member);
-                })
+                });
                 console.log("rateSum1:"+rateSum1);
                 console.log("rateSum2:"+rateSum2);
                 if(flag){
@@ -376,22 +380,37 @@
             return false;
         }
 
+
+        var falgNumbers = 0;
+
+        function updateFalgNumbers() {
+            falgNumbers = $(".memberItem").length;
+        }
         /**
          * 添加一个合伙人
          */
         $(".addHeHuoRen").click(function () {
-            var tmpl = $("#heHuoRenTmpl").html();
-            $("#dataList").append(tmpl);
-            mui('.mui-numbox').numbox()
+            updateFalgNumbers();
+            if(falgNumbers>4){
+                layer.msg("合伙人最多5个人");
+                return;
+            }else {
+                var tmpl = $("#heHuoRenTmpl").html();
+                $("#dataList").append(tmpl);
+                mui('.mui-numbox').numbox();
+            }
         })
+
         /**
          * @param that
          */
         function deleteFrom(that) {
             var $this = $(that);
             layer.confirm("是否确定删除",function (index) {
+                updateFalgNumbers();
+                console.log("falgNumbers==="+falgNumbers);
                 $this.parents(".mui-input-group").remove();
-                layer.close(index)
+                layer.close(index);
             })
         }
 
