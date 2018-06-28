@@ -53,6 +53,8 @@ API_URL.ApiGetApplyChargingGroupList =apiHost +"/api/applyChargingGroup/getApply
 API_URL.ApiChargingGroupQRCodeSaveChargingGroupQRCode =apiHost +"/api/chargingGroupQRCode/saveChargingGroupQRCode"; //保存片区二维码
 
 
+API_URL.ApiGetApplyChargingGroupById =apiHost +"/api/applyChargingGroup/getApplyChargingGroupById"; //保存片区二维码
+
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接
 
