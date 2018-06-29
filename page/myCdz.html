@@ -76,6 +76,7 @@
             display: none;
         }
 
+
     </style>
 
 </head>
@@ -137,7 +138,7 @@
 
     var btnType ="0";  //正常：0 异常：1
     var pageNumber = 1;
-    var pageSize = 99999;
+    var pageSize = 10;
     var type = 1;
     var uuid = '';
 
@@ -220,6 +221,7 @@
                     var tmpl = $("#dataTmpl2").html();
                 }
                 var ids = '';
+                var falgLast = true;
                 $.each(data, function(index,item) {
                     var createDate = new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss");
                     html += tmpl.replace(/{{createDate}}/g,createDate)
@@ -228,12 +230,26 @@
                         .replace(/{{id}}/g,item.id)
                         .replace(/{{money}}/g,'<img src="../images/5-121204194028.gif" height="15">');
                     ids += item.id+",";
+                    if(index<9){
+                        falgLast =true;
+                    }else{
+                        falgLast =false;
+                    }
                 });
 
                 console.log("ids:"+ids)
 
                 $(".dataList").append(html);
+
                 getItemMoney(ids,uuid);
+                if(falgLast){
+                    $("#loadMore").css({"display":"none"});
+                    $("#noMore").css({"display":"block"});
+                }else{
+                    $("#loadMore").css({"display":"block"});
+                    $("#noMore").css({"display":"none"});
+                }
+
             }else{
                 layer.msg(res.msg);
             }
@@ -277,7 +293,10 @@
     }
 
 
-
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getChargingGroup(uuid);
+    })
 
 
 </script>
