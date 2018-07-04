@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>片区申请修改</title>
+	<link rel="stylesheet" href="../css/mui.min.css">
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+	<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../plugins/layer/layer.js"></script>
+	<script src="../js/hammer.min.js"></script>
+	<script src="../js/jquery.hammer.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+        .topAlertIfo{
+            font-size: .8rem;
+            padding: 15px;
+            background-color: #FF7546;
+        }
+        .mui-content{
+            background-color: #ffffff;
+        }
+        .application-Box{
+            overflow: hidden;
+            margin-bottom: 0;
+            margin: 15px;
+            padding-top: 1rem;
+        }
+        .application-Box .inputBox{
+            position: relative;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .application-Box .inputBox i{
+            font-size: 1rem;
+            position: absolute;
+            left: 10px;
+            line-height: 2.5rem;
+            color: #000;
+        }
+        .application-Box input{
+            display: block;
+            border: none;
+            background: #F0F1F3;
+            padding-left: 80px;
+            border-radius: 20px;
+            font-size: .9rem;
+        }
+        .application-Box input:focus{
+            outline: none;
+        }
+        .getCode{
+            position: absolute;
+            right: 10px;
+            top: 0;
+            color: #333;
+            font-size: .8rem;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 10px;
+        }
+
+        #submitBtn{
+            display: block;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            background-color: #FF7546;
+            height: 60px;
+            color: #ffff;
+        }
+        .app-list{
+            color: #FF7546;
+            float: right;
+            /* padding: 20px; */
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+    </style>
+
+</head>
+<body style="background: #fff">
+
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">片区申请修改</h1>
+    </header>
+
+    <div class="mui-content" style="background: #fff;    padding-bottom: 100px;">
+
+        <div class="topAlertIfo">
+            请正确填写修改信息，信息提交后，工作人员会自动审核
+        </div>
+
+        <div class="application-Box">
+            <div class="inputBox">
+                <i class="iconfont">片区名称</i>
+                <input type="text" name="name" placeholder="请输入市+小区,例如：北京市XX小区"/>
+            </div>
+            <div class="inputBox">
+                    <i class="iconfont">地理位置</i>
+                    <input type="text" id="address" name="address" placeholder="请选择" />
+                    <span class="getCode" id="map"  onclick="clicked('map.html')">选择位置</span>
+            </div>
+            <div class="inputBox">
+                <i class="iconfont">经度</i>
+                <input type="text" id="latitude" name="latitude"  disabled="true" placeholder="请输经度" />
+            </div>
+            <div class="inputBox">
+                <i class="iconfont">纬度</i>
+                <input type="text"  id="longitude" name="longitude"   disabled="true" placeholder="请输入纬度" />
+            </div>
+            <div class="inputBox">
+                <i class="iconfont">电价</i>
+                <input type="text"  id="electricPrice" name="electricPrice" placeholder="请输入电价" value="0.8"  />
+            </div>
+        </div>
+
+        <button id="submitBtn">
+                下一步
+        </button>
+    </div>
+
+	<script type="text/javascript">
+        mui.init();
+
+        if(window.plus){
+            pagePlusReady();
+        }else{
+            document.addEventListener('plusready',pagePlusReady,false);
+        }
+        function pagePlusReady(){
+
+            var  app_name =   plus.storage.getItem( "app_name");
+            var  app_address =    plus.storage.getItem( "app_address");
+            var  app_latitude =    plus.storage.getItem( "app_latitude");
+            var  app_longitude =   plus.storage.getItem( "app_longitude");
+            var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
+
+            $("input[name='name']").val(app_name);
+            $("input[name='address']").val(app_address);
+
+            $("input[name='latitude']").val(app_latitude);
+            $("input[name='longitude']").val(app_longitude);
+            $("input[name='electricPrice']").val(app_electricPrice);
+
+        }
+        function fullAddress( latitude,longitude,address) {
+            console.log("fullAddress=========address"+address);
+            console.log("fullAddress=========latitude"+latitude);
+            console.log("fullAddress=========longitude"+longitude);
+
+            $("#latitude").val(latitude);
+            $("#longitude").val(longitude);
+            $("#address").val(address);
+        }
+
+        $("#submitBtn").click(function(){
+            var name = $("input[name='name']").val();
+            if(!vaildeParam(name)){
+                layer.msg("片区名称不能为空");
+                return;
+            }
+            var address = $("input[name='address']").val();
+            if(!vaildeParam(address)){
+                layer.msg("位置不能为空");
+                return;
+            }
+            var latitude = $("input[name='latitude']").val();
+            if(!vaildeParam(latitude)){
+                layer.msg("经度不能为空");
+                return;
+            }
+            var longitude = $("input[name='longitude']").val();
+            if(!vaildeParam(longitude)){
+                layer.msg("纬度不能为空");
+                return;
+            }
+            var electricPrice = $("input[name='electricPrice']").val();
+            if(!vaildeParam(electricPrice)){
+                layer.msg("电价不能为空");
+                return;
+            }
+            var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
+            if(!reg.test(electricPrice)){
+                layer.msg("电价需为数字");
+                return;
+            }
+            if(name.length>15){
+                layer.msg("片区名称不能大于15个字符");
+            }
+            //服务校验参数 然后保存
+            plus.storage.setItem( "app_name", name);
+            plus.storage.setItem( "app_address", address );
+            plus.storage.setItem( "app_latitude", latitude);
+            plus.storage.setItem( "app_longitude", longitude);
+            plus.storage.setItem( "app_electricPrice", electricPrice);
+
+            clicked('areaSettingEdit.html');  //下一步
+        });
+
+	</script>
+</body>
+</html>

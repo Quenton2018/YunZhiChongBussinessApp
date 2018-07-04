@@ -200,7 +200,9 @@
 
         </div>
 
-
+        <button id="submitBtn">
+           去修改
+        </button>
     </div>
     <script type="text/html" id="heHuoRenTmpl">
             <form class="mui-input-group memberItem">
@@ -249,28 +251,6 @@
             getApplyChargingGroupBYID();
         }
 
-
-
-
-        /**
-         * 添加一个合伙人
-         */
-        $(".addHeHuoRen").click(function () {
-            var tmpl = $("#heHuoRenTmpl").html();
-            $("#dataList").append(tmpl);
-            mui('.mui-numbox').numbox()
-        })
-        /**
-         * @param that
-         */
-        function deleteFrom(that) {
-            var $this = $(that);
-            layer.confirm("是否确定删除",function (index) {
-                $this.parents(".mui-input-group").remove();
-                layer.close(index)
-            })
-        }
-
         function getApplyChargingGroupBYID(){
             var areaId = plus.storage.getItem("areaId");
             console.log("## getApplyChargingGroupBYID ## areaId:"+areaId);
@@ -281,7 +261,6 @@
                         var priceJson = res.data.priceJson;        //价格设定
                         var proportionsJsonObj =  JSON.parse(proportionsJson);
                         var priceJsonObj =  JSON.parse(priceJson);
-
                         var tmpl = $("#heHuoRenTmpl").html();
                         var html = '';
                         for(var i=0;i<proportionsJsonObj.length;i++){
@@ -301,7 +280,6 @@
                         }
                         $("#dataList").append(html);
 
-
                         var tmpl2 = $("#dianJiaTmpl").html();
                         var html2 = '';
                         for(var i=0;i<priceJsonObj.length;i++){
@@ -316,6 +294,24 @@
                         }
                         $("#dataList2").append(html2);
 
+                        var areaName = res.data.areaName; //片区名称
+                        var address = res.data.address;   //地址
+                        var latitude = res.data.latitude; //纬度
+                        var longitude = res.data.longitude; //纬度
+                        var electricPrice = res.data.electricPrice; //纬度
+
+                        var proportionsJson = res.data.proportionsJson; //分成比例
+                        var dianjiaListJson = res.data.priceJson; //价格设定
+
+                        //服务校验参数 然后保存
+                        plus.storage.setItem( "app_name", areaName);
+                        plus.storage.setItem( "app_address", address );
+                        plus.storage.setItem( "app_latitude", latitude);
+                        plus.storage.setItem( "app_longitude", longitude);
+                        plus.storage.setItem( "app_electricPrice", electricPrice);
+                        plus.storage.setItem( "memberListJson", proportionsJson);
+                        plus.storage.setItem( "dianjiaListJson", dianjiaListJson);
+
                     }else{
                         layer.msg(res.msg);
                         clearLogin();
@@ -325,6 +321,31 @@
             }
         }
 
+
+        /**
+         * 去修改
+         */
+        $("#submitBtn").click(function(){
+            var  app_name =   plus.storage.getItem( "app_name");
+            var  app_address =    plus.storage.getItem( "app_address");
+            var  app_latitude =    plus.storage.getItem( "app_latitude");
+            var  app_longitude =   plus.storage.getItem( "app_longitude");
+            var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
+            var  memberListJson =  plus.storage.getItem( "memberListJson");
+            var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
+
+            console.log("## Detail ## areaName:"+app_name);
+            console.log("## Detail ## address:"+app_address);
+            console.log("## Detail ## latitude:"+app_latitude);
+            console.log("## Detail ## longitude:"+app_longitude);
+            console.log("## Detail ## electricPrice:"+app_electricPrice);
+            console.log("## Detail ## proportionsJson:"+memberListJson);
+            console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
+
+            clicked('areaApplicationEdit.html');
+
+
+        });
 
 
 
