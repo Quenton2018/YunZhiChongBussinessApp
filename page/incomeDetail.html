@@ -180,12 +180,16 @@
 
 
     $(".selectDate").click(function () {
+
         var options = {
             'type':'month'
         }
         var dtPicker = new mui.DtPicker(options);
 
         dtPicker.show(function (selectItems) {
+            $("#loadMore").css({"display":"none"});
+            $("#noMore").css({"display":"none"});
+            pageNumber=1;
             console.log(selectItems.y);//{text: "2016",value: 2016}
             console.log(selectItems.m);//{text: "05",value: "05"}
             var month = selectItems.m.value;
