@@ -193,6 +193,7 @@
 
     <script type="text/html" id="heHuoRenTmplTwo">
             <form class="mui-input-group memberItem">
+                {{deleteBtn}}
                 <div class="mui-input-row ">
                     <label>合伙人姓名</label>
                     <input type="text" class="mui-input-clear" name="users" value="{{users}}" placeholder="请输入合伙人姓名">
@@ -241,6 +242,12 @@
             var tmpl = $("#heHuoRenTmplTwo").html();
             var html = '';
             for(var i=0;i<memberListJsonObj.length;i++){
+                var dispStr = ''
+                if(i<2){
+                      dispStr = '<i class="deleteBtn iconfont icon-shanchu" style="display:none" onclick="deleteFrom(this)"></i>';
+                }else{
+                      dispStr = '<i class="deleteBtn iconfont icon-shanchu" style="display:block" onclick="deleteFrom(this)"></i>';
+                }
                 var users =memberListJsonObj[i].users;
                 var mobile =memberListJsonObj[i].mobile;
                 var rate1 =memberListJsonObj[i].rate1;
@@ -248,7 +255,9 @@
                 html += tmpl.replace(/{{users}}/g,users)
                     .replace(/{{mobile}}/g,mobile)
                     .replace(/{{rate1}}/g,rate1)
-                    .replace(/{{rate2}}/g,rate2);
+                    .replace(/{{rate2}}/g,rate2)
+                    .replace(/{{deleteBtn}}/g,dispStr);
+                ;
             }
             $("#dataList").append(html);
 
