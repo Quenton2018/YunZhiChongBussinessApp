@@ -89,8 +89,8 @@
 
     </ul>
 
-<!--    <div id="loadMore">加载更多</div>
-    <div id="noMore" class="noMore">没有更多了</div>-->
+    <div id="loadMore">加载更多</div>
+    <div id="noMore" class="noMore">没有更多了</div>
 </div>
 
 <script type="text/html" id="dataTmpl">
@@ -106,6 +106,12 @@
 <script type="text/javascript">
     mui.init();
 
+    var pageNumber = 1;
+    var pageSize = 10;
+    var yearParam =  new Date().getFullYear();
+    var monthParam = 1;
+
+
     if(window.plus){
         pagePlusReady();
     }else{
@@ -114,43 +120,57 @@
 
     function pagePlusReady(){
         checkLogin();
-
-        getList();
-
-    }
-
-    function getList(){
-        var uuid = plus.storage.getItem("uuid");
+        var year =  new Date().getFullYear();
         var month = plus.storage.getItem("month");
         var parnterMoney = plus.storage.getItem("parnterMoney");
-        var year =  new Date().getFullYear();
+        monthParam =month;
+        yearParam =year;
 
-        $("#benyuemoney").text(parnterMoney);
         $(".selectDate span").text(year+"年"+month+"月");
+        $("#benyuemoney").text(parnterMoney);
+        $(".dataList").html("");
+        getList(month,year);
+    }
 
+    function getList(month,year){
+        var uuid = plus.storage.getItem("uuid");
         var dataParam = {
             "uuid":uuid,
             "month":month,
-            "year":year
+            "year":year,
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
         }
-        console.log("getList:year:"+year);
-        console.log("getList:UUid:"+uuid);
-        console.log("getList:month:"+month);
-        console.log("getList:parnterMoney:"+parnterMoney);
+        console.log("getList:dataParam:"+dataParam);
+
         postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
             if("0" == res.code){
+                var parnterMoneyToTal = res.data.parnterMoneyToTal;
                 var data = res.data.listRet;
                 var tmpl = $("#dataTmpl").html();
                 var html = '';
-                var htmlNow = '';
+                var falgLast = true;
                 $.each(data, function(index,item) {
                     var parnterMoney = item.parnterMoney;
                     var chargingGroupName = item.chargingGroupName;
                     html += tmpl.replace(/{{parnterMoney}}/g,parnterMoney)
                         .replace(/{{chargingGroupName}}/g,chargingGroupName);
+
+                    if(index<9){
+                        falgLast =true;
+                    }else{
+                        falgLast =false;
+                    }
                 });
-                $(".dataList").html("");
+                $("#benyuemoney").text(parnterMoneyToTal);
                 $(".dataList").append(html);
+                if(falgLast){
+                    $("#loadMore").css({"display":"none"});
+                    $("#noMore").css({"display":"block"});
+                }else{
+                    $("#loadMore").css({"display":"block"});
+                    $("#noMore").css({"display":"none"});
+                }
             }else{
                 layer.msg(res.msg);
             }
@@ -159,51 +179,32 @@
 
 
 
-
     $(".selectDate").click(function () {
         var options = {
             'type':'month'
         }
         var dtPicker = new mui.DtPicker(options);
+
         dtPicker.show(function (selectItems) {
             console.log(selectItems.y);//{text: "2016",value: 2016}
             console.log(selectItems.m);//{text: "05",value: "05"}
-            var uuid = plus.storage.getItem("uuid");
             var month = selectItems.m.value;
             var year = selectItems.y.value;
-            var dataParam = {
-                "uuid":uuid,
-                "month":month,
-                "year":year
-            }
             $(".selectDate span").text(year+"年"+month+"月");
+            $(".dataList").html("");
 
-            postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
-                if("0" == res.code){
-                    var parnterMoneyToTal = res.data.parnterMoneyToTal;
-                    var data = res.data.listRet;
-                    var tmpl = $("#dataTmpl").html();
-                    var html = '';
-                    var htmlNow = '';
-                    $.each(data, function(index,item) {
-                        var parnterMoney = item.parnterMoney;
-                        var chargingGroupName = item.chargingGroupName;
-                        html += tmpl.replace(/{{parnterMoney}}/g,parnterMoney)
-                            .replace(/{{chargingGroupName}}/g,chargingGroupName);
-                    });
-                    $("#benyuemoney").text(parnterMoneyToTal);
-                    $(".dataList").html("");
-                    $(".dataList").append(html);
-                }else{
-                    layer.msg(res.msg);
-                }
-            })
-
-
-
+            getList(month,year);
 
         })
     })
+
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getList(monthParam,yearParam);
+    })
+
+
 </script>
 </body>
 </html>
