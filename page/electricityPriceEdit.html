@@ -166,7 +166,7 @@
 
 
         <button id="submitBtn">
-                提交
+                提交修改
         </button>
     </div>
 
@@ -255,6 +255,7 @@
             }
             retFalg  =true;
             //服务校验参数 然后保存
+            var areaId = plus.storage.getItem("areaId");
             var uuid = plus.storage.getItem("uuid");
             var app_name = plus.storage.getItem("app_name");
             var app_address = plus.storage.getItem("app_address");
@@ -262,6 +263,7 @@
             var app_longitude = plus.storage.getItem("app_longitude");
             var app_electricPrice = plus.storage.getItem("app_electricPrice");
             var memberListJson = plus.storage.getItem("memberListJson");
+            console.log("areaId======"+areaId);
             console.log("uuid======"+uuid);
             console.log("app_name======"+app_name);
             console.log("app_address======"+app_address);
@@ -335,6 +337,7 @@
             dianjiaListJson = JSON.stringify(dianjiaList);
             console.log("dianjiaListJson"+dianjiaListJson);
             var dataParam = {
+                "areaId":areaId,
                 "uuid":uuid,
                 "app_name":app_name,
                 "app_address":app_address,
@@ -344,7 +347,7 @@
                 "memberListJson":memberListJson,
                 "dianjiaListJson":dianjiaListJson
             }
-           postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
+           postJSON(API_URL.ApiApplyChargingGroupUpdateChargingGroup,dataParam,function(res){
                 if("0" == res.code){
                     layer.msg(res.msg);
                     setTimeout(function(){

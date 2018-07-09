@@ -200,7 +200,7 @@
 
         </div>
 
-        <button id="submitBtn">
+        <button id="submitBtn" style="display:none;">
            去修改
         </button>
     </div>
@@ -248,6 +248,7 @@
             document.addEventListener('plusready',pagePlusReady,false);
         }
         function pagePlusReady(){
+            
             getApplyChargingGroupBYID();
         }
 
@@ -257,6 +258,10 @@
             if(vaildeParam(areaId)){
                 postJSON(API_URL.ApiGetApplyChargingGroupById,{"areaId":areaId},function(res){
                     if("0" == res.code){
+                      /*  var statusStr = res.data.status;  //状态
+                        if("通过"!=statusStr){
+                            $("#submitBtn").css("display","block")
+                        }*/
                         var proportionsJson = res.data.proportionsJson;  //分成比例
                         var priceJson = res.data.priceJson;        //价格设定
                         var proportionsJsonObj =  JSON.parse(proportionsJson);
