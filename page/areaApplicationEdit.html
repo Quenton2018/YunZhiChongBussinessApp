@@ -103,18 +103,19 @@
                 <i class="iconfont">片区名称</i>
                 <input type="text" name="name" placeholder="请输入市+小区,例如：北京市XX小区"/>
             </div>
-            <div class="inputBox">
+          <!--  <div class="inputBox">
                     <i class="iconfont">地理位置</i>
-                    <input type="text" id="address" name="address" placeholder="请选择" />
+                    <input type="hidden" id="address" name="address" placeholder="请选择" />
                     <span class="getCode" id="map"  onclick="clicked('map.html')">选择位置</span>
-            </div>
+            </div>-->
+            <input type="hidden" id="address" name="address" placeholder="请选择" />
             <div class="inputBox">
                 <i class="iconfont">经度</i>
-                <input type="text" id="latitude" name="latitude"  disabled="true" placeholder="请输经度" />
+                <input type="hidden" id="latitude" name="latitude"  disabled="true" placeholder="请输经度" />
             </div>
             <div class="inputBox">
                 <i class="iconfont">纬度</i>
-                <input type="text"  id="longitude" name="longitude"   disabled="true" placeholder="请输入纬度" />
+                <input type="hidden"  id="longitude" name="longitude"   disabled="true" placeholder="请输入纬度" />
             </div>
             <div class="inputBox">
                 <i class="iconfont">电价</i>
