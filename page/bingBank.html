@@ -17,6 +17,14 @@
 	<script src="../js/base.js"></script>
 	<script src="../js/mui.min.js"></script>
 	<style type="text/css">
+			hrml{
+				min-height: 100%;
+				/*background:#efeff4*/
+			}
+			body{
+				height: 100%;
+				background:#efeff4
+			}
 			* {
 				margin: 0;
 				padding: 0;
@@ -29,10 +37,6 @@
 				font-size: .8rem;
 				padding: 15px;
 			}
-			body {
-				background: white;
-			}
-
 			.mui-input-row label {
 				width: 30%;
 				padding: 14px 15px;
@@ -66,7 +70,7 @@
 				margin-bottom: 15px;
 				border-radius: 22.5px;
 				height: 45px;
-				background: #01B20C;
+				background-color: #FF7546;
 				font-weight: bold;
 				font-size: 18px;
 				color: #FFFFFF;
@@ -76,7 +80,6 @@
 			}
 			.foot-btn{
 				padding-top: 40px;
-				padding-bottom: 20px;
 			}
 		</style>
 	</head>
@@ -88,19 +91,19 @@
 		<h1 class="mui-title">绑定银行卡</h1>
 	</header>
 
-	<div class="mui-content" style=" ">
-		<div class="topAlertIfo">
+
+		<div class="topAlertIfo" style="    padding-top: 60px;">
 			请绑定持卡人本人的银行卡
 		</div>
 
 		<form class="mui-input-group">
 			<div class="mui-input-row">
 				<label>持卡人</label>
-				<input type="text" placeholder="请输入持卡人姓名">
+				<input type="text" placeholder="请输入持卡人姓名"  name="realname">
 			</div>
 			<div class="mui-input-row">
 				<label>身份证</label>
-				<input type="text" placeholder="请输入持卡人身份证">
+				<input type="text" placeholder="请输入持卡人身份证"  name="idCard">
 			</div>
 		</form>
 		<div class="topAlertIfo">
@@ -109,34 +112,86 @@
 		<form class="mui-input-group">
 			<div class="mui-input-row">
 				<label>所属银行</label>
-				<input type="text" placeholder="所请输入持卡人身份证号">
+				<input type="text" placeholder="所请输入持卡人身份证号" name="bank">
 			</div>
 			<div class="mui-input-row">
 				<label>银行卡号码</label>
-				<input type="text" placeholder="请输入银行卡号">
+				<input type="text" placeholder="请输入银行卡号"  name="bankCode">
 			</div>
 			<div class="mui-input-row">
 				<label>手机号码</label>
-				<input type="text" placeholder="请输入银行预留手机">
+				<input type="number" placeholder="请输入银行预留手机" name="mobile" >
 			</div>
 			<div class="mui-input-row">
-				<label>验证码</label>
-				<input type="text" placeholder="请输入验证码">
+				<label>
+
+				</label>
+				<input type="text" placeholder="请输入验证码"	name="code">
 				<span class="getCode">获取验证码</span>
 			</div>
 		</form>
 		<div class="foot-btn">
 			<div class="submitBtn">
-				登录
+				确定绑卡
 			</div>
 		</div>
 
-	</div>
+
 
     </body>
 
     <script type="text/javascript" charset="utf-8">
         mui.init();
+
+
+        var $getCodeBtn = $(".getCode");
+        var isLock = false; //是否锁定
+        var time = 180; //倒计时
+        var timeInterval; //定时器
+        /**
+         * 定时器
+         */
+        function showTime(){
+            timeInterval = setInterval(function(){
+                time--;
+                if(time <= 0){
+                    isLock = false;
+                    time = 180;
+                    clearInterval(timeInterval);
+                    $getCodeBtn.text('获取验证码');
+                    return;
+                }else{
+                    $getCodeBtn.text(time);
+                }
+            },1000)
+        }
+
+        /**
+         * 获取
+         */
+        $(".getCode").click(function(){
+            var mobile = $("input[name='mobile']").val();
+            if(!vaildeParam(mobile)){
+                layer.msg("手机号不能为空");
+                return;
+            }
+
+            if(isLock){
+                return;
+            }
+            isLock = true;
+            $getCodeBtn.text(time);
+            showTime();
+            postJSON(API_URL.ApiAdminSendCode,{"mobile":mobile,"type":"3"},function(res){
+                if("0" == res.code){
+                    layer.msg("发送成功");
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+        })
+
+
 
         if(window.plus){
             pagePlusReady();
@@ -145,44 +200,78 @@
         }
         function pagePlusReady(){
 
+
+
         }
 
        	 var canPostFlag = true;
         	$(".submitBtn").click(function(){
         		var uuid = plus.storage.getItem("uuid");
-				var content = $('#textarea').val();
-
                 if(!canPostFlag){
                     layer.msg("已提交,不可重复提交！");
                     return;
                 }
-
                 canPostFlag = false;
 
-				if(content.length<5){
-                    layer.msg("内容不能少于5个字");
+                var realname = $("input[name='realname']").val();
+                var idCard = $("input[name='idCard']").val();
+                var bank = $("input[name='bank']").val();
+                var bankCode = $("input[name='bankCode']").val();
+                var mobile = $("input[name='mobile']").val();
+                var code = $("input[name='code']").val();
+
+                if(!vaildeParam(realname)){
+                    layer.msg("持卡人为空");
                     canPostFlag = true;
                     return;
-				}
-				if( content.length>=200){
-                    layer.msg("内容不能大于200个字");
+                }
+                if(!vaildeParam(idCard)){
+                    layer.msg("身份证不能为空");
                     canPostFlag = true;
                     return;
-				}
-				if(!vaildeParam(content)){
-					layer.msg("内容不能为空");
+                }
+                if(!vaildeParam(bank)){
+                    layer.msg("所属银行不能为空");
                     canPostFlag = true;
-					return;
-				}
+                    return;
+                }
+                if(!vaildeParam(bankCode)){
+                    layer.msg("银行卡号码不能为空");
+                    canPostFlag = true;
+                    return;
+                }
+                if(!vaildeParam(mobile)){
+                    layer.msg("手机号码不能为空");
+                    canPostFlag = true;
+                    return;
+                }
+                if(!vaildeParam(code)){
+                    layer.msg("验证码不能为空");
+                    canPostFlag = true;
+                    return;
+                }
+
+
 				var data = {
 					"uuid":uuid,
-					"content":content
+					"realname":realname,
+                    "idCard":idCard,
+                    "bank":bank,
+                    "bankCode":bankCode,
+                    "mobile":mobile,
+                    "code":code
 				}
-        	postJSON(API_URL.APIPartnerFeedbackSavePartnerFeedback,data,function(res){
+        	postJSON(API_URL.ApiAdminBingBank,data,function(res){
 					if("0" == res.code){
-						layer.msg("您提交的宝贵意见，我们已经收到");
+						layer.msg("绑定成功");
+                        var moneyAmount = res.data.moneyAmount;
+                        var bankCode = res.data.bankCode;
+                        var bank = res.data.bank;
+                        plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
+                        plus.storage.setItem( "bankCode", bankCode);
+                        plus.storage.setItem( "bank", bank);
 						setTimeout(function(){
-							back();
+                            clicked('putforward.html');
 						},3000);
 					}else{
 						layer.msg(res.msg);

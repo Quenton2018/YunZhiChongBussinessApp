@@ -18,6 +18,7 @@ API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApp
 
 API_URL.ApiAdminUploadPicture = apiHost + "/api/admin/uploadPicture"; //用户上传头像数据
 API_URL.ApiAdminUpdataAdminInfo = apiHost + "/api/admin/updataAdminInfo"; //用户上传联系方式
+API_URL.ApiAdminBingBank =  apiHost + "/api/admin/bingBank"; //绑定银行卡
 
 API_URL.ApiArticleCategoryList = apiHost + "/api/article/getArticleCategoryList"; //获取文章分类
 API_URL.ApiArticleContentBYID = apiHost + "/api/article/getArticleByCategoryTwoId";

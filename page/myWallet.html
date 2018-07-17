@@ -105,7 +105,7 @@
         <h3>我的钱包</h3>
         <h1>&yen;<span id="moneyAmountBox"></span></h1>
 
-        <div class="Box-tixian" onclick="clicked('putforward.html')">
+        <div class="Box-tixian">
             <img class="Button-Img putForwardBtn"  src="../images/tixian.png" />
         </div>
 
@@ -281,6 +281,31 @@
 
 
 
+    $(".Box-tixian").click(function(){
+        var uuid = plus.storage.getItem("uuid");
+        console.log("## getUserInfoDateBase ## uuid:"+uuid);
+        if(vaildeParam(uuid)){
+            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+                if("0" == res.code){
+                    var moneyAmount = res.data.moneyAmount;
+                    var bankCode = res.data.bankCode;
+                    var bank = res.data.bank;
+                    console.log(bankCode);
+                    if(vaildeParam(bankCode)){
+                        clicked("bingBank.html");
+                    }else{
+                        clicked('putforward.html');
+                    }
+                }else{
+                    layer.msg(res.msg);
+                    clearLogin();
+                    clicked("login.html");
+                }
+            })
+        }
+    })
+
+
 
     /**
      * 获取用户信息
@@ -303,7 +328,7 @@
                 }else{
                     layer.msg(res.msg);
                     clearLogin();
-                    clicked("page/login.html");
+                    clicked("login.html");
                 }
             })
         }
