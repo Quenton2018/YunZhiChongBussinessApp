@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>绑定银行卡</title>
+	<link rel="stylesheet" href="../css/mui.min.css">
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+	<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../plugins/layer/layer.js"></script>
+	<script src="../js/hammer.min.js"></script>
+	<script src="../js/jquery.hammer.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/base.js"></script>
+	<script src="../js/mui.min.js"></script>
+	<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				text-decoration: none;
+				list-style: none;
+				font-weight: normal;
+				border-style: none;
+			}
+			.topAlertIfo{
+				font-size: .8rem;
+				padding: 15px;
+			}
+			body {
+				background: white;
+			}
+
+			.mui-input-row label {
+				width: 30%;
+				padding: 14px 15px;
+			}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+				width: 70%;
+
+			}
+			.mui-input-group .mui-input-row {
+				height: 50px;
+			}
+
+			input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+				line-height: 25px;
+				height: 50px;
+				font-size: 14px;
+			}
+			.mui-input-row label {
+				line-height: 25px;
+				font-size: 14px;
+			}
+
+		</style>
+	</head>
+	<body >
+
+
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">绑定银行卡</h1>
+	</header>
+
+	<div class="mui-content" style=" ">
+		<div class="topAlertIfo">
+			请绑定持卡人本人的银行卡
+		</div>
+
+		<form class="mui-input-group">
+			<div class="mui-input-row">
+				<label>持卡人</label>
+				<input type="text" placeholder="请输入持卡人姓名">
+			</div>
+			<div class="mui-input-row">
+				<label>身份证</label>
+				<input type="text" placeholder="请输入持卡人身份证">
+			</div>
+		</form>
+		<div class="topAlertIfo">
+			请输入银行卡信息
+		</div>
+		<form class="mui-input-group">
+			<div class="mui-input-row">
+				<label>所属银行</label>
+				<input type="text" placeholder="所请输入持卡人身份证号">
+			</div>
+			<div class="mui-input-row">
+				<label>银行卡号码</label>
+				<input type="text" placeholder="请输入银行卡号">
+			</div>
+			<div class="mui-input-row">
+				<label>手机号码</label>
+				<input type="text" placeholder="请输入银行预留手机">
+			</div>
+			<div class="mui-input-row">
+				<label>验证码</label>
+				<input type="text" placeholder="请输入验证码">
+			</div>
+		</form>
+	</div>
+
+    </body>
+
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+
+        if(window.plus){
+            pagePlusReady();
+        }else{
+            document.addEventListener('plusready',pagePlusReady,false);
+        }
+        function pagePlusReady(){
+
+        }
+
+       	 var canPostFlag = true;
+        	$(".submitBtn").click(function(){
+        		var uuid = plus.storage.getItem("uuid");
+				var content = $('#textarea').val();
+
+                if(!canPostFlag){
+                    layer.msg("已提交,不可重复提交！");
+                    return;
+                }
+
+                canPostFlag = false;
+
+				if(content.length<5){
+                    layer.msg("内容不能少于5个字");
+                    canPostFlag = true;
+                    return;
+				}
+				if( content.length>=200){
+                    layer.msg("内容不能大于200个字");
+                    canPostFlag = true;
+                    return;
+				}
+				if(!vaildeParam(content)){
+					layer.msg("内容不能为空");
+                    canPostFlag = true;
+					return;
+				}
+				var data = {
+					"uuid":uuid,
+					"content":content
+				}
+        	postJSON(API_URL.APIPartnerFeedbackSavePartnerFeedback,data,function(res){
+					if("0" == res.code){
+						layer.msg("您提交的宝贵意见，我们已经收到");
+						setTimeout(function(){
+							back();
+						},3000);
+					}else{
+						layer.msg(res.msg);
+					}
+				});
+			});
+    </script>
+
+</html>
