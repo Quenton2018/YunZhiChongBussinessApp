@@ -1,7 +1,7 @@
-var apiHost = "http://api.9n.jxyunge.com";
+//var apiHost = "http://api.9n.jxyunge.com";
 //var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-//var apiHost = "http://192.168.1.109:8181";
+var apiHost = "http://192.168.1.126:8181";
 
 
 var API_URL = {};
@@ -33,6 +33,8 @@ API_URL.ApiGetSumMoney = apiHost + "/api/admin/getSumMoney"; //获取合伙人�
 API_URL.ApiGetChargingByGroupID = apiHost + "/api/charging/getChargingByGroupID"; //根据片区ID获取充电桩
 API_URL.ApiGetChargingList = apiHost + "/api/charging/getChargingList"; //根据片区ID获取充电桩
 
+
+
 API_URL.ApiChargingBusinessGetAMonthlyIncome = apiHost + "/api/chargingBusiness/GetAMonthlyIncome"; //获取合伙人收入
 API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail = apiHost + "/api/chargingBusiness/GetAMonthlyIncomeDetail";
 
@@ -56,6 +58,10 @@ API_URL.ApiChargingGroupQRCodeSaveChargingGroupQRCode =apiHost +"/api/chargingGr
 
 
 API_URL.ApiGetApplyChargingGroupById =apiHost +"/api/applyChargingGroup/getApplyChargingGroupById"; //保存片区二维码
+
+API_URL.ApichargingGroupProportionsgetChargingGroupProportionsListByGroupID = apiHost +"/api/chargingGroupProportions/getChargingGroupProportionsListByGroupID"; //充电桩分成比列接口
+
+API_URL.ApichargingGroupProportionsgetChargingGroupPriceListByGroupID = apiHost +"/api/chargingGroupProportions/getChargingGroupPriceListByGroupID"; //充电价格
 
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接
