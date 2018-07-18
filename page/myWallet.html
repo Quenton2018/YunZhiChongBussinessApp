@@ -291,7 +291,7 @@
                     var bankCode = res.data.bankCode;
                     var bank = res.data.bank;
                     console.log(bankCode);
-                    if(vaildeParam(bankCode)){
+                    if(!vaildeParam(bankCode)){
                         clicked("bingBank.html");
                     }else{
                         clicked('putforward.html');
