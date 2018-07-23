@@ -1,7 +1,7 @@
-//var apiHost = "http://api.9n.jxyunge.com";
+var apiHost = "http://api.9n.jxyunge.com";
 //var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-var apiHost = "http://192.168.1.126:8181";
+//var apiHost = "http://192.168.1.128:8181";
 
 
 var API_URL = {};
@@ -62,6 +62,11 @@ API_URL.ApiGetApplyChargingGroupById =apiHost +"/api/applyChargingGroup/getApply
 API_URL.ApichargingGroupProportionsgetChargingGroupProportionsListByGroupID = apiHost +"/api/chargingGroupProportions/getChargingGroupProportionsListByGroupID"; //充电桩分成比列接口
 
 API_URL.ApichargingGroupProportionsgetChargingGroupPriceListByGroupID = apiHost +"/api/chargingGroupProportions/getChargingGroupPriceListByGroupID"; //充电价格
+
+
+API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID = apiHost +"/api/chargingGroupProportions/getChargingGroupListByGroupID"; //
+
+
 
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接

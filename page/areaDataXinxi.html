@@ -133,7 +133,19 @@
     </li>
 </script>
 
-
+<script type="text/html" id="dataTmpl3">
+    <li class="mui-table-view-cell">
+        <table class="mui-table" >
+            <tbody >
+            <tr>
+                <td style="width: 16%"></td>
+                <td style="width: 60%">{{shellId}}</td>
+                <td>{{sevenDaysUseRate}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </li>
+</script>
 
 
 <script type="text/javascript">
@@ -188,7 +200,7 @@
             $(".title-left").css('margin-right','16%')
             $(".title-right").text("桩号");
             $(".title-left").text("近七天使用率");
-
+            getDataList3();
         }
 
     });
@@ -251,20 +263,20 @@
         var dataParam= {
             "groupID":groupID
         }
-        postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupProportionsListByGroupID,dataParam,function(res){
+        postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID,dataParam,function(res){
             if("0" == res.code){
                 var data = res.data;
                 var html = '';
-                var tmpl = $("#dataTmpl").html();
-                var rateSwitchDate;
+                var tmpl = $("#dataTmpl3").html();
                 $.each(data, function(index,item) {
-                    html += tmpl.replace(/{{name}}/g,item.name)
-                        .replace(/{{rate1}}/g,item.rate1)
-                        .replace(/{{rate2}}/g,item.rate2);
-                    rateSwitchDate = new Date(item.rateSwitchDate).format("yyyy-MM-dd");
+                    var sevenDaysUseRate = 0;
+                    if(vaildeParam(item.sevenDaysUseRate)){
+                        sevenDaysUseRate = item.sevenDaysUseRate;
+                    }
+                    html += tmpl.replace(/{{shellId}}/g,item.shellId.slice(0,1))
+                        .replace(/{{sevenDaysUseRate}}/g, sevenDaysUseRate+"%")
                 });
-                console.log("rateSwitchDate"+rateSwitchDate)
-                $(".title-left").text("比列切换时间("+rateSwitchDate+")");
+
                 $(".dataList").html("");
                 $(".dataList").append(html);
             }else{
