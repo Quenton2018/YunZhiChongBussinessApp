@@ -4,18 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>主页</title>
-    <link rel="stylesheet" href="css/mui.min.css">
-    <link rel="stylesheet" href="css/iconfont.css">
-    <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="plugins/layer/layer.js"></script>
-    <script src="js/hammer.min.js"></script>
-    <script src="js/jquery.hammer.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/base.js"></script>
-    <script src="js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
     <style type="text/css">
         *{
             margin: 0;
@@ -50,11 +50,86 @@
             margin: 0;
             padding: 0;
             color: black;
-            font-size: 15px;
-            font-weight: bolder;
         }
-
-
+        .conbox01{
+            margin-top: 64px;
+        }
+        .conbox{
+            margin-bottom: 20px;
+        }
+        .box01{
+            background: white;
+            border-bottom:1px #f0f1f3 dashed;
+            padding:10px 15px;
+        }
+        .box01 .imgbox{
+            float: left;
+            width:20px;
+        }
+        .imgbox img{
+            width: 100%;
+        }
+        .box01 h1{
+            margin: 0;
+            padding: 0;
+            float: left;
+            color: black;
+            font-size:15px;
+            line-height: 20px;
+            margin-left: 15px;
+        }
+        .box01 .zhuangtai01{
+            float: right;
+            background-color: rgb(229, 247, 255);
+            width:65px;
+            height: 20px;
+            font-size: 12px;
+            color: rgb(33, 181, 255);
+            text-align: center;
+            border-radius: 10px;
+        }
+        .box01 .zhuangtai02{
+            float: right;
+            width:65px;
+            height: 20px;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 10px;
+            color: rgb(255, 109, 34);
+            background-color: rgb(255, 242, 229);
+        }
+        .box01 .zhuangtai03{
+            float: right;
+            width:65px;
+            height: 20px;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 10px;
+            color: rgb(153, 153, 153);
+            background-color: rgb(240, 241, 243);
+        }
+        .box02{
+            background: white;
+            padding: 10px 15px;
+        }
+        .box02 h1{
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            color: black;
+            line-height:30px;
+        }
+        .box03{
+            background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            height: 49px;
+            text-align: center;
+            color: white;
+            font-size:16px;
+            line-height: 49px;
+            box-shadow: none;
+        }
     </style>
 
 </head>
@@ -63,4 +138,55 @@
     <div class="left"></div>
     <h1 class="mui-title">片区申请列表</h1>
 </header>
+<div class="conbox01">
+    <div class="conbox">
+    <div class="box01">
+        <div class="imgbox">
+            <img src="../images/pianqushenqing/pianqu@3x.png">
+        </div>
+        <h1>片区名称：万科五街坊</h1>
+        <div class="zhuangtai01">等待审核</div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="box02">
+        <h1>电价：0.5元/千瓦时</h1>
+        <h1>地址：上海市浦东新区东明路2000号108室</h1>
+        <h1>申请时间：2018.7.5 15:30</h1>
+    </div>
+    </div>
+    <div class="conbox">
+        <div class="box01">
+            <div class="imgbox">
+                <img src="../images/pianqushenqing/pianqu@3x.png">
+            </div>
+            <h1>片区名称：万科五街坊</h1>
+            <div class="zhuangtai02">审核通过</div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="box02">
+            <h1>电价：0.5元/千瓦时</h1>
+            <h1>地址：上海市浦东新区东明路2000号108室</h1>
+            <h1>申请时间：2018.7.5 15:30</h1>
+        </div>
+    </div>
+    <div class="conbox">
+        <div class="box01">
+            <div class="imgbox">
+                <img src="../images/pianqushenqing/pianqu@3x.png">
+            </div>
+            <h1>片区名称：万科五街坊</h1>
+            <div class="zhuangtai03">审核驳回</div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="box02">
+            <h1>电价：0.5元/千瓦时</h1>
+            <h1>地址：上海市浦东新区东明路2000号108室</h1>
+            <h1>申请时间：2018.7.5 15:30</h1>
+        </div>
+    </div>
+</div>
+<div class="box03 mui-bar mui-bar-tab">
+    申请片区
+</div>
+</body>
 </html>
