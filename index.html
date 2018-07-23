@@ -224,7 +224,7 @@
                 document.getElementById('head-img').src = headImage;
             }
             getUserInfo();
-
+            GetADaylyIncomeDetail();
 
 
             plus.push.addEventListener( "receive", function( msg ) {
@@ -241,6 +241,7 @@
         // 刷新页面
         function onRefresh(){
             getUserInfo();
+            GetADaylyIncomeDetail();
             ws.endPullToRefresh();
         }
 
@@ -291,6 +292,7 @@
                         console.log("userType"+userType);
                         console.log("moneyAmount"+moneyAmount);
                         $(".totalMoney").text(res.data.totalIncome);
+                        console.log("aaa"+res.data.totalIncome);
 
                     }else{
                         layer.msg(res.msg);
@@ -305,7 +307,7 @@
         /**
          * 获取今日收入 充电桩总台数
          */
-        function getUserInfo(){
+        function GetADaylyIncomeDetail(){
             var uuid = plus.storage.getItem("uuid");
             if(!vaildeParam(uuid)){
                 return;
