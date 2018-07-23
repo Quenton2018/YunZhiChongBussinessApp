@@ -66,13 +66,14 @@
 
     <table class="mui-table" id="dataTable">
         <thead>
-            <tr>
-                <td>桩号</td>
-                <td>异常时间</td>
+            <tr style="width:100%">
+                <td style="width:25%">桩号</td>
+                <td style="width:35%">异常状态</td>
+                <td style="width:40%">异常时间</td>
             </tr>
         </thead>
         <tbody id="dataList">
-            <tr><td colspan="2" style="text-align: center">加载中...</td></tr>
+            <tr><td colspan="3" style="text-align: center">加载中...</td></tr>
         </tbody>
     </table>
 
@@ -80,9 +81,10 @@
 
 
 <script type="text/html" id="dataTmpl">
-    <tr>
-        <td>{{shellId}}</td>
-        <td>{{lastUseTime}}</td>
+    <tr style="width:100%">
+        <td style="width:25%">{{shellId}}</td>
+        <td style="width:35%">{{status}}</td>
+        <td style="width:40%">{{lastUseTime}}</td>
     </tr>
 </script>
 
@@ -127,7 +129,15 @@
                 $.each(data,function (index,item) {
 
                     var lastUseTime = item.lastUseTime;
+                    var statusCdz = item.status;//状态(是否损坏，是否1在綫、2離綫)
+                    var daysNoUseCdz = item.daysNoUse;//多少天没有使用
 
+                    var status = '';
+                    if(statusCdz==2){
+                        status = '离线';
+                    }else{
+                        status = daysNoUseCdz+"天";
+                    }
                     if(!vaildeParam(lastUseTime)){
                         lastUseTime = '暂无';
                     }else{
@@ -136,6 +146,7 @@
                     html += tmpl.replace(/{{shellId}}/g,item.shellId.substr(0,1))
                         .replace(/{{id}}/g,item.id)
                         .replace(/{{daysNoUse}}/g,item.daysNoUse)
+                        .replace(/{{status}}/g,status)
                         .replace(/{{lastUseTime}}/g,lastUseTime);
 
                     ids += item.id + ',';
