@@ -66,7 +66,7 @@ API_URL.ApichargingGroupProportionsgetChargingGroupPriceListByGroupID = apiHost 
 
 API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID = apiHost +"/api/chargingGroupProportions/getChargingGroupListByGroupID"; //
 
-
+API_URL.ApiChargingBusinessGetADaylyIncomeDetail = apiHost + "/api/chargingBusiness/GetADaylyIncomeDetail"; //主页获取用户信息
 
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接

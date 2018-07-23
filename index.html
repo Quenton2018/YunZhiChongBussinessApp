@@ -137,14 +137,14 @@
     <h1 class="mui-title">云智充</h1>
 </header>
 <div class="box01">
-    <h1>3652</h1>
+    <h1 class="totalMoney">0.00</h1>
     <h2>收入总计(元)</h2>
     <div class="conbox01">
-        <h3>234</h3>
+        <h3 class="dayMoney">0.00</h3>
         <h4>今日总收入(元)</h4>
     </div>
     <div class="conbox01">
-        <h3>56</h3>
+        <h3 class="cdzCount">0</h3>
         <h4>充电桩总数(台)</h4>
     </div>
     <div class="clearfix"></div>
@@ -223,10 +223,9 @@
                 console.log("## headImage ## : "+headImage);
                 document.getElementById('head-img').src = headImage;
             }
-
             getUserInfo();
 
-            // checkVersion();
+
 
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
@@ -245,27 +244,6 @@
             ws.endPullToRefresh();
         }
 
-
-        /**
-         * 检查版本
-         */
-        function checkVersion() {
-            var osName = plus.os.name;
-            var version = appVersion;
-
-            postJSON(API_URL.AppVersionPartnerGetNewest,{"appType":osName},function (res) {
-
-                if('0' == res.code){
-                    if(vaildeParam(res.data)){
-                        var v = res.data.version;
-                        console.log("v:"+v);
-                        if(version != v){
-                            clicked('page/edition.html')
-                        }
-                    }
-                }
-            })
-        }
 
 
         $("#areaApplicationList").click(function(){
@@ -312,12 +290,8 @@
                         plus.storage.setItem( "userType", userType);
                         console.log("userType"+userType);
                         console.log("moneyAmount"+moneyAmount);
-                        mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
-                        $("#mobileBox").text(mobile);
-                        if(vaildeParam(headImage)){
-                            console.log("## headImage ## : "+headImage);
-                            document.getElementById('head-img').src = headImage;
-                        }
+                        $(".totalMoney").text(res.data.totalIncome);
+
                     }else{
                         layer.msg(res.msg);
                         clearLogin();
@@ -327,6 +301,33 @@
             }
         }
 
-	</script>
+
+        /**
+         * 获取今日收入 充电桩总台数
+         */
+        function getUserInfo(){
+            var uuid = plus.storage.getItem("uuid");
+            if(!vaildeParam(uuid)){
+                return;
+            }
+            if(vaildeParam(uuid)){
+                postJSON(API_URL.ApiChargingBusinessGetADaylyIncomeDetail,{"uuid":uuid},function(res){
+                    if("0" == res.code){
+                        var parnterMoneyToTal = res.data.parnterMoneyToTal;
+                        var countAll = res.data.countAll;
+
+                        $(".dayMoney").text(res.data.parnterMoneyToTal);
+                        $(".cdzCount").text(res.data.countAll);
+                    }else{
+                        layer.msg(res.msg);
+                        clearLogin();
+                        clicked("page/login.html");
+                    }
+                })
+            }
+        }
+
+
+    </script>
 </body>
 </html>
