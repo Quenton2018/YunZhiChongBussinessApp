@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../plugins/layer/layer.js"></script>
@@ -221,12 +221,25 @@
             line-height: 49px;
             box-shadow: none;
         }
+        .mui-numbox {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            width: 120px;
+            height: 30px;
+            padding: 0 40px;
+            vertical-align: top;
+            vertical-align: middle;
+            border: solid 1px #bbb;
+            border-radius: 3px;
+            background-color: #efeff4;
+        }
     </style>
 
 </head>
 <body>
-<header class="top mui-bar mui-bar-nav">
-    <div class="left"></div>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">申请片区</h1>
 </header>
 <div class="conbox01">
@@ -245,43 +258,339 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="box03">
+    <div id="dataList" class="dataList">
+        <div class="box03 dianjiaItem">
+            <div class="line01">
+                <div class="biaozhu"></div>
+                <h1>充电价格</h1>
+                <div class="shanchu"  onclick="deleteFrom(this)">
+                    <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line02">
+                <h1>片区价格</h1>
+                <input type="text" name="price" value="1" placeholder="请输入片区电价"/>
+                <h2>元/千瓦时</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line03">
+                <h1>预设充电时间</h1>
+                <div class="bilibox">
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number"  readonly="readonly" value="4" name="defaultTime" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="box03 dianjiaItem">
+            <div class="line01">
+                <div class="biaozhu"></div>
+                <h1>充电价格</h1>
+                <div class="shanchu" onclick="deleteFrom(this)">
+                    <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line02">
+                <h1>片区价格</h1>
+                <input type="text" name="price" value="1.5" placeholder="请输入片区电价"/>
+                <h2>元/千瓦时</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line03">
+                <h1>预设充电时间</h1>
+                <div class="bilibox">
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number"  readonly="readonly" value="6" name="defaultTime" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="box03 dianjiaItem">
+            <div class="line01">
+                <div class="biaozhu"></div>
+                <h1>充电价格</h1>
+                <div class="shanchu" onclick="deleteFrom(this)">
+                    <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line02">
+                <h1>片区价格</h1>
+                <input type="text" name="price" value="2" placeholder="请输入片区电价"/>
+                <h2>元/千瓦时</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line03">
+                <h1>预设充电时间</h1>
+                <div class="bilibox">
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number"  readonly="readonly" value="8" name="defaultTime" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="box03 dianjiaItem">
+            <div class="line01">
+                <div class="biaozhu"></div>
+                <h1>充电价格</h1>
+                <div class="shanchu" onclick="deleteFrom(this)">
+                    <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line02">
+                <h1>片区价格</h1>
+                <input type="text" name="price" value="3" placeholder="请输入片区电价"/>
+                <h2>元/千瓦时</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="line03">
+                <h1>预设充电时间</h1>
+                <div class="bilibox">
+                    <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
+                        <!-- "-"按钮，点击可减小当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                        <input class="mui-numbox-input" type="number"  readonly="readonly" value="12" name="defaultTime" />
+                        <!-- "+"按钮，点击可增大当前数值 -->
+                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="xinzengbox addDianJia">
+        <img src="../images/pianqushenqing/xinzeng.png">
+        新增一个电价
+    </div>
+</div>
+<div class="dbbt mui-bar mui-bar-tab" id="submitBtn">
+    提交
+</div>
+
+
+<script type="text/html" id="dianJiaTmpl">
+    <div class="box03 dianjiaItem">
         <div class="line01">
             <div class="biaozhu"></div>
             <h1>充电价格</h1>
-            <div class="shanchu">
+            <div class="shanchu" onclick="deleteFrom(this)">
                 <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
             </div>
             <div class="clearfix"></div>
         </div>
         <div class="line02">
             <h1>片区价格</h1>
-            <input type="text" placeholder="请输入片区电价"/>
+            <input type="text" name="price"  placeholder="请输入片区电价"/>
             <h2>元/千瓦时</h2>
             <div class="clearfix"></div>
         </div>
         <div class="line03">
             <h1>预设充电时间</h1>
             <div class="bilibox">
-                <div class="jian">
-                    <img src="../images/pianqushenqing/jian@3x.png" style="width: 12px;height: 2px;">
-                </div>
-                <div class="shuliang">2</div>
-                <div class="jia">
-                    <img src="../images/pianqushenqing/jia.png" style="width: 12px;height: 12px;">
+                <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
+                    <!-- "-"按钮，点击可减小当前数值 -->
+                    <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                    <input class="mui-numbox-input" type="number"  readonly="readonly" value="0" name="defaultTime" />
+                    <!-- "+"按钮，点击可增大当前数值 -->
+                    <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
-    <div class="xinzengbox">
-        <img src="../images/pianqushenqing/xinzeng.png">
-        新增一个电价
-    </div>
-</div>
-<div class="dbbt mui-bar mui-bar-tab">
-    提交
-</div>
+
+
+</script>
+
+
+
+<script type="text/javascript">
+    mui.init();
+
+    var retFalg =false;
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+
+        document.getElementById("submitBtn").addEventListener('tap',function(){
+            var btnArray=['确定','取消'];
+            mui.confirm('是否确定提交?','提示',btnArray,function(e){
+                if(e.index == 0){
+                    submintBtn();
+                }
+            });
+        });
+
+
+
+
+    }
+
+    function submintBtn( ) {
+        if(retFalg){
+            layer.msg("已提交,不能重复提交");
+            return;
+        }
+        retFalg  =true;
+        //服务校验参数 然后保存
+        var uuid = plus.storage.getItem("uuid");
+        var app_name = plus.storage.getItem("app_name");
+        var app_address = plus.storage.getItem("app_address");
+        var app_latitude = plus.storage.getItem("app_latitude");
+        var app_longitude = plus.storage.getItem("app_longitude");
+        var app_electricPrice = plus.storage.getItem("app_electricPrice");
+        var memberListJson = plus.storage.getItem("memberListJson");
+        console.log("uuid======"+uuid);
+        console.log("app_name======"+app_name);
+        console.log("app_address======"+app_address);
+        console.log("app_latitude======"+app_latitude);
+        console.log("app_longitude======"+app_longitude);
+        console.log("app_electricPrice======"+app_electricPrice);
+        console.log("memberListJson======"+memberListJson);
+        var $dianjiaItem = $(".dianjiaItem");
+        var dianjiaList = new Array();
+        var dianjiaListJson = '';
+        var vaildeflag= false;
+        var priceflag= false;
+        var defaultTimeflag= false;
+        var jiageling = false;
+        $.each($dianjiaItem,function (index,item) {
+            var price =  $(item).find( $("input[name='price']")).val();
+            var defaultTime =  $(item).find( $("input[name='defaultTime']")).val();
+            console.log("price"+price);
+            console.log("defaultTime"+defaultTime);
+            if(!vaildeParam(price) || !vaildeParam(defaultTime)){
+                vaildeflag = true;
+                retFalg  =false;
+                return;
+            }
+            /*   checkNumber(price);
+             checkNumber(defaultTime);*/
+            //校验是数字
+            var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
+            if(!reg.test(price)){
+                priceflag = true;
+                retFalg  =false;
+                return;
+            }
+            if(!reg.test(defaultTime)){
+                defaultTimeflag = true;
+                retFalg  =false;
+                return;
+            }
+            if(0==parseFloat(price)){
+                jiageling = true;
+                retFalg  =false;
+                return;
+            }
+            var dianjia = new Object();
+            dianjia.price = price;
+            dianjia.defaultTime = defaultTime;
+            dianjiaList.push(dianjia);
+        })
+
+        if(vaildeflag){
+            layer.msg("请补全信息");
+            retFalg  =false;
+            return;
+        }
+        if(priceflag){
+            layer.msg("片区价格必须为数字，且不能为负数");
+            retFalg  =false;
+            return;
+        }
+        if(defaultTimeflag){
+            layer.msg("充电时间必须为数字，且不能为负数");
+            retFalg  =false;
+            return;
+        }
+        if(jiageling){
+            layer.msg("片区价格必须大于0");
+            retFalg  =false;
+            return;
+        }
+
+        dianjiaListJson = JSON.stringify(dianjiaList);
+        console.log("dianjiaListJson"+dianjiaListJson);
+        var dataParam = {
+            "uuid":uuid,
+            "app_name":app_name,
+            "app_address":app_address,
+            "app_latitude":app_latitude,
+            "app_longitude":app_longitude,
+            "app_electricPrice":app_electricPrice,
+            "memberListJson":memberListJson,
+            "dianjiaListJson":dianjiaListJson
+        }
+        postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,dataParam,function(res){
+            if("0" == res.code){
+                layer.msg(res.msg);
+                setTimeout(function(){
+                    clicked('areaApplicationList.html');
+                },2000);
+            }else{
+                retFalg  =false;
+                layer.msg(res.msg);
+            }
+        });
+
+    }
+
+    /**
+     * 添加一个电价
+     */
+    $(".addDianJia").click(function () {
+        var tmpl = $("#dianJiaTmpl").html();
+        $("#dataList").append(tmpl);
+        mui('.mui-numbox').numbox()
+    })
+
+    /**
+     * @param that
+     */
+    function deleteFrom(that) {
+        var $this = $(that);
+        layer.confirm("是否确定删除",function (index) {
+            $this.parents(".box03").remove();
+            layer.close(index)
+        })
+    }
+    //验证字符串是否是数字
+    function checkNumber(theObj) {
+        var reg = /^[0-9]+.?[0-9]*$/;
+        if (reg.test(theObj)) {
+            return true;
+        }
+        return false;
+    }
+</script>
 </body>
 </html>
