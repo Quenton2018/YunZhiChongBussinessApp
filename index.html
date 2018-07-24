@@ -262,9 +262,8 @@
                         var bankCode = res.data.bankCode;
                         var bank = res.data.bank;
                         var moneyAmount = res.data.moneyAmount;
-
                         var userType = res.data.userType;
-
+                        var totalIncome = res.data.totalIncome+'';
                         if("1"==userType){
                             pianquFlag = true;
                         }
@@ -275,12 +274,12 @@
                         plus.storage.setItem( "bankCode", bankCode);
                         plus.storage.setItem( "bank", bank);
                         plus.storage.setItem( "moneyAmount", moneyAmount);
-
+                        plus.storage.setItem( "totalIncome", totalIncome+'');
                         plus.storage.setItem( "userType", userType);
-                        console.log("userType"+userType);
-                        console.log("moneyAmount"+moneyAmount);
-                        $(".totalMoney").text(res.data.totalIncome);
-                        console.log("aaa"+res.data.totalIncome);
+
+
+                        $(".totalMoney").text(totalIncome);
+                        console.log("aaa"+totalIncome);
 
                     }else{
                         layer.msg(res.msg);
