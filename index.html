@@ -168,8 +168,8 @@
             <h1>我的钱包</h1>
         </div>
     </div>
-    <div class="box03">
-        <div class="imgbox" id="areaApplicationList"  >
+    <div class="box03" id="areaApplicationList">
+        <div class="imgbox" >
             <img src="images/index/pianqushenqing@3x.png">
             <h1>片区申请</h1>
         </div>
@@ -210,19 +210,7 @@
 
         function pagePlusReady(){
             checkLogin('page/login.html');
-            var uuid = plus.storage.getItem("uuid");
-            if(!vaildeParam(uuid)){
-                return;
-            }
 
-            var mobile = plus.storage.getItem("mobile");
-            var headImage = plus.storage.getItem("headImage");
-            mobile  = mobile.substr(0, 3) + '****' + mobile.substr(7);
-            $("#mobileBox").text(mobile);
-            if(vaildeParam(headImage)){
-                console.log("## headImage ## : "+headImage);
-                document.getElementById('head-img').src = headImage;
-            }
             getUserInfo();
             GetADaylyIncomeDetail();
 
@@ -253,7 +241,7 @@
             }else{
                 layer.msg("您没有权限申请片区");
             }
-        })
+        });
 
 
         /**

@@ -113,6 +113,7 @@
            margin-bottom: 15px;
            color:black;
            font-size: 15px;
+
        }
        .box04 .dingwei{
            position: absolute;
@@ -160,15 +161,15 @@
     <div class="box03">
         <div class="box04">
             <h1>片区名称</h1>
-            <input class="shurukuang" placeholder="请输入市+小区，例如：北京市XX小区"/>
+            <input class="shurukuang" type="text" name="name"  placeholder="请输入市+小区，例如：北京市XX小区"/>
             <div class="clearfix"></div>
         </div>
         <div class="box04"style="margin-top: 15px;border: none;">
-            <div class="dingwei">
+            <div class="dingwei" class="getCode" id="map"  onclick="clicked('map.html')">
                 <img src="../images/pianqushenqing/dingwei@3x.png"style="width:14px;height: 18px ">
             </div>
             <h1>地址</h1>
-            <input class="shurukuang" placeholder="请选择小区的地理位置"/>
+            <input class="shurukuang" id="address" name="address"  placeholder="请选择小区的地理位置"/>
             <div class="clearfix"></div>
         </div>
     </div>
@@ -176,5 +177,100 @@
 <div class="dbbt mui-bar mui-bar-tab">
     下一步
 </div>
+
+<script type="text/javascript">
+    mui.init();
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+
+    }
+
+    function fullAddress( latitude,longitude,address) {
+        console.log("fullAddress=========address"+address);
+        console.log("fullAddress=========latitude"+latitude);
+        console.log("fullAddress=========longitude"+longitude);
+
+        $("#latitude").val(latitude);
+        $("#longitude").val(longitude);
+        $("#address").val(address);
+    }
+
+
+    $("#submitBtn").click(function(){
+        var name = $("input[name='name']").val();
+        if(!vaildeParam(name)){
+            layer.msg("片区名称不能为空");
+            return;
+        }
+        var address = $("input[name='address']").val();
+        if(!vaildeParam(address)){
+            layer.msg("位置不能为空");
+            return;
+        }
+        var latitude = $("input[name='latitude']").val();
+        if(!vaildeParam(latitude)){
+            layer.msg("经度不能为空");
+            return;
+        }
+        var longitude = $("input[name='longitude']").val();
+        if(!vaildeParam(longitude)){
+            layer.msg("纬度不能为空");
+            return;
+        }
+        var electricPrice = $("input[name='electricPrice']").val();
+        if(!vaildeParam(electricPrice)){
+            layer.msg("电价不能为空");
+            return;
+        }
+        var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
+        if(!reg.test(electricPrice)){
+            layer.msg("电价需为数字");
+            return;
+        }
+        if(name.length>15){
+            layer.msg("片区名称不能大于15个字符");
+        }
+        //服务校验参数 然后保存
+        plus.storage.setItem( "app_name", name);
+        plus.storage.setItem( "app_address", address );
+        plus.storage.setItem( "app_latitude", latitude);
+        plus.storage.setItem( "app_longitude", longitude);
+        plus.storage.setItem( "app_electricPrice", electricPrice);
+        //校验片区名称是否重复
+        checkArea(name,latitude,longitude);
+    });
+    /**
+     * 校验
+     */
+    function checkArea(name,latitude,longitude){
+        var uuid = plus.storage.getItem("uuid");
+        console.log("## checkArea ## uuid:"+uuid);
+        console.log("## latitude ## uuid:"+latitude);
+        console.log("## longitude ## uuid:"+longitude);
+        if(vaildeParam(uuid)){
+            var dataParam = {
+                "uuid":uuid,
+                "name":name,
+                "latitude":latitude,
+                "longitude":longitude
+            }
+
+            postJSON(API_URL.ApiApplyChargingGroupCheckChargingGroup,dataParam,function(res){
+                if("0" == res.code){
+                    clicked('areaSetting.html');  //下一步
+                }else {
+                    layer.msg(res.msg);
+                    return;
+                }
+            });
+        }
+    }
+
+</script>
 </body>
 </html>
