@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="../../css/iconfont.css">
     <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/mui.min.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
 
     <!--引入公用样式-->
-    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/public.css" />
     <script src="../../js/jquery-3.3.1.min.js"></script>
     <script src="../../js/mui.min.js"></script>
     <script src="../../plugins/layer/layer.js"></script>
@@ -20,8 +19,14 @@
     <script src="../../js/base.js"></script>
 
     <style type="text/css">
+        .clearfix{
+            clear: both;
+        }
         body{
             background: #F0F1F3;
+        }
+        .mui-bar-nav{
+            box-shadow:none;
         }
         .mui-bar{
             background: #fff;
@@ -31,31 +36,205 @@
         }
         .mui-card{
             margin: 0;
+            box-shadow:none;
         }
+        .cdzGroup{
+            border-bottom: #F1F4F5 solid 1px;
+            padding: 5px 0;
+        }
+        .cdzItem{
+            float: left;
+            width: 50%;
+            text-align: center;
+        }
+        .cdzItem span{
+            display: inline-block;
+            padding: 5px;
+            margin-left: 10px;
+        }
+        .cdzItem span b{
+            display: inline-block;
+            padding: 5px 10px;
+            background: #F7F7F7;
+            font-weight: 400;
+        }
+        .cdzItem span b.selected{
+            background: #F96D44;
+            color: #fff;
+        }
+        .mui-input-group:before{
+            background-color: transparent;
+        }
+        .mui-input-group:after{
+            background-color: transparent;
+        }
+        .mui-input-group .mui-input-row:after{
+            background-color: transparent;
+        }
+
     </style>
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" style="color: #333">申请充电桩</h1>
-</header>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title" style="color: #333">申请充电桩</h1>
+    </header>
 
-<div class="mui-content">
-    <div class="mui-card">
-        <div class="mui-card-header" style="font-size: 13px">
-            充电桩桩号
-        </div>
-        <div class="mui-card-content">
+    <div class="mui-content">
+        <div class="mui-card">
+            <div class="mui-card-header" style="font-size: 13px">
+                充电桩桩号
+            </div>
+            <div class="mui-card-content">
 
-            <div class="">
+                <div class="cdzList">
+
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            A <span><b class="jian">-</b><b class="count selected">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            B <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            C <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            D <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            E <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            F <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            G <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            H <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            I <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            J <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            K <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            L <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            M <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            N <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            O <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            P <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            Q <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            R <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            S <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            T <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            U <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            V <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            W <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            X <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="cdzGroup">
+                        <div class="cdzItem">
+                            Y <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="cdzItem">
+                            Z <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
 
             </div>
-
         </div>
-    </div>
-</div>
 
+        <form class="mui-input-group" style="margin-top: 10px">
+            <div class="mui-input-row">
+                <label>申请原因</label>
+                <input type="text" placeholder="请输入您的申请原因">
+            </div>
+        </form>
+
+        <form class="mui-input-group" style="margin-top: 10px">
+            <div class="mui-input-row">
+                <label>收货地址</label>
+                <input type="text" placeholder="请输入收货地址">
+            </div>
+            <div class="mui-input-row">
+                <label>联系电话</label>
+                <input type="text" placeholder="请输入收货人联系电话">
+            </div>
+        </form>
+    </div>
+
+    <script type="application/javascript">
+        mui.init();
+    </script>
 
 </body>
 </html>
