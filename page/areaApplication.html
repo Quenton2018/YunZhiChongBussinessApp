@@ -134,8 +134,8 @@
 
 </head>
 <body>
-<header class="top mui-bar mui-bar-nav">
-    <div class="left"></div>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">申请片区</h1>
 </header>
 <div class="conbox01">
@@ -209,26 +209,28 @@
 
 
     $("#submitBtn").click(function(){
+
+
         var name = $("input[name='name']").val();
         if(!vaildeParam(name)){
             layer.msg("片区名称不能为空");
             return;
         }
+
+
         var address = $("input[name='address']").val();
         if(!vaildeParam(address)){
-            layer.msg("位置不能为空");
-            return;
+            address = '南昌市新建区慧谷创意产业园';
         }
         var latitude = $("input[name='latitude']").val();
         if(!vaildeParam(latitude)){
-            layer.msg("经度不能为空");
-            return;
+            latitude = '28.666281';
         }
         var longitude = $("input[name='longitude']").val();
         if(!vaildeParam(longitude)){
-            layer.msg("纬度不能为空");
-            return;
+            longitude = '115.822649';
         }
+
         var electricPrice = $("input[name='electricPrice']").val();
         if(!vaildeParam(electricPrice)){
             layer.msg("电价不能为空");
