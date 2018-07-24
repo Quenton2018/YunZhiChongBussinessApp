@@ -1,61 +1,307 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>申请</title>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>申请列表</title>
+    <link rel="stylesheet" href="../../css/mui.min.css">
     <link rel="stylesheet" href="../../css/iconfont.css">
     <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="../../css/mui.min.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-
-    <!--引入公用样式-->
-    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
     <script src="../../plugins/layer/layer.js"></script>
+    <script src="../../js/hammer.min.js"></script>
+    <script src="../../js/jquery.hammer.js"></script>
     <script src="../../js/common.js"></script>
     <script src="../../js/base.js"></script>
-
+    <script src="../../js/mui.min.js"></script>
     <style type="text/css">
-        body{
-            background: #F0F1F3;
-        }
-        .mui-bar{
-            background: #fff;
-        }
-        .mui-content{
-            background: transparent;
-        }
-        .mui-card{
+        *{
             margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            font-weight: normal;
+            border-style: none;
+        }
+        img{display: block;}
+        body{background:#ececec;}
+        .top{
+            width: 100%;
+            height: 44px;
+            background:white;
+            font-size: 16px;
+            color:white;
+            text-align: center;
+            line-height: 44px;
+            box-shadow: none;
+        }
+        .top .left{
+            float: left;
+            padding-left: 30px;
+            background: url("../../images/pianqushenqing/faihui@3x.png") 15px center no-repeat;
+            background-size: 12px 20px;
+            height: 44px;
+        }
+        .top h1{
+            z-index: -100;
+            margin: 0;
+            padding: 0;
+            color: black;
+        }
+        .conbox01{
+            margin-top: 64px;
+        }
+        .box01{
+            padding: 15px;
+            border-bottom: 1px solid #dce1e6;
+            font-size: 15px;
+            color: #333333;
+            background: white;
+        }
+        .conbox02{
+            padding:15px;
+            border-bottom: 1px solid #dce1e6;
+            background: white;
+        }
+        .box02{
+            margin-bottom: 30px;
+            position: relative;
+
+        }
+        .box02 .xuhao{
+            background: rgb(255, 109, 34);
+            width: 18px;
+            height: 18px;
+            border-radius: 100%;
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            line-height: 18px;
+            float: left;
+            margin-right: 8px;
+        }
+        .box02 h1{
+            margin:0;
+            padding: 0;
+            color: #333333;
+            font-size: 15px;
+            float: left;
+        }
+        .box02 h2{
+            margin:0;
+            padding: 0;
+            color: #333333;
+            font-size: 12px;
+            float: right;
+        }
+        .box02 h3{
+            margin:0;
+            padding: 0;
+            color: #333333;
+            font-size: 12px;
+            margin-left: 26px;
+            margin-top: 10px;
+        }
+        .box02 .xian{
+            position: absolute;
+            left: 9px;
+            top: 18px;
+            width: 1px;
+            height: 52px;
+            background: rgb(255, 109, 34);
+        }
+        .box03{
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .box03 .xian{
+            position: absolute;
+            left: 9px;
+            top: 18px;
+            width: 1px;
+            height: 52px;
+            background:#999999;
+        }
+        .box03 .xuhao{
+            background:#999999;
+            width: 18px;
+            height: 18px;
+            border-radius: 100%;
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            line-height: 18px;
+            float: left;
+            margin-right: 8px;
+        }
+        .box03 h1{
+            margin:0;
+            padding: 0;
+            color: #999999;
+            font-size: 15px;
+            float: left;
+        }
+        .box03 h2{
+            margin:0;
+            padding: 0;
+            color: #999999;
+            font-size: 12px;
+            float: right;
+        }
+        .box03 h3{
+            margin:0;
+            padding: 0;
+            color: #999999;
+            font-size: 12px;
+            margin-left: 26px;
+            margin-top: 10px;
+        }
+        .box04{
+            margin-top: 15px;
+            padding:15px;
+            border-bottom: 1px solid #dce1e6;
+            background: white;
+        }
+        .box04 h1{
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            color: #333333;
+            float: left;
+            width: 20%;
+            line-height: 22px;
+        }
+        .box04 textarea{
+            font-size: 15px;
+            color: #333333;
+            float: right;
+            width: 80%;
+            line-height: 22px;
+            height: 66px;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+        .conbox03{
+            margin-top: 15px;
+            margin-bottom: 65px;
+        }
+        .box05{
+            padding:15px;
+            border-bottom: 1px solid #dce1e6;
+            background: white;
+        }
+        .box05 h1{
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            float: left;
+            color: #333333;
+        }
+        .box05 h2{
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            float:right;
+            color: #333333;
+        }
+        .dbbt{
+            background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            height: 49px;
+            text-align: center;
+            color: white;
+            font-size:16px;
+            line-height: 49px;
+            box-shadow: none;
         }
     </style>
+
 </head>
 <body>
-
-<header class="mui-bar mui-bar-nav">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" style="color: #333">申请充电桩</h1>
+<header class="top mui-bar mui-bar-nav">
+    <div class="left"></div>
+    <h1 class="mui-title">桩申请信息</h1>
 </header>
-
-<div class="mui-content">
-    <div class="mui-card">
-        <div class="mui-card-header" style="font-size: 13px">
-            充电桩桩号
+<div class="conbox01">
+    <div class="box01">
+        申请流程
+    </div>
+    <div class="conbox02">
+    <div class="box02">
+        <div class="xian"></div>
+        <div class="xuhao">1</div>
+        <h1>申请已提交</h1>
+        <h2>2018.07.05 15:30</h2>
+        <div class="clearfix"></div>
+        <h3>您的充电桩申请已成功提交</h3>
+    </div>
+    <div class="box02">
+        <div class="xian" style="background: #999999;"></div>
+        <div class="xuhao">2</div>
+        <h1>申请已提交</h1>
+        <h2>2018.07.05 15:30</h2>
+        <div class="clearfix"></div>
+        <h3>您的充电桩申请已成功提交</h3>
+    </div>
+    <div class="box03">
+        <div class="xian"></div>
+        <div class="xuhao" style="background: #999999;">3</div>
+        <h1>申请已提交</h1>
+        <h2>2018.07.05 15:30</h2>
+        <div class="clearfix"></div>
+        <h3>您的充电桩申请已成功提交</h3>
+    </div>
+    <div class="box03">
+        <div class="xian"></div>
+        <div class="xuhao" style="background: #999999;">3</div>
+        <h1>申请已提交</h1>
+        <h2>2018.07.05 15:30</h2>
+        <div class="clearfix"></div>
+        <h3>您的充电桩申请已成功提交</h3>
+    </div>
+    <div class="box03" style="margin-bottom: 0;">
+        <div class="xuhao" style="background: #999999;">3</div>
+        <h1>申请已提交</h1>
+        <h2>2018.07.05 15:30</h2>
+        <div class="clearfix"></div>
+        <h3>您的充电桩申请已成功提交</h3>
+    </div>
+    </div>
+    <div class="box04">
+        <h1>申请原因</h1>
+        <textarea>申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因
+        </textarea>
+        <div class="clearfix"></div>
+    </div>
+    <div class="conbox03">
+        <div class="box05">
+            <h1>充电桩桩号(3)</h1>
+            <h2>状态</h2>
+            <div class="clearfix"></div>
         </div>
-        <div class="mui-card-content">
-
-            <div class="">
-
-            </div>
-
+        <div class="box05">
+            <h1>A1111111</h1>
+            <h2>已安装</h2>
+            <div class="clearfix"></div>
         </div>
+        <div class="box05">
+        <h1>B1857644</h1>
+        <h2>未安装</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="box05">
+        <h1>T4684163</h1>
+        <h2>返厂</h2>
+        <div class="clearfix"></div>
+    </div>
     </div>
 </div>
-
-
+<div class="dbbt mui-bar mui-bar-tab">
+    确认收到货
+</div>
 </body>
 </html>
