@@ -72,6 +72,29 @@
             background-color: transparent;
         }
 
+        .footBtn{
+            position:fixed;
+            width: 100%;
+            bottom: 0;
+            background: #fff;
+        }
+        .footBtn .footBtnInner{
+            padding:20px 10px;
+            position: relative;
+        }
+        .footBtn .footBtnInner b{
+            color: #F87952;
+        }
+        .footBtn .footBtnInner span{
+            display: inline-block;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: #F87952;
+            border-radius: 20px;
+            color: #fff;
+            padding: 10px 40px;
+        }
     </style>
 </head>
 <body>
@@ -81,7 +104,7 @@
         <h1 class="mui-title" style="color: #333">申请充电桩</h1>
     </header>
 
-    <div class="mui-content">
+    <div class="mui-content" style="padding-bottom: 80px">
         <div class="mui-card">
             <div class="mui-card-header" style="font-size: 13px">
                 充电桩桩号
@@ -92,7 +115,7 @@
 
                     <div class="cdzGroup">
                         <div class="cdzItem">
-                            A <span><b class="jian">-</b><b class="count selected">0</b><b class="jia">+</b></span>
+                            A <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
                         </div>
                         <div class="cdzItem">
                             B <span><b class="jian">-</b><b class="count">0</b><b class="jia">+</b></span>
@@ -221,9 +244,10 @@
         </form>
 
         <form class="mui-input-group" style="margin-top: 10px">
-            <div class="mui-input-row">
+            <div class="mui-input-row" style="position: relative" onclick="clicked('../map.html')">
                 <label>收货地址</label>
-                <input type="text" placeholder="请输入收货地址">
+                <i class="iconfont icon-map" style="position: absolute;right: 10px;top: 8px"></i>
+                <input type="text" placeholder="请输入收货地址" disabled >
             </div>
             <div class="mui-input-row">
                 <label>联系电话</label>
@@ -232,8 +256,81 @@
         </form>
     </div>
 
+    <div class="footBtn">
+        <div class="footBtnInner">
+            充电桩总台数: <b id="allCount">0</b>
+            <span id="submitBox">提交</span>
+        </div>
+    </div>
+
     <script type="application/javascript">
         mui.init();
+
+        $(".jia").click(function () {
+            addCount(this,1);
+        })
+
+        $(".jian").click(function () {
+            addCount(this,-1);
+        })
+
+
+        /**
+         * 获取用户全部选择的数量
+         */
+        function getAllCount() {
+
+            var $selected = $(".selected");
+
+            var sum = 0;
+
+            $.each($selected,function (index,item) {
+
+                var count = $(item).text();
+                count = parseInt(count);
+
+                sum += count;
+
+            })
+
+            return sum;
+        }
+        
+        /**
+         * 加
+         * @param that
+         * @param count
+         */
+        function addCount(that,num) {
+            var $parent = $(that).parent();
+            var $countBox = $parent.find(".count");
+
+            var count = $countBox.text();
+            count = parseInt(count);
+
+            count += num;
+            
+            if (count < 0){
+                count = 0
+            }
+            $countBox.text(count);
+
+            if(count > 0){
+                $countBox.addClass('selected')
+            }else{
+                $countBox.removeClass('selected')
+            }
+
+            $('#allCount').text(getAllCount());
+        }
+
+        /**
+         * 申请提交
+         */
+        $("#submitBox").click(function () {
+            
+        })
+
     </script>
 
 </body>
