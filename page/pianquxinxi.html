@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../plugins/layer/layer.js"></script>
@@ -115,73 +115,183 @@
 </head>
 <body>
 <header class="top mui-bar mui-bar-nav">
-    <div class="left"></div>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <div class="right"></div>
     <h1 class="mui-title">申请片区</h1>
 </header>
+
+
 <div class="conbox01">
     <div class="box01">
         <h1>地址</h1>
         <h2>上海市浦东新区东明路2000号108室</h2>
         <div class="clearfix"></div>
     </div>
+    <div  id="dataList">
+
+    </div>
+
+    <div  id="dataList2">
+
+    </div>
+
+</div>
+
+
+
+<script type="text/html" id="heHuoRenTmpl">
     <div class="box02">
         <div class="box03">
             <h1>合伙人姓名</h1>
-            <h2>某某某</h2>
+            <h2>{{users}}</h2>
             <div class="clearfix"></div>
         </div>
         <div class="box03">
             <h1>合伙人电话</h1>
-            <h2>13888888888</h2>
+            <h2>{{mobile}}</h2>
             <div class="clearfix"></div>
         </div>
         <div class="box03">
             <h1>第一年比例</h1>
-            <h2>10%</h2>
+            <h2>{{rate1}}%</h2>
             <div class="clearfix"></div>
         </div>
         <div class="box03"style="border: none;">
             <h1>第二年比例</h1>
-            <h2>20%</h2>
+            <h2>{{rate2}}%</h2>
             <div class="clearfix"></div>
         </div>
     </div>
-    <div class="box02">
-        <div class="box03">
-            <h1>合伙人姓名</h1>
-            <h2>某某某</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="box03">
-            <h1>合伙人电话</h1>
-            <h2>13888888888</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="box03">
-            <h1>第一年比例</h1>
-            <h2>10%</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="box03"style="border: none;">
-            <h1>第二年比例</h1>
-            <h2>20%</h2>
-            <div class="clearfix"></div>
-        </div>
-    </div>
+</script>
+
+<script type="text/html" id="dianJiaTmpl">
     <div class="box02">
         <div class="box03">
             <h1>片区价格</h1>
-            <h2>1元/千瓦时</h2>
+            <h2>{{price}}元/千瓦时</h2>
             <div class="clearfix"></div>
         </div>
         <div class="box03"style="border: none;">
             <h1>预设充电时间</h1>
-            <h2>2小时</h2>
+            <h2>{{defaultTime}}小时</h2>
             <div class="clearfix"></div>
         </div>
     </div>
-</div>
+</script>
 
+
+<script type="text/javascript">
+    mui.init();
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+
+        getApplyChargingGroupBYID();
+    }
+
+    function getApplyChargingGroupBYID(){
+        var areaId = plus.storage.getItem("areaId");
+        console.log("## getApplyChargingGroupBYID ## areaId:"+areaId);
+        if(vaildeParam(areaId)){
+            postJSON(API_URL.ApiGetApplyChargingGroupById,{"areaId":areaId},function(res){
+                if("0" == res.code){
+
+                    var proportionsJson = res.data.proportionsJson;  //分成比例
+                    var priceJson = res.data.priceJson;        //价格设定
+                    var proportionsJsonObj =  JSON.parse(proportionsJson);
+                    var priceJsonObj =  JSON.parse(priceJson);
+                    var tmpl = $("#heHuoRenTmpl").html();
+                    var html = '';
+                    for(var i=0;i<proportionsJsonObj.length;i++){
+                        console.log(proportionsJsonObj[i].users);  //取json中的值
+                        var users =proportionsJsonObj[i].users;
+                        var mobile =proportionsJsonObj[i].mobile;
+                        var rate1 =proportionsJsonObj[i].rate1;
+                        var rate2 =proportionsJsonObj[i].rate2;
+                        html += tmpl.replace(/{{users}}/g,users)
+                            .replace(/{{mobile}}/g,mobile)
+                            .replace(/{{rate1}}/g,rate1)
+                            .replace(/{{rate2}}/g,rate2);
+                    }
+                    console.log("html");
+                    if(''!=html){
+                        $(".title1").css('display',"block");
+                    }
+                    $("#dataList").append(html);
+
+                    var tmpl2 = $("#dianJiaTmpl").html();
+                    var html2 = '';
+                    for(var i=0;i<priceJsonObj.length;i++){
+                        console.log(priceJsonObj[i].price);  //取json中的值
+                        var price =priceJsonObj[i].price;
+                        var defaultTime =priceJsonObj[i].defaultTime;
+                        html2 += tmpl2.replace(/{{price}}/g,price)
+                            .replace(/{{defaultTime}}/g,defaultTime);
+                    }
+                    if(''!=html2){
+                        $(".title2").css('display',"block");
+                    }
+                    $("#dataList2").append(html2);
+
+                    var areaName = res.data.areaName+""; //片区名称
+                    var address = res.data.address+"";   //地址
+                    var latitude = res.data.latitude+""; //纬度
+                    var longitude = res.data.longitude+""; //纬度
+                    var electricPrice = res.data.electricPrice+""; //纬度
+
+                    var proportionsJson = res.data.proportionsJson; //分成比例
+                    var dianjiaListJson = res.data.priceJson; //价格设定
+
+                    //服务校验参数 然后保存
+                    plus.storage.setItem( "app_name", areaName);
+                    plus.storage.setItem( "app_address", address );
+                    plus.storage.setItem( "app_latitude", latitude);
+                    plus.storage.setItem( "app_longitude", longitude);
+                    plus.storage.setItem( "app_electricPrice", electricPrice);
+                    plus.storage.setItem( "memberListJson", proportionsJson);
+                    plus.storage.setItem( "dianjiaListJson", dianjiaListJson);
+
+                }else{
+                    layer.msg(res.msg);
+                    clearLogin();
+                    clicked("page/login.html");
+                }
+            })
+        }
+    }
+
+
+    /**
+     * 去修改
+     */
+    $("#submitBtn").click(function(){
+        var  app_name =   plus.storage.getItem( "app_name");
+        var  app_address =    plus.storage.getItem( "app_address");
+        var  app_latitude =    plus.storage.getItem( "app_latitude");
+        var  app_longitude =   plus.storage.getItem( "app_longitude");
+        var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
+        var  memberListJson =  plus.storage.getItem( "memberListJson");
+        var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
+
+        console.log("## Detail ## areaName:"+app_name);
+        console.log("## Detail ## address:"+app_address);
+        console.log("## Detail ## latitude:"+app_latitude);
+        console.log("## Detail ## longitude:"+app_longitude);
+        console.log("## Detail ## electricPrice:"+app_electricPrice);
+        console.log("## Detail ## proportionsJson:"+memberListJson);
+        console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
+
+        clicked('areaApplicationEdit.html');
+
+
+    });
+
+
+
+</script>
 </body>
 </html>

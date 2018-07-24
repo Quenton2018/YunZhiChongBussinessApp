@@ -3,391 +3,522 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>片区申请修改</title>
-	<link rel="stylesheet" href="../css/mui.min.css">
-	<link rel="stylesheet" href="../css/iconfont.css">
-	<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-	<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-	<script src="../js/jquery-3.3.1.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../plugins/layer/layer.js"></script>
-	<script src="../js/hammer.min.js"></script>
-	<script src="../js/jquery.hammer.js"></script>
-	<script src="../js/common.js"></script>
-	<script src="../js/base.js"></script>
+    <title>片区申请</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
     <style type="text/css">
-        .topAlertIfo{
-            font-size: .8rem;
-            padding: 15px;
-            background-color: #FF7546;
+        *{
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            font-weight: normal;
+            border-style: none;
         }
-        .topInfo{
-            font-size: 1rem;
-            padding: 15px;
-        }
-        .mui-content{
-            background-color: #ffffff;
-        }
-        .application-Box{
-            overflow: hidden;
-            margin-bottom: 0;
-            margin: 15px;
-            padding-top: 1rem;
-        }
-        .application-Box .inputBox{
-            position: relative;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-        .application-Box .inputBox i{
-            font-size: 1rem;
-            position: absolute;
-            left: 10px;
-            line-height: 2.5rem;
-            color: #000;
-        }
-        .application-Box input{
-            display: block;
-            border: none;
-            background: #F0F1F3;
-            padding-left: 80px;
-            border-radius: 20px;
-            font-size: .9rem;
-        }
-        .application-Box input:focus{
-            outline: none;
-        }
-        .getCode{
-            position: absolute;
-            right: 10px;
-            top: 0;
-            color: #333;
-            font-size: .8rem;
-            height: 40px;
-            line-height: 40px;
-            padding: 0 10px;
-        }
-
-        #submitBtn{
-            display: block;
+        body{background:#ececec;}
+        .top{
             width: 100%;
-            position: fixed;
-            bottom: 0;
-            background-color: #FF7546;
-            height: 60px;
-            color: #ffff;
+            height: 44px;
+            background:white;
+            font-size: 16px;
+            color:white;
+            text-align: center;
+            line-height: 44px;
+            box-shadow: none;
         }
-
-    .btn-class{
-        width: 50%;
-        margin: 0 auto;
-        text-align: center;
-        margin-top: 10px;
-    }
-    .tips-fuhao{
-        margin-top: 10px;
-        float: left;
-    }
-        .mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+        .top .left{
             float: left;
-            width: 50%;
-            margin-bottom: 0;
-            padding-left: 0;
-            border: 0;
+            padding-left: 30px;
+            background: url("../images/pianqushenqing/faihui@3x.png") 15px center no-repeat;
+            background-size: 15px 22px;
+            height: 44px;
         }
-        .mui-input-row label {
-            font-family: 'Helvetica Neue',Helvetica,sans-serif;
-            line-height: 1.1;
+        .top h1{
+            z-index: -100;
+            margin: 0;
+            padding: 0;
+            color: black;
+        }
+        .conbox01{
+            margin-top:44px;
+        }
+        .box01{
+            background: #e0e0e0;
+        }
+        .box01 .zhuangtai{
+            text-align: center;
             float: left;
-            width: 40%;
-            padding: 11px 15px;
-        }
-
-        .mui-input-row .mui-numbox {
-            /* float: right; */
-            margin: 2px 8px;
-            float: left;
-            margin-left: 0px;
-            width: 160px;
-        }
-        .mui-input-group:before{
-            background-color:transparent;
-        }
-        .mui-input-group:after{
-            background-color:transparent;
-        }
-
-        .mui-input-group .mui-input-row:last-child:after{
-            background-color:transparent;
-        }
-        .dianjiaItem{
-            display: block;
-            margin: 10px;
-            box-shadow: 0 1px 6px #ccc;
-            padding: 10px;
+            width: calc(100% / 3);
+            color: #999999;
+            font-size: 15px;
+            line-height: 35px;
             position: relative;
         }
 
-        .deleteBtn{
-            display: block;
-            position: absolute;
-            right: 0px;
-            top: 0px;
-            padding: 10px;
-            z-index: 999;
+        .zhuangtai img{
+            margin-top: 10px;
+            width:15px;
+            height: 15px;
+            vertical-align: center;
+        }
+        .box03{
+            margin: 0 10px;
+            padding: 0 10px;
+            padding-top: 15px;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px 0px rgba(238, 238, 238, 0.004);
+            margin-bottom: 20px;
+        }
+        .box03 .line01{
+            border-bottom: 1px solid #dce1e6;
+        }
+        .line01 .biaozhu{
+            background:#ff6d22;
+            width: 4px;
+            height: 12px;
+            float: left;
+            margin-right: 6px;
+            border-radius: 2px;
+            margin-top: 1.5px;
+            margin-bottom: 15px;
+        }
+        .line01 h1{
+            float: left;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            line-height: 15px;
+            font-weight: bolder;
+            margin-bottom: 15px;
+        }
+        .line01 .shanchu{
+            float: right;
+            margin-bottom: 15px;
+        }
+        .box03 .line02{
+            border-bottom: 1px solid #dce1e6;
+        }
+        .line02 h1{
+            float: left;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            line-height: 15px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            width: 25%;
+        }
+        .line02 input{
+            width: 45%;
+            float: left;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            line-height: 15px;
+            border: none;
+            margin-top: 2px;
+        }
+        .line02 h2{
+            text-align: right;
+            float: right;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            line-height: 15px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            width: 30%;
+        }
+        .box03 .line03{
+        }
+        .line03 h1{
+            float: left;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            line-height: 15px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            width: 50%;
+        }
+        .line03 .bilibox{
+            float: right;
+            margin-top: 7.5px;
+        }
+        .bilibox .jian{
+            text-align: center;
+            float: left;
+            border-radius: 2px 0 0 2px;
+            width: 33px;
+            height: 30px;
+            background-color: rgb(247, 247, 247);
+            border: 1px solid rgb(186, 185, 192);
+        }
+        .jian img{
+            margin-top: 14px;
+        }
+        .bilibox .shuliang{
+            text-align: center;
+            font-size: 15px;
+            color: black;
+            line-height: 30px;
+            float: left;
+            width: 33px;
+            height: 30px;
+            background-color:#f0f1f3;
+            border-top: 1px solid rgb(186, 185, 192);
+            border-bottom: 1px solid rgb(186, 185, 192);
+        }
+        .bilibox .jia{
+            text-align: center;
+            float: left;
+            border-radius: 0 2px 2px 0;
+            width: 33px;
+            height: 30px;
+            background-color: rgb(247, 247, 247);
+            border: 1px solid rgb(186, 185, 192);
+            border-bottom: 1px solid rgb(186, 185, 192);
+        }
+        .jia img{
+            margin-top: 9px;
+        }
+        .xinzengbox{
+            width: 60%;
+            font-size: 15px;
+            line-height: 45px;
+            text-align: center;
+            border: 1px dashed #bab9c0;
+            margin: 0 auto;
+            margin-bottom: 70px;
+            border-radius: 10px;
+        }
+        .xinzengbox img{
+            position: relative;
+            top: 2px;
+            width: 16px;
+            height: 16px;
+        }
+        .dbbt{
+            background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            height: 49px;
+            text-align: center;
+            color: white;
+            font-size:16px;
+            line-height: 49px;
+            box-shadow: none;
+        }
+        .mui-numbox {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            width: 120px;
+            height: 30px;
+            padding: 0 40px;
+            vertical-align: top;
+            vertical-align: middle;
+            border: solid 1px #bbb;
+            border-radius: 3px;
+            background-color: #efeff4;
         }
     </style>
 
 </head>
-<body style="background: #fff">
-
-    <header class="mui-bar mui-bar-nav">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">电价设置修改</h1>
-    </header>
-
-    <div class="mui-content" style="background: #fff;    padding-bottom: 100px;">
-        <div class="topAlertIfo">
-            请正确填写修改信息
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">申请片区修改</h1>
+</header>
+<div class="conbox01">
+    <div class="box01">
+        <div class="zhuangtai" style="background: #ff6d22;color:#ffcaaf;">
+            <img src="../images/pianqushenqing/pianqumingchen02.png">
+            片区申请
         </div>
-
-        <div  id="dataList">
-            <h1  class="topInfo">
-                充电价格
-            </h1>
-
-
-
+        <div class="zhuangtai"style="background: #ff6d22;color:#ffcaaf;">
+            <img src="../images/pianqushenqing/hehuoren03.png">
+            合伙人设置
         </div>
-        <div class="btn-class">
-            <button type="button" class="mui-btn mui-btn-success addDianJia">新增一个电价</button>
+        <div class="zhuangtai"style="background: #ff6d22;color: white;">
+            <img src="../images/pianqushenqing/dianjia02.png">
+            电价设置
         </div>
+        <div class="clearfix"></div>
+    </div>
+    <div id="dataList" class="dataList">
 
 
-        <button id="submitBtn">
-                提交修改
-        </button>
     </div>
 
-    <script type="text/html" id="dianJiaTmpl">
-        <form class="mui-input-group dianjiaItem">
-            <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
-            <div class="mui-input-row">
-                <label>片区价格</label>
-                <input type="number" class="mui-input-clear" name="price"  placeholder="输入数字最多2位小数">
-                <span class="tips-fuhao">元</span>
+    <div class="xinzengbox addDianJia">
+        <img src="../images/pianqushenqing/xinzeng.png">
+        新增一个电价
+    </div>
+</div>
+<div class="dbbt mui-bar mui-bar-tab" id="submitBtn">
+    提交
+</div>
+
+
+<script type="text/html" id="dianJiaTmpl">
+    <div class="box03 dianjiaItem">
+        <div class="line01">
+            <div class="biaozhu"></div>
+            <h1>充电价格</h1>
+            <div class="shanchu" onclick="deleteFrom(this)">
+                <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
             </div>
-            <div class="mui-input-row">
-                <label>预设充电时间</label>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line02">
+            <h1>片区价格</h1>
+            <input type="text" name="price"  placeholder="请输入片区电价"/>
+            <h2>元/千瓦时</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line03">
+            <h1>预设充电时间</h1>
+            <div class="bilibox">
                 <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
+                    <!-- "-"按钮，点击可减小当前数值 -->
                     <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                    <input class="mui-numbox-input" type="number"  name="defaultTime" readonly="readonly" value="0" />
+                    <input class="mui-numbox-input" type="number"  readonly="readonly" value="0" name="defaultTime" />
+                    <!-- "+"按钮，点击可增大当前数值 -->
                     <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                 </div>
+                <div class="clearfix"></div>
             </div>
-        </form>
-    </script>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
 
-    <script type="text/html" id="dianJiaTmplTwo">
-        <form class="mui-input-group dianjiaItem">
-            <i class="deleteBtn iconfont icon-shanchu" onclick="deleteFrom(this)"></i>
-            <div class="mui-input-row">
-                <label>片区价格</label>
-                <input type="number" class="mui-input-clear" name="price" value="{{price}}" placeholder="输入数字最多2位小数">
-                <span class="tips-fuhao">元</span>
+
+<script type="text/html" id="dianJiaTmplTwo">
+    <div class="box03 dianjiaItem">
+        <div class="line01">
+            <div class="biaozhu"></div>
+            <h1>充电价格</h1>
+            <div class="shanchu" onclick="deleteFrom(this)">
+                <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
             </div>
-            <div class="mui-input-row">
-                <label>预设充电时间</label>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line02">
+            <h1>片区价格</h1>
+            <input type="text" name="price" value="{{price}}"  placeholder="请输入片区电价"/>
+            <h2>元/千瓦时</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line03">
+            <h1>预设充电时间</h1>
+            <div class="bilibox">
                 <div class="mui-numbox" data-numbox-step='0.5' data-numbox-min='0.5' data-numbox-max='24'>
+                    <!-- "-"按钮，点击可减小当前数值 -->
                     <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                    <input class="mui-numbox-input" type="number"  name="defaultTime" readonly="readonly" value="{{defaultTime}}" />
+                    <input class="mui-numbox-input" type="number"  readonly="readonly"  name="defaultTime"  value="{{defaultTime}}"/>
+                    <!-- "+"按钮，点击可增大当前数值 -->
                     <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                 </div>
+                <div class="clearfix"></div>
             </div>
-        </form>
-    </script>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
 
+<script type="text/javascript">
+    mui.init();
 
-	<script type="text/javascript">
-        mui.init();
+    var retFalg =false;
 
-        var retFalg =false;
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+        var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
+        var priceJsonObj =  JSON.parse(dianjiaListJson);
 
-        if(window.plus){
-            pagePlusReady();
-        }else{
-            document.addEventListener('plusready',pagePlusReady,false);
+        var tmpl2 = $("#dianJiaTmplTwo").html();
+        var html2 = '';
+        for(var i=0;i<priceJsonObj.length;i++){
+            console.log(priceJsonObj[i].price);  //取json中的值
+            var price =priceJsonObj[i].price;
+            var defaultTime =priceJsonObj[i].defaultTime;
+            html2 += tmpl2.replace(/{{price}}/g,price)
+                .replace(/{{defaultTime}}/g,defaultTime);
         }
-        function pagePlusReady(){
-            var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
-            var priceJsonObj =  JSON.parse(dianjiaListJson);
+        $("#dataList").append(html2);
 
-            var tmpl2 = $("#dianJiaTmplTwo").html();
-            var html2 = '';
-            for(var i=0;i<priceJsonObj.length;i++){
-                console.log(priceJsonObj[i].price);  //取json中的值
-                var price =priceJsonObj[i].price;
-                var defaultTime =priceJsonObj[i].defaultTime;
-                html2 += tmpl2.replace(/{{price}}/g,price)
-                    .replace(/{{defaultTime}}/g,defaultTime);
-            }
-            $("#dataList").append(html2);
-
-            document.getElementById("submitBtn").addEventListener('tap',function(){
-                var btnArray=['确定','取消'];
-                mui.confirm('是否确定提交?','提示',btnArray,function(e){
-                    if(e.index == 0){
-                        submintBtn();
-                    }
-                });
-            });
-
-
-
-
-        }
-
-        function submintBtn( ) {
-            if(retFalg){
-                layer.msg("已提交,不能重复提交");
-                return;
-            }
-            retFalg  =true;
-            //服务校验参数 然后保存
-            var areaId = plus.storage.getItem("areaId");
-            var uuid = plus.storage.getItem("uuid");
-            var app_name = plus.storage.getItem("app_name");
-            var app_address = plus.storage.getItem("app_address");
-            var app_latitude = plus.storage.getItem("app_latitude");
-            var app_longitude = plus.storage.getItem("app_longitude");
-            var app_electricPrice = plus.storage.getItem("app_electricPrice");
-            var memberListJson = plus.storage.getItem("memberListJson");
-            console.log("areaId======"+areaId);
-            console.log("uuid======"+uuid);
-            console.log("app_name======"+app_name);
-            console.log("app_address======"+app_address);
-            console.log("app_latitude======"+app_latitude);
-            console.log("app_longitude======"+app_longitude);
-            console.log("app_electricPrice======"+app_electricPrice);
-            console.log("memberListJson======"+memberListJson);
-            var $dianjiaItem = $(".dianjiaItem");
-            var dianjiaList = new Array();
-            var dianjiaListJson = '';
-            var vaildeflag= false;
-            var priceflag= false;
-            var defaultTimeflag= false;
-            var jiageling = false;
-            $.each($dianjiaItem,function (index,item) {
-                var price =  $(item).find( $("input[name='price']")).val();
-                var defaultTime =  $(item).find( $("input[name='defaultTime']")).val();
-                console.log("price"+price);
-                console.log("defaultTime"+defaultTime);
-                if(!vaildeParam(price) || !vaildeParam(defaultTime)){
-                    vaildeflag = true;
-                    retFalg  =false;
-                    return;
-                }
-                /*   checkNumber(price);
-                 checkNumber(defaultTime);*/
-                //校验是数字
-                var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
-                if(!reg.test(price)){
-                    priceflag = true;
-                    retFalg  =false;
-                    return;
-                }
-                if(!reg.test(defaultTime)){
-                    defaultTimeflag = true;
-                    retFalg  =false;
-                    return;
-                }
-                if(0==parseFloat(price)){
-                    jiageling = true;
-                    retFalg  =false;
-                    return;
-                }
-                var dianjia = new Object();
-                dianjia.price = price;
-                dianjia.defaultTime = defaultTime;
-                dianjiaList.push(dianjia);
-            })
-
-            if(vaildeflag){
-                layer.msg("请补全信息");
-                retFalg  =false;
-                return;
-            }
-            if(priceflag){
-                layer.msg("片区价格必须为数字，且不能为负数");
-                retFalg  =false;
-                return;
-            }
-            if(defaultTimeflag){
-                layer.msg("充电时间必须为数字，且不能为负数");
-                retFalg  =false;
-                return;
-            }
-            if(jiageling){
-                layer.msg("片区价格必须大于0");
-                retFalg  =false;
-                return;
-            }
-
-            dianjiaListJson = JSON.stringify(dianjiaList);
-            console.log("dianjiaListJson"+dianjiaListJson);
-            var dataParam = {
-                "areaId":areaId,
-                "uuid":uuid,
-                "app_name":app_name,
-                "app_address":app_address,
-                "app_latitude":app_latitude,
-                "app_longitude":app_longitude,
-                "app_electricPrice":app_electricPrice,
-                "memberListJson":memberListJson,
-                "dianjiaListJson":dianjiaListJson
-            }
-           postJSON(API_URL.ApiApplyChargingGroupUpdateChargingGroup,dataParam,function(res){
-                if("0" == res.code){
-                    layer.msg(res.msg);
-                    setTimeout(function(){
-                        clicked('areaApplicationList.html');
-                    },2000);
-                }else{
-                    retFalg  =false;
-                    layer.msg(res.msg);
+        document.getElementById("submitBtn").addEventListener('tap',function(){
+            var btnArray=['确定','取消'];
+            mui.confirm('是否确定提交?','提示',btnArray,function(e){
+                if(e.index == 0){
+                    submintBtn();
                 }
             });
+        });
 
+
+
+
+    }
+
+    function submintBtn( ) {
+        if(retFalg){
+            layer.msg("已提交,不能重复提交");
+            return;
         }
-
-        /**
-         * 添加一个电价
-         */
-        $(".addDianJia").click(function () {
-            var tmpl = $("#dianJiaTmpl").html();
-            $("#dataList").append(tmpl);
-            mui('.mui-numbox').numbox()
+        retFalg  =true;
+        //服务校验参数 然后保存
+        var areaId = plus.storage.getItem("areaId");
+        var uuid = plus.storage.getItem("uuid");
+        var app_name = plus.storage.getItem("app_name");
+        var app_address = plus.storage.getItem("app_address");
+        var app_latitude = plus.storage.getItem("app_latitude");
+        var app_longitude = plus.storage.getItem("app_longitude");
+        var app_electricPrice = plus.storage.getItem("app_electricPrice");
+        var memberListJson = plus.storage.getItem("memberListJson");
+        console.log("areaId======"+areaId);
+        console.log("uuid======"+uuid);
+        console.log("app_name======"+app_name);
+        console.log("app_address======"+app_address);
+        console.log("app_latitude======"+app_latitude);
+        console.log("app_longitude======"+app_longitude);
+        console.log("app_electricPrice======"+app_electricPrice);
+        console.log("memberListJson======"+memberListJson);
+        var $dianjiaItem = $(".dianjiaItem");
+        var dianjiaList = new Array();
+        var dianjiaListJson = '';
+        var vaildeflag= false;
+        var priceflag= false;
+        var defaultTimeflag= false;
+        var jiageling = false;
+        $.each($dianjiaItem,function (index,item) {
+            var price =  $(item).find( $("input[name='price']")).val();
+            var defaultTime =  $(item).find( $("input[name='defaultTime']")).val();
+            console.log("price"+price);
+            console.log("defaultTime"+defaultTime);
+            if(!vaildeParam(price) || !vaildeParam(defaultTime)){
+                vaildeflag = true;
+                retFalg  =false;
+                return;
+            }
+            /*   checkNumber(price);
+             checkNumber(defaultTime);*/
+            //校验是数字
+            var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/
+            if(!reg.test(price)){
+                priceflag = true;
+                retFalg  =false;
+                return;
+            }
+            if(!reg.test(defaultTime)){
+                defaultTimeflag = true;
+                retFalg  =false;
+                return;
+            }
+            if(0==parseFloat(price)){
+                jiageling = true;
+                retFalg  =false;
+                return;
+            }
+            var dianjia = new Object();
+            dianjia.price = price;
+            dianjia.defaultTime = defaultTime;
+            dianjiaList.push(dianjia);
         })
 
-        /**
-         * @param that
-         */
-        function deleteFrom(that) {
-            var $this = $(that);
-            layer.confirm("是否确定删除",function (index) {
-                $this.parents(".mui-input-group").remove();
-                layer.close(index)
-            })
+        if(vaildeflag){
+            layer.msg("请补全信息");
+            retFalg  =false;
+            return;
         }
-        //验证字符串是否是数字
-        function checkNumber(theObj) {
-            var reg = /^[0-9]+.?[0-9]*$/;
-            if (reg.test(theObj)) {
-                return true;
+        if(priceflag){
+            layer.msg("片区价格必须为数字，且不能为负数");
+            retFalg  =false;
+            return;
+        }
+        if(defaultTimeflag){
+            layer.msg("充电时间必须为数字，且不能为负数");
+            retFalg  =false;
+            return;
+        }
+        if(jiageling){
+            layer.msg("片区价格必须大于0");
+            retFalg  =false;
+            return;
+        }
+
+        dianjiaListJson = JSON.stringify(dianjiaList);
+        console.log("dianjiaListJson"+dianjiaListJson);
+        var dataParam = {
+            "areaId":areaId,
+            "uuid":uuid,
+            "app_name":app_name,
+            "app_address":app_address,
+            "app_latitude":app_latitude,
+            "app_longitude":app_longitude,
+            "app_electricPrice":app_electricPrice,
+            "memberListJson":memberListJson,
+            "dianjiaListJson":dianjiaListJson
+        }
+        postJSON(API_URL.ApiApplyChargingGroupUpdateChargingGroup,dataParam,function(res){
+            if("0" == res.code){
+                layer.msg(res.msg);
+                setTimeout(function(){
+                    clicked('areaApplicationList.html');
+                },2000);
+            }else{
+                retFalg  =false;
+                layer.msg(res.msg);
             }
-            return false;
+        });
+
+    }
+
+    /**
+     * 添加一个电价
+     */
+    $(".addDianJia").click(function () {
+        var tmpl = $("#dianJiaTmpl").html();
+        $("#dataList").append(tmpl);
+        mui('.mui-numbox').numbox()
+    })
+
+    /**
+     * @param that
+     */
+    function deleteFrom(that) {
+        var $this = $(that);
+        layer.confirm("是否确定删除",function (index) {
+            $this.parents(".box03").remove();
+            layer.close(index)
+        })
+    }
+    //验证字符串是否是数字
+    function checkNumber(theObj) {
+        var reg = /^[0-9]+.?[0-9]*$/;
+        if (reg.test(theObj)) {
+            return true;
         }
-	</script>
+        return false;
+    }
+</script>
 </body>
 </html>

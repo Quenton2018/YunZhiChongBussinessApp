@@ -3,354 +3,297 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>片区申请详情页</title>
-	<link rel="stylesheet" href="../css/mui.min.css">
-	<link rel="stylesheet" href="../css/iconfont.css">
-	<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-	<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-	<script src="../js/jquery-3.3.1.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../plugins/layer/layer.js"></script>
-	<script src="../js/hammer.min.js"></script>
-	<script src="../js/jquery.hammer.js"></script>
-	<script src="../js/common.js"></script>
-	<script src="../js/base.js"></script>
+    <title>片区信息</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
     <style type="text/css">
-        .topAlertIfo{
-            font-size: .8rem;
-            padding: 15px;
-            background-color: #FF7546;
+        *{
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            font-weight: normal;
+            border-style: none;
         }
-        .topInfo{
-            font-size: 1rem;
-            padding: 15px;
-        }
-        .mui-content{
-            background-color: #ffffff;
-        }
-        .application-Box{
-            overflow: hidden;
-            margin-bottom: 0;
-            margin: 15px;
-            padding-top: 1rem;
-        }
-        .application-Box .inputBox{
-            position: relative;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-        .application-Box .inputBox i{
-            font-size: 1rem;
-            position: absolute;
-            left: 10px;
-            line-height: 2.5rem;
-            color: #000;
-        }
-        .application-Box input{
-            display: block;
-            border: none;
-            background: #F0F1F3;
-            padding-left: 80px;
-            border-radius: 20px;
-            font-size: .9rem;
-        }
-        .application-Box input:focus{
-            outline: none;
-        }
-        .getCode{
-            position: absolute;
-            right: 10px;
-            top: 0;
-            color: #333;
-            font-size: .8rem;
-            height: 40px;
-            line-height: 40px;
-            padding: 0 10px;
-        }
-
-        #submitBtn{
-            display: block;
+        body{background:#ececec;}
+        .top{
             width: 100%;
-            position: fixed;
-            bottom: 0;
-            background-color: #FF7546;
-            height: 60px;
-            color: #ffff;
-            border: none;
-            border-radius: 0;
+            height: 44px;
+            background:white;
+            font-size: 16px;
+            color:white;
+            text-align: center;
+            line-height: 44px;
+            box-shadow: none;
         }
-
-    .btn-class{
-        width: 50%;
-        margin: 0 auto;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-        .mui-input-row .mui-numbox {
-            /* float: right; */
-            margin: 2px 8px;
+        .top .left{
             float: left;
-            margin-left: 0px;
-            width: 160px;
+            padding-left: 30px;
+            background: url("../images/pianqushenqing/faihui@3x.png") 15px center no-repeat;
+            background-size: 15px 22px;
+            height: 44px;
         }
 
-        .mui-input-group:before{
-            background-color:transparent;
+        .top .right{
+            float: right;
+            padding-left: 20px;
+            padding-right: 15px;
+            background: url("../images/pianqushenqing/bianji@3x.png") 0px center no-repeat;
+            background-size: 20px 20px;
+            height: 44px;
         }
-        .mui-input-group:after{
-            background-color:transparent;
+        .top h1{
+            z-index: -100;
+            margin: 0;
+            padding: 0;
+            color: black;
         }
-
-        .mui-input-group .mui-input-row:last-child:after{
-            background-color:transparent;
+        .conbox01{
+            margin-top:59px;
         }
-        .memberItem{
-            display: block;
-            margin: 10px;
-            box-shadow: 0 1px 6px #ccc;
-            padding: 10px;
-            position: relative;
+        .box01{
+            border-top: 1px solid #dce1e6;
+            border-bottom: 1px solid #dce1e6;
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
         }
-
-        .dianjiaItem{
-            display: block;
-            margin: 10px;
-            box-shadow: 0 1px 6px #ccc;
-            padding: 10px;
-            position: relative;
-        }
-        .deleteBtn{
-            display: block;
-            position: absolute;
-            right: 0px;
-            top: 0px;
-            padding: 10px;
-            z-index: 999;
-        }
-        .tips-fuhao{
-            margin-top: 10px;
+        .box01 h1{
             float: left;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            color: #7a7d80;
         }
-        .mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+        .box01 h2{
+            float: right;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            color: #333333;
+        }
+        .box02{
+            border-top: 1px solid #dce1e6;
+            border-bottom: 1px solid #dce1e6;
+            background: white;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+        .box02 .box03{
+            padding: 15px 0;
+            padding-right: 15px;
+            border-bottom: 1px solid #dce1e6;
+        }
+        .box03 h1{
             float: left;
-            width: 50%;
-            margin-bottom: 0;
-            padding-left: 0;
-            border: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            color: #7a7d80;
         }
-        .mui-input-row label {
-            font-family: 'Helvetica Neue',Helvetica,sans-serif;
-            line-height: 1.1;
-            float: left;
-            width: 40%;
-            padding: 11px 15px;
+        .box03 h2{
+            float: right;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            color: #333333;
         }
-
-        .mui-input-row .mui-numbox {
-            /* float: right; */
-            margin: 2px 8px;
-            float: left;
-            margin-left: 0px;
-            width: 160px;
-        }
-        .mui-input-group:before{
-            background-color:transparent;
-        }
-        .mui-input-group:after{
-            background-color:transparent;
-        }
-
-        .mui-input-group .mui-input-row:last-child:after{
-            background-color:transparent;
-        }
-        .dianjiaItem{
-            display: block;
-            margin: 10px;
-            box-shadow: 0 1px 6px #ccc;
-            padding: 10px;
-            position: relative;
-        }
-
     </style>
 
 </head>
-<body style="background: #fff">
-
-    <header class="mui-bar mui-bar-nav">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">片区详情</h1>
-    </header>
-
-    <div class="mui-content" style="background: #fff;    padding-bottom: 100px;">
-        <div  id="dataList">
-            <h1 class="topInfo title1" style="display: none">
-                合伙人信息
-            </h1>
+<body>
+<header class="top mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <div class="right" id="submitBtn"></div>
+    <h1 class="mui-title">申请片区</h1>
+</header>
 
 
-        </div>
-        <div  id="dataList2">
-            <h1 class="topInfo title2" style="display: none">
-                充电价格
-            </h1>
-
-
-
-        </div>
-
-        <button id="submitBtn" >
-           去修改
-        </button>
+<div class="conbox01">
+    <div class="box01">
+        <h1>地址</h1>
+        <h2 class="address"></h2>
+        <div class="clearfix"></div>
     </div>
-    <script type="text/html" id="heHuoRenTmpl">
-            <form class="mui-input-group memberItem">
-                <div class="mui-input-row ">
-                    <label>合伙人姓名</label>
-                    <input type="text" class="mui-input-clear" name="users" readonly="readonly" value="{{users}}" >
-                </div>
-                <div class="mui-input-row">
-                    <label>合伙人手机</label>
-                    <input type="text" class="mui-input-clear" name="mobile"  readonly="readonly" value="{{mobile}}">
-                </div>
-                <div class="mui-input-row">
-                    <label>第一年比例</label>
-                    <input type="text" class="mui-input-clear" name="rate1"  readonly="readonly" value="{{rate1}}%">
-                </div>
-                <div class="mui-input-row">
-                    <label>第二年比例</label>
-                    <input type="text" class="mui-input-clear" name="rate2"  readonly="readonly" value="{{rate2}}%">
-                </div>
-            </form>
-    </script>
+    <div  id="dataList">
 
-    <script type="text/html" id="dianJiaTmpl">
-        <form class="mui-input-group  dianjiaItem">
-            <div class="mui-input-row">
-                <label>片区价格</label>
-                <input type="text" class="mui-input-clear" name="price"  readonly="readonly" value="{{price}}元">
-            </div>
-            <div class="mui-input-row">
-                <label>预设充电时间</label>
-                <input type="text" class="mui-input-clear" name="defaultTime"  readonly="readonly" value="{{defaultTime}}元">
-            </div>
-        </form>
-    </script>
+    </div>
+
+    <div  id="dataList2">
+
+    </div>
+
+</div>
 
 
-	<script type="text/javascript">
-        mui.init();
 
-        if(window.plus){
-            pagePlusReady();
-        }else{
-            document.addEventListener('plusready',pagePlusReady,false);
-        }
-        function pagePlusReady(){
-            
-            getApplyChargingGroupBYID();
-        }
+<script type="text/html" id="heHuoRenTmpl">
+    <div class="box02">
+        <div class="box03">
+            <h1>合伙人姓名</h1>
+            <h2>{{users}}</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="box03">
+            <h1>合伙人电话</h1>
+            <h2>{{mobile}}</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="box03">
+            <h1>第一年比例</h1>
+            <h2>{{rate1}}%</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="box03"style="border: none;">
+            <h1>第二年比例</h1>
+            <h2>{{rate2}}%</h2>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
 
-        function getApplyChargingGroupBYID(){
-            var areaId = plus.storage.getItem("areaId");
-            console.log("## getApplyChargingGroupBYID ## areaId:"+areaId);
-            if(vaildeParam(areaId)){
-                postJSON(API_URL.ApiGetApplyChargingGroupById,{"areaId":areaId},function(res){
-                    if("0" == res.code){
-                      
-                        var proportionsJson = res.data.proportionsJson;  //分成比例
-                        var priceJson = res.data.priceJson;        //价格设定
-                        var proportionsJsonObj =  JSON.parse(proportionsJson);
-                        var priceJsonObj =  JSON.parse(priceJson);
-                        var tmpl = $("#heHuoRenTmpl").html();
-                        var html = '';
-                        for(var i=0;i<proportionsJsonObj.length;i++){
-                            console.log(proportionsJsonObj[i].users);  //取json中的值
-                            var users =proportionsJsonObj[i].users;
-                            var mobile =proportionsJsonObj[i].mobile;
-                            var rate1 =proportionsJsonObj[i].rate1;
-                            var rate2 =proportionsJsonObj[i].rate2;
-                            html += tmpl.replace(/{{users}}/g,users)
-                                .replace(/{{mobile}}/g,mobile)
-                                .replace(/{{rate1}}/g,rate1)
-                                .replace(/{{rate2}}/g,rate2);
-                        }
-                        console.log("html");
-                        if(''!=html){
-                            $(".title1").css('display',"block");
-                        }
-                        $("#dataList").append(html);
+<script type="text/html" id="dianJiaTmpl">
+    <div class="box02">
+        <div class="box03">
+            <h1>片区价格</h1>
+            <h2>{{price}}元/千瓦时</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="box03"style="border: none;">
+            <h1>预设充电时间</h1>
+            <h2>{{defaultTime}}小时</h2>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
 
-                        var tmpl2 = $("#dianJiaTmpl").html();
-                        var html2 = '';
-                        for(var i=0;i<priceJsonObj.length;i++){
-                            console.log(priceJsonObj[i].price);  //取json中的值
-                            var price =priceJsonObj[i].price;
-                            var defaultTime =priceJsonObj[i].defaultTime;
-                            html2 += tmpl2.replace(/{{price}}/g,price)
-                                .replace(/{{defaultTime}}/g,defaultTime);
-                        }
-                        if(''!=html2){
-                            $(".title2").css('display',"block");
-                        }
-                        $("#dataList2").append(html2);
 
-                        var areaName = res.data.areaName+""; //片区名称
-                        var address = res.data.address+"";   //地址
-                        var latitude = res.data.latitude+""; //纬度
-                        var longitude = res.data.longitude+""; //纬度
-                        var electricPrice = res.data.electricPrice+""; //纬度
+<script type="text/javascript">
+    mui.init();
 
-                        var proportionsJson = res.data.proportionsJson; //分成比例
-                        var dianjiaListJson = res.data.priceJson; //价格设定
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
 
-                        //服务校验参数 然后保存
-                        plus.storage.setItem( "app_name", areaName);
-                        plus.storage.setItem( "app_address", address );
-                        plus.storage.setItem( "app_latitude", latitude);
-                        plus.storage.setItem( "app_longitude", longitude);
-                        plus.storage.setItem( "app_electricPrice", electricPrice);
-                        plus.storage.setItem( "memberListJson", proportionsJson);
-                        plus.storage.setItem( "dianjiaListJson", dianjiaListJson);
+        getApplyChargingGroupBYID();
+    }
 
-                    }else{
-                        layer.msg(res.msg);
-                        clearLogin();
-                        clicked("page/login.html");
+    function getApplyChargingGroupBYID(){
+        var areaId = plus.storage.getItem("areaId");
+        console.log("## getApplyChargingGroupBYID ## areaId:"+areaId);
+        if(vaildeParam(areaId)){
+            postJSON(API_URL.ApiGetApplyChargingGroupById,{"areaId":areaId},function(res){
+                if("0" == res.code){
+
+                    var address = res.data.address;
+                    $(".address").text(address);
+                    var proportionsJson = res.data.proportionsJson;  //分成比例
+                    var priceJson = res.data.priceJson;        //价格设定
+                    var proportionsJsonObj =  JSON.parse(proportionsJson);
+                    var priceJsonObj =  JSON.parse(priceJson);
+                    var tmpl = $("#heHuoRenTmpl").html();
+                    var html = '';
+                    for(var i=0;i<proportionsJsonObj.length;i++){
+                        console.log(proportionsJsonObj[i].users);  //取json中的值
+                        var users =proportionsJsonObj[i].users;
+                        var mobile =proportionsJsonObj[i].mobile;
+                        var rate1 =proportionsJsonObj[i].rate1;
+                        var rate2 =proportionsJsonObj[i].rate2;
+                        html += tmpl.replace(/{{users}}/g,users)
+                            .replace(/{{mobile}}/g,mobile)
+                            .replace(/{{rate1}}/g,rate1)
+                            .replace(/{{rate2}}/g,rate2);
                     }
-                })
-            }
+                    console.log("html");
+                    if(''!=html){
+                        $(".title1").css('display',"block");
+                    }
+                    $("#dataList").append(html);
+
+                    var tmpl2 = $("#dianJiaTmpl").html();
+                    var html2 = '';
+                    for(var i=0;i<priceJsonObj.length;i++){
+                        console.log(priceJsonObj[i].price);  //取json中的值
+                        var price =priceJsonObj[i].price;
+                        var defaultTime =priceJsonObj[i].defaultTime;
+                        html2 += tmpl2.replace(/{{price}}/g,price)
+                            .replace(/{{defaultTime}}/g,defaultTime);
+                    }
+                    if(''!=html2){
+                        $(".title2").css('display',"block");
+                    }
+                    $("#dataList2").append(html2);
+
+                    var areaName = res.data.areaName+""; //片区名称
+                    var address = res.data.address+"";   //地址
+                    var latitude = res.data.latitude+""; //纬度
+                    var longitude = res.data.longitude+""; //纬度
+                    var electricPrice = res.data.electricPrice+""; //纬度
+
+                    var proportionsJson = res.data.proportionsJson; //分成比例
+                    var dianjiaListJson = res.data.priceJson; //价格设定
+
+                    //服务校验参数 然后保存
+                    plus.storage.setItem( "app_name", areaName);
+                    plus.storage.setItem( "app_address", address );
+                    plus.storage.setItem( "app_latitude", latitude);
+                    plus.storage.setItem( "app_longitude", longitude);
+                    plus.storage.setItem( "app_electricPrice", electricPrice);
+                    plus.storage.setItem( "memberListJson", proportionsJson);
+                    plus.storage.setItem( "dianjiaListJson", dianjiaListJson);
+
+                }else{
+                    layer.msg(res.msg);
+                    clearLogin();
+                    clicked("page/login.html");
+                }
+            })
         }
+    }
 
 
-        /**
-         * 去修改
-         */
-        $("#submitBtn").click(function(){
-            var  app_name =   plus.storage.getItem( "app_name");
-            var  app_address =    plus.storage.getItem( "app_address");
-            var  app_latitude =    plus.storage.getItem( "app_latitude");
-            var  app_longitude =   plus.storage.getItem( "app_longitude");
-            var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
-            var  memberListJson =  plus.storage.getItem( "memberListJson");
-            var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
+    /**
+     * 去修改
+     */
+    $("#submitBtn").click(function(){
+        var  app_name =   plus.storage.getItem( "app_name");
+        var  app_address =    plus.storage.getItem( "app_address");
+        var  app_latitude =    plus.storage.getItem( "app_latitude");
+        var  app_longitude =   plus.storage.getItem( "app_longitude");
+        var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
+        var  memberListJson =  plus.storage.getItem( "memberListJson");
+        var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
 
-            console.log("## Detail ## areaName:"+app_name);
-            console.log("## Detail ## address:"+app_address);
-            console.log("## Detail ## latitude:"+app_latitude);
-            console.log("## Detail ## longitude:"+app_longitude);
-            console.log("## Detail ## electricPrice:"+app_electricPrice);
-            console.log("## Detail ## proportionsJson:"+memberListJson);
-            console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
+        console.log("## Detail ## areaName:"+app_name);
+        console.log("## Detail ## address:"+app_address);
+        console.log("## Detail ## latitude:"+app_latitude);
+        console.log("## Detail ## longitude:"+app_longitude);
+        console.log("## Detail ## electricPrice:"+app_electricPrice);
+        console.log("## Detail ## proportionsJson:"+memberListJson);
+        console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
 
-            clicked('areaApplicationEdit.html');
-
-
-        });
+        clicked('areaApplicationEdit.html');
 
 
+    });
 
-    </script>
+
+
+</script>
 </body>
 </html>
