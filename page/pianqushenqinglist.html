@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../plugins/layer/layer.js"></script>
@@ -16,6 +16,7 @@
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-qrcode-master/qrcode.js"></script>
     <style type="text/css">
         *{
             margin: 0;
@@ -129,6 +130,21 @@
             line-height: 49px;
             box-shadow: none;
         }
+        .loadMore{
+            background: #eaeaea;
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            display: none;
+        }
+
+        .noMore{
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            /*display: none;*/
+            background: #EFEFF4;
+        }
     </style>
 
 </head>
@@ -138,54 +154,227 @@
     <h1 class="mui-title">片区申请列表</h1>
 </header>
 <div class="conbox01">
-    <div class="conbox">
-    <div class="box01">
-        <div class="imgbox">
-            <img src="../images/pianqushenqing/pianqu@3x.png">
-        </div>
-        <h1>片区名称：万科五街坊</h1>
-        <div class="zhuangtai01">等待审核</div>
-        <div class="clearfix"></div>
+    <div class="dataList">
+
+
     </div>
-    <div class="box02">
-        <h1>电价：0.5元/千瓦时</h1>
-        <h1>地址：上海市浦东新区东明路2000号108室</h1>
-        <h1>申请时间：2018.7.5 15:30</h1>
-    </div>
-    </div>
-    <div class="conbox">
-        <div class="box01">
-            <div class="imgbox">
-                <img src="../images/pianqushenqing/pianqu@3x.png">
-            </div>
-            <h1>片区名称：万科五街坊</h1>
-            <div class="zhuangtai02">审核通过</div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="box02">
-            <h1>电价：0.5元/千瓦时</h1>
-            <h1>地址：上海市浦东新区东明路2000号108室</h1>
-            <h1>申请时间：2018.7.5 15:30</h1>
-        </div>
-    </div>
-    <div class="conbox">
-        <div class="box01">
-            <div class="imgbox">
-                <img src="../images/pianqushenqing/pianqu@3x.png">
-            </div>
-            <h1>片区名称：万科五街坊</h1>
-            <div class="zhuangtai03">审核驳回</div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="box02">
-            <h1>电价：0.5元/千瓦时</h1>
-            <h1>地址：上海市浦东新区东明路2000号108室</h1>
-            <h1>申请时间：2018.7.5 15:30</h1>
-        </div>
-    </div>
+    <div id="loadMore" class="loadMore">加载更多</div>
+    <div id="noMore" class="noMore">没有更多了</div>
+
+
 </div>
 <div class="box03 mui-bar mui-bar-tab">
     申请片区
 </div>
+
+<script type="text/html" id="dataTmpl">
+    <div class="conbox">
+        <div class="box01"  data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)" >
+            <div class="imgbox">
+                <img src="../images/pianqushenqing/pianqu@3x.png">
+            </div>
+            <h1>片区名称：{{name}}</h1>
+            {{status}}
+            <div class="clearfix"></div>
+        </div>
+        <div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">
+            <h1>电价：{{electricPrice}}元/千瓦时</h1>
+            <h1>地址：{{address}}</h1>
+            <h1>申请时间：{{createDate}}</h1>
+        </div>
+    </div>
+</script>
+
+
+
+
+
+<script type="text/javascript">
+    mui.init();
+
+    var ws=null;
+    // 处理沉浸式状态栏
+    var topoffset=0;
+    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if(ms&&ms.length>=3){
+        topoffset=parseFloat(ms[2]);
+    }
+
+    var pageNumber = 1;
+    var pageSize = 5;
+    var shareUrl = null;
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady() {
+        $("#loadMore").css({"display":"none"});
+        $("#noMore").css({"display":"none"});
+        getList();
+
+        ws=plus.webview.currentWebview();
+        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+        }
+        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+    }
+
+    // 刷新页面
+    function onRefresh(){
+        console.log("onRefresh==================");
+        $("#loadMore").css({"display":"none"});
+        $("#noMore").css({"display":"none"});
+        pageNumber = 1;
+        $(".dataList").html("");
+        getList();
+        ws.endPullToRefresh();
+    }
+
+    //跳转详情页
+    function areaApplicationDeatil(that) {
+        console.log("that=========="+that);
+        var data_id = $(that).attr("data-id")+''; //片区id*/
+        console.log("areaId=========="+data_id);
+        //服务校验参数 然后保存
+        plus.storage.setItem( "areaId", data_id);
+        clicked('areaApplicationDetail.html');
+    }
+
+
+    function getqrCode(that) {
+        var btnArray=['确定','取消'];
+        mui.confirm('生成片区二维码?','提示',btnArray,function(e){
+            if(e.index == 0){
+                var id = 'Qrcode_' + randomString(20);
+                var data_id = $(that).attr("data-id")+'';
+                var data_name =  $(that).attr("data-name")+'';
+                var timestamp = new Date().getTime();
+                console.log("data_id:"+data_id);
+                console.log("data_name:"+data_name);
+
+                if(data_id=='undefined'){
+                    layer.msg("片区申请被驳回或处理中，片区二维码生成失败");
+                    return ;
+                }else{
+                    var dataParam = {
+                        "qrCodeId":id+'',
+                        "shareUrl": WX_URL.QRCode+'',
+                        "data_id":data_id+'',
+                        "timestamp":timestamp+''
+                    }
+
+
+                    postJSON(API_URL.ApiChargingGroupQRCodeSaveChargingGroupQRCode,dataParam,function(res){
+                        if("0" == res.code){
+                            var  qrCode_id = res.data.id;
+                            var  qrCode_sn = res.data.sn;
+                            var  wexinUrl = res.data.shareUrl;
+                            shareUrl = wexinUrl+"?qrCode_id="+qrCode_id+"&timestamp="+timestamp;
+                            console.log("shareUrl=================="+shareUrl);
+
+                            var  contentDiv = '<div class="qrcodeBox" style="width:300px;height: 300px" id="'+id+'"> <h4 style="margin-top: 0px;">微信扫一扫 进入安装申请页面</h4> </div>';
+                            layer.open({
+                                title: '片区名称： '+data_name
+                                ,content:contentDiv,
+                                btn:{}
+                            });
+                            var qrcode = new QRCode(document.getElementById(id), {
+                                width : 300,
+                                height : 300
+                            });
+                            qrcode.makeCode(shareUrl);
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    function getList(){
+        var uuid = plus.storage.getItem("uuid");
+        if(vaildeParam(uuid)){
+            var dataParam = {
+                "uuid":uuid,
+                "pageSize":pageSize,
+                "pageNumber":pageNumber
+            }
+            postJSON(API_URL.ApiGetApplyChargingGroupList,dataParam,function(res){
+                if("0" == res.code){
+                    var data = res.data.pagedata.content;
+                    var tmpl = $("#dataTmpl").html();
+                    var html = '';
+                    $.each(data, function(index,item) {
+                        var chargingGroup = item.chargingGroup;
+                        var keid;
+                        if(vaildeParam(chargingGroup)){
+                            keid =chargingGroup.id;
+                        }
+                        console.log("keid:"+keid);
+                        var id = item.id+'';
+                        var status = item.status+'';
+                        var areaName =  item.areaName;
+                        var address =  item.address;
+                        var electricPrice =  item.electricPrice;
+                        var createDate = jsDateDiff(item.createDate / 1000);
+
+                        var statusDiv  = '<div class="zhuangtai01">等待审核</div>';
+                        if(status =='通过'){
+                            statusDiv = '<div class="zhuangtai02">审核通过</div>';
+                        }else if(status =='驳回'){
+                            statusDiv = '<div class="zhuangtai03">审核驳回</div> ';
+                        }
+                        console.log("status=========="+status);
+                        console.log("statusDiv========="+statusDiv);
+
+                        html += tmpl.replace(/{{name}}/g,areaName)
+                            .replace(/{{createDate}}/g,createDate)
+                            .replace(/{{status}}/g,statusDiv)
+                            .replace(/{{electricPrice}}/g,electricPrice)
+                            .replace(/{{address}}/g,address)
+                            .replace(/{{areaid}}/g,id)
+                            .replace(/{{id}}/g,keid);
+
+                    });
+                    if(1 == pageSize){
+                        $(".dataList").html("");
+                    }
+                    $(".dataList").append(html);
+                    //   bindItemClick();
+                    if(true == res.data.pagedata.last){
+                        $("#loadMore").css({"display":"none"});
+                        $("#noMore").css({"display":"block"});
+                    }else{
+                        $("#loadMore").css({"display":"block"});
+                        $("#noMore").css({"display":"none"});
+                    }
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+        }
+    }
+
+    /* var qrcode = new QRCode(document.getElementById("qtCodeBox"), {
+         width : 200,
+         height : 200
+     });
+     qrcode.makeCode("${setting.siteUrl}/wx/member/bind.html?invitationCode=${member.myinvitationCode}");*/
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getList();
+    })
+
+    //新建一个申请
+    $("#submitBtn").click(function(){
+        clicked('areaApplication.html');
+    });
+
+</script>
+
 </body>
 </html>
