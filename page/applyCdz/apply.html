@@ -370,12 +370,15 @@
 
         var uuid = plus.storage.getItem("uuid");
 
+        var totalCount = $("#allCount").text();
+
         var data = {
             'uuid':uuid,
             'selectCdzJson':selectArrJson,
             'reason':reason,
             'address':address,
-            'mobile':mobile
+            'mobile':mobile,
+            'totalCount':totalCount
         }
 
         postJSON(API_URL.ApiApplyCdzApply,data,function (res) {

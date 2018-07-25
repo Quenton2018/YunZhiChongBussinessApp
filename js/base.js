@@ -70,6 +70,7 @@ API_URL.ApiChargingBusinessGetADaylyIncomeDetail = apiHost + "/api/chargingBusin
 
 
 API_URL.ApiApplyCdzApply = apiHost + "/api/applyCdz/apply"; //合伙人申请充电桩
+API_URL.ApiApplyCdzList = apiHost + "/api/applyCdz/list"; //申请列表
 
 
 var WX_URL = {};
