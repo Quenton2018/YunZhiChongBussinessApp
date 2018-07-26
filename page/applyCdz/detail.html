@@ -218,90 +218,262 @@
             line-height: 49px;
             box-shadow: none;
         }
+
+        .activeProgress{
+            color: #000!important;
+        }
+        .activeProgress .xuhao{
+            background: rgb(255, 109, 34)!important;
+        }
+        .activeProgress h1{
+            color: #000!important;
+        }
+        .activeProgress .date{
+            color: #000!important;
+        }
+        .activeProgress h3{
+            color: #000!important;
+        }
+        .activeProgress .xian{
+            background: rgb(255, 109, 34)!important;
+        }
     </style>
 
 </head>
 <body>
-<header class="top mui-bar mui-bar-nav">
-    <div class="left"></div>
-    <h1 class="mui-title">桩申请信息</h1>
-</header>
-<div class="conbox01">
-    <div class="box01">
-        申请流程
-    </div>
-    <div class="conbox02">
-    <div class="box02">
-        <div class="xian"></div>
-        <div class="xuhao">1</div>
-        <h1>申请已提交</h1>
-        <h2>2018.07.05 15:30</h2>
-        <div class="clearfix"></div>
-        <h3>您的充电桩申请已成功提交</h3>
-    </div>
-    <div class="box02">
-        <div class="xian" style="background: #999999;"></div>
-        <div class="xuhao">2</div>
-        <h1>申请已提交</h1>
-        <h2>2018.07.05 15:30</h2>
-        <div class="clearfix"></div>
-        <h3>您的充电桩申请已成功提交</h3>
-    </div>
-    <div class="box03">
-        <div class="xian"></div>
-        <div class="xuhao" style="background: #999999;">3</div>
-        <h1>申请已提交</h1>
-        <h2>2018.07.05 15:30</h2>
-        <div class="clearfix"></div>
-        <h3>您的充电桩申请已成功提交</h3>
-    </div>
-    <div class="box03">
-        <div class="xian"></div>
-        <div class="xuhao" style="background: #999999;">3</div>
-        <h1>申请已提交</h1>
-        <h2>2018.07.05 15:30</h2>
-        <div class="clearfix"></div>
-        <h3>您的充电桩申请已成功提交</h3>
-    </div>
-    <div class="box03" style="margin-bottom: 0;">
-        <div class="xuhao" style="background: #999999;">3</div>
-        <h1>申请已提交</h1>
-        <h2>2018.07.05 15:30</h2>
-        <div class="clearfix"></div>
-        <h3>您的充电桩申请已成功提交</h3>
-    </div>
-    </div>
-    <div class="box04">
-        <h1>申请原因</h1>
-        <textarea>申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因申请原因
-        </textarea>
-        <div class="clearfix"></div>
-    </div>
-    <div class="conbox03">
-        <div class="box05">
-            <h1>充电桩桩号(3)</h1>
-            <h2>状态</h2>
+    <header class="top mui-bar mui-bar-nav">
+        <div class="left"></div>
+        <h1 class="mui-title">桩申请信息</h1>
+    </header>
+    <div class="conbox01">
+        <div class="box01">
+            申请流程
+        </div>
+        <div class="conbox02">
+            <div class=" box03 progressItem progressItem1">
+                <div class="xian"></div>
+                <div class="xuhao">1</div>
+                <h1>申请已提交</h1>
+                <h2 class="date"></h2>
+                <div class="clearfix"></div>
+                <h3>您的充电桩申请已成功提交</h3>
+            </div>
+            <div class="box03 progressItem progressItem2">
+                <div class="xian" style="background: #999999;"></div>
+                <div class="xuhao">2</div>
+                <h1>审核通过</h1>
+                <h2 class="date"></h2>
+                <div class="clearfix"></div>
+                <h3>您的充电桩申请已受理，并审核通过</h3>
+            </div>
+            <div class="box03 progressItem progressItem3">
+                <div class="xian"></div>
+                <div class="xuhao" style="background: #999999;">3</div>
+                <h1>待发货</h1>
+                <h2 class="date"></h2>
+                <div class="clearfix"></div>
+                <h3>您的充电桩申请已经成功核实，我们会尽快安排发货</h3>
+            </div>
+            <div class="box03 progressItem progressItem4">
+                <div class="xian"></div>
+                <div class="xuhao" style="background: #999999;">4</div>
+                <h1>已发货</h1>
+                <h2 class="date"></h2>
+                <div class="clearfix"></div>
+                <h3>您的充电桩已经发货，请注意查收</h3>
+            </div>
+            <div class="box03 progressItem progressItem5" style="margin-bottom: 0;">
+                <div class="xuhao" style="background: #999999;">5</div>
+                <h1>已收货</h1>
+                <h2 class="date"></h2>
+                <div class="clearfix"></div>
+                <h3>您的充电桩已经被接收，请尽快安装</h3>
+            </div>
+            <div class="box03 progressItem progressItem6 activeProgress" style="margin-bottom: 0;display: none">
+                <div class="xuhao" style="background: #999999;">2</div>
+                <h1>驳回</h1>
+                <h2 class="date"></h2>
+                <div class="clearfix"></div>
+                <h3>您的充电桩已经被驳回，请重新申请</h3>
+            </div>
+        </div>
+
+        <div class="box04">
+            <h1>申请原因</h1>
+            <textarea id="reasonBox">加载中...</textarea>
             <div class="clearfix"></div>
         </div>
-        <div class="box05">
-            <h1>A1111111</h1>
-            <h2>已安装</h2>
+        <div class="box04">
+            <h1>审核信息</h1>
+            <textarea id="reasonByAdminBox">加载中...</textarea>
             <div class="clearfix"></div>
         </div>
+        <div class="conbox03">
+            <div class="box05">
+                <h1>充电桩桩号(<span id="realCount">0</span>)</h1>
+                <h2>状态</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="cdzList">
+                <p style="text-align: center;padding: 10px">暂未配货</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="dbbt mui-bar mui-bar-tab">
+        确认收到货
+    </div>
+
+
+    <script type="text/html" id="cdzInfoTmpl">
         <div class="box05">
-        <h1>B1857644</h1>
-        <h2>未安装</h2>
+            <h1>{{code}}}</h1>
+            <h2>{{status}}</h2>
             <div class="clearfix"></div>
         </div>
-        <div class="box05">
-        <h1>T4684163</h1>
-        <h2>返厂</h2>
-        <div class="clearfix"></div>
-    </div>
-    </div>
-</div>
-<div class="dbbt mui-bar mui-bar-tab">
-    确认收到货
-</div>
+    </script>
+
+    <script type="application/javascript">
+
+        var id = getQueryString("id");
+
+        if(!vaildeParam(id)){
+            layer.msg("非法操作");
+            clicked('list.html');
+        }
+
+
+        var ws=null;
+        var uuid = null;
+
+        var topoffset=0;
+        var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+        if(ms&&ms.length>=3){
+            topoffset=parseFloat(ms[2]);
+        }
+
+
+        if(window.plus){
+            pagePlusReady();
+        }else{
+            document.addEventListener('plusready',pagePlusReady,false);
+        }
+
+        function pagePlusReady() {
+
+            uuid = plus.storage.getItem("uuid");
+
+            getData();
+
+            ws=plus.webview.currentWebview();
+            if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+                topoffset=Math.round(plus.navigator.getStatusbarHeight());
+            }
+            ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+        }
+
+
+        // 刷新页面
+        function onRefresh(){
+
+            getData();
+
+            ws.endPullToRefresh();
+        }
+
+
+        /**
+         * 获取数据
+         */
+        function getData() {
+
+            var data = {
+                'uuid':uuid,
+                'id':id
+            }
+
+            postJSON(API_URL.ApiApplyCdzDetail,data,function (res) {
+
+                if('0' == res.code){
+
+                    var data = res.data;
+
+                    showStatus(data);
+
+                    $("#reasonBox").html(vaildeParam(data.reason)?data.reason:'暂无');
+                    $("#reasonByAdminBox").html(vaildeParam(data.reasonByAdmin)?data.reasonByAdmin:'暂无');
+                    $("#realCount").html(data.realCount);
+
+                }else{
+                    layer.msg(res.msg)
+                }
+
+            })
+
+        }
+
+        /**
+         * 申请已提交,
+         * 审核通过
+         * 待发货
+         * 已发货
+         * 已收货
+         *
+         * @param data
+         */
+        function showStatus(data) {
+
+            console.log(data.status)
+
+            if(data.status == '申请已提交'
+                || data.status == '审核通过'
+                || data.status == '待发货'
+                || data.status == '已发货'
+                || data.status == '已收货'
+                || data.status == '驳回'
+            ){
+                $(".progressItem1 .date").text(new Date(data.submitDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem1").addClass('activeProgress');
+            }
+
+            if(data.status == '待发货'
+                || data.status == '已发货'
+                || data.status == '已收货'
+            ){
+                $(".progressItem2 .date").text(new Date(data.checkDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem2").addClass('activeProgress');
+                $(".progressItem3 .date").text(new Date(data.checkDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem3").addClass('activeProgress');
+            }
+
+            if(data.status == '已发货'
+                || data.status == '已收货'
+            ){
+                $(".progressItem4 .date").text(new Date(data.transDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem4").addClass('activeProgress');
+            }
+
+            if(data.status == '已收货'){
+                $(".progressItem5 .date").text(new Date(data.getDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem5").addClass('activeProgress');
+            }
+
+            if(data.status == '驳回'){
+                $(".progressItem2").css("display","none");
+                $(".progressItem3").css("display","none");
+                $(".progressItem4").css("display","none");
+                $(".progressItem5").css("display","none");
+                $(".progressItem6").css("display","block");
+                $(".progressItem6 .date").text(new Date(data.checkDate).format("yyyy-MM-dd hh:mm:ss"))
+
+            }else{
+                $(".progressItem6").css("display","none");
+            }
+
+        }
+        
+
+    </script>
 </body>
 </html>
