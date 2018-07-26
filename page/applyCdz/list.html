@@ -129,64 +129,160 @@
             line-height: 49px;
             box-shadow: none;
         }
+
+        .loadMore{
+            text-align: center;
+            background: #fff;
+            padding: 10px;
+            display: none;
+        }
     </style>
 
 </head>
 <body>
-<header class="top mui-bar mui-bar-nav">
-    <div class="left"></div>
-    <h1 class="mui-title">申请列表</h1>
-</header>
-<div class="conbox01">
-    <div class="conbox">
-        <div class="box01">
-            <div class="imgbox">
-                <img src="../../images/pianqushenqing/pianqu@3x.png">
-            </div>
-            <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">17</span>（实际10台）</h1>
-            <div class="zhuangtai01">核实中</div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="box02">
-            <h1>收货人电话：15647656435</h1>
-            <h1>地址：上海市浦东新区东明路2000号108室</h1>
-            <h1>申请时间：2018.7.5 15:30</h1>
-        </div>
+
+    <header class="top mui-bar mui-bar-nav">
+        <div class="left"></div>
+        <h1 class="mui-title">申请列表</h1>
+    </header>
+
+    <div class="conbox01" id="dataListBox">
+
     </div>
-    <div class="conbox">
-        <div class="box01">
-            <div class="imgbox">
-                <img src="../../images/pianqushenqing/pianqu@3x.png">
-            </div>
-            <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">17</span>（实际10台）</h1>
-            <div class="zhuangtai02">待发货</div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="box02">
-            <h1>收货人电话：15647656435</h1>
-            <h1>地址：上海市浦东新区东明路2000号108室</h1>
-            <h1>申请时间：2018.7.5 15:30</h1>
-        </div>
+
+    <div class="loadMore" id="loadMore">加载更多</div>
+
+    <div class="dbbt mui-bar mui-bar-tab" onclick="clicked('apply.html')">
+        申请充电桩
     </div>
-    <div class="conbox">
-        <div class="box01">
-            <div class="imgbox">
-                <img src="../../images/pianqushenqing/pianqu@3x.png">
+
+    <script type="text/html" id="dataTmpl">
+        <div class="conbox" onclick="clicked('detail.html?id={{id}}')">
+            <div class="box01">
+                <div class="imgbox">
+                    <img src="../../images/pianqushenqing/pianqu@3x.png">
+                </div>
+                <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">{{totalCount}}</span>（实际{{realCount}}台）</h1>
+                <div class="zhuangtai02">{{status}}</div>
+                <div class="clearfix"></div>
             </div>
-            <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">17</span>（实际10台）</h1>
-            <div class="zhuangtai03">已发货</div>
-            <div class="clearfix"></div>
+            <div class="box02">
+                <h1>收货人电话：{{mobile}}</h1>
+                <h1>地址：{{address}}</h1>
+                <h1>申请时间：{{createDate}}</h1>
+                <h1>快递单号：{{expressInfo}}</h1>
+            </div>
         </div>
-        <div class="box02">
-            <h1>收货人电话：15647656435</h1>
-            <h1>地址：上海市浦东新区东明路2000号108室</h1>
-            <h1>申请时间：2018.7.5 15:30</h1>
-            <h1>快递单号：中通快递  1564896134631</h1>
-        </div>
-    </div>
-</div>
-<div class="dbbt mui-bar mui-bar-tab" onclick="clicked('apply.html')">
-    申请充电桩
-</div>
+    </script>
+
+    <script type="application/javascript">
+
+        var pageNumber = 1;
+        var pageSize = 10;
+
+        var ws=null;
+        var uuid = null;
+
+        var $dataListBox = $("#dataListBox");
+
+        var topoffset=0;
+        var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+        if(ms&&ms.length>=3){
+            topoffset=parseFloat(ms[2]);
+        }
+
+        if(window.plus){
+            pagePlusReady();
+        }else{
+            document.addEventListener('plusready',pagePlusReady,false);
+        }
+
+        function pagePlusReady() {
+
+            uuid = plus.storage.getItem("uuid");
+
+            getPageData();
+
+            ws=plus.webview.currentWebview();
+            if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+                topoffset=Math.round(plus.navigator.getStatusbarHeight());
+            }
+            ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+
+        }
+
+        // 刷新页面
+        function onRefresh(){
+
+            pageNumber = 1;
+            getPageData();
+
+            ws.endPullToRefresh();
+        }
+
+        
+        function getPageData() {
+
+            var data = {
+                'uuid':uuid,
+                'pageSize':pageSize,
+                'pageNumber':pageNumber
+            }
+
+            postJSON(API_URL.ApiApplyCdzList,data,function (res) {
+
+                if(1 == pageNumber){
+                    $dataListBox.html('');
+                }
+
+                if('0' == res.code){
+
+                    if(res.data.pagedata.last){
+                        $("#loadMore").css("display",'none');
+                    }else{
+                        $("#loadMore").css("display",'block');
+                    }
+
+                    var data = res.data.pagedata.content;
+
+                    var html = '';
+                    var tmpl = $("#dataTmpl").html();
+
+                    $.each(data,function (index,item) {
+
+                        var expressInfo = '暂无';
+                        if(vaildeParam(item.expressInfo)){
+                            expressInfo = item.expressInfo;
+                        }
+
+                        html += tmpl.replace(/{{totalCount}}/g,item.totalCount)
+                            .replace(/{{id}}/g,item.id)
+                            .replace(/{{realCount}}/g,item.realCount)
+                            .replace(/{{status}}/g,item.status)
+                            .replace(/{{mobile}}/g,item.mobile)
+                            .replace(/{{address}}/g,item.address)
+                            .replace(/{{createDate}}/g,new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss"))
+                            .replace(/{{expressInfo}}/g,expressInfo)
+
+                    })
+
+                    $dataListBox.append(html);
+
+
+                }else{
+                    layer.msg(res.msg);
+                }
+
+            })
+        }
+
+
+        $("#loadMore").click(function () {
+            pageNumber++;
+            getPageData();
+        })
+
+
+    </script>
 </body>
 </html>

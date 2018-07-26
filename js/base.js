@@ -1,7 +1,7 @@
 // var apiHost = "http://api.9n.jxyunge.com";
 //var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-var apiHost = "http://192.168.1.119:8181";
+var apiHost = "http://192.168.1.131:8181";
 
 
 var API_URL = {};
@@ -77,7 +77,6 @@ var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接
 
 
-
 function checkNumber(theObj) {
   var reg = /^[0-9]+.?[0-9]*$/;
   if (reg.test(theObj)) {
@@ -85,6 +84,7 @@ function checkNumber(theObj) {
   }
   return false;
 }
+
 
 Date.prototype.format = function(fmt) {
     var o = {
@@ -106,7 +106,6 @@ Date.prototype.format = function(fmt) {
     }
     return fmt;
 }
-
 
 
 function getHeadImg(img) {
