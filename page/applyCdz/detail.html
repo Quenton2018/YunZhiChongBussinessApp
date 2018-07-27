@@ -242,7 +242,7 @@
 </head>
 <body>
     <header class="top mui-bar mui-bar-nav">
-        <div class="left"></div>
+        <div class="left mui-action-back"></div>
         <h1 class="mui-title">桩申请信息</h1>
     </header>
     <div class="conbox01">
@@ -321,14 +321,14 @@
 
         </div>
     </div>
-    <div class="dbbt mui-bar mui-bar-tab">
+    <div class="dbbt mui-bar mui-bar-tab" style="display: none" id="confirmGetBtn">
         确认收到货
     </div>
 
 
     <script type="text/html" id="cdzInfoTmpl">
         <div class="box05">
-            <h1>{{code}}}</h1>
+            <h1>{{code}}</h1>
             <h2>{{status}}</h2>
             <div class="clearfix"></div>
         </div>
@@ -399,12 +399,19 @@
 
                     var data = res.data;
 
+                    if(data.status == '已发货'){
+                        $("#confirmGetBtn").css("display",'block')
+                    }else{
+                        $("#confirmGetBtn").css("display",'none')
+                    }
+
                     showStatus(data);
 
                     $("#reasonBox").html(vaildeParam(data.reason)?data.reason:'暂无');
                     $("#reasonByAdminBox").html(vaildeParam(data.reasonByAdmin)?data.reasonByAdmin:'暂无');
                     $("#realCount").html(data.realCount);
 
+                    showCdz(data);
                 }else{
                     layer.msg(res.msg)
                 }
@@ -473,7 +480,64 @@
 
         }
         
+        
+        function showCdz(data) {
 
+            var applyCdzDataItemList = data.applyCdzDataItemList;
+
+            if(applyCdzDataItemList.length==0){
+                return;
+            }
+
+            var $cdzList = $(".cdzList");
+
+            var cdzInfoTmpl = $("#cdzInfoTmpl").html();
+
+            var html = '';
+
+            $.each(applyCdzDataItemList,function (index,item) {
+
+                var code = item.shellId;
+                var groupId = item.charging.groupId;
+
+                var status = '未安装';
+                if(null != groupId){
+                    status = '已安装';
+                }
+
+                html += cdzInfoTmpl.replace(/{{code}}/g,code)
+                    .replace(/{{status}}/g,status)
+
+            })
+
+            $cdzList.html(html);
+
+
+        }
+
+        $("#confirmGetBtn").click(function () {
+
+            var data = {
+                'uuid':uuid,
+                'id':id
+            }
+
+            postJSON(API_URL.ApiApplyCdzConfirmGet,data,function (res) {
+
+                if('0' == res.code){
+
+                    layer.msg("操作成功");
+
+                    getData();
+
+                }else{
+                    layer.msg(res.msg);
+                }
+
+            })
+        })
+
+        
     </script>
 </body>
 </html>
