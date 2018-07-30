@@ -251,7 +251,7 @@
         </div>
         <div class="mui-input-row">
             <label>联系电话</label>
-            <input type="text" placeholder="请输入收货人联系电话" name="mobile">
+            <input type="number" placeholder="请输入收货人联系电话" name="mobile" >
         </div>
     </form>
 </div>
@@ -399,6 +399,35 @@
 
 
     })
+
+
+    /**
+     * 手机号长度限制
+     */
+    $("input[name='mobile']").keyup(function () {
+        var $this = $(this);
+        var value = $this.val();
+        if(value.length > 11){
+            value = value.substr(0,11);
+            $this.val(value);
+        }
+        if(!isNumber(value)){
+            value = value.substr(0,value.length-1);
+            $this.val(value);
+        }
+    })
+
+    function isNumber(val){
+        var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+        if(regPos.test(val) || regNeg.test(val)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 
 </script>
 
