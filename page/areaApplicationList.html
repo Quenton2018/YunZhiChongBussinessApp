@@ -82,7 +82,7 @@
         .box01 .zhuangtai01{
             float: right;
             background-color: rgb(229, 247, 255);
-            width:65px;
+            width: 85px;
             height: 20px;
             font-size: 12px;
             color: rgb(33, 181, 255);
@@ -91,7 +91,7 @@
         }
         .box01 .zhuangtai02{
             float: right;
-            width: 80px;
+            width: 85px;
             height: 20px;
             font-size: 12px;
             text-align: center;
@@ -101,7 +101,7 @@
         }
         .box01 .zhuangtai03{
             float: right;
-            width:65px;
+            width: 85px;
             height: 20px;
             font-size: 12px;
             text-align: center;
@@ -157,21 +157,7 @@
 </header>
 <div class="conbox01" >
     <div class="dataList">
-        <div class="conbox">
-            <div class="box01"  data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)" >
-                <div class="imgbox">
-                    <img src="../images/pianqushenqing/pianqu@3x.png">
-                </div>
-                <h1>片区:{{name}}</h1>
-                {{status}}
-                <div class="clearfix"></div>
-            </div>
-            <div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">
-                <h1>电价：{{electricPrice}}元/千瓦时</h1>
-                <h1>地址：{{address}}</h1>
-                <h1>申请时间：{{createDate}}</h1>
-            </div>
-        </div>
+
     </div>
     <div id="loadMore" class="loadMore">加载更多</div>
     <div id="noMore" class="noMore">没有更多了</div>
