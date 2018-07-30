@@ -277,8 +277,10 @@
                         plus.storage.setItem( "totalIncome", totalIncome+'');
                         plus.storage.setItem( "userType", userType);
 
-
-                        $(".totalMoney").text(totalIncome);
+					 	if (vaildeParam(totalIncome)) {
+					           totalIncome = 0;
+				        }
+                        $(".totalMoney").text(totalIncome.toFixed(2));
                         console.log("aaa"+totalIncome);
 
                     }else{
@@ -304,8 +306,10 @@
                     if("0" == res.code){
                         var parnterMoneyToTal = res.data.parnterMoneyToTal;
                         var countAll = res.data.countAll;
-
-                        $(".dayMoney").text(res.data.parnterMoneyToTal);
+						if (!vaildeParam(parnterMoneyToTal)) {
+					           parnterMoneyToTal = 0;
+				        }
+                        $(".dayMoney").text(parnterMoneyToTal.toFixed(2));
                         $(".cdzCount").text(res.data.countAll);
                     }else{
                         layer.msg(res.msg);

@@ -53,6 +53,7 @@
         }
         .conbox01{
             margin-top: 64px;
+            padding-bottom: 70px;
         }
         .conbox{
             margin-bottom: 20px;
@@ -74,7 +75,7 @@
             padding: 0;
             float: left;
             color: black;
-            font-size:15px;
+            font-size:14px;
             line-height: 20px;
             margin-left: 15px;
         }
@@ -90,7 +91,7 @@
         }
         .box01 .zhuangtai02{
             float: right;
-            width:65px;
+            width: 80px;
             height: 20px;
             font-size: 12px;
             text-align: center;
@@ -136,14 +137,15 @@
             text-align: center;
             font-size: .8rem;
             display: none;
+            margin-top: -20px;
         }
 
         .noMore{
             padding: 10px;
             text-align: center;
             font-size: .8rem;
-            /*display: none;*/
-            background: #EFEFF4;
+            display: none;
+            margin-top: -20px;
         }
     </style>
 
@@ -153,10 +155,23 @@
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">片区申请列表</h1>
 </header>
-<div class="conbox01">
+<div class="conbox01" >
     <div class="dataList">
-
-
+        <div class="conbox">
+            <div class="box01"  data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)" >
+                <div class="imgbox">
+                    <img src="../images/pianqushenqing/pianqu@3x.png">
+                </div>
+                <h1>片区:{{name}}</h1>
+                {{status}}
+                <div class="clearfix"></div>
+            </div>
+            <div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">
+                <h1>电价：{{electricPrice}}元/千瓦时</h1>
+                <h1>地址：{{address}}</h1>
+                <h1>申请时间：{{createDate}}</h1>
+            </div>
+        </div>
     </div>
     <div id="loadMore" class="loadMore">加载更多</div>
     <div id="noMore" class="noMore">没有更多了</div>
@@ -173,7 +188,7 @@
             <div class="imgbox">
                 <img src="../images/pianqushenqing/pianqu@3x.png">
             </div>
-            <h1>片区名称：{{name}}</h1>
+            <h1>片区:{{name}}</h1>
             {{status}}
             <div class="clearfix"></div>
         </div>
@@ -324,8 +339,10 @@
                         var statusDiv  = '<div class="zhuangtai01">等待审核</div>';
                         if(status =='通过'){
                             statusDiv = '<div class="zhuangtai02">审核通过</div>';
-                        }else if(status =='驳回'){
+                        }else if(status =='驳回' ){
                             statusDiv = '<div class="zhuangtai03">审核驳回</div> ';
+                        }else if(status =="编辑"){
+                            statusDiv = '<div class="zhuangtai01">(编辑)等待审核</div>';
                         }
                         console.log("status=========="+status);
                         console.log("statusDiv========="+statusDiv);

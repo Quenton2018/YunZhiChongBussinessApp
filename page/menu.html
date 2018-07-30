@@ -104,7 +104,7 @@
         <div class="menu-item" onclick="clicked('myWallet.html')">
             <img src="../images/menu/qianbao.png"> 我的钱包
         </div>
-        <div class="menu-item"  onclick="clicked('applyCdz/list.html')">
+        <div class="menu-item" id = "applyCdz"  onclick="clicked('applyCdz/list.html')" style="display: none;">
             <i class="iconfont icon-gongzuoshenqing"></i> 充电桩申请
         </div>
         <div class="menu-item" id = "areaApplication"  onclick="clicked('areaApplicationList.html')" style="display: none;">
@@ -154,6 +154,7 @@
             }
             if("1"==userType){
                 $("#areaApplication").css("display","block");
+                $("#applyCdz").css("display","block");
             }
 
         }else{
