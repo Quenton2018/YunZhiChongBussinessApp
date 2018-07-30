@@ -1,7 +1,7 @@
-var apiHost = "http://api.9n.jxyunge.com";
-//var apiHost = "http://api.jx9n.com";
+   // var apiHost = "http://api.9n.jxyunge.com";
+var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-//var apiHost = "http://192.168.1.123:8181";
+//var apiHost = "http://192.168.43.84:8181";
 
 
 var API_URL = {};
@@ -68,9 +68,15 @@ API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID = apiHost +"/ap
 
 API_URL.ApiChargingBusinessGetADaylyIncomeDetail = apiHost + "/api/chargingBusiness/GetADaylyIncomeDetail"; //主页获取用户信息
 
+
+API_URL.ApiApplyCdzApply = apiHost + "/api/applyCdz/apply"; //合伙人申请充电桩
+API_URL.ApiApplyCdzList = apiHost + "/api/applyCdz/list"; //合伙人申请充电桩 - 列表
+API_URL.ApiApplyCdzDetail = apiHost + "/api/applyCdz/detail"; //合伙人申请充电桩 - 详情
+API_URL.ApiApplyCdzConfirmGet = apiHost + "/api/applyCdz/confirmGet"; //合伙人申请充电桩 - 详情
+
+
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接
-
 
 
 function checkNumber(theObj) {
@@ -80,6 +86,7 @@ function checkNumber(theObj) {
   }
   return false;
 }
+
 
 Date.prototype.format = function(fmt) {
     var o = {
@@ -101,7 +108,6 @@ Date.prototype.format = function(fmt) {
     }
     return fmt;
 }
-
 
 
 function getHeadImg(img) {

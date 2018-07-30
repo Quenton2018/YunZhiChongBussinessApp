@@ -244,15 +244,20 @@
     </form>
 
     <form class="mui-input-group" style="margin-top: 10px">
-        <div class="mui-input-row" style="position: relative">
-            <label>收货地址</label>
-            <i class="iconfont icon-map" style="position: absolute;right: 10px;top: 8px"></i>
-                <input type="text" placeholder="请输入收货地址" name="address">
+        <div class="mui-input-row">
+            <label>姓名</label>
+            <input type="text" disabled value="" id="nickname" >
         </div>
         <div class="mui-input-row">
             <label>联系电话</label>
             <input type="number" placeholder="请输入收货人联系电话" name="mobile" >
         </div>
+        <div class="mui-input-row" style="position: relative">
+            <label>收货地址</label>
+            <i class="iconfont icon-map" style="position: absolute;right: 10px;top: 8px" onclick="clicked('../map.html')"></i>
+            <input type="text" placeholder="请输入收货地址" name="address" id="address">
+        </div>
+
     </form>
 </div>
 
@@ -265,6 +270,17 @@
 
 <script type="application/javascript">
     mui.init();
+
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+    function pagePlusReady(){
+        $("#nickname").val(plus.storage.getItem( "nickname"))
+    }
+
 
     $(".jia").click(function () {
         addCount(this,1);
@@ -425,6 +441,17 @@
         }else{
             return false;
         }
+    }
+
+
+    function fullAddress( latitude,longitude,address) {
+        console.log("fullAddress=========address"+address);
+        console.log("fullAddress=========latitude"+latitude);
+        console.log("fullAddress=========longitude"+longitude);
+
+        $("#latitude").val(latitude);
+        $("#longitude").val(longitude);
+        $("#address").val(address);
     }
 
 
