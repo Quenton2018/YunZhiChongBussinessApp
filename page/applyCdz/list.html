@@ -163,7 +163,7 @@
                     <img src="../../images/pianqushenqing/pianqu@3x.png">
                 </div>
                 <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">{{totalCount}}</span>（实际{{realCount}}台）</h1>
-                <div class="zhuangtai02">{{status}}</div>
+                <div class="{{zhuangtai}}">{{status}}</div>
                 <div class="clearfix"></div>
             </div>
             <div class="box02">
@@ -255,6 +255,13 @@
                             expressInfo = item.expressInfo;
                         }
 
+                        var zhuangtai = 'zhuangtai02'
+
+
+                        if('驳回' == item.status){
+                            zhuangtai = 'zhuangtai03'
+                        }
+
                         html += tmpl.replace(/{{totalCount}}/g,item.totalCount)
                             .replace(/{{id}}/g,item.id)
                             .replace(/{{realCount}}/g,item.realCount)
@@ -263,6 +270,7 @@
                             .replace(/{{address}}/g,item.address)
                             .replace(/{{createDate}}/g,new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss"))
                             .replace(/{{expressInfo}}/g,expressInfo)
+                            .replace(/{{zhuangtai}}/g,zhuangtai)
 
                     })
 
