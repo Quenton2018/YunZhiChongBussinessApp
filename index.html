@@ -168,31 +168,30 @@
                 <h1>我的钱包</h1>
             </div>
         </div>
-        <div class="box03" id="areaApplicationList">
-            <div class="imgbox" >
+        <div class="box03" style="display: none;" id="areaApplicationList">
+            <div class="imgbox" onclick="clicked('page/areaApplicationList.html');">
                 <img src="images/index/pianqushenqing@3x.png">
                 <h1>片区申请</h1>
             </div>
         </div>
-        <div class="box03">
+        <div class="box03" style="display: none;" id="applyCdz">
             <div class="imgbox" onclick="clicked('page/applyCdz/list.html')">
                 <img src="images/index/cdzsq@3x.png">
                 <h1>充电桩申请</h1>
             </div>
         </div>
-        <div class="box03" onclick="clicked('page/honorList.html')">
+       <!-- <div class="box03" onclick="clicked('page/honorList.html')">
             <div class="imgbox">
                 <img src="images/index/ryb@3x.png">
                 <h1>荣誉榜</h1>
             </div>
-        </div>
+        </div>-->
     </div>
 
 
 	<script type="text/javascript">
         mui.init();
 
-        var pianquFlag = false;
 
         var ws=null;
         // 处理沉浸式状态栏
@@ -235,13 +234,13 @@
 
 
 
-        $("#areaApplicationList").click(function(){
+      /*  $("#areaApplicationList").click(function(){
             if(pianquFlag){
-                clicked('page/areaApplicationList.html');
+
             }else{
                 layer.msg("您没有权限申请片区");
             }
-        });
+        });*/
 
 
         /**
@@ -265,7 +264,8 @@
                         var userType = res.data.userType;
                         var totalIncome = res.data.totalIncome+'';
                         if("1"==userType){
-                            pianquFlag = true;
+                            $("#areaApplicationList").css("display","block");
+                            $("#applyCdz").css("display","block");
                         }
                         plus.storage.setItem( "mobile", mobile);
                         plus.storage.setItem( "headImage", headImage);
