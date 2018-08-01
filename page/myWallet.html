@@ -280,28 +280,23 @@
     })
 
 
-
+    /**
+     *提现校验
+     */
     $(".Box-tixian").click(function(){
         var uuid = plus.storage.getItem("uuid");
-        console.log("## getUserInfoDateBase ## uuid:"+uuid);
+        console.log("## Box-tixian ## uuid:"+uuid);
         if(vaildeParam(uuid)){
-            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+            postJSON(API_URL.ApiAdmincheckWithDrawal,{"uuid":uuid},function(res){
                 if("0" == res.code){
-                    var moneyAmount = res.data.moneyAmount;
-                    var bankCode = res.data.bankCode;
-                    var bank = res.data.bank;
-                    console.log(bankCode);
-                    if(vaildeParam(bankCode)){
-                        clicked("bingBank.html");
-                    }else{
-                        clicked('putforward.html');
-                    }
+                    clicked("bingBank.html");
                 }else{
-                    layer.msg(res.msg);
-                    clearLogin();
-                    clicked("login.html");
+                    clicked('putforward.html');
                 }
             })
+        }else{
+            clearLogin();
+            clicked("login.html");
         }
     })
 
