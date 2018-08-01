@@ -169,7 +169,7 @@
             </div>
         </div>
         <div class="box03" style="display: none;" id="areaApplicationList">
-            <div class="imgbox" >
+            <div class="imgbox" onclick="clicked('page/areaApplicationList.html');">
                 <img src="images/index/pianqushenqing@3x.png">
                 <h1>片区申请</h1>
             </div>
@@ -191,6 +191,7 @@
 
 	<script type="text/javascript">
         mui.init();
+
 
         var ws=null;
         // 处理沉浸式状态栏
@@ -235,7 +236,7 @@
 
       /*  $("#areaApplicationList").click(function(){
             if(pianquFlag){
-                clicked('page/areaApplicationList.html');
+
             }else{
                 layer.msg("您没有权限申请片区");
             }
