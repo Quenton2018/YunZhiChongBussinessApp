@@ -1,7 +1,7 @@
-      var apiHost = "http://api.9n.jxyunge.com";
+//var apiHost = "http://api.9n.jxyunge.com";
 //var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-//var apiHost = "http://192.168.43.84:8181";
+var apiHost = "http://192.168.43.84:8181";
 
 
 var API_URL = {};
@@ -12,7 +12,6 @@ API_URL.ApiAdminPasswordlogin = apiHost + "/api/admin/passwordlogin"; //密码�
 API_URL.ApiAdminInfo = apiHost + "/api/admin/info"; //获取用户信息
 
 API_URL.ApiAdminGetCompanyAccount = apiHost + "/api/admin/getCompanyAccount";
-
 
 API_URL.ApiApplyBusinessSaveApplyBusiness= apiHost + "/api/applyBusiness/saveApplyBusiness"; //获取用户信息
 
@@ -67,12 +66,14 @@ API_URL.ApichargingGroupProportionsgetChargingGroupPriceListByGroupID = apiHost 
 API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID = apiHost +"/api/chargingGroupProportions/getChargingGroupListByGroupID"; //
 
 API_URL.ApiChargingBusinessGetADaylyIncomeDetail = apiHost + "/api/chargingBusiness/GetADaylyIncomeDetail"; //主页获取用户信息
+API_URL.ApiChargingBusinessGetChargingByDivideMoneyLog = apiHost + "/api/chargingBusiness/getChargingByDivideMoneyLog"; //主页获取用户信息
 
 
 API_URL.ApiApplyCdzApply = apiHost + "/api/applyCdz/apply"; //合伙人申请充电桩
 API_URL.ApiApplyCdzList = apiHost + "/api/applyCdz/list"; //合伙人申请充电桩 - 列表
 API_URL.ApiApplyCdzDetail = apiHost + "/api/applyCdz/detail"; //合伙人申请充电桩 - 详情
 API_URL.ApiApplyCdzConfirmGet = apiHost + "/api/applyCdz/confirmGet"; //合伙人申请充电桩 - 详情
+
 
 
 var WX_URL = {};
@@ -545,3 +546,13 @@ function getCurrentMonthLast(){
     return new Date(nextMonthFirstDay-oneDay);
 }
 
+function getLastDay(year,month) {
+    var new_year = year;    //取当前的年份
+    var new_month = month++;//取下一个月的第一天，方便计算（最后一天不固定）
+    if(month>12) {
+        new_month -=12;        //月份减
+        new_year++;            //年份增
+    }
+    var new_date = new Date(new_year,new_month,1);                //取当年当月中的第一天
+    return (new Date(new_date.getTime()-1000*60*60*24));//获取当月最后一天日期
+}

@@ -94,10 +94,9 @@
 </div>
 
 <script type="text/html" id="dataTmpl">
-
-    <li class="mui-table-view-cell">
-        <a class="">
-            片区名称:{{chargingGroupName}} <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
+    <li class="mui-table-view-cell" onclick="clicked('incomeDetailCdz.html?chargingGroupID={{chargingGroupID}}&year={{yearParam}}&month={{monthParam}}&parnterMoney={{parnterMoney}}')">
+        <a class="mui-navigate-right">
+            {{chargingGroupName}} <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
         </a>
     </li>
 </script>
@@ -154,6 +153,9 @@
                     var parnterMoney = item.parnterMoney;
                     var chargingGroupName = item.chargingGroupName;
                     html += tmpl.replace(/{{parnterMoney}}/g,parnterMoney)
+                        .replace(/{{chargingGroupID}}/g,item.chargingGroupId)
+                        .replace(/{{yearParam}}/g,yearParam)
+                        .replace(/{{monthParam}}/g,monthParam)
                         .replace(/{{chargingGroupName}}/g,chargingGroupName);
 
                     if(index<9){
