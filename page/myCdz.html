@@ -97,18 +97,16 @@
     <div class="tabBox">
         <span id="normal" class="tabItem select" data-type="1">正常充电桩(<span id="countValid">0</span>)</span>
         <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<span id="countInvalid">0</span>)</span>
-        <span  class="tabItem " data-type="2">未安装(<span>0</span>)</span>
+        <span class="tabItem" data-type="3" >未安装(<span id="countUnInstall">0</span>)</span>
     </div>
 
     <div class="midRow">
-        <div class="left">片区(<span id="groupCount">0</span>)</div>
-        <div class="right">台数</div>
+        <div class="left" id="midInfoBox">片区(<span id="groupCount">0</span>)</div>
+        <div class="right" id="midInfoBoxRight">台数</div>
         <div class="clearfix"></div>
     </div>
-    <div  class="normal" >
-        <ul class="mui-table-view dataList">
-
-        </ul>
+    <div class="normal">
+        <ul class="mui-table-view dataList"></ul>
         <div id="loadMore" class="loadMore">加载更多</div>
         <div id="noMore" class="noMore">没有更多了</div>
     </div>
@@ -129,6 +127,14 @@
         <a class="mui-navigate-right" onclick="clicked('areaListUnNormal.html?id={{id}}')" data-id="{{id}}">
             <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
             片区名称:{{groupName}}
+        </a>
+    </li>
+</script>
+<script type="text/html" id="dataTmpl3">
+    <li class="mui-table-view-cell">
+        <a>
+            <span class="mui-badge transDate" data-id="{{id}}">加载中</span>
+            {{code}}
         </a>
     </li>
 </script>
@@ -171,6 +177,7 @@
                 $("#countAll").text(res.data.countAll);
                 $("#countValid").text(res.data.countValid);
                 $("#countInvalid").text(res.data.countInvalid);
+                $("#countUnInstall").text(res.data.countUnInstall);
             }else{
                 layer.msg(res.msg);
             }
@@ -187,10 +194,17 @@
 
         pageNumber = 1;
 
-        getChargingGroup(uuid);
+        if(type != 3){
+            $("#midInfoBox").html('片区(<span id="groupCount">0</span>)');
+            $("#midInfoBoxRight").html("台数");
+            getChargingGroup(uuid);
+        }else{
+            $("#midInfoBox").html("充电桩编号");
+            $("#midInfoBoxRight").html("发货时间");
+            getApplyCdzDataUnInstall();
+        }
 
-    });
-
+    })
 
 
     /**
@@ -274,11 +288,86 @@
     }
 
 
+    function getApplyCdzDataUnInstall(){
+
+        var data = {
+            "uuid":uuid,
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
+        }
+
+        postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall,data,function (res) {
+
+            $("#loadMore").css({"display":"block"});
+            $("#noMore").css({"display":"none"});
+
+            if("0" == res.code){
+
+                if(1 == pageNumber){
+                    $(".dataList").html('');
+                }
+                var data = res.data;
+
+                if(data.length == 0){
+                    layer.msg("没有更多了")
+                }
+
+                var html = '';
+
+                var dataTmpl3 = $("#dataTmpl3").html();
+
+                $.each(data,function (index,item) {
+                    html +=dataTmpl3.replace(/{{code}}/g,item.shellId)
+                        .replace(/{{id}}/g,item.id);
+                })
+
+                $(".dataList").append(html);
+
+
+                getTransDate();
+
+            }else{
+                layer.msg(res.msg);
+            }
+
+        })
+
+
+    }
+
+
     $("#loadMore").click(function(){
         pageNumber++;
         getChargingGroup(uuid);
     })
 
+    
+    function getTransDate() {
+        var $transDate = $(".transDate");
+
+        $.each($transDate,function (index,item) {
+
+            var id = $(item).attr("data-id");
+
+            if("加载中" == $(item).text()){
+
+                postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataTransDate,{"id":id},function (res) {
+
+                    if(vaildeParam(res.data)){
+                        $(item).text(res.data)
+                    }else{
+                        $(item).text('-')
+                    }
+
+                })
+
+            }
+
+
+        })
+        
+    }
+    
 
 </script>
 </body>

@@ -85,6 +85,9 @@ API_URL.ApiDivideMoneyLogList = apiHost + "/api/divideMoneyLog/list"; //分佣�
 
 API_URL.ApiChargingGetChargingCountByGroupID= apiHost + "/api/charging/getChargingCountByGroupID"; //分佣接口
 
+API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall = apiHost + "/api/chargingBusiness/getApplyCdzDataUnInstall"; //分佣接口
+API_URL.ApiChargingBusinessGetApplyCdzDataTransDate = apiHost + "/api/chargingBusiness/getApplyCdzDataTransDate"; //分佣接口
+
 
 
 var WX_URL = {};
