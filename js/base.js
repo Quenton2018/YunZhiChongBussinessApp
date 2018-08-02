@@ -79,6 +79,8 @@ API_URL.ApiApplyCdzConfirmGet = apiHost + "/api/applyCdz/confirmGet"; //合伙�
 
 API_URL.ApiAdminGetSumMoney = apiHost + "/api/admin/getSumMoney"; //多维度获取合伙人赚的钱
 
+API_URL.ApiChargingSocketListByCode = apiHost + "/api/chargingSocket/listByCode"; //根据充电桩编号，获取插座
+
 
 
 var WX_URL = {};

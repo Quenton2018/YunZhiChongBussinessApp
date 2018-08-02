@@ -118,8 +118,8 @@
 </div>
 
 <script type="text/html" id="dataTmpl">
-    <tr class="dataItem" data-id="{{id}}" onclick="clicked('incomeDetailCz.html?cdzID={{id}}&year={{year}}&month={{month}}')">
-        <td>{{code}}</td>
+    <tr class="dataItem" data-id="{{id}}" data-shellid="{{shellid}}" data-code="{{code}}" data-year="{{year}}" data-year="{{month}}" onclick="setCzDetail(this)">
+        <td>{{shellid}}</td>
         <td class="sumMoney">加载中...</td>
         <td class="partnerMoney">加载中...</td>
         <td><i class="iconfont icon-youjiantou1"></i></td>
@@ -201,7 +201,8 @@
                     var code = item.code;
 
                     html += dataTmpl.replace(/{{id}}/g,item.id)
-                        .replace(/{{code}}/g,item.code.substr(0,1))
+                        .replace(/{{code}}/g,item.code)
+                        .replace(/{{shellid}}/g,item.shellId)
                         .replace(/{{year}}/g,year)
                         .replace(/{{month}}/g,month)
 
@@ -272,6 +273,22 @@
         })
     }
 
+
+    function setCzDetail(that) {
+
+        var $this = $(that);
+
+        var code = $this.attr("data-code");
+        var shellid = $this.attr("data-shellid");
+
+        var partnerMoney = $this.find(".partnerMoney").text();
+
+        var url = 'incomeDetailCz.html?cdzIDCode='+code+'&year='+year+'&month='+month+"&partnerMoney="+partnerMoney+"&shellid="+shellid;
+
+        console.log("url : "+url)
+
+        clicked(url);
+    }
 
 
 </script>

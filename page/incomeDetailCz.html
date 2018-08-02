@@ -92,7 +92,7 @@
     <div class="topBox">
         <div class="row1 selectDate"><span class="dateBox">loading</span> <i class="iconfont icon-xiala1"></i> </div>
         <div class="row2">
-            <div class="left">总收入 : <span id="benyuemoney">0</span>元</div>
+            <div class="left">总收入 : <span id="partnerMoney">0</span>元</div>
             <div class="clearfix"></div>
         </div>
     </div>
@@ -108,12 +108,7 @@
             </tr>
             </thead>
             <tbody class="dataList">
-            <tr class="dataItem" data-id="{{id}}">
-                <td>A</td>
-                <td class="sumMoney">加载中...</td>
-                <td class="partnerMoney">加载中....</td>
-                <td class="time">加载中...</td>
-            </tr>
+
             </tbody>
         </table>
     </div>
@@ -123,7 +118,12 @@
 </div>
 
 <script type="text/html" id="dataTmpl">
-
+    <tr class="dataItem" data-id="{{id}}">
+        <td>{{code}}</td>
+        <td class="sumMoney">加载中...</td>
+        <td class="partnerMoney">加载中....</td>
+        <td class="time">加载中...</td>
+    </tr>
 </script>
 
 <script type="text/javascript" src="../js/mui.picker.all.js"></script>
@@ -132,14 +132,20 @@
 
     var uuid;
 
-    var cdzID = getQueryString("cdzID");
+    var cdzIDCode = getQueryString("cdzIDCode");
     var year = getQueryString("year");
     var month = getQueryString("month");
+    var partnerMoney = getQueryString("partnerMoney");
+    var shellid = getQueryString("shellid");
+
+
     var day = '1';
-    if(!vaildeParam(cdzID) || !vaildeParam(year) || !vaildeParam(month)){
+    if(!vaildeParam(cdzIDCode) || !vaildeParam(year) || !vaildeParam(month)){
         layer.msg("非法操作");
         clicked("myIncome.html");
     }
+
+    $("#partnerMoney").text(partnerMoney);
 
     var nowDate = new Date();
     var day = nowDate.format("dd")
@@ -198,9 +204,48 @@
     function pagePlusReady(){
         uuid = plus.storage.getItem("uuid");
 
-
+        getCz();
     }
 
+
+    function compare(property){
+        return function(a,b){
+            var value1 = parseFloat(a[property]);
+            var value2 = parseFloat(b[property]);
+            return value1 - value2;
+        }
+    }
+
+    /**
+     * 获取插座
+     */
+    function getCz() {
+
+        postJSON(API_URL.ApiChargingSocketListByCode,{"code":cdzIDCode},function (res) {
+
+            if('0' == res.code){
+
+                var dataTmpl = $('#dataTmpl').html();
+                var html = '';
+
+                var data = res.data.sort(compare('code'));
+
+                $.each(data,function (index,item) {
+
+                    html += dataTmpl.replace(/{{id}}/g,item.id)
+                        .replace(/{{code}}/g,shellid.substr(0,1)+(parseInt(item.code) + 1))
+
+                })
+
+                $(".dataList").html(html);
+
+            }else{
+                layer.msg(res.msg)
+            }
+
+        })
+
+    }
 
 
 </script>
