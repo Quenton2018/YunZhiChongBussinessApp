@@ -1,7 +1,7 @@
 // var apiHost = "http://api.9n.jxyunge.com";
 //var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
-var apiHost = "http://192.168.43.84:8181";
+var apiHost = "http://192.168.1.6:8181";
 
 
 var API_URL = {};
@@ -80,6 +80,8 @@ API_URL.ApiApplyCdzConfirmGet = apiHost + "/api/applyCdz/confirmGet"; //合伙�
 API_URL.ApiAdminGetSumMoney = apiHost + "/api/admin/getSumMoney"; //多维度获取合伙人赚的钱
 
 API_URL.ApiChargingSocketListByCode = apiHost + "/api/chargingSocket/listByCode"; //根据充电桩编号，获取插座
+
+API_URL.ApiDivideMoneyLogList = apiHost + "/api/divideMoneyLog/list"; //分佣接口
 
 
 

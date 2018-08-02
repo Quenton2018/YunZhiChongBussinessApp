@@ -120,9 +120,9 @@
 <script type="text/html" id="dataTmpl">
     <tr class="dataItem" data-id="{{id}}">
         <td>{{code}}</td>
-        <td class="sumMoney">加载中...</td>
-        <td class="partnerMoney">加载中....</td>
-        <td class="time">加载中...</td>
+        <td class="sumMoney">{{sumMoney}}</td>
+        <td class="partnerMoney">{{partnerMoney}}</td>
+        <td class="time">{{time}}</td>
     </tr>
 </script>
 
@@ -131,13 +131,16 @@
     mui.init();
 
     var uuid;
+    var pageSize = 10;
+    var pageNumber = 1;
 
     var cdzIDCode = getQueryString("cdzIDCode");
+    var cdzID = getQueryString("cdzID");
     var year = getQueryString("year");
     var month = getQueryString("month");
     var partnerMoney = getQueryString("partnerMoney");
     var shellid = getQueryString("shellid");
-
+    var chargingGroupID = getQueryString("chargingGroupID");
 
     var day = '1';
     if(!vaildeParam(cdzIDCode) || !vaildeParam(year) || !vaildeParam(month)){
@@ -197,6 +200,14 @@
 
             $(".dateBox").html(year+"年"+month+"月"+day+"日")
 
+
+            $(".sumMoney").html("加载中...")
+            $(".partnerMoney").html("加载中...")
+
+
+            pageNumber = 1;
+
+            getDivideMoneyLogList();
         })
     })
 
@@ -204,48 +215,77 @@
     function pagePlusReady(){
         uuid = plus.storage.getItem("uuid");
 
-        getCz();
+        getDivideMoneyLogList();
     }
 
 
-    function compare(property){
-        return function(a,b){
-            var value1 = parseFloat(a[property]);
-            var value2 = parseFloat(b[property]);
-            return value1 - value2;
+
+    
+    function getDivideMoneyLogList() {
+        var firstDay = year + "-" + month + "-" +day +" 00:00:00";
+        var lastDay = year + "-" + month + "-" +day +" 23:59:59";
+
+        var data = {
+            "uuid":"",
+            "partnerUuid":uuid,
+            "startDate":firstDay,
+            "endDate":lastDay,
+            "groupID":chargingGroupID,
+            "chargingID":cdzID,
+            "chargingSocketID":"",
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
         }
-    }
 
-    /**
-     * 获取插座
-     */
-    function getCz() {
 
-        postJSON(API_URL.ApiChargingSocketListByCode,{"code":cdzIDCode},function (res) {
+        postJSON(API_URL.ApiDivideMoneyLogList,data,function (res) {
+
 
             if('0' == res.code){
 
-                var dataTmpl = $('#dataTmpl').html();
+                var pagedata = res.data.pagedata;
+
+                if(pagedata.last){
+                    $("#loadMore").css("display",'none');
+                    $("#noMore").css("display",'block');
+                }else{
+                    $("#loadMore").css("display",'block');
+                    $("#noMore").css("display",'none');
+                }
+
+                var dataTmpl = $("#dataTmpl").html();
+
+                var data = pagedata.content;
+
                 var html = '';
-
-                var data = res.data.sort(compare('code'));
-
                 $.each(data,function (index,item) {
 
-                    html += dataTmpl.replace(/{{id}}/g,item.id)
-                        .replace(/{{code}}/g,shellid.substr(0,1)+(parseInt(item.code) + 1))
+                    html += dataTmpl.replace(/{{code}}/g,item.charging.shellId.substr(0,1)+(parseInt(item.chargingSocket.code)+1))
+                        .replace(/{{sumMoney}}/g,item.userChargingDetail.amount)
+                        .replace(/{{partnerMoney}}/g,item.money)
+                        .replace(/{{time}}/g,(new Date(item.userChargingDetail.createDate)).format("hh:mm"))
 
                 })
 
-                $(".dataList").html(html);
+                if(1 == pageNumber){
+                    $(".dataList").html(html);
+                }else{
+                    $(".dataList").append(html)
+                }
+
 
             }else{
                 layer.msg(res.msg)
             }
 
         })
-
     }
+    
+    
+    $("#loadMore").click(function () {
+        pageNumber++;
+        getDivideMoneyLogList();
+    })
 
 
 </script>

@@ -278,12 +278,19 @@
 
         var $this = $(that);
 
+        var id = $this.attr("data-id");
         var code = $this.attr("data-code");
         var shellid = $this.attr("data-shellid");
 
         var partnerMoney = $this.find(".partnerMoney").text();
 
-        var url = 'incomeDetailCz.html?cdzIDCode='+code+'&year='+year+'&month='+month+"&partnerMoney="+partnerMoney+"&shellid="+shellid;
+        var url = 'incomeDetailCz.html?cdzIDCode='+code
+            +'&year='+year
+            +'&month='+month
+            +"&partnerMoney="+partnerMoney
+            +"&chargingGroupID="+chargingGroupID
+            +"&cdzID="+id
+            +"&shellid="+shellid;
 
         console.log("url : "+url)
 
