@@ -145,6 +145,23 @@
     $(".dateBox").html(year+"年"+month+"月")
     $("#benyuemoney").html(parnterMoney);
 
+
+    var monthStr = month+"";
+    if(monthStr.length == 1){
+        monthStr = "0"+monthStr;
+    }
+
+    var firstDay = year+"-"+monthStr+"-"+"01 00:00:00";
+
+    var dateLast = getLastDay(year,month);
+    console.log("## getCdz ## dateLast:"+dateLast)
+
+    var lastDay = dateLast.format("yyyy-MM-dd 23:59:59")
+
+    console.log("## getCdz ## firstDay:"+firstDay)
+    console.log("## getCdz ## lastDay:"+lastDay)
+
+
     if(window.plus){
         pagePlusReady();
     }else{
@@ -160,15 +177,7 @@
     
     function getCdz(){
 
-        var firstDay = year+"-"+month+"-"+"01 00:00:00";
 
-        var dateLast = getLastDay(year,month);
-        console.log("## getCdz ## dateLast:"+dateLast)
-
-        var lastDay = dateLast.format("yyyy-MM-dd 23:59:59")
-
-        console.log("## getCdz ## firstDay:"+firstDay)
-        console.log("## getCdz ## lastDay:"+lastDay)
 
         var data = {
             'startDate':firstDay,
@@ -177,13 +186,15 @@
             'chargingGroupID':chargingGroupID
         }
 
+        console.log(data);
+
         postJSON(API_URL.ApiChargingBusinessGetChargingByDivideMoneyLog,data,function (res) {
 
             if('0' == res.code){
 
                 var dataList = res.data;
 
-                var dataTmpl = $("#dataTmpl");
+                var dataTmpl = $("#dataTmpl").html();
 
                 var html = '';
 
@@ -198,6 +209,9 @@
 
                 $(".dataList").html(html);
 
+                getSumMoney();
+
+                partnerMoney();
             }else{
                 layer.msg(res.msg)
             }
@@ -205,7 +219,59 @@
         })
 
     }
-    
+
+
+    function getSumMoney(){
+        var $sumMoney = $(".sumMoney");
+
+        $.each($sumMoney,function (index,item) {
+
+            var $dataItem = $(item).parents(".dataItem");
+
+            var cdzID = $dataItem.attr("data-id");
+
+            var data = {
+                "uuid":"",
+                "startDate":firstDay,
+                "endDate":lastDay,
+                "groupID":chargingGroupID,
+                "chargingID":cdzID,
+                "chargingSocketID":""
+            }
+
+
+            postJSON(API_URL.ApiAdminGetSumMoney,data,function (res) {
+                $(item).html(res.data);
+            })
+
+        })
+    }
+
+    function partnerMoney(){
+        var $sumMoney = $(".partnerMoney");
+
+        $.each($sumMoney,function (index,item) {
+
+            var $dataItem = $(item).parents(".dataItem");
+
+            var cdzID = $dataItem.attr("data-id");
+
+            var data = {
+                "uuid":uuid,
+                "startDate":firstDay,
+                "endDate":lastDay,
+                "groupID":chargingGroupID,
+                "chargingID":cdzID,
+                "chargingSocketID":""
+            }
+
+            postJSON(API_URL.ApiAdminGetSumMoney,data,function (res) {
+                $(item).html(res.data);
+            })
+
+        })
+    }
+
 
 
 </script>

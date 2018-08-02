@@ -1,4 +1,4 @@
-//var apiHost = "http://api.9n.jxyunge.com";
+// var apiHost = "http://api.9n.jxyunge.com";
 //var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.0";  //app当前版本
 var apiHost = "http://192.168.43.84:8181";
@@ -75,6 +75,9 @@ API_URL.ApiApplyCdzApply = apiHost + "/api/applyCdz/apply"; //合伙人申请充
 API_URL.ApiApplyCdzList = apiHost + "/api/applyCdz/list"; //合伙人申请充电桩 - 列表
 API_URL.ApiApplyCdzDetail = apiHost + "/api/applyCdz/detail"; //合伙人申请充电桩 - 详情
 API_URL.ApiApplyCdzConfirmGet = apiHost + "/api/applyCdz/confirmGet"; //合伙人申请充电桩 - 详情
+
+
+API_URL.ApiAdminGetSumMoney = apiHost + "/api/admin/getSumMoney"; //多维度获取合伙人赚的钱
 
 
 
