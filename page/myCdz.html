@@ -97,11 +97,12 @@
     <div class="tabBox">
         <span id="normal" class="tabItem select" data-type="1">正常充电桩(<span id="countValid">0</span>)</span>
         <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<span id="countInvalid">0</span>)</span>
+        <span  class="tabItem " data-type="2">未安装(<span>0</span>)</span>
     </div>
 
     <div class="midRow">
         <div class="left">片区(<span id="groupCount">0</span>)</div>
-        <div class="right">月收入(<span>元</span>)</div>
+        <div class="right">台数</div>
         <div class="clearfix"></div>
     </div>
     <div  class="normal" >
@@ -118,7 +119,7 @@
 <script type="text/html" id="dataTmpl">
     <li class="mui-table-view-cell">
         <a class="mui-navigate-right" onclick="clicked('areaDataXinxi.html?id={{id}}')" data-id="{{id}}"> <!-- areaList-->
-            <span class="mui-badge moneyBox" data-id="{{id}}">{{money}}</span>
+            <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
             {{groupName}}-{{sn}}
         </a>
     </li>
@@ -126,14 +127,11 @@
 <script type="text/html" id="dataTmpl2">
     <li class="mui-table-view-cell">
         <a class="mui-navigate-right" onclick="clicked('areaListUnNormal.html?id={{id}}')" data-id="{{id}}">
-            <span class="mui-badge moneyBox" data-id="{{id}}">{{money}}</span>
+            <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
             片区名称:{{groupName}}
         </a>
     </li>
 </script>
-
-
-
 
 
 <script type="text/javascript">
@@ -154,8 +152,6 @@
         checkLogin();
 
         uuid = plus.storage.getItem("uuid");
-
-        // uuid = '568f792a6bd34604a3ff666d6ac43f39';
 
         getChargingCountByPartner(uuid);
 
@@ -244,7 +240,8 @@
 
                 $(".dataList").append(html);
 
-                getItemMoney(ids,uuid);
+                getCount();
+
                 if(falgLast){
                     $("#loadMore").css({"display":"none"});
                     $("#noMore").css({"display":"block"});
@@ -259,37 +256,18 @@
         })
     }
 
-    function getItemMoney(ids,uuid){
 
-        if(!vaildeParam(ids)){
-            return;
-        }
+    function getCount(){
 
-        var idsArr = ids.split(",");
+        var $countBox = $(".countBox");
 
-        $.each(idsArr,function (index,item) {
+        $.each($countBox,function (index,item) {
 
-            if(vaildeParam(item)){
+            var id = $(item).attr("data-id");
 
-                var startDate = getCurrentMonthFirst().format("yyyy-MM-dd") + ' 00:00:00';
-                var endDate = getCurrentMonthLast().format("yyyy-MM-dd") + ' 23:59:59';
-
-                var param = {
-                    'uuid':uuid,
-                    'groupID':item,
-                    'startDate':startDate,
-                    'endDate':endDate
-                }
-
-                postJSON(API_URL.ApiGetSumMoney,param,function (res) {
-
-                    if("0" == res.code){
-                        $(".moneyBox[data-id='"+item+"']").text(res.data);
-                    }
-
-                })
-
-            }
+            postJSON(API_URL.ApiChargingGetChargingCountByGroupID,{"id":id},function (res) {
+                $(".countBox[data-id='"+id+"']").html(res.data);
+            })
 
         })
 
