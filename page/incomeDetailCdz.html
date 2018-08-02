@@ -118,7 +118,7 @@
 </div>
 
 <script type="text/html" id="dataTmpl">
-    <tr class="dataItem" data-id="{{id}}">
+    <tr class="dataItem" data-id="{{id}}" onclick="clicked('incomeDetailCz.html?cdzID={{id}}&year={{year}}&month={{month}}')">
         <td>{{code}}</td>
         <td class="sumMoney">加载中...</td>
         <td class="partnerMoney">加载中...</td>
@@ -177,8 +177,6 @@
     
     function getCdz(){
 
-
-
         var data = {
             'startDate':firstDay,
             'endDate':lastDay,
@@ -204,6 +202,8 @@
 
                     html += dataTmpl.replace(/{{id}}/g,item.id)
                         .replace(/{{code}}/g,item.code.substr(0,1))
+                        .replace(/{{year}}/g,year)
+                        .replace(/{{month}}/g,month)
 
                 })
 
