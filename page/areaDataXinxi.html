@@ -97,9 +97,9 @@
 
 <div class="mui-content" style="background: #fff">
     <div class="tabBox">
-        <span id="normal" class="tabItem select" data-type="1">分成比列</span>
+        <span class="tabItem select" data-type="3">充电桩</span>
+        <span id="normal" class="tabItem " data-type="1">分成比列</span>
         <span id="abnormal"  class="tabItem" data-type="2">收费价格</span>
-        <span class="tabItem" data-type="3">充电桩</span>
     </div>
     <div  class="normal">
         <div class="midRow">
@@ -166,7 +166,8 @@
     var pageSize = 10;
 
     var uuid = '';
-    var type = '1';
+    var type = '3';
+
     if(window.plus){
         pagePlusReady();
     }else{
@@ -176,11 +177,13 @@
     function pagePlusReady(){
         checkLogin();
         uuid = plus.storage.getItem("uuid");
-        if(type=="1"){
-            $(".title-right").text("账号");
-            $(".title-left").text("比列切换时间");
-            getDataList();
-        }
+
+
+        $(".title-right").css('margin-left','16%')
+        $(".title-left").css('margin-right','16%')
+        $(".title-right").text("桩号");
+        $(".title-left").text("信号强度");
+        getDataList3();
     }
 
 
