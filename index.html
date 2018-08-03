@@ -254,6 +254,9 @@
             if(vaildeParam(uuid)){
                 postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                     if("0" == res.code){
+
+                        console.log(JSON.stringify(res))
+
                         var mobile = res.data.username;
                         var headImage = res.data.headImage;
                         var nickname = res.data.realname;
@@ -262,7 +265,7 @@
                         var bank = res.data.bank;
                         var moneyAmount = res.data.moneyAmount;
                         var userType = res.data.userType;
-                        var totalIncome = res.data.totalIncome+'';
+                        var totalIncome = res.data.totalIncome;
                         if("1"==userType){
                             $("#areaApplicationList").css("display","block");
                             $("#applyCdz").css("display","block");
@@ -277,11 +280,13 @@
                         plus.storage.setItem( "totalIncome", totalIncome+'');
                         plus.storage.setItem( "userType", userType);
 
-					 	if (vaildeParam(totalIncome)) {
-					           totalIncome = 0;
+                        console.log("totalIncome : "+totalIncome)
+
+					 	if (!vaildeParam(totalIncome)) {
+					 	    totalIncome = 0;
 				        }
+
                         $(".totalMoney").text(totalIncome.toFixed(2));
-                        console.log("aaa"+totalIncome);
 
                     }else{
                         layer.msg(res.msg);
