@@ -145,7 +145,7 @@
 
                 var ids = '';
                 $.each(data,function (index,item) {
-                    html += tmpl.replace(/{{shellId}}/g,item.shellId.substr(0,1))
+                    html += tmpl.replace(/{{shellId}}/g,item.shellId)
                         .replace(/{{id}}/g,item.id);
 
                     ids += item.id + ',';

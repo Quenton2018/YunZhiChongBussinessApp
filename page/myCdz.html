@@ -95,7 +95,9 @@
     </div>
 
     <div class="tabBox">
-        <span id="normal" class="tabItem select" data-type="1">正常充电桩(<span id="countValid">0</span>)</span>
+        <span id="normal" class="tabItem select" data-type="0">充电桩详情
+            <!--(<span id="countValid">0</span>)-->
+        </span>
         <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<span id="countInvalid">0</span>)</span>
         <span class="tabItem" data-type="3" >未安装(<span id="countUnInstall">0</span>)</span>
     </div>
@@ -146,7 +148,7 @@
     var btnType ="0";  //正常：0 异常：1
     var pageNumber = 1;
     var pageSize = 10;
-    var type = 1;
+    var type = 0;
     var uuid = '';
 
     if(window.plus){
@@ -279,7 +281,7 @@
 
             var id = $(item).attr("data-id");
 
-            postJSON(API_URL.ApiChargingGetChargingCountByGroupID,{"id":id},function (res) {
+            postJSON(API_URL.ApiChargingGetChargingCountByGroupID,{"partnerUUID":"","groupID":id,"type":type},function (res) {
                 $(".countBox[data-id='"+id+"']").html(res.data);
             })
 

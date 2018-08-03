@@ -133,17 +133,23 @@
                     var daysNoUseCdz = item.daysNoUse;//多少天没有使用
 
                     var status = '';
+
                     if(statusCdz==2){
                         status = '离线';
-                    }else{
-                        status = daysNoUseCdz+"天";
+                    }
+                    if(daysNoUseCdz >= 10){
+                        if(vaildeParam(status)){
+                            status = status + "且无人使用";
+                        }else{
+                            status = status + "无人使用";
+                        }
                     }
                     if(!vaildeParam(lastUseTime)){
                         lastUseTime = '暂无';
                     }else{
                         lastUseTime = new Date(lastUseTime).format("yyyy-MM-dd hh:mm:ss")
                     }
-                    html += tmpl.replace(/{{shellId}}/g,item.shellId.substr(0,1))
+                    html += tmpl.replace(/{{shellId}}/g,item.shellId)
                         .replace(/{{id}}/g,item.id)
                         .replace(/{{daysNoUse}}/g,item.daysNoUse)
                         .replace(/{{status}}/g,status)
