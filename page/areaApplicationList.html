@@ -57,6 +57,7 @@
         }
         .conbox{
             margin-bottom: 20px;
+            position: relative;
         }
         .box01{
             background: white;
@@ -147,6 +148,13 @@
             display: none;
             margin-top: -20px;
         }
+
+        .conbox .qrCodeIcon{
+            position: absolute;
+            right: 10px;
+            bottom: 20px;
+            font-size: 3rem;
+        }
     </style>
 
 </head>
@@ -183,6 +191,9 @@
             <h1>地址：{{address}}</h1>
             <h1>申请时间：{{createDate}}</h1>
         </div>
+
+        <i class="iconfont icon-erweima qrCodeIcon" data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)"></i>
+
     </div>
 </script>
 
@@ -256,7 +267,7 @@
                 console.log("data_name:"+data_name);
 
                 if(data_id=='undefined'){
-                    layer.msg("片区申请被驳回或处理中，片区二维码生成失败");
+                    layer.msg("片区申请处理中");
                     return ;
                 }else{
                     var dataParam = {
@@ -265,7 +276,6 @@
                         "data_id":data_id+'',
                         "timestamp":timestamp+''
                     }
-
 
                     postJSON(API_URL.ApiChargingGroupQRCodeSaveChargingGroupQRCode,dataParam,function(res){
                         if("0" == res.code){
