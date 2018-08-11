@@ -90,7 +90,7 @@
 <div class="mui-content">
 
     <div class="topBox">
-        <div class="row1 selectDate"><span class="dateBox">loading</span> <i class="iconfont icon-xiala1"></i> </div>
+        <div class="row1 selectDate"><span class="dateBox">loading</span></div>
         <div class="row2">
             <div class="left">总收入 : <span id="partnerMoney">0</span>元</div>
             <div class="clearfix"></div>
@@ -151,9 +151,8 @@
     $("#partnerMoney").text(partnerMoney);
 
     var nowDate = new Date();
-    var day = nowDate.format("dd")
 
-    $(".dateBox").html(year+"年"+month+"月"+day+"日")
+    $(".dateBox").html(year+"年"+month+"月")
 
     if(window.plus){
         pagePlusReady();
@@ -161,55 +160,53 @@
         document.addEventListener('plusready',pagePlusReady,false);
     }
 
-
     function mGetDate(year, month){
         var d = new Date(year, month, 0);
         return d.getDate();
     }
 
-
-    $(".selectDate").click(function () {
-
-        var monthDayCount = mGetDate(year,month);
-
-        var options = {
-            'type':'day'
-        }
-
-        var dayArr = new Array();
-
-        for(var i=1;i<=monthDayCount;i++){
-            var dayObj = new Object();
-            dayObj.value = i+"";
-            dayObj.text = i+"日";
-            dayArr.push(dayObj);
-        }
-
-        var picker = new mui.PopPicker({
-            layer: 2
-        });
-        picker.setData( [{
-            value: month,
-            text: month+'月',
-            children: dayArr
-        }])
-        picker.show(function (selectItems) {
-            console.log(JSON.stringify(selectItems));
-            console.log(selectItems[1].value);
-            day = selectItems[1].value+"";
-
-            $(".dateBox").html(year+"年"+month+"月"+day+"日")
-
-
-            $(".sumMoney").html("加载中...")
-            $(".partnerMoney").html("加载中...")
-
-
-            pageNumber = 1;
-
-            getDivideMoneyLogList();
-        })
-    })
+    // $(".selectDate").click(function () {
+    //
+    //     var monthDayCount = mGetDate(year,month);
+    //
+    //     var options = {
+    //         'type':'day'
+    //     }
+    //
+    //     var dayArr = new Array();
+    //
+    //     for(var i=1;i<=monthDayCount;i++){
+    //         var dayObj = new Object();
+    //         dayObj.value = i+"";
+    //         dayObj.text = i+"日";
+    //         dayArr.push(dayObj);
+    //     }
+    //
+    //     var picker = new mui.PopPicker({
+    //         layer: 2
+    //     });
+    //     picker.setData( [{
+    //         value: month,
+    //         text: month+'月',
+    //         children: dayArr
+    //     }])
+    //     picker.show(function (selectItems) {
+    //         console.log(JSON.stringify(selectItems));
+    //         console.log(selectItems[1].value);
+    //         day = selectItems[1].value+"";
+    //
+    //         $(".dateBox").html(year+"年"+month+"月"+day+"日")
+    //
+    //
+    //         $(".sumMoney").html("加载中...")
+    //         $(".partnerMoney").html("加载中...")
+    //
+    //
+    //         pageNumber = 1;
+    //
+    //         getDivideMoneyLogList();
+    //     })
+    // })
 
 
     function pagePlusReady(){
@@ -219,11 +216,9 @@
     }
 
 
-
-    
     function getDivideMoneyLogList() {
-        var firstDay = year + "-" + month + "-" +day +" 00:00:00";
-        var lastDay = year + "-" + month + "-" +day +" 23:59:59";
+        var firstDay = year + "-" + month + "-01" +" 00:00:00";
+        var lastDay = year + "-" + month + "-" +mGetDate(year,month) +" 23:59:59";
 
         var data = {
             "uuid":"",
@@ -263,7 +258,7 @@
                     html += dataTmpl.replace(/{{code}}/g,item.charging.shellId.substr(0,1)+(parseInt(item.chargingSocket.code)+1))
                         .replace(/{{sumMoney}}/g,item.userChargingDetail.amount)
                         .replace(/{{partnerMoney}}/g,item.money)
-                        .replace(/{{time}}/g,(new Date(item.userChargingDetail.createDate)).format("hh:mm"))
+                        .replace(/{{time}}/g,(new Date(item.userChargingDetail.endDate)).format("MM-dd hh:mm"))
 
                 })
 
