@@ -245,8 +245,8 @@
 
     <form class="mui-input-group" style="margin-top: 10px">
         <div class="mui-input-row">
-            <label>姓名</label>
-            <input type="text" disabled value="" id="nickname" >
+            <label>收货人</label>
+            <input type="text" value="" id="username" name="username" placeholder="收货人姓名" >
         </div>
         <div class="mui-input-row">
             <label>联系电话</label>
@@ -367,10 +367,15 @@
         }
         var selectArrJson = JSON.stringify(selectArr);
 
+        var username = $("input[name='username']").val();
         var reason = $("input[name='reason']").val();
         var address = $("input[name='address']").val();
         var mobile = $("input[name='mobile']").val();
 
+        if(!vaildeParam(username)){
+            layer.msg("收货人姓名不能为空");
+            return;
+        }
         if(!vaildeParam(reason)){
             layer.msg("原因不能为空");
             return;
@@ -392,6 +397,7 @@
             'uuid':uuid,
             'selectCdzJson':selectArrJson,
             'reason':reason,
+            'username':username,
             'address':address,
             'mobile':mobile,
             'totalCount':totalCount
