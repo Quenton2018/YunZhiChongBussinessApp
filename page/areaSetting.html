@@ -426,7 +426,7 @@
 
 
     function pagePlusReady(){
-        GetCompanyAccount();
+       GetCompanyAccount();
         getUserInfoDateBase();
 
         $("#submitBtn").click(function(){ //下一步
@@ -591,8 +591,7 @@
                     $(".companyMobile").val(mobile);
                 }else{
                     layer.msg(res.msg);
-                    clearLogin();
-                    clicked("page/login.html");
+                    //clicked("login.html");
                 }
             })
         }
@@ -615,8 +614,7 @@
                     $(".usersmobile").val(mobile);
                 }else{
                     layer.msg(res.msg);
-                    clearLogin();
-                    clicked("page/login.html");
+                    clicked("login.html");
                 }
             })
         }
