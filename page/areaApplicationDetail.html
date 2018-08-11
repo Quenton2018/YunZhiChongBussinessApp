@@ -110,6 +110,9 @@
             font-size: 15px;
             color: #333333;
         }
+        #submitBtn{
+            display: none;
+        }
     </style>
 
 </head>
@@ -119,7 +122,6 @@
     <div class="right" id="submitBtn"></div>
     <h1 class="mui-title">申请片区</h1>
 </header>
-
 
 <div class="conbox01">
     <div class="box01">
@@ -136,7 +138,6 @@
     </div>
 
 </div>
-
 
 
 <script type="text/html" id="heHuoRenTmpl">
@@ -199,6 +200,12 @@
         if(vaildeParam(areaId)){
             postJSON(API_URL.ApiGetApplyChargingGroupById,{"areaId":areaId},function(res){
                 if("0" == res.code){
+
+                    if('待处理' == res.data.status || '编辑' == res.data.status ){
+                        $('#submitBtn').css('display','none');
+                    }else{
+                        $('#submitBtn').css('display','block');
+                    }
 
                     var address = res.data.address;
                     $(".address").text(address);
