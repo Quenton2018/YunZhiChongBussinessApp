@@ -167,6 +167,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="box02">
+                <h1>sn：{{sn}}</h1>
                 <h1>收货人电话：{{mobile}}</h1>
                 <h1>地址：{{address}}</h1>
                 <h1>申请时间：{{createDate}}</h1>
@@ -265,6 +266,7 @@
                         html += tmpl.replace(/{{totalCount}}/g,item.totalCount)
                             .replace(/{{id}}/g,item.id)
                             .replace(/{{realCount}}/g,item.realCount)
+                            .replace(/{{sn}}/g,item.sn)
                             .replace(/{{status}}/g,item.status)
                             .replace(/{{mobile}}/g,item.mobile)
                             .replace(/{{address}}/g,item.address)
