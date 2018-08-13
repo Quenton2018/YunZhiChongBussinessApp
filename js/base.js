@@ -29,6 +29,7 @@ API_URL.ApiArticleContentBYName = apiHost + "/api/article/getArticleByName";
 API_URL.ApiHonorGetHonorList = apiHost + "/api/honor/getHonorList"; //获取荣誉榜
 
 API_URL.ApiGetChargingGroup = apiHost + "/api/chargingBusiness/getChargingGroup"; //获取合伙人片区
+API_URL.ApiGetChargingGroupCount = apiHost + "/api/chargingBusiness/getChargingGroupCount"; //获取合伙人片区
 API_URL.ApiChargingGetChargingCountByPartner = apiHost + "/api/charging/getChargingCountByPartner"; //获取合伙人片区
 API_URL.ApiGetSumMoney = apiHost + "/api/admin/getSumMoney"; //获取合伙人片区
 API_URL.ApiGetChargingByGroupID = apiHost + "/api/charging/getChargingByGroupID"; //根据片区ID获取充电桩

@@ -253,9 +253,9 @@
                     $(".dataList").html('');
                 }
                 var data = res.data;
-                if(vaildeParam(data)){
-                    $("#groupCount").text(data.length);
-                }
+
+                getChargingGroupCount(dataParam);
+
                 var html = '';
                 var tmpl = $("#dataTmpl").html();
                 if(2 == type){
@@ -298,6 +298,11 @@
         })
     }
 
+    function getChargingGroupCount(dataParam) {
+        postJSON(API_URL.ApiGetChargingGroupCount,dataParam,function (res) {
+            $("#groupCount").text(res.data);
+        })
+    }
 
     function getCount(){
 

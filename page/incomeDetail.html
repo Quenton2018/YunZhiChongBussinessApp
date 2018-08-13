@@ -109,7 +109,8 @@
     var pageSize = 10;
     var yearParam =  new Date().getFullYear();
     var monthParam = 1;
-
+    var year;
+    var month;
 
     if(window.plus){
         pagePlusReady();
@@ -119,8 +120,8 @@
 
     function pagePlusReady(){
         checkLogin();
-        var year =  new Date().getFullYear();
-        var month = plus.storage.getItem("month");
+         year =  new Date().getFullYear();
+         month = plus.storage.getItem("month");
         var parnterMoney = plus.storage.getItem("parnterMoney");
         monthParam =month;
         yearParam =year;
@@ -181,29 +182,74 @@
 
 
 
+    // $(".selectDate").click(function () {
+    //
+    //     var options = {
+    //         'type':'month'
+    //     }
+    //     var dtPicker = new mui.DtPicker(options);
+    //
+    //     dtPicker.show(function (selectItems) {
+    //         $("#loadMore").css({"display":"none"});
+    //         $("#noMore").css({"display":"none"});
+    //         pageNumber=1;
+    //         console.log(selectItems.y);//{text: "2016",value: 2016}
+    //         console.log(selectItems.m);//{text: "05",value: "05"}
+    //         var month = selectItems.m.value;
+    //         var year = selectItems.y.value;
+    //         $(".selectDate span").text(year+"年"+month+"月");
+    //         $(".dataList").html("");
+    //
+    //         getList(month,year);
+    //
+    //     })
+    // })
+
+
     $(".selectDate").click(function () {
 
-        var options = {
-            'type':'month'
-        }
-        var dtPicker = new mui.DtPicker(options);
+        var dayArr = new Array();
 
-        dtPicker.show(function (selectItems) {
+        var day = new Date().getMonth() + 1;
+
+
+        for(var i=1;i<=day;i++){
+            var dayObj = new Object();
+            dayObj.value = i+"";
+            dayObj.text = i+"月";
+            dayArr.push(dayObj);
+        }
+
+        var picker = new mui.PopPicker({
+            layer: 2
+        });
+        picker.setData( [{
+            value: year,
+            text: year+'年',
+            children: dayArr
+        }])
+        picker.show(function (selectItems) {
+
+            var yearNew = selectItems[0].value+"";
+            var monthNew = selectItems[1].value+"";
+
+            year = yearNew;
+            month = monthNew;
+
             $("#loadMore").css({"display":"none"});
             $("#noMore").css({"display":"none"});
             pageNumber=1;
-            console.log(selectItems.y);//{text: "2016",value: 2016}
-            console.log(selectItems.m);//{text: "05",value: "05"}
-            var month = selectItems.m.value;
-            var year = selectItems.y.value;
             $(".selectDate span").text(year+"年"+month+"月");
             $(".dataList").html("");
-
             getList(month,year);
 
         })
     })
 
+    function mGetDate(year, month){
+        var d = new Date(year, month, 0);
+        return d.getDate();
+    }
 
     $("#loadMore").click(function(){
         pageNumber++;
