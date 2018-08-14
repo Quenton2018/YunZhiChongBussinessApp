@@ -258,7 +258,7 @@
                     html += dataTmpl.replace(/{{code}}/g,item.charging.shellId.substr(0,1)+(parseInt(item.chargingSocket.code)+1))
                         .replace(/{{sumMoney}}/g,item.userChargingDetail.amount)
                         .replace(/{{partnerMoney}}/g,item.money)
-                        .replace(/{{time}}/g,(new Date(item.userChargingDetail.endDate)).format("MM-dd hh:mm"))
+                        .replace(/{{time}}/g,(new Date(item.creteDate)).format("MM-dd hh:mm"))
 
                 })
 
