@@ -216,6 +216,14 @@
                 layer.msg("金额不能为空");
                 return;
             }
+
+            money = parseFloat(money);
+
+            if(money < 10){
+                layer.msg("金额最少10元");
+                return;
+            }
+
             var code = $("input[name='code']").val();
             if(!vaildeParam(code)){
                 canPostFlag = true;
