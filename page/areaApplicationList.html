@@ -320,7 +320,7 @@
                     var html = '';
                     $.each(data, function(index,item) {
                         var chargingGroup = item.chargingGroup;
-                        var keid;
+                        var keid = 0;
                         if(vaildeParam(chargingGroup)){
                             keid =chargingGroup.id;
                         }
@@ -335,10 +335,12 @@
                         var statusDiv  = '<div class="zhuangtai01">等待审核</div>';
                         if(status =='通过'){
                             statusDiv = '<div class="zhuangtai02">审核通过</div>';
-                        }else if(status =='驳回' ){
+                        }else if(status =='驳回' && keid == 0 ){
                             statusDiv = '<div class="zhuangtai03">审核驳回</div> ';
+                        }else if(status =='驳回' && keid > 0 ){
+                            statusDiv = '<div class="zhuangtai02">编辑失败</div> ';
                         }else if(status =="编辑"){
-                            statusDiv = '<div class="zhuangtai01">(编辑)等待审核</div>';
+                            statusDiv = '<div class="zhuangtai02">(编辑)等待审核</div>';
                         }
                         console.log("status=========="+status);
                         console.log("statusDiv========="+statusDiv);
