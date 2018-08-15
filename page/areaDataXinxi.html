@@ -223,30 +223,43 @@
      抓取数据
      */
     function getDataList(){
-        var groupID = getQueryString("id");
-        var dataParam= {
-            "groupID":groupID
-        }
-        postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupProportionsListByGroupID,dataParam,function(res){
-            if("0" == res.code){
-                var data = res.data;
-                var html = '';
-                var tmpl = $("#dataTmpl").html();
-                var rateSwitchDate;
-                $.each(data, function(index,item) {
-                    html += tmpl.replace(/{{name}}/g,item.name)
-                        .replace(/{{rate1}}/g,item.rate1)
-                        .replace(/{{rate2}}/g,item.rate2);
-                     rateSwitchDate = new Date(item.rateSwitchDate).format("yyyy-MM-dd");
-                });
-                console.log("rateSwitchDate"+rateSwitchDate)
-                $(".title-left").text("比列切换时间("+rateSwitchDate+")");
-                $(".dataList").html("");
-                $(".dataList").append(html);
-            }else{
-                layer.msg(res.msg);
+
+        postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(rrr){
+
+            var userType = rrr.data.userType;
+
+            var groupID = getQueryString("id");
+            var dataParam= {
+                "groupID":groupID
             }
+            postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupProportionsListByGroupID,dataParam,function(res){
+                if("0" == res.code){
+                    var data = res.data;
+                    var html = '';
+                    var tmpl = $("#dataTmpl").html();
+                    var rateSwitchDate;
+                    $.each(data, function(index,item) {
+
+                        if('1' == userType || item.member.id == rrr.data.id){
+                            html += tmpl.replace(/{{name}}/g,item.name)
+                                .replace(/{{rate1}}/g,item.rate1)
+                                .replace(/{{rate2}}/g,item.rate2);
+                        }
+
+                        rateSwitchDate = new Date(item.rateSwitchDate).format("yyyy-MM-dd");
+                    });
+                    console.log("rateSwitchDate"+rateSwitchDate)
+                    $(".title-left").text("比列切换时间("+rateSwitchDate+")");
+                    $(".dataList").html("");
+                    $(".dataList").append(html);
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+
         })
+
+
     }
 
     function getDataList2(){
