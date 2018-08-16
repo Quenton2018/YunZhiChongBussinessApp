@@ -265,6 +265,13 @@
 					"index.html"
 				],
 				"priority": 0
+			},
+			"page/myWallet.html": {
+				"resources": [],
+				"refer": [
+					"page/putforward.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

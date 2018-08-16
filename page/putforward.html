@@ -180,10 +180,35 @@
          */
         $(".getCode").click(function(){
             var uuid = plus.storage.getItem("uuid");
+
+            var money = $("input[name='money']").val();
+
+            if(!vaildeParam(money)){
+                layer.msg("金额不能为空");
+                return;
+            }
+
+            if(!/^\d+$/.test(money)){
+                layer.msg("金额不是整数");
+                return;
+            }
+
+            money = parseFloat(money);
+            if(money < 10){
+                layer.msg("金额最少10元");
+                return;
+            }
+
+            if(!checkMoney(money)){
+                layer.msg("金额不足");
+                return;
+            }
+
             if(!vaildeParam(uuid)){
                 layer.msg("用户数据异常");
                 return;
             }
+
             if(isLock){
                 return;
             }
@@ -198,6 +223,30 @@
                 }
             })
         })
+
+
+        /**
+         * 判断金额是否购
+         */
+        function checkMoney(money){
+
+            /** 当前可用金额 */
+            var moneyAmountBox = $("#moneyAmountBox").val();
+            moneyAmountBox = parseFloat(moneyAmountBox);
+
+            console.log("## checkMoney ## moneyAmountBox:"+moneyAmountBox);
+            console.log("## checkMoney ## money:"+money);
+
+            if(money > moneyAmountBox){
+
+                console.log("余额不足");
+
+                return false;
+            }
+
+            return true;
+        }
+
 
         /**
          * 提现
@@ -217,6 +266,11 @@
                 return;
             }
 
+            if(!/^\d+$/.test(money)){
+                canPostFlag = true;
+                layer.msg("金额不是整数");
+                return;
+            }
             money = parseFloat(money);
 
             if(money < 10){
