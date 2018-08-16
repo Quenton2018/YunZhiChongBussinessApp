@@ -220,6 +220,7 @@
             money = parseFloat(money);
 
             if(money < 10){
+                canPostFlag = true;
                 layer.msg("金额最少10元");
                 return;
             }
