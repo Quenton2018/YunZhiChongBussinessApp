@@ -105,7 +105,10 @@
                     var v = res.data.version;
                     $(".appVersion2").text(v)
 
-                    if(version != v){
+                    var versionNum = parseFloat(version.replace('v',''));
+                    var vNum = parseFloat(v.replace('v',''));
+
+                    if(versionNum < vNum){
 						$("#downloadBtn").css("display",'block');
 						$("#downloadBtn").click(function () {
                             plus.runtime.openURL(res.data.url);

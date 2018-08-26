@@ -213,6 +213,7 @@
             getUserInfo();
             GetADaylyIncomeDetail();
 
+            checkVersion();
 
             plus.push.addEventListener( "receive", function( msg ) {
                 layer.msg(msg);
@@ -325,6 +326,36 @@
             }
         }
 
+
+
+        /**
+         * 检查版本
+         */
+        function checkVersion() {
+            var osName = plus.os.name;
+            var version = appVersion;
+
+            postJSON(API_URL.AppVersionPartnerGetNewest,{"appType":osName},function (res) {
+
+                if('0' == res.code){
+                    if(vaildeParam(res.data)){
+                        var v = res.data.version;
+
+                        var versionNum = parseFloat(version.replace('v',''));
+                        var vNum = parseFloat(v.replace('v',''));
+
+                        console.log(versionNum);
+                        console.log(vNum);
+
+                        if(versionNum < vNum){
+
+                            clicked("page/edition.html");
+
+                        }
+                    }
+                }
+            })
+        }
 
     </script>
 </body>
