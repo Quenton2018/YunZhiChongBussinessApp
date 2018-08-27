@@ -175,7 +175,7 @@
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": ""
+					"ldpi": "","hdpi":"images/qidong/qd_750x1334.png","xhdpi":"images/qidong/qd_750x1334.png","xxhdpi":"images/qidong/qd_750x1334.png"
 				}
 			}
 		}
