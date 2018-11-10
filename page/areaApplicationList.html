@@ -187,7 +187,7 @@
             <div class="clearfix"></div>
         </div>
         <!--<div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">-->
-        <div class="box02" data-id="{{areaid}}"  onclick="clicked('AreaFullstopAndAdvance.html')">
+        <div class="box02" data-id="{{areaid}}"  onclick="clicked('AreaFullstopAndAdvance.html?areaid={{areaid}}')">
             <h1>电价：{{electricPrice}}元/千瓦时</h1>
             <h1>地址：{{address}}</h1>
             <h1>申请时间：{{createDate}}</h1>
@@ -344,8 +344,8 @@
                         }else if(status =="编辑"){
                             statusDiv = '<div class="zhuangtai02">(编辑)等待审核</div>';
                         }
-                        console.log("status=========="+status);
-                        console.log("statusDiv========="+statusDiv);
+//                      console.log("status=========="+status);
+//                      console.log("statusDiv========="+statusDiv);
 
                         html += tmpl.replace(/{{name}}/g,areaName)
                             .replace(/{{createDate}}/g,createDate)
@@ -387,11 +387,11 @@
     })
 
     //新建一个申请
-    $("#submitBtn").click(function(){
-//      clicked('areaApplication.html');
-//      clicked('areaApplicationCombo.html');
-		clicked('AreaFullstopAndAdvance.html')
-    });
+//  $("#submitBtn").click(function(){
+////clicked('areaApplication.html');
+///clicked('areaApplicationCombo.html');
+//clicked('AreaFullstopAndAdvance.html')
+//  });
 
 </script>
 

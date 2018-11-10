@@ -408,12 +408,13 @@
         }
         .yc{
         	width: 8px;
-        	height: 8px;
-        	display: inline-block;
-        	background: #FF6D22;
-        	border-radius: 100%;
-        	margin-right: 4px;
-        	vertical-align: 1px;
+		    height: 8px;
+		    display: inline-block;
+		    background: red;
+		    border-radius: 100%;
+		    margin-right: 4px;
+		    vertical-align: 1px;
+		    box-shadow: 0px 0px 6px 2px rgba(241,76,37,.6);;
         }
         .zc{
         	width: 8px;
@@ -511,7 +512,16 @@
 	            <div class="clearfix"></div>
 	        </div>
 	        <ul class="mui-table-view dataList">
-				
+				<li class="mui-table-view-cell">
+			        <table class="mui-table" >
+			            <tbody >
+			            <tr>
+			                <td align="left"><span class="yc"></span>{{/if}}A1900000</td>
+			        		<td align="right">{{item.qos}}:<span class="progress"><i style="width: {{item.qosPrecent}}%;" class="progressInner"></i></span></td>
+			            </tr>
+			            </tbody>
+			        </table>
+			   </li>
 	        </ul>
 	        <div id="loadMore" class="loadMore">加载更多</div>
 	        <div id="noMore" class="noMore">没有更多了</div>
