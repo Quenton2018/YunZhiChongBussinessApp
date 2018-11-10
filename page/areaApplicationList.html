@@ -186,7 +186,8 @@
             {{status}}
             <div class="clearfix"></div>
         </div>
-        <div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">
+        <!--<div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">-->
+        <div class="box02" data-id="{{areaid}}"  onclick="AreaFullstopAndAdvance(this)">
             <h1>电价：{{electricPrice}}元/千瓦时</h1>
             <h1>地址：{{address}}</h1>
             <h1>申请时间：{{createDate}}</h1>
@@ -372,7 +373,7 @@
             })
         }
     }
-
+		
     /* var qrcode = new QRCode(document.getElementById("qtCodeBox"), {
          width : 200,
          height : 200
@@ -386,7 +387,9 @@
 
     //新建一个申请
     $("#submitBtn").click(function(){
-        clicked('areaApplication.html');
+//      clicked('areaApplication.html');
+//      clicked('areaApplicationCombo.html');
+		clicked('AreaFullstopAndAdvance.html')
     });
 
 </script>

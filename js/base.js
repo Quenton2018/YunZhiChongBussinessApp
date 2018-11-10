@@ -1,8 +1,10 @@
 // var apiHost = "http://api.9n.jxyunge.com";
-var apiHost = "http://api.jx9n.com";
+//var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.2";  //app当前版本
-var apiHost = "http://39.106.62.16:8181";
 //var apiHost = "http://192.168.1.134:8181";
+var apiHost = "http://39.106.62.16:8181";
+
+
 
 var API_URL = {};
 API_URL.ApiAdminSendCode = apiHost + "/api/admin/sendCode"; //发送短信接口
@@ -89,14 +91,14 @@ API_URL.ApiChargingGetChargingCountByGroupID= apiHost + "/api/charging/getChargi
 API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall = apiHost + "/api/chargingBusiness/getApplyCdzDataUnInstall"; //分佣接口
 API_URL.ApiChargingBusinessGetApplyCdzDataTransDate = apiHost + "/api/chargingBusiness/getApplyCdzDataTransDate"; //分佣接口
 
-API_URL.ApiChargingBusinessGetApplyCdzDataGetSetmeals = apiHost + '/api/setmeal/getSetmeals';//片区套餐
-API_URL.GetSetmeal = apiHost + '/api/setmeal/getSetmeal';
-API_URL.deleteSetmealMember = apiHost + '/api/setmeal/deleteSetmealMember'; //删除套餐用户 
-API_URL.updateSetmealMember = apiHost + '/api/setmeal/updateSetmealMember'; //编辑套餐用户
-API_URL.saveSetmealMember = apiHost + '/api/setmeal/saveSetmealMember'; //添加套餐用户
+API_URL.ApiChargingBusinessGetSetmeals = apiHost + "/api/setmeal/getSetmeals"; //片区套餐
+API_URL.ApiChargingBusinessGetSetmeal = apiHost + "/api/setmeal/getSetmeal"; //单个套餐
+API_URL.ApiChargingBusinessGetSetmealPrice = apiHost + "/api/setmeal/getDefaultSetmealPrice"; //合伙人收费
 
-//API_URL.ApiChargingBusinessGetApplyCdzDataGetSetmeals = '../mockjson/GetSetmeals.json';
-//API_URL.GetSetmeal = '/api/setmeal/getSetmeals';
+// TODO
+//API_URL.ApiChargingGroupSetmeal = "../mockData/powerprice.json";
+//API_URL.ApiChargingGroupSetmealType = "../mockData/setmealtype.json";
+
 
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接
