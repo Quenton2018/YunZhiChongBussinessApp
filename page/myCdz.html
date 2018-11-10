@@ -50,9 +50,19 @@
             color: #979797;
         }
 
-        .mui-table-view{
+        /*.mui-table-view{
             font-size: .9rem;
+            margin-top: 10px;
+            background: none;
         }
+        .mui-table-view li{
+        	margin-bottom: 5px;
+        	background: #fff;
+        	border-radius: 6px;
+        	font-size: 0.8rem;
+        	padding: 10px 0;
+        	box-shadow: inset #999 0px -1px 3px 0px;
+        }*/
         .mui-table-view .mui-badge{
             background: transparent;
             font-size: .9rem;
@@ -149,7 +159,7 @@
     var pageNumber = 1;
     var pageSize = 10;
     var type = 0;
-    var uuid = '';
+    var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
 
     var ws=null;
     // 处理沉浸式状态栏
@@ -168,7 +178,7 @@
     function pagePlusReady(){
         checkLogin();
 
-        uuid = plus.storage.getItem("uuid");
+//      uuid = plus.storage.getItem("uuid");
 
         getChargingCountByPartner(uuid);
 

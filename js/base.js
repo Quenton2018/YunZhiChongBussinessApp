@@ -94,7 +94,10 @@ API_URL.ApiChargingBusinessGetApplyCdzDataTransDate = apiHost + "/api/chargingBu
 API_URL.ApiChargingBusinessGetSetmeals = apiHost + "/api/setmeal/getSetmeals"; //片区套餐
 API_URL.ApiChargingBusinessGetSetmeal = apiHost + "/api/setmeal/getSetmeal"; //单个套餐
 API_URL.ApiChargingBusinessGetSetmealPrice = apiHost + "/api/setmeal/getDefaultSetmealPrice"; //合伙人收费
-
+API_URL.saveSetmealMember = apiHost + "/api/setmeal/saveSetmealMember"; //添加套餐用户
+API_URL.saveSetmealMember = apiHost + "/api/setmeal/saveSetmealMember"; //添加套餐用户
+API_URL.deleteSetmealMember = apiHost + "/api/setmeal/deleteSetmealMember"; //删除套餐用户
+API_URL.updateSetmealMember = apiHost + "/api/setmeal/updateSetmealMember"; //修改套餐用户
 // TODO
 //API_URL.ApiChargingGroupSetmeal = "../mockData/powerprice.json";
 //API_URL.ApiChargingGroupSetmealType = "../mockData/setmealtype.json";

@@ -604,6 +604,14 @@
     var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
     var code = getQueryString('code') || 42;
     var roadPickData = [];      //套餐name数据
+    
+    var ws=null;
+    // 处理沉浸式状态栏
+    var topoffset=0;
+    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if(ms&&ms.length>=3){
+        topoffset=parseFloat(ms[2]);
+    }
   
     if(window.plus){
         pagePlusReady();
@@ -613,21 +621,29 @@
 	
     function pagePlusReady(){
         checkLogin();
-//      uuid = plus.storage.getItem("uuid");
+//      uuid = plus.storage.getItem("uuid");		
         getDataList();
-		// 下拉刷新页面
-        plusRefresh(function(){
-        	getDataList();
-        });
+        
+        ws=plus.webview.currentWebview();
+        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+        }
+        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+
     }
-    getDataList();
+    // 刷新页面
+    function onRefresh(){
+        getDataList();
+        ws.endPullToRefresh();
+    }
+    
     //抓取数据
     function getDataList(){
 		var params = {
 			"uuid":uuid,
 			"code":code
 		};
-        postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataGetSetmeals,params,function(res){
+        postJSON(API_URL.ApiChargingBusinessGetSetmeals,params,function(res){
 			if("0" == res.code){
 				var data = res.data;
                 if(!vaildeParam(data) || data.length == 0){
@@ -854,7 +870,7 @@
 			code:code,
 			setmealId:id
 		}
-		postJSON(API_URL.GetSetmeal,params,function(res){		
+		postJSON(API_URL.ApiChargingBusinessGetSetmeal,params,function(res){		
 			var roadState = res.data.state;					
 			$('#roadState').html("<span>" + roadState + "</span>");
 			var eles = res.data.eles;         //阶梯价格
@@ -986,7 +1002,32 @@
 			timesLimit:timesLimit,       
 			expired:expired
 		}
-    	checkMobile(mobile);
+    	var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+		var flag= false;
+		var flagMobile= false;
+		var flagMobileNumber= false;
+		if(!vaildeParam(mobile)){
+		   flag = true;
+		}
+		if(mobile.length!==11){
+		    flagMobile = true;
+		}
+		//校验是数字
+		if(!reg.test(mobile)){
+		    flagMobileNumber = true;
+		}
+		if(flag){
+	     	layer.msg("请补全信息");
+	     	return;
+		}
+		if(flagMobile){
+	    	layer.msg("请输入正确手机号码");
+	    	return;
+		}
+		if(flagMobileNumber){
+	    	layer.msg("手机号码必须为数字");
+	    	return;
+		}
 		postJSON(API_URL.updateSetmealMember,params,function(res){
 			if(res.code == '0'){
 				$('.memberbox').hide();
@@ -1070,11 +1111,11 @@
 	     	return;
 		}
 		if(flagMobile){
-	    	layer.msg("手机必须为11位");
+	    	layer.msg("请输入正确手机号码");
 	    	return;
 		}
 		if(flagMobileNumber){
-	    	layer.msg("手机必须为数字");
+	    	layer.msg("手机号码必须为数字");
 	    	return;
 		}
 		postJSON(API_URL.saveSetmealMember,params,function(res){
@@ -1093,7 +1134,7 @@
 			code:code,
 			setmealId:setmealId
 		}
-		postJSON(API_URL.GetSetmeal,params,function(res){
+		postJSON(API_URL.ApiChargingBusinessGetSetmeal,params,function(res){
 			if(res.code == '0'){
 				var members = res.data.members;
 				var manager = res.data.manager+"";
