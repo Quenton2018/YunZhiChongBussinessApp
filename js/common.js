@@ -180,6 +180,29 @@ w.ultZeroize=function(v,l){
 	}
 	return z+v;
 };
+/**
+ * 下拉刷新
+ * @param {Object} callback 回调函数 
+ *  
+ */
+w.plusRefresh = function(c){
+	var ws=null;
+    // 处理沉浸式状态栏
+    var topoffset=0;
+    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if(ms&&ms.length>=3){
+        topoffset=parseFloat(ms[2]);
+    }
+    ws=plus.webview.currentWebview();
+    if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+        topoffset=Math.round(plus.navigator.getStatusbarHeight());
+    }
+    ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},a);
+    function a(){
+		c();
+        ws.endPullToRefresh();
+    }
+};
 })(window);
 
 ;(function () {

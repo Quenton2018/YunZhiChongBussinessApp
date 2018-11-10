@@ -46,3 +46,20 @@
 .myList .listItem i {
     color: #CECECE;
 }
+/*ul*/  
+.flex{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+
+/*li 平均分配*/  
+.flex .flex-item{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.nodata{
+	text-align: center;
+}
