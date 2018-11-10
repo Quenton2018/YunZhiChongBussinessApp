@@ -1,0 +1,123 @@
+{
+  "code": "0",
+  "msg": "操作成功",
+  "data": [
+    {
+      "id": 263,
+      "groupId": 42,
+      "seq": 0,
+      "name": "基本套餐",
+      "state": "充满自停+充电时长",
+      "eles": [
+        {
+          "seq": 0,
+          "min": 0,
+          "max": 200,
+          "cost": 300,
+          "amount": 0.2
+        },
+        {
+          "seq": 1,
+          "min": 200,
+          "max": 500,
+          "cost": 750,
+          "amount": 0.25
+        },
+        {
+          "seq": 2,
+          "min": 500,
+          "max": 900,
+          "cost": 1350,
+          "amount": 0.35
+        },
+        {
+          "seq": 3,
+          "min": 900,
+          "max": 1200,
+          "cost": 1800,
+          "amount": 0.5
+        },
+        {
+          "seq": 4,
+          "min": 1200,
+          "max": 1500,
+          "cost": 2250,
+          "amount": 0.65
+        }
+      ],
+      "fullStop": {
+        "state": "1",
+        "minutes": 600,
+        "power": 5,
+        "amount": 5
+      },
+      "advanceCharges": [],
+      "actualCharges": [
+        {
+          "state": "2",
+          "minutes": 240,
+          "power": 1,
+          "amount": 1
+        },
+        {
+          "state": "2",
+          "minutes": 360,
+          "power": 2,
+          "amount": 2
+        },
+        {
+          "state": "2",
+          "minutes": 480,
+          "power": 3,
+          "amount": 3
+        },
+        {
+          "state": "2",
+          "minutes": 600,
+          "power": 4,
+          "amount": 4
+        }
+      ],
+      "members": null,
+      "partners": [
+        {
+          "partnerId": 260,
+          "setmealId": 263,
+          "name": "guild",
+          "mobile": "13301182130",
+          "dividePrice": null,
+          "divideRatio": 100
+        }
+      ],
+      "manager": true
+    },
+    {
+      "id": 305,
+      "groupId": 42,
+      "seq": 1,
+      "name": "套餐二",
+      "state": "充满自停+充电时长",
+      "eles": null,
+      "fullStop": null,
+      "advanceCharges": null,
+      "actualCharges": null,
+      "members": null,
+      "partners": null,
+      "manager": false
+    },
+    {
+      "id": 306,
+      "groupId": 42,
+      "seq": 2,
+      "name": "套餐三",
+      "state": "充满自停+充电时长",
+      "eles": null,
+      "fullStop": null,
+      "advanceCharges": null,
+      "actualCharges": null,
+      "members": null,
+      "partners": null,
+      "manager": false
+    }
+  ]
+}
