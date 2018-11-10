@@ -187,7 +187,7 @@
             <div class="clearfix"></div>
         </div>
         <!--<div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">-->
-        <div class="box02" data-id="{{areaid}}"  onclick="AreaFullstopAndAdvance(this)">
+        <div class="box02" data-id="{{areaid}}"  onclick="clicked('AreaFullstopAndAdvance.html')">
             <h1>电价：{{electricPrice}}元/千瓦时</h1>
             <h1>地址：{{address}}</h1>
             <h1>申请时间：{{createDate}}</h1>
@@ -308,6 +308,7 @@
 
     function getList(){
         var uuid = plus.storage.getItem("uuid");
+        var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
         if(vaildeParam(uuid)){
             var dataParam = {
                 "uuid":uuid,
