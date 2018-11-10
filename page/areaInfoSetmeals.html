@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>我的充电桩</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/mui.picker.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/mui.picker.all.js"></script>
+    <script src="../js/artTemplate.min.js"></script>
+    <style type="text/css">
+
+        .topInfoBox h1{
+            color: #F17E38;
+            font-size: 4rem;
+            font-weight: 400;
+        }
+        .topInfoBox small{
+            font-size: .8rem;
+            color: #9D9D9D;
+        }
+
+        .tabBox{
+            text-align: center;
+            padding: 20px 0;
+        }
+        .tabBox span{
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            line-height: 50px;
+        }
+        .tabItem img{
+        	width: 50px;
+        	height: 50px;
+        	vertical-align: top;
+        	margin-right: 10px;
+        }
+        .normal{
+        	padding: 10px;
+        	background: #F0F1F3;
+        	display: none;
+        }
+        .normal.on{
+        	display: block;
+        }
+        .midRow{      
+            background: #EEE;
+		    padding: 5px 15px;
+		    font-size: .8rem;
+		    border-radius: 6px;
+		    box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;
+		    overflow: hidden;
+        }
+		.midLeft{
+			width: 28%;
+		    float: left;
+		    /*box-shadow: #999 0px 1px 19px 1px;*/
+		    margin-top: 15px;
+		    border-radius: 6px;
+		    overflow: hidden;
+		    padding: 3px;
+    		box-shadow: inset #999 0px -1px 5px 0px;
+		}
+		.midRight{
+			width: calc(72% - 10px);
+		    margin-left: 10px;
+		    float: left;
+		    margin-top: 15px;		    
+		}
+		.mui-head-view{
+        	background: #fff;
+        	overflow: hidden;
+        	padding: 10px 0;
+        	border-radius: 6px;
+        	box-shadow: inset #999 0px -1px 5px 0px;
+        }
+		.mui-head-list{
+			text-align: center;
+			font-size: 0.8rem;
+			position: relative;
+		}
+		.mui-head-list:after{
+			content: '';
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 1px;
+			height: 100%;
+			background: #E0E0E0;
+		}
+		.mui-head-list:last-child:after{
+			width: 0;
+		}
+		.mui-head-list span{
+			display: inline-block;
+			width: 100%;
+		}
+		.mui-head-list span.dw{
+			font-size: 0.7rem;
+			color: #B7B7B7;
+		}
+		.midContent{
+			overflow: hidden;
+			display: none;
+		}
+        .midLeft .mui-table-view{
+            font-size: .9rem;
+        }
+        .midLeft .mui-table-view li{
+        	background: #EEEEEE;
+        	padding: 15px;
+        	text-align: center;
+        	font-size: 0.8rem;
+        }
+        .midLeft .mui-table-view li.select{
+        	background: #fff;
+        	color: #FF6D22;
+        	border-left: 4px solid #FF6D22;
+        	top: -1px;
+        	left: -3px;
+    		position: relative;
+        }
+        .midLeft .mui-table-view .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+        }
+		.dataList .mui-table-view-cell:after,.midRight .mui-table-view-cell:after,.mui-table-view:after,.mui-table-view li.select:after,.mui-table-view:before{
+			height:0;
+		}
+		.midLeft .mui-table-view-cell:after{
+			right: 15px;
+		}
+		.midRight .mui-table-view{
+            font-size: .9rem;
+            margin-top: 10px;
+            background: none;
+        }
+        .midRight .mui-table-view li{
+        	margin-bottom: 5px;
+        	background: #fff;
+        	border-radius: 6px;
+        	font-size: 0.8rem;
+        	padding: 10px 0;
+        	box-shadow: inset #999 0px -1px 3px 0px;
+        }
+        /*.midRight .mui-table-view li.sx{
+        	background: #F0F1F3;
+        }*/
+        .midRight .mui-table-view li span{
+        	text-align: center;
+        }
+        .midRight .mui-table-view .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+        }
+		.title-right{
+			position: relative;
+			padding: 10px;
+		}
+		.title-no{
+			padding: 10px;
+		}
+		.title-strong{
+			padding: 10px;
+		}
+		.title-left{
+			top: 10px;
+			right: 35px;
+			position: relative;
+		}
+		.title-left span:before{
+			position: absolute;
+		    top: 10px;
+		    left: -40px;
+		    height: 1px;
+		    width: 30px;
+		    background: #000;
+		    content: '';
+		}
+		.title-left span:after{
+			position: absolute;
+		    top: 10px;
+		    right: -40px;
+		    height: 1px;
+		    width: 30px;
+		    background: #000;
+		    content: '';
+		}
+		/*箭头向下*/
+		.title-right:before {
+			position: absolute;
+		    width: 0;
+		    height: 0;
+		    border-left: 8px solid transparent;
+		    border-right: 8px solid transparent;
+		    border-top: 10px solid #FF6D22;
+		    right: -25px;
+		    top: 15px;
+		    content: '';
+		}
+        #loadMore{
+            background: #eaeaea;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+        .progress{
+            display: inline-block;
+            height: 12px;
+            width: 40px;
+            background: #C4C4C4;
+            vertical-align: -1px;
+    		margin-left: 3px;
+        }
+        .progressInner{
+            display: block;
+            height: 12px;
+            background: #FF6D22;
+            float: left;
+        }
+		.setmeal i{
+			background: url('../images/areaInfo/areaInfo_01.png') no-repeat center;
+			background-size: 100%;
+			width: 50px;
+			height: 50px;
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 10px;
+		}
+		.setmeal.select i{
+			background: url('../images/areaInfo/areaInfo_02.png') no-repeat center;
+			background-size: 100%;
+		}
+		.cdz i{
+			background: url('../images/areaInfo/areaInfo_03.png') no-repeat center;
+			background-size: 100%;
+			width: 50px;
+			height: 50px;
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 10px;
+		}
+		.cdz.select i{
+			background: url('../images/areaInfo/areaInfo_04.png') no-repeat center;
+			background-size: 100%;
+		}
+		.mui-table-view.dataList{
+            font-size: .9rem;
+            margin-top: 10px;
+            background: none;
+        }
+        .mui-table-view.dataList li{
+        	margin-bottom: 5px;
+        	background: #fff;
+        	border-radius: 6px;
+        }
+		.lindex{
+			font-style: normal;
+		    border: 1px solid #000;
+		    border-radius: 100%;
+		    width: 16px;
+		    height: 16px;
+		    display: inline-block;
+		    line-height: 16px;
+		    text-align: center;
+		}
+		.flex-top{
+			border-bottom: 1px dashed #c4c4c4;
+			padding-bottom: 5px;
+		}
+		.flex-mobile{
+			color: #000;
+		}
+		.glay{
+			font-style: normal;
+			color: #999999;
+			font-size: 0.8rem;
+		}
+		.sx-icon{
+			background: url(../images/areaInfo/sx_icon.png) no-repeat center;
+		    background-size: 100%;
+		    position: absolute;
+		    top: 8px;
+		    left: 50%;
+		    width: 35px;
+		    height: 22px;
+		    z-index: 2;
+		}
+		.sx{
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background: rgba(240, 241, 243,.6);
+		}
+		.midRight .mui-table-view li.members-li{
+			padding: 10px 0 5px 10px;
+			position: relative;
+		}
+		.handle-icon{
+			position: absolute;
+		    right: 10px;
+		    top: 10px;
+		    z-index: 2;
+		}
+		.xg-icon{
+			margin-right: 4px;
+		}
+		.addmember{
+			color: #333333;
+			font-size: 1rem;
+			padding:30px 40px 30px;
+			display: none;
+		}
+		.add-icon{
+			width: 22px;
+			height: 22px;
+			line-height: 22px;
+			vertical-align: top;
+			display: inline-block;
+		}
+		.memberbox{
+			background: #fff;
+    		padding: 15px 10px;
+    		border-radius: 6px;
+    		box-shadow: inset #999 0px -1px 5px 0px;
+    		display: none;
+		}
+		.memberbox h2{
+		    font-size: 16px;
+		    line-height: 15px;
+		    margin-bottom: 15px;
+		    color: #282828;
+		}
+		.memberbox .form-group{
+			height: 40px;
+			overflow: hidden;
+			border-bottom: 1px dashed #c4c4c4;
+		}
+		.memberbox .form-group .mui-icon{
+			color: #828282;
+    		line-height: 40px;
+    		font-size: 1.2rem;
+		}
+		.memberbox .form-button{
+			text-align: center;
+    		margin-top: 10px;
+		}
+		.memberbox .form-button .mui-btn{
+			background: #ff6d22;
+			padding: 6px 20px;
+		}
+		.memberbox .form-laber{
+			/*width: 40%;
+			float: left;*/
+			font-size: 0.8rem;
+			line-height: 40px;
+			margin: 0;
+    		padding: 0;
+		}
+		.memberbox input{
+			font-size: 0.8rem;
+			line-height: 30px;
+			border: 0;
+			text-align: right;
+		}
+		#updataSetmeal{
+			display: none;
+		}
+    </style>
+
+</head>
+<body style="background: #F0F1F3">
+
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">片区信息</h1>
+</header>
+
+<div class="mui-content" style="background: #fff">
+    <div class="tabBox">
+        <span class="tabItem setmeal select"><i></i>收费信息</span>
+        <span class="tabItem cdz"><i></i>充电桩</span>
+    </div>
+  	<div class="tabView">
+	    <div class="normal on">
+	        <div class="midRow">
+	            <div class="left title-right" id="roadPick">基本套餐</div>
+	            <div class="right title-left" id="roadState"></div>
+	        </div>
+	        <div class="midContent">
+	        	<div class="midLeft">
+	        		<ul class="mui-table-view" id="leftList">
+	
+	        		</ul>
+	        	</div>
+	        	<div class="midRight">
+	        		<div class="mui-head-view flex" id="headList">
+	        			
+	        		</div>
+	        		<ul class="mui-table-view" id="tableList">
+						
+		        	</ul>
+		        	<div class="memberbox mui-input-group">
+		        		<div class="form-title">
+				            <h2>添加其他用户</h2>
+				            <!--<div class="shanchu" onclick="deleteFrom(this)">
+				                <img src="../images/pianqushenqing/guanbi@3x.png" style="width: 15px;height: 15px;">
+				            </div>-->
+				        </div>
+				        <div class="form-group flex">
+				        	<div class="form-laber flex-item">用户信息：</div>
+				        	<input type="tel" class="flex-item" placeholder="请填写用户信息" id="mobileSel" />
+				        </div>
+				        <div class="form-group flex">
+				        	<div class="form-laber flex-item">时长(小时)：</div>
+				        	<input type="tel"  class="flex-item" value="300" id="timeSel" readonly="true" />
+				        	<span class="mui-icon mui-icon-arrowdown"></span>
+				        </div>
+				        <div class="form-group flex">
+				        	<div class="form-laber flex-item">电量(度)：</div>
+				        	<input type="tel"  class="flex-item" value="30" id="electricitySel" readonly="true"/>
+				        	<span class="mui-icon mui-icon-arrowdown"></span>
+				        </div>
+				        <div class="form-group flex">
+				        	<div class="form-laber flex-item">次数(次)：</div>
+				        	<input type="tel" class="flex-item" value="30" id="timesSel" readonly="true" />
+				        	<span class="mui-icon mui-icon-arrowdown"></span>
+				        </div>
+				        <div class="form-group flex">
+				        	<div class="form-laber flex-item">到期时间：</div>
+				        	<input type="tel" class="flex-item" id="dateSel" readonly="true" />
+				        	<span class="mui-icon mui-icon-arrowdown"></span>
+				        </div>
+						<div class="form-button">
+							<button id="saveSetmeal" type="button" class="mui-btn mui-btn-warning">确认</button>
+							<button id="updataSetmeal" type="button" class="mui-btn mui-btn-warning">确认</button>
+						</div>
+		        	</div>
+		        	<div class="addmember">
+						<img class="add-icon" src="../images/areaInfo/add_icon.png"/>
+						添加其他用户
+		        	</div>
+			        <div id="loadMore" class="loadMore">加载更多</div>
+			        <div id="noMore" class="noMore">没有更多了</div>
+	        	</div>    	
+	        </div>
+	    </div>
+	    <div class="normal">
+	    	<div class="midRow">
+	            <div class="left title-no">充电桩编号</div>
+	            <div class="right title-strong">信号强度</div>
+	            <div class="clearfix"></div>
+	        </div>
+	        <ul class="mui-table-view dataList">
+				<li class="mui-table-view-cell">
+			        <table class="mui-table" >
+			            <tbody >
+			            <tr>
+			                <td align="left">A1860096</td>
+	                		<td align="right">19:<span class="progress"><i style="width: 20%;" class="progressInner"></i></span></td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </li>
+			    <li class="mui-table-view-cell">
+			        <table class="mui-table" >
+			            <tbody >
+			            <tr>
+			                <td align="left">A1860096</td>
+	                		<td align="right">19:<span class="progress"><i style="width: 90%;" class="progressInner"></i></span></td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </li>
+			    <li class="mui-table-view-cell">
+			        <table class="mui-table" >
+			            <tbody >
+			            <tr>
+			                <td align="left">A1860096</td>
+	                		<td align="right">19:<span class="progress"><i style="width: 90%;" class="progressInner"></i></span></td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </li>
+			    <li class="mui-table-view-cell">
+			        <table class="mui-table" >
+			            <tbody >
+			            <tr>
+			                <td align="left">A1860096</td>
+	                		<td align="right">19:<span class="progress"><i style="width: 90%;" class="progressInner"></i></span></td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </li>
+	        </ul>
+	        <div id="loadMore" class="loadMore">加载更多</div>
+	        <div id="noMore" class="noMore">没有更多了</div>
+	    </div>
+	</div>
+</div>
+
+
+<script type="text/html" id="dataTmpl">
+    <li class="mui-table-view-cell tabItem" onclick="tabClick(this)" data-type='{{type}}'>{{leftName}}</li>
+</script>
+
+<script type="text/html" id="headTmpl">
+	{{each list as item}}
+	<div class="mui-head-list flex-item" {{if item.title=="账号" && $index == 0}}style="padding-left: 10px;"{{/if}}>
+		<span>{{item.title}}</span>
+		{{if item.dw}}
+			<span class="dw">({{item.dw}})</span>
+		{{/if}}
+	</div>
+	{{/each}}
+</script>
+
+<script type="text/html" id="tableTmpl">
+	{{if type == 'eles'}}
+		{{each list as item}}
+		<li class="mui-table-view-cell flex">
+			<span class="flex-item">
+				<!--<i class="lindex">{{$index+1}}</i>-->
+				{{if item.min >= 1200 }}1200以上{{else if item.min == 0}}{{item.max}}以下{{else}}{{item.min}}-{{item.max}}{{/if}}</span>
+			<span class="flex-item">{{item.cost}}</span>
+			<span class="flex-item">{{item.amount}}</span>
+		</li>
+		{{/each}}
+	{{else if type == 'fullStop'}}
+		<li class="mui-table-view-cell flex">
+			<span class="flex-item">{{list.power}}</span>
+			<span class="flex-item">{{list.minutes/60}}</span>
+			<span class="flex-item">{{list.amount}}</span>
+		</li>
+	{{else if type == 'Charges'}}
+		{{each list as item}}
+		<li class="mui-table-view-cell flex">
+			<span class="flex-item">{{item.amount}}</span>
+			<span class="flex-item">{{item.minutes/60}}</span>
+		</li>
+		{{/each}}
+	{{else if type == 'partners'}}
+		{{each list as item}}
+		<li class="mui-table-view-cell flex">
+			<span class="flex-item">{{item.name}}</span>
+			<span class="flex-item">{{item.mobile}}</span>
+			<span class="flex-item">{{item.divideRatio}}</span>
+		</li>
+		{{/each}}
+	{{else if type == 'members'}}
+		{{each list as item}}
+		<li class="mui-table-view-cell members-li">
+			{{if !item.effective}}<div class="sx"></div>{{/if}}
+			<div class="flex-top">
+				<span class="flex-mobile">{{item.mobile}}</span>
+				{{if !item.effective}}
+				<span class="sx-icon"></span>
+				{{/if}}
+				{{if manager == "true"}}
+				<span class="handle-icon">
+					<img id="updataSetmeals" class="xg-icon" src="../images/areaInfo/xg_icon.png" width="15" height="15" data-mobile="{{item.mobile}}" data-time="{{item.timeLimit}}" data-electricity="{{item.electricityLimit}}" data-times="{{item.timesLimit}}" data-setmealid="{{item.setmealId}}">
+					<img id="delSetmeals" class="del-icon" src="../images/areaInfo/del_icon.png" width="15" height="15" data-memberid="{{item.memberId}}" data-setmealid="{{item.setmealId}}">
+				</span>
+				{{/if}}
+			</div>
+			<div class="flex" style="padding-top: 5px;">
+				<span class="flex-item"></span>
+				<span class="flex-item"><i class="glay">{{item.timeRemain}}</i>/{{item.timeLimit}}</span>
+				<span class="flex-item"><i class="glay">{{item.electricityRemain}}</i>/{{item.electricityLimit}}</span>
+				<span class="flex-item"><i class="glay">{{item.timesRemain}}</i>/{{item.timesLimit}}</span>
+			</div>
+		</li>
+		{{/each}}
+	{{/if}}
+</script>
+
+<script type="text/javascript">
+    mui.init();
+    var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
+    var code = getQueryString('code') || 42;
+    var roadPickData = [];      //套餐name数据
+  
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+	
+    function pagePlusReady(){
+        checkLogin();
+//      uuid = plus.storage.getItem("uuid");
+        getDataList();
+		// 下拉刷新页面
+        plusRefresh(function(){
+        	getDataList();
+        });
+    }
+    getDataList();
+    //抓取数据
+    function getDataList(){
+		var params = {
+			"uuid":uuid,
+			"code":code
+		};
+        postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataGetSetmeals,params,function(res){
+			if("0" == res.code){
+				var data = res.data;
+                if(!vaildeParam(data) || data.length == 0){
+                    $(".normal").html('<p class="nodata">暂无数据</p>');
+                }
+				roadPickData = [];
+				$.each(res.data, function(index,item) {
+					roadPickData.push({
+						'value':item.id,
+						'text':item.name
+					});
+				});
+				$('.midContent').show();
+				$('#roadPick').attr('data-pick',JSON.stringify(roadPickData));
+				if(vaildeParam(res.data)){
+					var roadState = res.data[0].state;					
+					$('#roadState').html("<span>" + roadState + "</span>");
+					var eles = res.data[0].eles;         //阶梯价格
+					var fullStop = res.data[0].fullStop; //充满最大配置
+					var advanceCharges  = res.data[0].advanceCharges; //时长区
+					var actualCharges = res.data[0].actualCharges;
+					var partners = res.data[0].partners; //合伙人配置
+					var members = res.data[0].members;
+					var manager = res.data[0].manager;
+					var seq = res.data[0].seq;
+					var name = res.data[0].name;
+					getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager);
+					$('.title-right').html(name);
+				}
+
+			}else{
+                layer.msg(res.msg);
+            }
+        });
+    }
+    //左侧tab数据
+    function getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager){
+    	var leftData = [];
+		var html = '';
+    	var tmpl = $("#dataTmpl").html();
+    	if(vaildeParam(eles)){
+    		leftData.push({
+    			type:'eles',
+    			leftName:'阶梯价格'
+    		});
+    		var elesJson = JSON.stringify(eles);
+    		plus.storage.setItem("elesJson", elesJson);
+    	}
+    	if(vaildeParam(fullStop)){
+    		leftData.push({
+    			type:'fullStop',
+    			leftName:'充满最大配置'
+    		});
+    		var fullStopJson = JSON.stringify(fullStop);
+    		plus.storage.setItem("fullStopJson", fullStopJson);
+    	}
+    	if(vaildeParam(advanceCharges) || vaildeParam(actualCharges)){
+    		leftData.push({
+    			type:'Charges',
+    			leftName:'时长区'
+    		});
+    		if(vaildeParam(advanceCharges)){
+    			var ChargesJson = advanceCharges;
+    		}else if(vaildeParam(actualCharges)){
+    			var ChargesJson = actualCharges;
+    		}else{
+    			var ChargesJson = {};
+    		}
+    		plus.storage.setItem("ChargesJson", JSON.stringify(ChargesJson));
+    	}
+    	if(vaildeParam(partners)){
+    		leftData.push({
+    			type:'partners',
+    			leftName:'合伙人'
+    		});
+    		var partnersJson = JSON.stringify(partners);
+    		plus.storage.setItem("partnersJson", partnersJson);
+    	}
+    	if(vaildeParam(members)){
+    		leftData.push({
+    			type:'members',
+    			leftName:'用户'
+    		});
+    		var membersJson = JSON.stringify(members);
+    		plus.storage.setItem("manager", manager+"");
+    		plus.storage.setItem("membersJson", membersJson);
+    	}
+		//console.log(JSON.stringify(leftData))
+    	$.each(leftData, function(index,item) {
+    		html += tmpl.replace(/{{type}}/g,item.type)
+    					.replace(/{{leftName}}/g,item.leftName);
+    	});
+    	$("#leftList").html(html);
+    	
+    	$('#leftList .tabItem').eq(0).addClass('select');
+    	var type = $('#leftList .tabItem').eq(0).attr('data-type');
+    	getType(type);
+    }
+  	function getType(type){
+  		$('.addmember').hide();
+  		$('.memberbox').hide()
+  		if(type=="eles"){
+  		 	var elesData = JSON.parse(plus.storage.getItem("elesJson"));
+  		 	var tableData = {'type':'eles','list':elesData};
+            getElesList(tableData);
+        }else if(type=="fullStop"){
+        	var fullStopData = JSON.parse(plus.storage.getItem("fullStopJson"));
+  		 	var tableData = {'type':'fullStop','list':fullStopData};
+            getfullStopList(tableData);
+        }else if(type=="Charges"){
+        	var ChargesData = JSON.parse(plus.storage.getItem("ChargesJson"));
+  		 	var tableData = {'type':'Charges','list':ChargesData};
+            getChargesList(tableData);
+        }else if(type =="partners"){
+        	var partnersData = JSON.parse(plus.storage.getItem("partnersJson"));
+  		 	var tableData = {'type':'partners','list':partnersData};
+            getPartnersList(tableData);
+        }else if(type == 'members'){
+        	var manager = plus.storage.getItem("manager");
+        	var membersData = JSON.parse(plus.storage.getItem("membersJson"));
+  		 	var tableData = {'type':'members','manager':manager,'list':membersData};
+  		 	if(manager == 'true' && type == 'members'){
+  		 		$('.addmember').show();
+  		 	}else{
+  		 		$('.addmember').hide();
+  		 	}
+            getMembersList(tableData);
+        }else{
+        	$('.midContent').html('<p class="nodata" style="margin-top:20px">暂无数据</p>');
+        }
+  	}
+    function getHeadData(headData){
+    	var headHtml = '';
+    	var data = {'list':headData};
+    	var headHtml = template('headTmpl', data);
+    	$("#headList").html(headHtml);
+    }
+    //获取表格数据
+	function getTableData(tableData){
+//		console.log(JSON.stringify(tableData))
+		var tableHtml = '';
+    	var tableHtml = template('tableTmpl', tableData);
+    	$("#tableList").html(tableHtml);
+	}
+    //获取阶梯价格数据
+    function getElesList(tableData){
+    	var headData = [{
+    		'title': '功率',
+    		'dw':'w'
+    	},{
+    		'title': '最大成本',
+    		'dw':'元/小时'
+    	},{
+    		'title': '价格',
+    		'dw':'元/小时'
+    	}];
+    	getHeadData(headData);
+    	getTableData(tableData);
+    }
+    //获取充满最大配置数据
+    function getfullStopList(tableData){
+    	var headData = [{
+    		'title': '最大电量',
+    		'dw':'度'
+    	},{
+    		'title': '最大时长',
+    		'dw':'小时'
+    	},{
+    		'title': '最多扣款',
+    		'dw':'元'
+    	}];
+    	getHeadData(headData);
+    	getTableData(tableData);
+    }
+	//获取时长区的数据
+	function getChargesList(tableData){
+		var headData = [{
+    		'title': '价格',
+    		'dw':'元'
+    	},{
+    		'title': '时长',
+    		'dw':'小时'
+    	}];
+    	getHeadData(headData);
+    	getTableData(tableData);
+	}
+	//获取合伙人的数据
+	function getPartnersList(tableData){
+		var headData = [{
+    		'title': '姓名',
+    		'dw':''
+    	},{
+    		'title': '账号',
+    		'dw':''
+    	},{
+    		'title': '分成',
+    		'dw':''
+    	}];
+    	getHeadData(headData);
+    	getTableData(tableData);
+	}
+	//获取用户数据
+	function getMembersList(tableData){
+		var headData = [{
+    		'title': '账号',
+    		'dw':''
+    	},{
+    		'title': '时长',
+    		'dw':'小时'
+    	},{
+    		'title': '电量',
+    		'dw':'度'
+    	},{
+    		'title': '次数',
+    		'dw':'次'
+    	}];
+    	getHeadData(headData);
+    	getTableData(tableData);
+	}
+	//获取单个套餐信息
+	function getSetmeal(id){
+		var params = {
+			uuid:uuid,
+			code:code,
+			setmealId:id
+		}
+		postJSON(API_URL.GetSetmeal,params,function(res){		
+			var roadState = res.data.state;					
+			$('#roadState').html("<span>" + roadState + "</span>");
+			var eles = res.data.eles;         //阶梯价格
+			var fullStop = res.data.fullStop; //充满最大配置
+			var advanceCharges  = res.data.advanceCharges; //时长区
+			var actualCharges = res.data.actualCharges;
+			var partners = res.data.partners; //合伙人配置
+			var members = res.data.members;
+			var manager = res.data.manager;
+			var seq = res.data.seq;
+			getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager);
+		});
+	}
+	$('.tabBox .tabItem').on('click',function(){
+		var index = $(this).index();
+        $(this).addClass("select").siblings().removeClass('select');
+        $('.normal').eq(index).show().siblings().hide();
+	});
+	//左侧tab切换点击
+	function tabClick(that){
+		var $this = $(that);
+		var type = $this.attr('data-type');
+        $this.addClass("select").siblings().removeClass('select');
+        getType(type);
+    };
+    //下拉选择器
+	$('#roadPick').on("click", function() {   	
+        var roadPickData = $('#roadPick').attr('data-pick');
+        if(roadPickData && JSON.parse(roadPickData).length){
+        	var roadPick = new mui.PopPicker();//获取弹出列表组建，假如是二联则在括号里面加入{layer:2}
+        	var roadPickJsonData = JSON.parse(roadPickData);
+        	roadPick.setData(roadPickJsonData);
+      		roadPick.show(function(item) {
+        		var id = item[0].value;
+         		$('.title-right').html(item[0].text);
+         		plus.storage.setItem("setmealId",id+"");
+         		getSetmeal(id);
+        	});
+        }
+        return false;
+   	});
+   	$('#electricitySel').on("click", function() {
+    	var Times = new mui.PopPicker();
+    	var TimesJsonData = [];
+    	for(var i=1;i<=100;i++){
+    		TimesJsonData.push({
+    			'value': i,
+    			'text': i
+    		});
+    	}
+    	Times.setData(TimesJsonData);
+		Times.show(function(item){
+		    $('#electricitySel').val(item[0].text);
+		});
+    });
+   	//时长选择器
+   	$('#timeSel').on("click", function() {
+    	var Time = new mui.PopPicker();
+    	var TimeJsonData = [];
+    	for(var i=1;i<=300;i++){
+    		TimeJsonData.push({
+    			'value': i,
+    			'text': i
+    		});
+    	}
+    	Time.setData(TimeJsonData);
+		Time.show(function(item){
+		    $('#timeSel').val(item[0].text);
+		});
+    });
+    //次数选择器
+    $('#timesSel').on("click", function() {
+    	var Times = new mui.PopPicker();
+    	var TimesJsonData = [];
+    	for(var i=1;i<=50;i++){
+    		TimesJsonData.push({
+    			'value': i,
+    			'text': i
+    		});
+    	}
+    	Times.setData(TimesJsonData);
+		Times.show(function(item){
+		    $('#timesSel').val(item[0].text);
+		});
+    });
+    //日期选择器
+    $('#dateSel').on("click", function() {
+    	var Date = new mui.DtPicker({type:'date'});
+		Date.show(function(item){
+//		    console.log(JSON.stringify(item));
+		    var endDate = item.y.text + '-' + item.m.text + '-' + item.d.text;
+		    $('#dateSel').val(endDate);
+		    //这两种都是可以的
+		})
+    });
+    //修改用户
+    $('#tableList').on('click','#updataSetmeals',function(){
+    	var mobile = $(this).attr('data-mobile');
+    	var times = $(this).attr('data-times');
+    	var time = $(this).attr('data-time');
+    	var electricity = $(this).attr('data-electricity');
+    	var date = getCurDates();
+    	$('#dateSel').val(date);
+    	$('#saveSetmeal').hide();
+    	$('#updataSetmeal').show();
+    	$('.form-title h2').html('修改用户');
+    	$('#mobileSel').val(mobile);
+    	$('#timeSel').val(time);
+    	$('#timesSel').val(times);
+    	$('#electricitySel').val(electricity);
+    	$('.memberbox').show();
+    });
+    $('#updataSetmeal').on('click',function(){
+    	updataSetmeals();
+    });
+    function updataSetmeals(){
+    	var setmealId = plus.storage.getItem("setmealId");
+    	var mobile = $('#mobileSel').val();
+    	var timesLimit = $('#timesSel').val(); //次数
+    	var electricityLimit = $('#electricitySel').val();
+    	var timeLimit = $('#timeSel').val(); //时长
+    	var expired = $('#dateSel').val();
+    	var params = {
+			uuid:uuid,
+			setmealId:setmealId,
+			mobile:mobile,
+			timeLimit:timeLimit,          
+			electricityLimit:electricityLimit,
+			timesLimit:timesLimit,       
+			expired:expired
+		}
+    	checkMobile(mobile);
+		postJSON(API_URL.updateSetmealMember,params,function(res){
+			if(res.code == '0'){
+				$('.memberbox').hide();
+				getMemberLists();
+			}
+			layer.msg(res.msg);
+		});
+    }
+    //删除用户
+    $('#tableList').on('click','#delSetmeals',function(){
+    	var $this = $(this);
+    	var memberId = $this.attr('data-memberid');
+    	var setmealId = $this.attr('data-setmealid');
+    	layer.confirm("是否确定删除",function (index) {
+            delSetmeals(memberId,setmealId,$this);
+            layer.close(index);
+        });  	
+    });
+    function delSetmeals(memberId,setmealId,$this){
+    	var params = {
+			uuid:uuid,
+			memberId:memberId,
+			setmealId:setmealId
+		}
+		postJSON(API_URL.deleteSetmealMember,params,function(res){
+			if(res.code == '0'){
+				$this.parents(".members-li").remove();
+			}
+			layer.msg(res.msg);
+		});
+    };
+    function getCurDates(){
+    	return new Date().getFullYear() + '-' +(new Date().getMonth()+1) + '-' + ultZeroize((new Date().getDate()+1));
+    }
+    //新增用户
+    $('.addmember').on('click',function(){
+    	var date = getCurDates();
+    	$('#dateSel').val(date);
+    	$('#mobileSel').val('').focus();
+    	$('#updataSetmeal').hide();
+    	$('#saveSetmeal').show();
+    	$('.form-title h2').html('添加其他用户');
+    	$('.memberbox').show();
+    });
+    //确认添加用户
+    $('#saveSetmeal').on('click',function(){
+    	saveSetmeals();
+    });
+    function saveSetmeals(){
+    	var setmealId = plus.storage.getItem("setmealId");
+    	var mobile = $('#mobileSel').val();
+    	var timesLimit = $('#timesSel').val(); //次数
+    	var electricityLimit = $('#electricitySel').val();
+    	var timeLimit = $('#timeSel').val(); //时长
+    	var expired = $('#dateSel').val();
+    	var params = {
+			uuid:uuid,
+			setmealId:setmealId,
+			mobile:mobile,
+			timeLimit:timeLimit,          
+			electricityLimit:electricityLimit,
+			timesLimit:timesLimit,       
+			expired:expired
+		};
+    	var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+		var flag= false;
+		var flagMobile= false;
+		var flagMobileNumber= false;
+		if(!vaildeParam(mobile)){
+		   flag = true;
+		}
+		if(mobile.length!==11){
+		    flagMobile = true;
+		}
+		//校验是数字
+		if(!reg.test(mobile)){
+		    flagMobileNumber = true;
+		}
+		if(flag){
+	     	layer.msg("请补全信息");
+	     	return;
+		}
+		if(flagMobile){
+	    	layer.msg("手机必须为11位");
+	    	return;
+		}
+		if(flagMobileNumber){
+	    	layer.msg("手机必须为数字");
+	    	return;
+		}
+		postJSON(API_URL.saveSetmealMember,params,function(res){
+			if(res.code == '0'){
+				$('.memberbox').hide();
+				getMemberLists();
+			}
+			layer.msg(res.msg);
+		});
+    }
+    //获取套餐用户列表
+    function getMemberLists(){
+    	var setmealId = plus.storage.getItem("setmealId");
+    	var params = {
+			uuid:uuid,
+			code:code,
+			setmealId:setmealId
+		}
+		postJSON(API_URL.GetSetmeal,params,function(res){
+			if(res.code == '0'){
+				var members = res.data.members;
+				var manager = res.data.manager+"";
+				var membersJson = JSON.stringify(members);
+	    		plus.storage.setItem("manager", manager);
+	    		plus.storage.setItem("membersJson", membersJson);
+	    		var tableData = {'type':'members','manager':manager,'list':members};
+	            getMembersList(tableData);
+			}else{
+				layer.msg(res.msg);
+			}
+		});
+    }
+</script>
+</body>
+
+</html>
