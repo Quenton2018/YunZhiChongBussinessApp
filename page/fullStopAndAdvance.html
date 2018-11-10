@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>申请片区</title>
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <!--<link rel="stylesheet" href="../css/mui.min.css">-->
+    <!--<link rel="stylesheet" href="../css/mui.picker.min.css">-->
+    <link rel="stylesheet" href="../css/areacommon.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>   
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../plugins/layer/layer.js"></script>
+	<script src="../js/hammer.min.js"></script>
+	<script src="../js/jquery.hammer.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/base.js"></script>
+    <!--<script src="../js/mui.min.js"></script>
+    <script src="../js/mui.picker.all.js"></script> -->
+    <script src="../js/wangyi-rem.js"></script>
+    <script src="../js/artTemplate.min.js"></script>
+    <style type="text/css">
+	body {
+    		background-color: #f2f2f2;
+    	}
+		.concealer_wrap,.continue_wrap {
+        	width: 37.5rem;
+        	height: 100%;
+        	background-color: rgba(0,0,0,0.7);
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	margin: auto;
+        	z-index: 98;
+        }
+        .set_complete_wrap,.continue_top_wrap {
+        	width: 19.8rem;
+        	height: 24.4rem;
+        	background-color: #fff;
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	margin: auto;
+        	border-radius: 0.8rem;
+        	z-index: 100;
+        }
+        .set_top {
+        	height: 13rem;
+        	position: relative;
+        }
+        .set_bottom {
+        	height: 11.4rem;
+        	background-color: #ff6d22;
+        	border-bottom-left-radius: 0.8rem;
+        	border-bottom-right-radius: 0.8rem;
+        	position: relative;
+        	overflow: hidden;
+        }
+        .set_top .gou_photo {
+        	width: 8rem;
+        	height: 8rem;
+        	position: absolute;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	margin: auto;
+        }
+        .set_top .close {
+        	width: 1.1rem;
+        	height: 1.1rem;
+        	position: absolute;
+        	top: 1rem;
+        	right: 1rem;
+        }
+        .set_bottom p {
+        	height: 1.5rem;
+        	text-align: center;
+        	color: #fff;
+        	line-height: 1.5rem;
+        }
+        .set_bottom p:first-child {
+        	margin-top: 2.5rem;
+        }
+        .set_bottom p:last-child {
+        	margin-top: 0.8rem;
+        }
+        .set_btn {
+        	width: 17.1rem;
+        	margin: 0 auto;
+        	margin-top: 2.2rem;
+        	position: relative;
+        }
+        .set_btn button {
+        	width: 8rem;
+        	height: 2rem;
+        	border: 0.1rem solid #fff;
+        	border-radius: 0.5rem;
+        	background-color: #fff;
+        	font-size: 1rem;
+        	line-height: 2rem;
+        }
+        .set_btn button:first-child {
+        	position: absolute;
+        	left: 0;
+        	background-color: transparent;
+        	color: #fff;
+        }
+        .set_btn button:last-child {
+        	position: absolute;
+        	right: 0;
+        	color: #ff6d22;
+        }
+		/*footer*/
+		.footer_wrap {
+			width: 37.5rem;
+			height: 5rem;
+			background: linear-gradient(to left,#f08200,#f2800b,#ff7546);
+			text-align: center;
+			line-height: 5rem;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+		}
+		.footer_wrap span {
+			font-size: 1.5rem;
+			color: #fff;
+		}
+		/*判断选择其他套餐*/
+		.continue_top {
+			position: relative;
+			height: 2rem;
+			z-index: 998;
+		}
+		.continue_top img {
+			width: 1.3rem;
+		}
+		.comeback {
+			width: 2rem;
+			position: absolute;
+			right: 1rem;
+			top: 1rem;
+		}
+		.select_combo {
+			height: 5rem;
+			text-align: center;
+			margin-top: 1rem;
+			font-size: 1.6rem;
+			box-sizing: border-box;
+			padding-top: 0.5rem;
+			/*overflow: hidden;*/
+		}
+		.combo {
+			width: 15rem;
+			border: 1px solid #999;
+			height: 3rem;
+			margin: 0 auto;
+			margin-top: 1rem;
+			line-height: 3rem;
+			background-color: #ff6d22;
+			color: #fff;
+			position: relative;
+		}
+		.method-of-triads {
+			width: 15rem;
+			margin: 0 auto;
+			text-align: left;
+			margin-top: 2rem;
+		}
+		.method-of-triads input {
+			width: 2rem;
+			height: 2rem;
+			vertical-align: bottom;
+		}
+		.method-of-triads p {
+			height: 2rem;
+			margin-top: 1rem;
+			font-size: 1.4rem;
+		}
+		.combo_bottom {
+			width: 19.8rem;
+			height: 4rem;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			background-color: #ff6d22;
+			color: #fff;
+			text-align: center;
+			line-height: 4rem;
+			font-size: 1.6rem;
+			border-bottom-left-radius: 0.8rem;
+			border-bottom-right-radius: 0.8rem;
+		}
+		.select_other {
+			width: 15rem;
+			background-color: #999;
+			border: 1px solid #999;
+			font-size: 1.6rem;
+			position: absolute;
+			left: -1px;
+			display: none;
+		}
+		.select_other p {
+			border-bottom: 1px solid #666;
+		}
+		/*选择套餐添加类名*/
+		.sure {
+			color: #ff6d22;
+		}
+		
+		/*时间收费与电量收费*/
+		.charge_wrap {
+			width: 37.5rem;
+			margin-top: 7.4rem;
+		}
+		.charge {
+			width: 32rem;
+			margin: 0 auto;
+			height: 3.9rem;
+			border: 0.1rem solid #ff6d22;
+			border-radius: 0.8rem;
+		}
+		.time_charge,.electricity_charge {
+			width: 16rem;
+			height: 3.9rem;
+			text-align: center;
+			line-height: 3.9rem;
+			font-size: 1.5rem;
+		}
+		.time_charge {
+			float: left;
+			background-color: #ff6d22;
+			color: white;
+			border-top-left-radius: 0.8rem;
+			border-bottom-left-radius: 0.8rem;
+		}
+		.electricity_charge {
+			float: right;
+			color: #333;
+			border-top-right-radius: 0.8rem;
+			border-bottom-right-radius: 0.8rem;
+		}
+		
+		
+		/*时长区*/
+		.time_wrap {
+        	width: 37.5rem;
+        	margin-top: 7.4rem;
+        }
+        .time {
+        	width: 35.5rem;
+        	margin: 0 auto;
+        	background-color: #fff;
+        	margin-top: 1rem;
+        	border-radius: 0.8rem;
+        	overflow: hidden;
+        	position: relative;
+        	padding-bottom: 1.5rem;
+        }
+        .time_top,.time_regulation {
+        	width: 26.1rem;
+        	margin: 0 auto;
+        }
+        .time_top {
+        	margin-top: 1.5rem;
+        	position: relative;
+        	height: 1.5rem;
+        	text-align: center;
+        }
+        .time_regulation {
+        	margin-top: 1.5rem;
+        	position: relative;
+        }
+        .top_line {
+        	padding-top: 1.5rem;
+        	border-top: 0.1rem dashed #828282;
+        }
+        .time_top_left,.time_regulation_left
+         {
+        	float: left;
+        }
+        .time_top_center,.time_regulation_center
+         {
+        	float: right;
+        }
+        .time_top_left,.time_top_center,
+        .time_regulation_left,.time_regulation_center
+         {
+        	width: 8.6rem;
+        	height: 2rem;
+        	line-height: 2rem;
+        }
+        .time_top_left,.time_top_center {
+        	font-size: 1.5rem;
+        	color: #4d4d4d;
+        }
+        .time_regulation_left,.time_regulation_center,.time_regulation_photo {
+        	height: 2rem;
+        	position: relative;
+        }
+        .time_regulation_left,.time_regulation_center {
+        	background-color: #eeeeee;
+        	border-radius: 0.6rem;
+        	text-align: center;
+        	line-height: 2rem;
+        	font-size: 1.4rem;
+        }
+        .time_regulation button {
+        	width: 2rem;
+        	height: 2rem;
+        	background-color: #ff6d22;
+        	color: #fff;
+        	font-size: 1.6rem;
+        }
+        .time_regulation_photo {
+        	width: 1.4rem;
+        	position: absolute;
+        	right: -3rem;
+        	top: 1.9rem;
+        }
+        .time_regulation_photo img {
+        	width: 1.4rem;
+        	height: 1.4rem;
+        }
+        .time_regulation_left button:first-child,.time_regulation_center button:first-child {
+        	border-top-left-radius: 0.5rem;
+        	border-bottom-left-radius: 0.5rem;
+        	left: 0;
+        }
+        .time_regulation_left button:first-child,.time_regulation_center button:first-child,
+        .time_regulation_left button:last-child,.time_regulation_center button:last-child {
+        	border: 0 solid transparent;
+        	position: absolute;
+        	width: 2.5rem;
+        	height: 2rem;
+        }
+        .time_regulation_left button:last-child,.time_regulation_center button:last-child {
+        	border-top-right-radius: 0.5rem;
+        	border-bottom-right-radius: 0.5rem;
+        	right: 0;
+        }
+        /*时长区中的新增*/
+       .add_time {
+      		width: 7rem;
+      		height: 1.4rem;
+      		position: absolute;
+      		top: 0;
+      		right: -2rem;
+      		line-height: 1.3rem;
+      	}
+      	.add_time img {
+      		width: 1.4rem;
+      		height: 1.4rem;
+      		vertical-align: middle;
+      	}
+      	.add_time .add_span {
+      		font-size: 1.3rem;
+      		vertical-align: middle;
+      	}
+		/*时长结束*/
+		/*新增用户*/
+      	.add_wrap {
+      		width: 5rem;
+      		height: 1.4rem;
+      		position: absolute;
+      		top: 1.6rem;
+      		right: 1.7rem;
+      		line-height: 1.3rem;
+      	}
+      	.add_wrap img {
+      		width: 1.4rem;
+      		height: 1.4rem;
+      		vertical-align: middle;
+      	}
+      	.add_wrap span {
+      		font-size: 1.3rem;
+      		vertical-align: middle;
+      	}
+      	/*新增结束*/
+      	/*用户删除*/
+      	.del {
+      		position: absolute;
+      		top: 1.4rem;
+      		right: 0;
+      		width: 1.5rem;
+      		height: 1.5rem;
+      	}
+      	/*右边距*/
+      	.right {
+      		margin-left: 0.3rem;
+      	}
+      	/*删除结束*/
+      	/*合伙人分成*/
+      	.tiered_price {
+        	width: 35.5rem;
+        	margin: 0 auto;
+        	background-color: #fff;
+        	margin-top: 1rem;
+        	border-radius: 0.8rem;
+        	overflow: hidden;
+        	position: relative;
+        }
+        .bottom_p{
+        	margin-bottom: 8rem;
+        }
+        .tiered_price_top {
+        	width: 32.7rem;
+        	height: 1.6rem;
+        	margin: 0 auto;
+        	margin-top: 1.6rem;
+        	line-height: 1.6rem;
+        	position: relative;
+        }
+        .tiered_price_top span {
+        	font-size: 1.5rem;
+        	color: #4d4d4d;
+        }
+        .tiered_price_top span:last-child {
+        	vertical-align: middle;
+        }
+        .tiered_price_top span:first-child {
+        	display: inline-block;
+        	width: 0.4rem;
+        	height: 1.6rem;
+        	background-color: #ff6d22;
+        	border-radius: 0.2rem;
+        	margin-right: 0.25rem;
+        	vertical-align: middle;
+        }
+
+       .equinox_top,.equinox_myself {
+       		width: 30.9rem;
+       		height: 2rem;
+       		margin: 0 auto;
+       		overflow: hidden;
+       		margin-bottom: 1.2rem;
+      	}
+      	.equinox_top {
+       		margin-top: 1.5rem;
+      	}
+      	.equinox_myself {
+      		padding-top: 1.2rem;
+      		border-top: 1px dashed #434343;
+       		margin-top: 1.1rem;
+       		position: relative;
+      	}
+      	.equinox_top div,.equinox_myself div {
+      		float: left;
+      		height: 2rem;
+      		line-height: 2rem;
+      		text-align: center;
+      	}
+      	.equinox_top div,.equinox_myself div {
+      		float: left;
+      		height: 2rem;
+      		line-height: 2rem;
+      		text-align: center;
+      	}
+      	.equinox_top div span,.equinox_myself div span,.equinox_myself div input {
+      		font-size: 1.4rem;
+      	}
+      	.equinox_myself div:first-child input,.equinox_myself div:nth-child(2) input {
+      		height: 2rem;
+      		border-radius: 0.3rem;
+      		border: 1px solid transparent;
+      		text-align: center;
+      		line-height: 2rem;
+      		box-sizing: border-box;
+      		background-color: #e6e6e6;
+      		color: #666666;
+      	}
+      	.equinox_myself div:first-child input {
+      		width: 7rem;
+      	}
+      	.equinox_myself div:nth-child(2) input {
+      		width: 10rem;
+      	}
+      	.equinox_top div:first-child,.equinox_myself div:first-child {
+      		width: 7rem;
+      		border-radius: 0.3rem;
+      		margin-right: 0.5rem;
+      	}
+      	.equinox_top div:first-child {
+      		color: #333;
+      	}
+      	.equinox_top div:nth-child(2),.equinox_myself div:nth-child(2) {
+      		width: 10rem;
+      		border-radius: 0.3rem;
+      		margin-right: 0.9rem;
+      	}
+      	.equinox_top div:nth-child(2) {
+      		color: #333;
+      	}
+      	.equinox_myself div:first-child,.equinox_myself div:nth-child(2) {
+      		background-color: #e6e6e6;
+      		color: #666666;
+      	}
+      	.person_proportion span {
+      		display: inline-block;
+      		height: 2rem;
+      		line-height: 2rem;
+      	}
+      	.person_proportion span,.proportion span {
+      		margin-right: 0.2rem;
+      		color: #666666;
+      	}
+      	.proportion input,.person_proportion input {
+      		width: 4rem;
+      		height: 2rem;
+      		border-radius: 0.3rem;
+      		margin-right: 0.2rem;
+      		background-color: #e6e6e6;
+      		color:  #666666;
+      		text-align: center;
+      		border: 0;
+      		font-size: 1.4rem;
+      	}
+      	/*合伙人分成结束*/
+      	/*最大配置*/
+        .big_configuration_wrap {
+	    	width: 37.5rem;
+	    	margin-top: 1rem;
+	    	overflow: hidden;
+        }
+        .big_configuration {
+        	width: 35.5rem;
+        	margin: 0 auto;
+        	background-color: #fff;
+        	border-radius: 0.8rem;
+        	overflow: hidden;
+        }
+        .big_bottom {
+        	width: 33.5rem;
+        	height: 1.6rem;
+        	margin: 0 auto;
+        	margin-top: 1.5rem;
+        	line-height: 1.6rem;
+        	margin-bottom: 1.5rem;
+        	overflow: hidden;
+        }
+        .big_bottom span,.big_bottom input {
+        	font-size: 1.5rem;
+        	color: rgb(77,77,77);
+        }
+        .big_bottom div {
+        	width: 10.9rem;
+        	float: left;
+        	text-align: center;
+        }
+        .big_bottom div input {
+        	width: 2rem;
+        	height: 1.6rem;
+        	color: #ff6d22;
+        	border-width: 0;
+        	text-align: center;
+        }
+        /*充满自停最大配置结束*/
+       /*阶梯价格*/
+      .tiered_wrap,.partner {
+        	width: 37.5rem;
+        	overflow: hidden;
+        	display: none;
+        }
+        .tiered_wrap {
+        	border-top: 1px solid #dce1e6;
+        	margin-top: 6.4rem;
+        }
+        .partner {
+        	margin-top: 1rem;
+        }
+        .tiered_price {
+        	width: 35.5rem;
+        	margin: 0 auto;
+        	background-color: #fff;
+        	margin-top: 1rem;
+        	border-radius: 0.8rem;
+        	overflow: hidden;
+        	position: relative;
+        }
+        .bottom_p{
+        	margin-bottom: 8rem;
+        }
+        
+        .wyp {
+        	width: 27.3rem;
+        	height: 3.2rem;
+        	margin: 0 auto;
+        	margin-top: 1.6rem;
+        }
+        .wyp p {
+        	height: 1.3rem;
+        	line-height: 1.3rem;
+        	text-align: left;
+        }
+        .wyp p:last-child {
+        	margin-top: 0.7rem;
+        	color: #a4a4a4;
+        }
+        .wyp p:first-child {
+        	color: #4d4d4d;
+        }
+        .wyp p:first-child span:nth-child(1){
+        	margin-right: 7.5rem;
+        }
+        .wyp p:first-child span:nth-child(2) {
+        	margin-right: 7.2rem;
+        }
+        .wyp p:last-child span:nth-child(1){
+        	margin-left: 0.6rem;
+        	margin-right: 8.5rem;
+        }
+        .wyp p:last-child span:nth-child(2){
+        	margin-right: 7.4rem;
+        }
+        .wyp p:first-child span {
+        	font-size: 1.4rem;
+        }
+        .wyp p:last-child span {
+        	font-size: 1rem;
+        }
+        .equinox {
+        	width: 27.3rem;
+        	height: 1.5rem;
+        	margin: 0 auto;
+        	margin-top: 1.6rem;
+        }
+        .equinox p {
+        	height: 1.3rem;
+        	line-height: 1.3rem;
+        	text-align: left;
+        	position: relative;
+        }
+        .equinox p:first-child {
+        	color: #4d4d4d;
+        }
+        .equinox p:first-child span:nth-child(1) {
+        	left: 0.2rem;
+        }
+        .equinox p:first-child span:nth-child(2) {
+        	left: 10rem;
+        }
+        .equinox p:first-child span:nth-child(3) {
+        	right: 8rem;
+        }
+        .equinox p:first-child span:nth-child(4) {
+        	right: 1.4rem;
+        }
+        .equinox p:first-child span:nth-child(5) {
+        	right: 5.8rem;
+        	top: 0.2rem;
+        	font-size: 1.2rem;
+        }
+        .equinox p:first-child span:nth-child(6) {
+        	right: -0.7rem;
+        	top: 0.2rem;
+        	font-size: 1.2rem;
+        }
+        .equinox p:first-child span {
+        	font-size: 1.5rem;
+        	position: absolute;
+        }
+        .tiered_one {
+        	width: 30.9rem;
+        	height: 2rem;
+        	margin: 0 auto;
+        	margin-top: 1.3rem;
+        	overflow: hidden;
+        	margin-bottom: 1.1rem;
+        	padding-bottom: 1.2rem;
+        	border-bottom: 1px dashed #434343;
+        	position: relative;
+        }
+        .tiered_wrap .last {
+        	margin-bottom: 0;
+        	border-bottom: 0px dashed #434343;
+        }
+        .tiered_one div {
+        	height: 2rem;
+        }
+        .tiered_one div:nth-child(1),.tiered_one div:nth-child(2),.tiered_one div:nth-child(3) {
+        	font-size: 1.4rem;
+        	margin-top: 0.3rem;
+        }
+        .tiered_one div:first-child {
+        	width: 1.6rem;
+        	height: 1.6rem;
+        	border-radius: 50%;
+        	box-sizing: border-box;
+        	border: 1px solid #ff793c;
+        	text-align: center;
+        	line-height: 1.4rem;
+        	color: #ff793c;
+        	position: absolute;
+        }
+        .tiered_one div:nth-child(2) {
+        	position: absolute;
+        	left: 3rem;
+        }
+        .tiered_one div:nth-child(3) {
+        	position: absolute;
+        	left: 13.5rem;
+        }
+        .tiered_one div:nth-child(2) span {
+        	color: #000;
+        }
+        .tiered_one div:nth-child(3) span {
+        	color: #000;
+        }
+        .tiered_one div:last-child {
+        	width: 8.8rem;
+        	position: absolute;
+        	font-size: 1rem;
+        	background-color: #eeeeee;
+        	right: 0;
+        	line-height: 1.6rem;
+        	border-radius: 0.5rem;
+        }
+        .tiered_one div:last-child button {
+        	width: 2.5rem;
+        	height: 2rem;
+        	border: 0 solid transparent;
+        	outline: none;
+        	font-size: 1.6rem;
+        	background-color: #ff6d22;
+        	/*line-height: 2rem;*/
+        	color: #fff;
+        	outline: none;
+        	
+        }
+        .reduce {
+        	border-top-left-radius: 0.5rem;
+        	border-bottom-left-radius: 0.5rem;
+        }
+        
+        .add {
+        	border-top-right-radius: 0.5rem;
+        	border-bottom-right-radius: 0.5rem;
+        }
+        .tiered_one div:last-child span {
+        	display: inline-block;
+        	width: 3.2rem;
+        	height: 2rem;
+        	text-align: center;
+        	line-height: 2rem;
+        	font-size: 1.4rem;
+        }
+        /*阶梯价格结束*/
+       /*时长*/
+      	.time_wrap {
+        	width: 37.5rem;
+        	margin-top: 1rem;
+        }
+        /*覆盖样式.本人名称*/
+    	.point_father span:first-child {
+    		color: #999;
+    		background-color: #e6e6e6;
+    	}
+    	.proportion span:nth-child(4) {
+    		font-size: 1.4rem;
+    	}
+    	.clear {
+    		clear: both;
+    	}
+    </style>
+    
+</head>
+<body>
+	<!--头部-->
+	<header class="header_wrap">
+		<div class="header">
+			<div class="header_left" id="back">
+				<img src="../images/pianqushenqing/faihui@3x.png"/>
+			</div>
+			<div class="header_right">
+				<div id="state"></div>
+			</div>
+		</div>
+	</header>
+	<!--时间收费与电量收费-->
+	<div class="charge_wrap" style="margin-top: 7.4rem;">
+
+
+	</div>
+
+	<!--阶梯价格-->
+	<div class="tiered_wrap" style="margin-top: 0;">
+		
+	</div>
+	
+	<!--充满自停最大配置-->
+	<div class="big_configuration_wrap">
+		
+	</div>
+	<!--合伙人分成设置-->
+	<div class="partner_wrap">
+		
+	</div>
+	<!--footer按钮-->
+	<footer class="footer_wrap" id="submit">
+    	<span>提交</span>
+   </footer>
+	<!--遮挡层
+		弹窗
+	-->
+	<div class="concealer_wrap" style="display: none;">
+		<div class="set_complete_wrap">
+			<div class="set_top">
+				<img class="gou_photo" src="../images/area/gou.png" alt="勾" />
+				<img class="close" src="../images/pianqushenqing/guanbi@3x.png" alt="关闭" />
+			</div>
+			<div class="set_bottom">
+				<div class="continue">
+					<p>您的<span>基本套餐</span>设置完成, 是</p>
+					<p>否需要添加其他套餐</p>
+					<div class="set_btn">
+						<button id="thanks">不用,谢谢</button>
+						<button id="href">添加其他套餐</button>
+					</div>
+				</div>
+			</div>
+			<!---->
+		</div>
+	</div>
+	
+	<!--判断选择其他套餐-->
+	<div class="continue_wrap" style="display: none;">
+		<div class="continue_top_wrap">
+			<div class="continue_top">
+				<img class="comeback" src="../images/pianqushenqing/guanbi@3x.png" alt"关闭"/>
+			</div>
+			<div class="select_combo">
+				<div class="combo">
+					<div class="basic">套餐一</div>
+					<div class="select_other">
+						<p class="combo_vip">套餐二</p>
+						<p class="combo_vip">套餐三</p>
+						<p class="combo_vip">套餐四</p>
+					</div>
+				</div>
+			</div>
+			<div class="method-of-triads">
+				<p class="one sure"><input type="radio" name="combo" id="1" value="" checked=""/> 充满自停</p>
+				<p class="one"><input type="radio" name="combo" id="2" value="" /> 充电时长</p>
+				<p class="one"><input type="radio" name="combo" id="3" value="" /> 充满自停+充电时长</p>
+			</div>
+			<div class="combo_bottom" id="AddCombo">
+				添加套餐
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/html" id="cooperation">
+		<div class="charge">
+			<div class="time_charge">
+				时间收费
+			</div>
+			<div class="electricity_charge">
+				电量收费
+			</div>
+		</div>
+		<!--时长区-->
+		<div class="time_wrap">
+			<div class="time">
+				<div class="tiered_price_top">
+					<span></span>
+					<span>时长区</span>
+					<div class="add_time">
+						<img src="../images/area/add.png" alt="新增" />
+						<span class="add_span">&nbsp;新增</span>
+					</div>
+				</div>
+				<div class="time_top">
+					<div class="time_top_left">
+						<span>价格</span>
+						<span style="font-size: 1.2rem;color: #acacac;">(元)</span>
+					</div>
+					<div class="time_top_center">
+						<span>时长</span>
+						<span style="font-size: 1.2rem;color: #acacac;">(小时)</span>
+					</div>
+				</div>
+				<!--累加器1-->
+				<div class="time_regulation">
+					<div class="time_regulation_left">
+						<button class="reduce1">-</button>
+						<span class="change">{{list.amount}}</span>
+						<button class="add1">+</button>
+					</div>
+					<div class="time_regulation_center">
+						<button class="reduce2">-</button>
+						<span class="change">{{list.minutes/60}}</span>
+						<button class="add2">+</button>
+					</div>
+					<div class="clear"></div>
+				</div>	
+			</div>
+		</div>
+	</script>
+	
+	<script type="text/html" id="elesTmpl">
+		<div class="tiered_price">
+			<div class="tiered_price_top">
+				<span></span>
+				<span>阶梯价格</span>
+			</div>
+			<!--功率 最大成本 价格-->
+			<div class="wyp">
+				<p>
+					<span>功率</span>
+					<span>最大成本</span>
+					<span>价格</span>
+				</p>
+				<p>
+					<span>(W)</span>
+					<span>(元/小时)</span>
+					<span>(元/小时)</span>
+				</p>
+			</div>
+			<!--100元以下-->
+			{{each list as item}}
+			<div class="tiered_one">
+				<div>
+					<span>{{$index+1}}</span>
+				</div>
+				<div>
+					{{if item.max>1200}}
+						<span>1200以上</span>
+					{{else if item.min <=0}}
+						<span>100以下</span>
+					{{else}}
+					<span>{{item.min}}-{{item.max}}</span>
+					{{/if}}
+				</div>
+				<div>
+					<span>{{item.cost}}</span>
+				</div>
+				<div>
+					<button class="reduce">-</button>
+					<span class="change">{{item.amount}}</span>
+					<button class="add">+</button>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</script>
+	
+	<script type="text/html" id="maxEnergy">
+	<div class="big_configuration">
+			<div class="tiered_price_top">
+				<span></span>
+				<span>充满自停最大配置</span>
+			</div>
+			<div class="big_bottom">
+				<div>
+					<span>最大电量</span>
+					<input class="inp_one" type="text" name="bigpower" value="{{list.power}}"/>
+					<span>度</span>
+				</div>
+				<div>
+					<span>最大时长</span>
+					<input class="inp_two" type="text" name="bigtime" value="{{list.minutes/60}}"/>
+					<span>小时</span>
+				</div>
+				<div>
+					<span>最大价格</span>
+					<input class="inp_three" type="text" name="bigprice" value="{{list.amount}}"/>
+					<span>元</span>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script type="text/html" id="personList">
+		<div class="tiered_price bottom_p">
+			<div class="tiered_price_top">
+				<span></span>
+				<span>合伙人分成设置</span>
+			</div>
+			<!--功率 最大成本 价格-->
+			<div class="equinox">
+				<p>
+					<span>姓名</span>
+					<span>号码</span>
+					<span>金额</span>
+					<span>比值</span>
+					<span>(元)</span>
+					<span>(%)</span>
+				</p>
+			</div>
+			<!--分成-->
+			{{each list as item}}
+			<div class="equinox_top" style="display: block;">
+				<div>
+					<span>{{item.name}}</span>
+				</div>
+				<div>
+					<span>{{item.mobile}}</span>
+				</div>
+				<div class="proportion">
+					<input type="text" value="{{item.dividePrice}}" name="money" class="point"/></span>
+					<span>或</span>
+					<input type="text" value="{{item.divideRatio}}" name="ratio" class="point"></span>
+				</div>
+			</div>
+			{{/each}}
+			<!--新增-->
+			<div class="add_wrap" id="AddWarp">
+				<img src="../images/area/add.png" alt="新增" />
+				<span>&nbsp;新增</span>
+			</div>
+		</div>
+	</script>
+	
+	
+	<script type="text/javascript">
+//		var code = getQueryString('code');
+		var ws=null;
+	    // 处理沉浸式状态栏
+	    var topoffset=0;
+	    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+	    if(ms&&ms.length>=3){
+	        topoffset=parseFloat(ms[2]);
+	    }
+	    
+	    if(window.plus){
+	        pagePlusReady();
+	    }else{
+	        document.addEventListener('plusready',pagePlusReady,false);
+	    }
+	
+	    function pagePlusReady(){
+	        console.log("## pagePlusReady ##");
+	//      var uuid = plus.storage.getItem("uuid");
+	//  	console.log("## GetCompanyAccount ## uuid:"+uuid);
+	//      getQueryString(name)
+//			getList();
+			getmealdata()
+	        
+	        ws=plus.webview.currentWebview();
+	        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+	            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+	        }
+	        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+	    }
+
+	    // 刷新页面
+	    function onRefresh(){
+	        console.log("## onRefresh ##");	        
+			getmealdata();
+			ws.endPullToRefresh();
+	    }
+		function getmealdata(){
+//			var uuid = plus.storage.getItem("uuid");
+			postJSON(API_URL.ApiChargingBusinessGetSetmealPrice, {
+	    		uuid: '615cd7b2d8f84377bd4d3bcd9bc9f731',
+	    		seq:0,
+	    		state: 1,
+	    		price: 0.8
+    		}, function(res) {
+			    if("0" == res.code){
+			    	$('#state').html(res.data.state);
+			    	var elesdata = res.data.eles;
+			    	var fullStopdata = res.data.fullStop;
+			    	var advanceChargesdata = res.data.advanceCharges;
+			    	var actualChargesdata = res.data.actualCharges;
+			    	var partnersdata = res.data.partners;
+			    	getAllData(elesdata,fullStopdata,advanceChargesdata,actualChargesdata,partnersdata);
+			    }
+			})
+    	}
+		
+		
+		
+		function getElesData(eles){
+  			var data = {'list':eles};
+  			var elesHtml = template('elesTmpl', data);
+  			$('.tiered_wrap').html(elesHtml);
+  			
+	  	}
+	  	function getFullStopData(fullStop){
+	  		var data = {'list':fullStop};
+	  		var fullStopHtml = template('maxEnergy', data);
+	  		$('.big_configuration_wrap').html(fullStopHtml);	
+	  	}
+	  	
+	  	function getChargesData(actualCharges){
+	  		var data = {'list':actualCharges};
+	  		var ChargesHtml = template('cooperation', data);
+	  		$('.charge_wrap').html(ChargesHtml);
+	  		
+	  		//充电时长，时长区新增
+			$(".charge_wrap").on("click",".add_time",function(){
+				$(".time").last().append(
+					'<div class="time_regulation top_line">'
+						+'<div class="time_regulation_left">'
+							+'<button class="reduce1">-</button>'
+							+'<span class="change">0.65</span>'
+							+'<button class="add1">+</button>'
+						+'</div>'
+						+'<div class="time_regulation_center">'
+							+'<button class="reduce2">-</button>'
+							+'<span class="change">8.5</span>'
+							+'<button class="add2">+</button>'
+						+'</div>'
+						+'<div class="clear"></div>'
+						+'<div class="time_regulation_photo">'
+							+'<img src="../images/area/del.png" alt="del" class="del_time" />'
+						+'</div>'
+					+'</div>'
+				)
+			})
+	  	}
+	  	function getPartnersData(partners){
+			var data = {'list':partners};
+			var partnersHtml = template('personList', data);
+			$('.partner_wrap').html(partnersHtml);
+	  	}
+	  	
+		function getAllData(eles,fullStop,advanceCharges,actualCharges,partners){
+			if(vaildeParam(eles)){
+  				getElesData(eles);
+  				$('.tiered_wrap').show();
+	  		}
+	  		if(vaildeParam(fullStop)){
+				getFullStopData(fullStop)
+	  		}
+	  		if(vaildeParam(actualCharges)||vaildeParam(advanceCharges)){
+	  			getChargesData(actualCharges)
+	  		}
+	  		if(vaildeParam(partners)){
+	  			getPartnersData(partners)
+	  		}
+		};
+		
+		
+		
+//		$("#submit").click(function(){
+////				var uuid = plus.storage.getItem("uuid");
+//				var $time_regulation_left = $(".time_regulation_left");
+//				var $time_regulation_center = $(".time_regulation_center");
+//				var $tiered_one = $(".tiered_one");
+//				var $big_bottom = $(".big_bottom");
+////				var $tiered_price = $(".partner_wrap");
+//				var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+//				var flag= false;
+//				var flagchange = false;
+//				var moneyresult=[];
+//				var ratioresult=[];
+//				$.each($time_regulation_left, function(index,item) {
+//					var changedata = $(item).find($(".change")).text();
+//					console.log(changedata);
+//					if(parseInt(changedata)<=0){
+//						layer.msg("内容不能为0");
+//						flagchange = true;
+//						return;
+//					}
+//				});
+//				$.each($time_regulation_center, function(index,item) {
+//					var changedata1 = $(item).find($(".change")).text();
+//					console.log(changedata1);
+//					if(parseInt(changedata1)<=0){
+//						layer.msg("内容不能为0");
+//						flagchange = true;
+//						return;
+//					}
+//				});
+//				$.each($tiered_one, function(index,item) {
+//					var changedata2 = $(item).find($(".change")).text();
+//					console.log(changedata2);
+//					if(parseInt(changedata2)<=0){
+//						layer.msg("内容不能为0");
+//						flagchange = true;
+//						return;
+//					}
+//				});
+//				$.each($big_bottom, function(index,item) {
+//					var bigpowerdata = $(item).find( $("input[name='bigpower']")).val();
+//					var bigtimedata = $(item).find( $("input[name='bigtime']")).val();
+//					var bigpricedata = $(item).find( $("input[name='bigprice']")).val();
+//					console.log(bigpowerdata);
+//					if(parseInt(bigpowerdata)==0||parseInt(bigtimedata)==0||parseInt(bigpricedata)==0){
+//						layer.msg("最大配置不能为0");
+//					}
+//					if(parseInt(bigpowerdata)==""||parseInt(bigtimedata)==""||parseInt(bigpricedata)==""){
+//						layer.msg("最大配置不能为空");
+//					}
+//				});
+//				//判断总和为1
+//				$("input[name='money']").each(function(){
+////					moneyresult = moneyresult+$(this).val();
+//					moneyresult.push($(this).val());
+//				});
+////				var ratiototal = eval(moneyresult.join("+"));
+////				console.log(ratiototal);
+//				$("input[name='ratio']").each(function(){
+//					ratioresult.push($(this).val());
+//				})
+//				var moneytotal = eval(ratioresult.join("+"));
+//				if(moneytotal!=100){
+//					layer.msg("比值之和必须为1")
+//				}
+//				
+//			})
+		//提交
+		$("#submit").click(function(){
+			//显示遮道层
+			$(".concealer_wrap").css("display","block")
+			//叉掉遮道层
+			$(".close").click(function(){
+				$(".concealer_wrap").css("display","none")
+			})
+			//不提交关闭遮道层跳转至片区列表
+			$("#thanks").click(function(){
+//				$(".concealer_wrap").css("display","none")
+				$(location).attr("href","areaApplicationList.html")
+			})
+			//跳转至添加套餐
+			$("#href").click(function(){
+//				$(location).attr("href","areaApplicationCombo.html")
+				$(".concealer_wrap").css("display","none")
+				$(".continue_wrap").css("display","block")
+			})
+		})
+		
+	</script>
+	
+	
+	
+	<script type="text/javascript">
+
+		
+		//阶梯价格
+		//累减
+		
+		$(".tiered_wrap").on("click",".reduce",function(){
+			addOrReduce(this, -0.01, 0);
+		})
+		function addOrReduce(self, n, time) {
+			var $charge = $(self).parent().find('.change');
+			num = parseFloat($charge.text()) + n;
+//			var z=time+1;
+//			var num;
+//			if(z<=5){
+//				num = parseFloat($charge.text()) + n;
+//			}else {
+//				num = parseFloat($charge.text()) + 5n;
+//			}
+			if (num >= 0) {
+				$charge.text(num.toFixed(2));
+			}
+		}
+		//累加
+		$(".tiered_wrap").on("click",".add",function(){
+			addOrReduce(this, 0.01, 0);
+		})
+		
+		
+		$(".charge_wrap").on('click','.reduce1',function(){
+			addOrReduce(this, -0.01, 0);
+		})
+		$(".charge_wrap").on('click','.add1',function(){
+			addOrReduce(this, 0.01, 0);
+		})
+		
+		//时长与最大电量累增累减
+		function add2OrReduce2(self, n, time) {
+			var $charge = $(self).parent().find('.change');
+			num = parseFloat($charge.text()) + n;
+			if (num >= 0) {
+				$charge.text(num.toFixed(1));
+			}
+		}
+		$(".charge_wrap").on('click','.reduce2',function(){
+			addOrReduce(this, -0.5, 0);
+		})
+		$(".charge_wrap").on('click','.add2',function(){
+			addOrReduce(this, 0.5, 0);
+		})
+//		时长区删除本行
+
+		$(".charge_wrap").on("click",".time_regulation_photo",function(){
+			if(confirm("确认删除吗?")){
+				$(this).parent().addClass('remove1');
+				$(this).parent().find().addClass('remove1')
+				$(".remove1").remove()
+			}else {
+				return false;
+			}
+		})
+		
+		//新增内容
+		$(".partner_wrap").on("click","#AddWarp",function(){
+			$(".tiered_price").last().append('<div class="equinox_myself margin_top">'
+			+'<div><input type="text" value="" placeholder="姓名"/></div>'
+			+'<div><input type="text" value="" placeholder="手机号" maxlength="11"/ id="tel" class="tel"></div>'
+			+'<div class="person_proportion"><input type="text" value="0.1" class="inp1" name="money" id="inp1"/>'
+				+'<span class="right">或</span>'
+				+'<input class="right inp2" id="inp2" name="ratio" type="text" value="10"/></div>'
+			+'<img class="del" id="del" src="../images/area/del.png" alt="del"/></div>')
+		})
+		//删除本行
+		$(".partner_wrap").on('click','.del',function(){
+			if(confirm("确认删除吗?")){
+				$(this).parent().addClass('remove');
+				$(this).parent().find().addClass('remove')
+				$(".remove").remove()
+			}
+			else return false; 
+		})
+		
+		//比值与金额单选
+		//本人
+//		rgb(253,108,33"}
+		$(".point").css({"color":"","background-color":""});
+		$(".partner_wrap").on("focus",".point",function(){
+			$(this).css({"color":"white","background-color":"rgb(253,108,33)"});
+			$(this).siblings().css({"color":"","background-color":""});
+		})
+		//添加用户
+		$(".partner_wrap").on("focus",".inp1",function(){
+			$(this).css({"color":"white","background-color":"rgb(253,108,33)"});
+			$(this).parent().find($(".inp2")).css({"color":"","background-color":""});
+		})
+		$(".partner_wrap").on("focus",".inp2",function(){
+			$(this).css({"color":"white","background-color":"rgb(253,108,33)"});
+			$(this).parent().find($(".inp1")).css({"color":"","background-color":""});
+		})
+		
+		//继续添加套餐
+		$(".comeback").click(function(){
+				$(".continue_wrap").css("display","none")
+		})
+		$(".basic").click(function(){
+				$(".select_other").toggle()
+		})
+		//选择套餐类型
+		$(".combo_vip").click(function(){
+				$(".select_other").hide();
+				var text= $(this).text();
+				$(".basic").text(text)
+		})
+		//单选套餐
+		$("input").click(function(){
+			$(this).parent().addClass("sure")
+			$(this).parent().css("color","#ff6d22")
+			$(this).parent().siblings().css("color","#000")
+			$(this).parent().siblings().removeClass("sure")
+		})
+		//跳转
+		$("#AddCombo").click(function(){
+		    var ID = $(".sure input").attr("id");
+			if(ID=="1"){
+				$(location).attr("href","fullStopAndAdvance.html")
+			}else if(ID=="2"){
+				$(location).attr("href","fullStopAndAdvance.html")
+			}else {
+				$(location).attr("href","fullStopAndAdvance.html")
+			}
+		})
+		
+		//创建用户时,手机号做正则匹配
+		$(".partner_wrap").on("blur",".tel",function(){
+//			console.log($(this))
+			var phone = $(this).val();
+			var tel = /^1[34578]\d{9}$/;
+			if(phone==""){
+				$(this).css("border","1px solid red")
+    			layer.msg("手机号不能为空");  
+    		}else if(!(tel.test(phone))){
+    			layer.msg("手机号码错误,请重新输入")
+    			$(this).css("border","1px solid red")
+   		    }else {
+   		    	layer.msg("手机号码正确")
+   		    	$(this).css("border","1px solid green")
+   		    }
+		});
+		
+		
+		//删除本行(动态创建)
+		$(".time").on('click','.del_time',function(){
+			if(confirm("确认删除吗?")){
+				$(this).parent().parent().addClass('remove');
+				$(this).parent().parent().find().addClass('remove')
+				$(".remove").remove()
+			}
+			else return false; 
+		})
+		
+		//时间收费与电量收费选择
+		
+		$(".charge_wrap").on("click",".time_charge",function(){
+			$(".tiered_wrap").hide();
+			$(this).css({"background":"#ff6d22","color":"white"})
+			$(".electricity_charge").css({"background":"#f2f2f2","color":"#333"})
+		})
+		
+		$(".charge_wrap").on("click",".electricity_charge",function(){
+			$(".tiered_wrap").show();
+			$(this).css({"background":"#ff6d22","color":"white"})
+			$(".time_charge").css({"background":"#f2f2f2","color":"#333"})
+		})
+		
+
+		
+		
+	</script>
+</body>
+</html>
+
