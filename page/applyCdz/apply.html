@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/iconfont.css">
     <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/mui.min.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
 
     <!--引入公用样式-->
@@ -17,6 +18,9 @@
     <script src="../../plugins/layer/layer.js"></script>
     <script src="../../js/common.js"></script>
     <script src="../../js/base.js"></script>
+    
+    <script src="../../js/mui.picker.all.js"></script>
+	<script src="../../js/data.city.js"></script>
 
     <style type="text/css">
         .clearfix{
@@ -95,6 +99,10 @@
             color: #fff;
             padding: 10px 40px;
         }
+        .mui-btn-blue, .mui-btn-primary, input[type=submit]{
+			border: 1px solid #FF6D22;
+    		background-color: #FF6D22;
+		}
     </style>
 </head>
 <body>
@@ -250,12 +258,17 @@
         </div>
         <div class="mui-input-row">
             <label>联系电话</label>
-            <input type="number" placeholder="请输入收货人联系电话" name="mobile" >
+            <input type="number" id="mobile" placeholder="请输入收货人联系电话" name="mobile" >
         </div>
         <div class="mui-input-row" style="position: relative">
             <label>收货地址</label>
-            <i class="iconfont icon-map" style="position: absolute;right: 10px;top: 8px" onclick="clicked('../map.html')"></i>
-            <input type="text" placeholder="请输入收货地址" name="address" id="address">
+            <i class="iconfont icon-xiala1" style="position: absolute;right: 10px;top: 8px"></i>
+            <input type="text" placeholder="请选择省市区" name="address" id="address" readonly="true">
+            
+        </div>
+        <div class="mui-input-row" style="position: relative">
+            <label>详细地址</label>
+            <input type="text" placeholder="详细地址(街道、小区、乡镇)" name="addressDetail">        
         </div>
 
     </form>
@@ -278,7 +291,8 @@
         document.addEventListener('plusready',pagePlusReady,false);
     }
     function pagePlusReady(){
-        $("#nickname").val(plus.storage.getItem( "nickname"))
+        $("#username").val(plus.storage.getItem( "nickname"));
+        $("#mobile").val(plus.storage.getItem( "mobile"));
     }
 
 
@@ -369,9 +383,11 @@
 
         var username = $("input[name='username']").val();
         var reason = $("input[name='reason']").val();
-        var address = $("input[name='address']").val();
+        var address1 = $("input[name='address']").val();
+        var addressDetail = $("input[name='addressDetail']").val();
         var mobile = $("input[name='mobile']").val();
-
+		
+		var address = address1 + addressDetail;
         if(!vaildeParam(username)){
             layer.msg("收货人姓名不能为空");
             return;
@@ -392,7 +408,7 @@
         var uuid = plus.storage.getItem("uuid");
 
         var totalCount = $("#allCount").text();
-
+		
         var data = {
             'uuid':uuid,
             'selectCdzJson':selectArrJson,
@@ -459,6 +475,22 @@
         $("#longitude").val(longitude);
         $("#address").val(address);
     }
+	//选择省市区 
+    var addressPicker = new mui.PopPicker({
+        layer: 3
+    });
+    $("#address").on("click", function() {
+    	addressPicker.setData(cityData3);
+		var adressStr = '';
+        addressPicker.show(function (selectItems) {
+            //将选择的省、市、区显示到屏幕上
+            for (var i = 0; i < selectItems.length; i++) {
+                adressStr += selectItems[i].text;
+            }
+            $("#address").val(adressStr);
+        });
+
+    });
 
 
 
