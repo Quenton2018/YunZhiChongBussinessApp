@@ -56,9 +56,11 @@
     	.setmeal_Sel{
     		color: #ff6d22;
     		font-size: 1rem;
+    		padding: 10px;
     	}
     	.setmeal_icon{
     		color: #737373;
+    		font-size: 1.2rem;
     	}
     	.setmeal_state{
     		margin-left: 40px;
@@ -161,9 +163,9 @@
 	<div class="setmeal_wrap" id="setmeals">
 		<div class="setmeal_top">
 			<div class="setmeal">
-				<span class="setmeal_Sel">基本套餐</span>
+				<span class="setmeal_Sel" id="setmealName">基本套餐</span>
 				<span class="setmeal_icon mui-icon mui-icon-arrowdown"></span>
-				<span class="setmeal_state">充满自停</span>
+				<span class="setmeal_state" id="state"></span>
 			</div>		
 		</div>
 		
@@ -289,7 +291,7 @@
     var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
     var areaId = getQueryString('areaid');
 //  var areaId = 42;
-    var roadPickData = [];      //套餐name数据
+    var setmealData = [];      //套餐name数据
     
     var ws=null;
     // 处理沉浸式状态栏
@@ -338,13 +340,16 @@
 					$('#setmeals').show();
 					plus.storage.setItem( "priceSetmealJson", priceSetmealJson);
 					var priceSetmealData = JSON.parse(priceSetmealJson);				
-					var eles = priceSetmealData[0].eles;				
-					var fullStop = priceSetmealData[0].fullStop;
-					var actualCharges = priceSetmealData[0].actualCharges;
-					var advanceCharges = priceSetmealData[0].advanceCharges;
-					var partners = priceSetmealData[0].partners;
-					console.log(JSON.stringify(actualCharges))
-					getAllData(eles,fullStop,actualCharges,advanceCharges,partners);
+					var name = priceSetmealData[0].name;
+					var setmealData = [];
+					$.each(priceSetmealData, function(index,item) {
+						setmealData.push({
+							'value':'',
+							'text':item.name
+						});
+					});				
+					$('#setmealName').html(name).data('pick',setmealData);
+					getAllData(priceSetmealData[0]);
 				}else{
 					clicked('areaApplicationDetail.html');
 				}
@@ -354,7 +359,14 @@
 		});
 		
     }
-    function getAllData(eles,fullStop,actualCharges,advanceCharges,partners){
+    function getAllData(priceSetmealData){
+		var eles = priceSetmealData.eles;				
+		var fullStop = priceSetmealData.fullStop;
+		var actualCharges = priceSetmealData.actualCharges;
+		var advanceCharges = priceSetmealData.advanceCharges;
+		var partners = priceSetmealData.partners;
+		var state = priceSetmealData.state;
+		$('#state').html(state);
     	var HeadData = [];
   		if(vaildeParam(eles)){
   			HeadData.push({
@@ -425,12 +437,42 @@
 		$('#partnersList').html(partnersHtml);
   	}
   	
+  	function getSetmeal(name){
+  		var priceSetmealStr = plus.storage.getItem( "priceSetmealJson");
+  		var priceSetmealJSON = JSON.parse(priceSetmealStr);
+  		var priceSetmealData = {};
+  		$.each(priceSetmealJSON, function(index,item) {
+			if(item.name == name){
+				priceSetmealData = item;
+			}
+		});	
+  		getAllData(priceSetmealData)
+  	}
+  	
+  	//套餐下拉选择器
+	$('#setmealName').on("click", function() {   	
+        var setmealData = $('#setmealName').data('pick');
+        var setmealPick = new mui.PopPicker();
+        if(vaildeParam(setmealData)){
+        	setmealPick.setData(setmealData);
+      		setmealPick.show(function(item) {
+      			var name = item[0].text;
+         		$('#setmealName').html(name);
+         		getSetmeal(name);
+        	});
+        }
+        return false;
+   	});
+  	
 	$('.setmeal_tap').on('click','.setmeal_tap_list',function(){
 		var index = $(this).index();
+		var type = $(this).attr('data-type');
 		$(this).addClass('select').siblings().removeClass('select');
-		$('.setmeal_tap_content').eq(index).show().siblings().hide();		
+		$('.setmeal_tap_content').hide();
+		$('#'+type).show();		
 	});
-			
+	
+	
 </script>
 
 </body>
