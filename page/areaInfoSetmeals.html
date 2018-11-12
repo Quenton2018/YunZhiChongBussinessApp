@@ -304,7 +304,7 @@
 		    background-size: 100%;
 		    position: absolute;
 		    top: 8px;
-		    left: 50%;
+		    left: 44%;
 		    width: 35px;
 		    height: 22px;
 		    z-index: 2;
@@ -324,11 +324,14 @@
 		.handle-icon{
 			position: absolute;
 		    right: 10px;
-		    top: 10px;
+		    top: 5px;
 		    z-index: 2;
 		}
+		.handle-icon img{
+			padding: 4px;
+		}
 		.xg-icon{
-			margin-right: 4px;
+			margin-right: 10px;
 		}
 		.addmember{
 			color: #333333;
@@ -349,6 +352,7 @@
     		border-radius: 6px;
     		box-shadow: inset #999 0px -1px 5px 0px;
     		display: none;
+    		position: relative;
 		}
 		.memberbox h2{
 		    font-size: 16px;
@@ -391,6 +395,36 @@
 		#updataSetmeal{
 			display: none;
 		}
+		.mui-btn-blue, .mui-btn-primary, input[type=submit]{
+			border: 1px solid #FF6D22;
+    		background-color: #FF6D22;
+		}
+        .form-close{
+           position: absolute;
+           top: 0px;
+           right: 0px;
+           font-size: 2rem;
+           padding: 10px;
+        }
+        .yc{
+        	width: 8px;
+		    height: 8px;
+		    display: inline-block;
+		    background: red;
+		    border-radius: 100%;
+		    margin-right: 4px;
+		    vertical-align: 1px;
+		    box-shadow: 0px 0px 6px 2px rgba(241,76,37,.6);;
+        }
+        .zc{
+        	width: 8px;
+        	height: 8px;
+        	display: inline-block;
+        	background: green;
+        	border-radius: 100%;
+        	margin-right: 4px;
+        	vertical-align: 1px;
+        }
     </style>
 
 </head>
@@ -403,8 +437,8 @@
 
 <div class="mui-content" style="background: #fff">
     <div class="tabBox">
-        <span class="tabItem setmeal select"><i></i>收费信息</span>
-        <span class="tabItem cdz"><i></i>充电桩</span>
+        <span class="tabItem setmeal select" data-type="sfxx"><i></i>收费信息</span>
+        <span class="tabItem cdz" data-type="cdz"><i></i>充电桩</span>
     </div>
   	<div class="tabView">
 	    <div class="normal on">
@@ -428,6 +462,7 @@
 		        	<div class="memberbox mui-input-group">
 		        		<div class="form-title">
 				            <h2>添加其他用户</h2>
+                            <span class="form-close mui-icon mui-icon-closeempty"></span>
 				            <!--<div class="shanchu" onclick="deleteFrom(this)">
 				                <img src="../images/pianqushenqing/guanbi@3x.png" style="width: 15px;height: 15px;">
 				            </div>-->
@@ -451,7 +486,7 @@
 				        	<input type="tel" class="flex-item" value="30" id="timesSel" readonly="true" />
 				        	<span class="mui-icon mui-icon-arrowdown"></span>
 				        </div>
-				        <div class="form-group flex">
+				        <div class="form-group flex" style="border-bottom: none;">
 				        	<div class="form-laber flex-item">到期时间：</div>
 				        	<input type="tel" class="flex-item" id="dateSel" readonly="true" />
 				        	<span class="mui-icon mui-icon-arrowdown"></span>
@@ -481,42 +516,12 @@
 			        <table class="mui-table" >
 			            <tbody >
 			            <tr>
-			                <td align="left">A1860096</td>
-	                		<td align="right">19:<span class="progress"><i style="width: 20%;" class="progressInner"></i></span></td>
+			                <td align="left"><span class="yc"></span>{{/if}}A1900000</td>
+			        		<td align="right">{{item.qos}}:<span class="progress"><i style="width: {{item.qosPrecent}}%;" class="progressInner"></i></span></td>
 			            </tr>
 			            </tbody>
 			        </table>
-			    </li>
-			    <li class="mui-table-view-cell">
-			        <table class="mui-table" >
-			            <tbody >
-			            <tr>
-			                <td align="left">A1860096</td>
-	                		<td align="right">19:<span class="progress"><i style="width: 90%;" class="progressInner"></i></span></td>
-			            </tr>
-			            </tbody>
-			        </table>
-			    </li>
-			    <li class="mui-table-view-cell">
-			        <table class="mui-table" >
-			            <tbody >
-			            <tr>
-			                <td align="left">A1860096</td>
-	                		<td align="right">19:<span class="progress"><i style="width: 90%;" class="progressInner"></i></span></td>
-			            </tr>
-			            </tbody>
-			        </table>
-			    </li>
-			    <li class="mui-table-view-cell">
-			        <table class="mui-table" >
-			            <tbody >
-			            <tr>
-			                <td align="left">A1860096</td>
-	                		<td align="right">19:<span class="progress"><i style="width: 90%;" class="progressInner"></i></span></td>
-			            </tr>
-			            </tbody>
-			        </table>
-			    </li>
+			   </li>
 	        </ul>
 	        <div id="loadMore" class="loadMore">加载更多</div>
 	        <div id="noMore" class="noMore">没有更多了</div>
@@ -583,20 +588,41 @@
 				{{/if}}
 				{{if manager == "true"}}
 				<span class="handle-icon">
-					<img id="updataSetmeals" class="xg-icon" src="../images/areaInfo/xg_icon.png" width="15" height="15" data-mobile="{{item.mobile}}" data-time="{{item.timeLimit}}" data-electricity="{{item.electricityLimit}}" data-times="{{item.timesLimit}}" data-setmealid="{{item.setmealId}}">
-					<img id="delSetmeals" class="del-icon" src="../images/areaInfo/del_icon.png" width="15" height="15" data-memberid="{{item.memberId}}" data-setmealid="{{item.setmealId}}">
+					<img id="updataSetmeals" class="xg-icon" src="../images/areaInfo/xg_icon.png" width="26" height="26" data-mobile="{{item.mobile}}" data-time="{{item.timeLimit}}" data-electricity="{{item.electricityLimit}}" data-times="{{item.timesLimit}}" data-setmealid="{{item.setmealId}}">
+					<img id="delSetmeals" class="del-icon" src="../images/areaInfo/del_icon.png" width="26" height="26" data-memberid="{{item.memberId}}" data-setmealid="{{item.setmealId}}">
 				</span>
 				{{/if}}
 			</div>
 			<div class="flex" style="padding-top: 5px;">
 				<span class="flex-item"></span>
+				{{if item.timeLimit}}
 				<span class="flex-item"><i class="glay">{{item.timeRemain}}</i>/{{item.timeLimit}}</span>
+				{{/if}}
+				{{if item.electricityLimit}}
 				<span class="flex-item"><i class="glay">{{item.electricityRemain}}</i>/{{item.electricityLimit}}</span>
+				{{/if}}
+				{{if item.timesLimit}}
 				<span class="flex-item"><i class="glay">{{item.timesRemain}}</i>/{{item.timesLimit}}</span>
+				{{/if}}
 			</div>
 		</li>
 		{{/each}}
 	{{/if}}
+</script>
+
+<script type="text/html" id="cdzTmpl">
+	{{each list as item}}
+	<li class="mui-table-view-cell">
+        <table class="mui-table" >
+            <tbody >
+            <tr>
+                <td align="left">{{if item.status == 2}}<span class="yc"></span>{{/if}}{{if item.status == 1}}<span class="zc"></span>{{/if}}{{item.shellId}}</td>
+        		<td align="right">{{item.qos}}:<span class="progress"><i style="width: {{item.qosPrecent}}%;" class="progressInner"></i></span></td>
+            </tr>
+            </tbody>
+        </table>
+   </li>
+   {{/each}}
 </script>
 
 <script type="text/javascript">
@@ -604,6 +630,14 @@
     var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
     var code = getQueryString('code') || 42;
     var roadPickData = [];      //套餐name数据
+    
+    var ws=null;
+    // 处理沉浸式状态栏
+    var topoffset=0;
+    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if(ms&&ms.length>=3){
+        topoffset=parseFloat(ms[2]);
+    }
   
     if(window.plus){
         pagePlusReady();
@@ -613,21 +647,29 @@
 	
     function pagePlusReady(){
         checkLogin();
-//      uuid = plus.storage.getItem("uuid");
+//      uuid = plus.storage.getItem("uuid");		
         getDataList();
-		// 下拉刷新页面
-        plusRefresh(function(){
-        	getDataList();
-        });
+        
+        ws=plus.webview.currentWebview();
+        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+        }
+        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+
     }
-    getDataList();
+    // 刷新页面
+    function onRefresh(){
+        getDataList();
+        ws.endPullToRefresh();
+    }
+    
     //抓取数据
     function getDataList(){
 		var params = {
 			"uuid":uuid,
 			"code":code
 		};
-        postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataGetSetmeals,params,function(res){
+        postJSON(API_URL.ApiChargingBusinessGetSetmeals,params,function(res){
 			if("0" == res.code){
 				var data = res.data;
                 if(!vaildeParam(data) || data.length == 0){
@@ -679,7 +721,7 @@
     	if(vaildeParam(fullStop)){
     		leftData.push({
     			type:'fullStop',
-    			leftName:'充满最大配置'
+    			leftName:'充满自停'
     		});
     		var fullStopJson = JSON.stringify(fullStop);
     		plus.storage.setItem("fullStopJson", fullStopJson);
@@ -854,7 +896,7 @@
 			code:code,
 			setmealId:id
 		}
-		postJSON(API_URL.GetSetmeal,params,function(res){		
+		postJSON(API_URL.ApiChargingBusinessGetSetmeal,params,function(res){		
 			var roadState = res.data.state;					
 			$('#roadState').html("<span>" + roadState + "</span>");
 			var eles = res.data.eles;         //阶梯价格
@@ -870,9 +912,41 @@
 	}
 	$('.tabBox .tabItem').on('click',function(){
 		var index = $(this).index();
+		var type = $(this).attr('data-type');
         $(this).addClass("select").siblings().removeClass('select');
         $('.normal').eq(index).show().siblings().hide();
+        console.log(type)
+        if(type == 'cdz'){
+        	getcdzList();
+        }     
 	});
+	function getcdzList(){
+		var dataParam = {
+			"groupID": code
+		}
+		postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data;
+                var cdzHtml = '';
+                $.each(data, function(index,item) {
+                    var qos = item.qos;
+                    if(!vaildeParam(item.qos)){
+                        item.qos = 0;
+                    }
+
+                    item.qosPrecent = (qos/31) * 100;
+
+					//var qosHtml ='<span style="display: inline-block;width: 20px;text-align: right">'+qos+'</span>:<div class="progress"><div class="progressInner" style="width: '+qosPrecent+'%"></div></div>'
+
+                });
+                var cdzData = {'list':data};
+    			var cdzHtml = template('cdzTmpl', cdzData);
+    			$(".dataList").html(cdzHtml);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+	}
 	//左侧tab切换点击
 	function tabClick(that){
 		var $this = $(that);
@@ -944,7 +1018,7 @@
     $('#dateSel').on("click", function() {
     	var Date = new mui.DtPicker({type:'date'});
 		Date.show(function(item){
-//		    console.log(JSON.stringify(item));
+			//console.log(JSON.stringify(item));
 		    var endDate = item.y.text + '-' + item.m.text + '-' + item.d.text;
 		    $('#dateSel').val(endDate);
 		    //这两种都是可以的
@@ -961,7 +1035,7 @@
     	$('#saveSetmeal').hide();
     	$('#updataSetmeal').show();
     	$('.form-title h2').html('修改用户');
-    	$('#mobileSel').val(mobile);
+    	$('#mobileSel').val(mobile).attr('disabled',true);
     	$('#timeSel').val(time);
     	$('#timesSel').val(times);
     	$('#electricitySel').val(electricity);
@@ -986,7 +1060,32 @@
 			timesLimit:timesLimit,       
 			expired:expired
 		}
-    	checkMobile(mobile);
+    	var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+		var flag= false;
+		var flagMobile= false;
+		var flagMobileNumber= false;
+		if(!vaildeParam(mobile)){
+		   flag = true;
+		}
+		if(mobile.length!==11){
+		    flagMobile = true;
+		}
+		//校验是数字
+		if(!reg.test(mobile)){
+		    flagMobileNumber = true;
+		}
+		if(flag){
+	     	layer.msg("请补全信息");
+	     	return;
+		}
+		if(flagMobile){
+	    	layer.msg("请输入正确手机号码");
+	    	return;
+		}
+		if(flagMobileNumber){
+	    	layer.msg("手机号码必须为数字");
+	    	return;
+		}
 		postJSON(API_URL.updateSetmealMember,params,function(res){
 			if(res.code == '0'){
 				$('.memberbox').hide();
@@ -1000,10 +1099,16 @@
     	var $this = $(this);
     	var memberId = $this.attr('data-memberid');
     	var setmealId = $this.attr('data-setmealid');
-    	layer.confirm("是否确定删除",function (index) {
-            delSetmeals(memberId,setmealId,$this);
-            layer.close(index);
-        });  	
+//  	layer.confirm("是否确定删除",function (index) {
+//          delSetmeals(memberId,setmealId,$this);
+//          layer.close(index);
+//      });
+        mui.confirm('是否确定删除',null,[],function(res){
+        	console.log(JSON.stringify(res))
+        	if(res.index == 0){
+        		delSetmeals(memberId,setmealId,$this);
+        	}	
+    	});
     });
     function delSetmeals(memberId,setmealId,$this){
     	var params = {
@@ -1019,13 +1124,13 @@
 		});
     };
     function getCurDates(){
-    	return new Date().getFullYear() + '-' +(new Date().getMonth()+1) + '-' + ultZeroize((new Date().getDate()+1));
+    	return (new Date().getFullYear()+1) + '-' +(new Date().getMonth()+1) + '-' + ultZeroize(new Date().getDate());
     }
     //新增用户
     $('.addmember').on('click',function(){
     	var date = getCurDates();
     	$('#dateSel').val(date);
-    	$('#mobileSel').val('').focus();
+    	$('#mobileSel').val('').attr('disabled',false).focus();
     	$('#updataSetmeal').hide();
     	$('#saveSetmeal').show();
     	$('.form-title h2').html('添加其他用户');
@@ -1070,16 +1175,15 @@
 	     	return;
 		}
 		if(flagMobile){
-	    	layer.msg("手机必须为11位");
+	    	layer.msg("请输入正确手机号码");
 	    	return;
 		}
 		if(flagMobileNumber){
-	    	layer.msg("手机必须为数字");
+	    	layer.msg("手机号码必须为数字");
 	    	return;
 		}
 		postJSON(API_URL.saveSetmealMember,params,function(res){
 			if(res.code == '0'){
-				$('.memberbox').hide();
 				getMemberLists();
 			}
 			layer.msg(res.msg);
@@ -1093,7 +1197,7 @@
 			code:code,
 			setmealId:setmealId
 		}
-		postJSON(API_URL.GetSetmeal,params,function(res){
+		postJSON(API_URL.ApiChargingBusinessGetSetmeal,params,function(res){
 			if(res.code == '0'){
 				var members = res.data.members;
 				var manager = res.data.manager+"";
@@ -1102,11 +1206,16 @@
 	    		plus.storage.setItem("membersJson", membersJson);
 	    		var tableData = {'type':'members','manager':manager,'list':members};
 	            getMembersList(tableData);
+	            $('.memberbox').hide();
 			}else{
 				layer.msg(res.msg);
 			}
 		});
     }
+    $('.form-close').on('click',function(){
+    	$('.memberbox').hide();
+    });
+
 </script>
 </body>
 

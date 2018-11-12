@@ -241,7 +241,8 @@
 				"refer": [
 					"page/myCdzUnNormal.html",
 					"page/areaList.html",
-					"page/areaListUnNormal.html"
+					"page/areaListUnNormal.html",
+					"page/areaInfoSetmeals.html"
 				],
 				"priority": 0
 			},
