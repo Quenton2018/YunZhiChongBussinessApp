@@ -321,11 +321,11 @@
         	width: 1.4rem;
         	position: absolute;
         	right: -3rem;
-        	top: 1.9rem;
+        	top: 1.5rem;
         }
         .time_regulation_photo img {
-        	width: 1.4rem;
-        	height: 1.4rem;
+        	width: 1.8rem;
+        	height: 1.8rem;
         }
         .time_regulation_left button:first-child,.time_regulation_center button:first-child {
         	border-top-left-radius: 0.5rem;
@@ -766,6 +766,44 @@
     	.clear {
     		clear: both;
     	}
+    	
+    	.top_line:first-child {
+    		border-top: 0 solid transparent;
+    	}
+    	
+    	.change {
+    		width: 3.7rem;
+    		height: 1.9rem;
+    		font-size: 1.4rem;
+    		text-align: center;
+    		line-height: 2rem;
+    		border-radius: 0.3rem;
+    	}
+    	.Cost {
+    		width: 2rem;
+    	}
+    	.change1 {
+    		width: 7rem;
+    		height: 1.9rem;
+    		font-size: 1.4rem;
+    		text-align: center;
+    		line-height: 2rem;
+    		border-radius: 0.3rem;
+      		margin-right: 0.5rem;
+    	}
+    	.change2 {
+    		width: 10rem;
+    		height: 1.9rem;
+    		font-size: 1.4rem;
+    		text-align: center;
+    		line-height: 2rem;
+    		border-radius: 0.3rem;
+    		margin-right: 0.9rem;
+    	}
+    	.amounts1 {
+    		width: 3.2rem;
+    		border: none;
+    	}
     </style>
     
 </head>
@@ -853,7 +891,7 @@
 			</div>
 		</div>
 	</div>
-	
+	<!--时长区-->
 	<script type="text/html" id="cooperation">
 		<div class="charge">
 			<div class="time_charge">
@@ -863,7 +901,6 @@
 				电量收费
 			</div>
 		</div>
-		<!--时长区-->
 		<div class="time_wrap">
 			<div class="time">
 				<div class="tiered_price_top">
@@ -885,19 +922,28 @@
 					</div>
 				</div>
 				<!--累加器1-->
-				<div class="time_regulation">
+				{{each list as item}}
+				<div class="time_regulation top_line">
 					<div class="time_regulation_left">
 						<button class="reduce1">-</button>
-						<span class="change">{{list.amount}}</span>
+						<!--<span class="change time_amount">{{item.amount}}</span>-->
+						<input type="text" readonly="" class="change time_amount" value="{{item.amount}}" />
 						<button class="add1">+</button>
 					</div>
 					<div class="time_regulation_center">
 						<button class="reduce2">-</button>
-						<span class="change">{{list.minutes/60}}</span>
+						<!--<span class="change time_minutes">{{item.minutes/60}}</span>-->
+						<input type="text" readonly="" class="change time_minutes" value="{{item.minutes/60}}" />
 						<button class="add2">+</button>
 					</div>
 					<div class="clear"></div>
-				</div>	
+					{{ if $index !== 0}}
+					<div class="time_regulation_photo">
+						<img src="../images/area/del.png" alt="del" class="del_time" />
+					</div>
+					{{/if}}
+				</div>
+				{{/each}}
 			</div>
 		</div>
 	</script>
@@ -929,7 +975,7 @@
 				</div>
 				<div>
 					{{if item.max>1200}}
-						<span>1200以上</span>
+						<span >1200以上</span>
 					{{else if item.min <=0}}
 						<span>100以下</span>
 					{{else}}
@@ -937,11 +983,11 @@
 					{{/if}}
 				</div>
 				<div>
-					<span>{{item.cost}}</span>
+					<span class="Cost">{{item.cost}}</span>
 				</div>
 				<div>
 					<button class="reduce">-</button>
-					<span class="change">{{item.amount}}</span>
+					<input type="text" readonly="" data-type="{{item.seq}}" class="change amounts1" value="{{item.amount}}" />
 					<button class="add">+</button>
 				</div>
 			</div>
@@ -994,17 +1040,19 @@
 			</div>
 			<!--分成-->
 			{{each list as item}}
-			<div class="equinox_top" style="display: block;">
+			<div class="equinox_top " style="display: block;">
 				<div>
-					<span>{{item.name}}</span>
+					<!--<span>{{item.name}}</span>-->
+					<input type="text" class="jyname change1" value="{{item.name}}" readonly=""/>
 				</div>
 				<div>
-					<span>{{item.mobile}}</span>
+					<!--<span>{{item.mobile}}</span>-->
+					<input type="text" class="jytel change2" value="{{item.mobile}}" readonly=""/>
 				</div>
 				<div class="proportion">
-					<input type="text" value="{{item.dividePrice}}" name="money" class="point"/></span>
+					<input type="text" value="{{item.dividePrice}}" name="money" class="point jydividePrice"/></span>
 					<span>或</span>
-					<input type="text" value="{{item.divideRatio}}" name="ratio" class="point"></span>
+					<input type="text" value="{{item.divideRatio}}" name="ratio" class="point jydivideRatio"></span>
 				</div>
 			</div>
 			{{/each}}
@@ -1063,6 +1111,8 @@
 	    		price: 0.8
     		}, function(res) {
 			    if("0" == res.code){
+			    	var defaultData = res.data;
+			    	plus.storage.setItem('defaultData',JSON.stringify(defaultData));
 			    	$('#state').html(res.data.state);
 			    	var elesdata = res.data.eles;
 			    	var fullStopdata = res.data.fullStop;
@@ -1093,27 +1143,6 @@
 	  		var ChargesHtml = template('cooperation', data);
 	  		$('.charge_wrap').html(ChargesHtml);
 	  		
-	  		//充电时长，时长区新增
-			$(".charge_wrap").on("click",".add_time",function(){
-				$(".time").last().append(
-					'<div class="time_regulation top_line">'
-						+'<div class="time_regulation_left">'
-							+'<button class="reduce1">-</button>'
-							+'<span class="change">0.65</span>'
-							+'<button class="add1">+</button>'
-						+'</div>'
-						+'<div class="time_regulation_center">'
-							+'<button class="reduce2">-</button>'
-							+'<span class="change">8.5</span>'
-							+'<button class="add2">+</button>'
-						+'</div>'
-						+'<div class="clear"></div>'
-						+'<div class="time_regulation_photo">'
-							+'<img src="../images/area/del.png" alt="del" class="del_time" />'
-						+'</div>'
-					+'</div>'
-				)
-			})
 	  	}
 	  	function getPartnersData(partners){
 			var data = {'list':partners};
@@ -1136,8 +1165,29 @@
 	  			getPartnersData(partners)
 	  		}
 		};
-		
-		
+		//<span class="change">0.65</span>
+		//<span class="change">8.5</span>
+		//充电时长，时长区新增
+		$(".charge_wrap").on("click",".add_time",function(){
+			$(".time").last().append(
+				'<div class="time_regulation top_line">'
+					+'<div class="time_regulation_left">'
+						+'<button class="reduce1">-</button>'
+						+'<input type="text" readonly="" class="change time_amount" value="0.65" />'
+						+'<button class="add1">+</button>'
+					+'</div>'
+					+'<div class="time_regulation_center">'
+						+'<button class="reduce2">-</button>'
+						+'<input type="text" readonly="" class="change time_minutes" value="8.5" />'
+						+'<button class="add2">+</button>'
+					+'</div>'
+					+'<div class="clear"></div>'
+					+'<div class="time_regulation_photo">'
+						+'<img src="../images/area/del.png" alt="del" class="del_time" />'
+					+'</div>'
+				+'</div>'
+			)
+		})
 		
 //		$("#submit").click(function(){
 ////				var uuid = plus.storage.getItem("uuid");
@@ -1206,26 +1256,7 @@
 //				}
 //				
 //			})
-		//提交
-		$("#submit").click(function(){
-			//显示遮道层
-			$(".concealer_wrap").css("display","block")
-			//叉掉遮道层
-			$(".close").click(function(){
-				$(".concealer_wrap").css("display","none")
-			})
-			//不提交关闭遮道层跳转至片区列表
-			$("#thanks").click(function(){
-//				$(".concealer_wrap").css("display","none")
-				$(location).attr("href","areaApplicationList.html")
-			})
-			//跳转至添加套餐
-			$("#href").click(function(){
-//				$(location).attr("href","areaApplicationCombo.html")
-				$(".concealer_wrap").css("display","none")
-				$(".continue_wrap").css("display","block")
-			})
-		})
+
 		
 	</script>
 	
@@ -1242,7 +1273,7 @@
 		})
 		function addOrReduce(self, n, time) {
 			var $charge = $(self).parent().find('.change');
-			num = parseFloat($charge.text()) + n;
+			num = parseFloat($charge.val()) + n;
 //			var z=time+1;
 //			var num;
 //			if(z<=5){
@@ -1251,7 +1282,7 @@
 //				num = parseFloat($charge.text()) + 5n;
 //			}
 			if (num >= 0) {
-				$charge.text(num.toFixed(2));
+				$charge.val(num.toFixed(2));
 			}
 		}
 		//累加
@@ -1270,9 +1301,9 @@
 		//时长与最大电量累增累减
 		function add2OrReduce2(self, n, time) {
 			var $charge = $(self).parent().find('.change');
-			num = parseFloat($charge.text()) + n;
+			num = parseFloat($charge.val()) + n;
 			if (num >= 0) {
-				$charge.text(num.toFixed(1));
+				$charge.val(num.toFixed(1));
 			}
 		}
 		$(".charge_wrap").on('click','.reduce2',function(){
@@ -1282,7 +1313,6 @@
 			addOrReduce(this, 0.5, 0);
 		})
 //		时长区删除本行
-
 		$(".charge_wrap").on("click",".time_regulation_photo",function(){
 			if(confirm("确认删除吗?")){
 				$(this).parent().addClass('remove1');
@@ -1295,12 +1325,12 @@
 		
 		//新增内容
 		$(".partner_wrap").on("click","#AddWarp",function(){
-			$(".tiered_price").last().append('<div class="equinox_myself margin_top">'
-			+'<div><input type="text" value="" placeholder="姓名"/></div>'
-			+'<div><input type="text" value="" placeholder="手机号" maxlength="11"/ id="tel" class="tel"></div>'
-			+'<div class="person_proportion"><input type="text" value="0.1" class="inp1" name="money" id="inp1"/>'
+			$(".tiered_price").last().append('<div class="equinox_top equinox_myself margin_top">'
+			+'<div><input type="text" class="jyname" value="" placeholder="姓名"/></div>'
+			+'<div><input type="text" value="" placeholder="手机号" maxlength="11"/ id="tel" class="tel jytel"></div>'
+			+'<div class="person_proportion jydividePrice inp1"><input type="text" value="0.1" name="money" id="inp1"/>'
 				+'<span class="right">或</span>'
-				+'<input class="right inp2" id="inp2" name="ratio" type="text" value="10"/></div>'
+				+'<input class="right inp2 jydivideRatio" id="inp2" name="ratio" type="text" value="10"/></div>'
 			+'<img class="del" id="del" src="../images/area/del.png" alt="del"/></div>')
 		})
 		//删除本行
@@ -1405,7 +1435,182 @@
 			$(".time_charge").css({"background":"#f2f2f2","color":"#333"})
 		})
 		
-
+		
+		
+		//提交
+		$("#submit").click(function(){
+			var defaultData = JSON.parse(plus.storage.getItem('defaultData'));
+			
+			var actualCharges = [];
+			var $Charges = $('.time_regulation');
+			
+			var Eles = [];
+			var $Eles = $('.tiered_one');
+			
+			var FullStop = {};
+			
+			var Parents = [];
+			var $Parents = $('.equinox_top');
+			
+			var reg = /^1[34578]\d{9}$/;
+			var flagCharges = false;
+			var flagFullstop = false;
+            var flagParents= false;
+            var flagEles = false;
+            var flagZero = false;
+            var flagMobileNumber = false;
+            var flagMobile = false;
+			
+			$.each($Charges, function(index,item) {
+				var amount = $(item).find('.time_amount').val();
+				var minutes = $(item).find('.time_minutes').val(); 
+                actualCharges.push({
+                	'amount':amount,
+                	'minutes':minutes
+                });
+              	if(!vaildeParam(amount) || !vaildeParam(minutes)){
+               		flagCharges = true;
+              		return;
+            	}
+			});
+			$.each($Eles, function(index,item) {
+				var amount = $(item).find('.amounts1').val();
+				var seq = $(item).find('.amounts1').attr("data-type");
+                Eles.push({
+                	'amount':parseFloat(amount),
+                	'seq':parseFloat(seq)
+                });
+                if(!vaildeParam(amount) || !vaildeParam(seq)){
+               		flagEles = true;
+              		return;
+            	}
+			});
+			FullStop.power = $('input[name="bigpower"]').val();
+			FullStop.minutes = $('input[name="bigtime"]').val();
+			FullStop.amount = $('input[name="bigprice"]').val();
+//			console.log(FullStop.amount)
+			if(FullStop.amount=="" || FullStop.minutes=="" || FullStop.amount==""){
+               		flagFullstop = true;
+              		return;
+            }
+			if(FullStop.amount=="0" || FullStop.minutes=="0" || FullStop.amount=="0"){
+               		flagZero = true;
+              		return;
+            }
+            
+			$.each($Parents, function(index,item) {
+				var name = $(item).find('.jyname').val();
+				var mobile = $(item).find('.jytel').val(); 
+				var dividePrice = $(item).find('.jydividePrice').val(); 
+				var divideRatio = $(item).find('.jydivideRatio').val(); 
+                Parents.push({
+                	'name':name,
+                	'mobile':mobile,
+                	'dividePrice':dividePrice,
+                	'divideRatio':divideRatio
+                });
+                if(!vaildeParam(name) || !vaildeParam(mobile) || !vaildeParam(dividePrice) || !vaildeParam(divideRatio)){
+               		flagParents = true;
+              		return;
+            	}
+                //校验是数字
+                if(!reg.test(mobile)){
+                    flagMobileNumber = true;
+                    alert("shuzi")
+                    return;
+                }
+                if(mobile.length!==11){
+                    flagMobile = true;
+                    alert(11)
+                    return;
+                }
+			});	
+//			console.log(JSON.stringify(Eles)) 
+//			console.log(JSON.stringify(actualCharges))
+//			console.log(JSON.stringify(FullStop))
+//			console.log(JSON.stringify(Parents))
+//			var actualChargesJson = '';
+//			actualChargesJson = JSON.stringify(actualCharges);
+//			var ElesJson = '';
+//			ElesJson = JSON.stringify(Eles);
+//			var FullStopJson = '';
+//			FullStopJson = JSON.stringify(FullStop);
+//			var ParentsJson = '';
+//			ParentsJson = JSON.stringify(Parents);
+//			var actualChargesJson = JSON.stringify(actualCharges);
+//			var FullStopJson = JSON.stringify(FullStop);
+//			var ParentsJson = JSON.stringify(Parents);
+//			plus.storage.setItem(
+//				"actualChargesJson",actualChargesJson
+//			);
+//			plus.storage.setItem(
+//				"ElesJson",ElesJson
+//			);
+//			plus.storage.setItem(
+//				"FullStopJson",FullStopJson
+//			);
+//			plus.storage.setItem(
+//				"ParentsJson",ParentsJson
+//			);
+//			console.log("####actualChargesJson####"+plus.storage.getItem("actualChargesJson")) 
+//			console.log("####ElesJson####"+plus.storage.getItem("ElesJson"))
+//			console.log("####FullStopJson####"+plus.storage.getItem("FullStopJson"))
+//			console.log("####ParentsJson####"+plus.storage.getItem("ParentsJson"))
+			
+//			var flagCharges = false;
+//			var flagFullstop = false;
+//          var flagParents= false;
+//          var flagEles = false;
+//          var flagZero = false;
+//          var flagMobileNumber = false;
+//          var flagMobile = false;
+			
+			
+//			//显示遮道层
+//			$(".concealer_wrap").css("display","block")
+//			//叉掉遮道层
+//			$(".close").click(function(){
+//				$(".concealer_wrap").css("display","none")
+//			})
+//			//不提交关闭遮道层跳转至片区列表
+//			$("#thanks").click(function(){
+////				$(".concealer_wrap").css("display","none")
+//				$(location).attr("href","areaApplicationList.html")
+//			})
+//			//跳转至添加套餐
+//			$("#href").click(function(){
+////				$(location).attr("href","areaApplicationCombo.html")
+//				$(".concealer_wrap").css("display","none")
+//				$(".continue_wrap").css("display","block")
+//			})
+//			console.log(JSON.stringify(defaultData));
+			defaultData.advanceCharges = actualCharges;
+//			defaultData.eles = Eles;
+			$.each(Eles, function(k ,v) {
+				$.each(defaultData.eles, function(index ,item) {						
+					if(v.seq == item.seq){				
+						item.amount = v.amount;
+//						console.log(item.amount,v.amount)
+					}
+				});
+			});
+			defaultData.state = 1;
+			defaultData.fullStop = FullStop;
+			defaultData.partners = Parents;
+			console.log(JSON.stringify(defaultData));
+			
+			
+			
+			postJSON(API_URL.ApiChargingBusinessGetcheckJsonSetmeal, {
+	    		uuid: '615cd7b2d8f84377bd4d3bcd9bc9f731',
+	    		jsonSetmeal: JSON.stringify(defaultData)
+    		}, function(res) {
+			    if("0" == res.code){
+			    	console.log(res.msg)
+			    	
+			    }
+			})
+		})
 		
 		
 	</script>

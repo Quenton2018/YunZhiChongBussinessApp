@@ -40,7 +40,7 @@
 		"Messaging": {},
 		"LivePusher": {},
 		"VideoPlayer": {},
-		"Fingerprint": {}
+		"Fingerprint": {},"Storage":{},"Webview":{},"NativeUI":{},"Navigator":{},"XMLHttpRequest":{}
 	},
 	"plus": {
 		"splashscreen": {
