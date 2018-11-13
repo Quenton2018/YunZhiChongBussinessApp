@@ -396,8 +396,12 @@
             layer.msg("原因不能为空");
             return;
         }
-        if(!vaildeParam(address)){
-            layer.msg("地址不能为空");
+        if(!vaildeParam(address1)){
+            layer.msg("省市不能为空");
+            return;
+        }
+        if(!vaildeParam(addressDetail)){
+            layer.msg("详细地址不能为空");
             return;
         }
         if(!vaildeParam(mobile)){
@@ -423,10 +427,13 @@
 
             if('0' == res.code){
 
-                layer.msg("提交成功,正在跳转...");
+                layer.msg("提交成功");
                 setTimeout(function () {
-                    /** 跳转列表页面 */
-                    clicked('list.html');
+					var ws=plus.webview.currentWebview();
+                    var wo = ws.opener();
+                    wo.evalJS('getPageData()');
+                    
+                    back();
                 },1000)
 
             }else{
