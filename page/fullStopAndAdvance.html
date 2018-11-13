@@ -1083,10 +1083,6 @@
 	
 	    function pagePlusReady(){
 	        console.log("## pagePlusReady ##");
-	//      var uuid = plus.storage.getItem("uuid");
-	//  	console.log("## GetCompanyAccount ## uuid:"+uuid);
-	//      getQueryString(name)
-//			getList();
 			getmealdata()
 	        
 	        ws=plus.webview.currentWebview();
@@ -1103,12 +1099,18 @@
 			ws.endPullToRefresh();
 	    }
 		function getmealdata(){
-//			var uuid = plus.storage.getItem("uuid");
+			var applyGroup = plus.storage.getItem('applyGroup');
+			applyGroup = JSON.parse(applyGroup);
+			var name = applyGroup.name;
+			var state = applyGroup.state;
+			var price = applyGroup.price;
+			
+			var uuid = plus.storage.getItem("uuid");
 			postJSON(API_URL.ApiChargingBusinessGetSetmealPrice, {
-	    		uuid: '615cd7b2d8f84377bd4d3bcd9bc9f731',
-	    		seq:0,
-	    		state: 1,
-	    		price: 0.8
+	    		uuid: uuid,
+	    		seq: 0,
+	    		state: state,
+	    		price: price
     		}, function(res) {
 			    if("0" == res.code){
 			    	var defaultData = res.data;
@@ -1120,6 +1122,13 @@
 			    	var actualChargesdata = res.data.actualCharges;
 			    	var partnersdata = res.data.partners;
 			    	getAllData(elesdata,fullStopdata,advanceChargesdata,actualChargesdata,partnersdata);
+			
+					if (state == '1') {
+						$('.charge_wrap').hide();
+					}
+	  				if (state != '2') {
+	  					$('.tiered_wrap').show();
+	  				}
 			    }
 			})
     	}
@@ -1153,7 +1162,6 @@
 		function getAllData(eles,fullStop,advanceCharges,actualCharges,partners){
 			if(vaildeParam(eles)){
   				getElesData(eles);
-  				$('.tiered_wrap').show();
 	  		}
 	  		if(vaildeParam(fullStop)){
 				getFullStopData(fullStop)
@@ -1188,75 +1196,6 @@
 				+'</div>'
 			)
 		})
-		
-//		$("#submit").click(function(){
-////				var uuid = plus.storage.getItem("uuid");
-//				var $time_regulation_left = $(".time_regulation_left");
-//				var $time_regulation_center = $(".time_regulation_center");
-//				var $tiered_one = $(".tiered_one");
-//				var $big_bottom = $(".big_bottom");
-////				var $tiered_price = $(".partner_wrap");
-//				var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
-//				var flag= false;
-//				var flagchange = false;
-//				var moneyresult=[];
-//				var ratioresult=[];
-//				$.each($time_regulation_left, function(index,item) {
-//					var changedata = $(item).find($(".change")).text();
-//					console.log(changedata);
-//					if(parseInt(changedata)<=0){
-//						layer.msg("内容不能为0");
-//						flagchange = true;
-//						return;
-//					}
-//				});
-//				$.each($time_regulation_center, function(index,item) {
-//					var changedata1 = $(item).find($(".change")).text();
-//					console.log(changedata1);
-//					if(parseInt(changedata1)<=0){
-//						layer.msg("内容不能为0");
-//						flagchange = true;
-//						return;
-//					}
-//				});
-//				$.each($tiered_one, function(index,item) {
-//					var changedata2 = $(item).find($(".change")).text();
-//					console.log(changedata2);
-//					if(parseInt(changedata2)<=0){
-//						layer.msg("内容不能为0");
-//						flagchange = true;
-//						return;
-//					}
-//				});
-//				$.each($big_bottom, function(index,item) {
-//					var bigpowerdata = $(item).find( $("input[name='bigpower']")).val();
-//					var bigtimedata = $(item).find( $("input[name='bigtime']")).val();
-//					var bigpricedata = $(item).find( $("input[name='bigprice']")).val();
-//					console.log(bigpowerdata);
-//					if(parseInt(bigpowerdata)==0||parseInt(bigtimedata)==0||parseInt(bigpricedata)==0){
-//						layer.msg("最大配置不能为0");
-//					}
-//					if(parseInt(bigpowerdata)==""||parseInt(bigtimedata)==""||parseInt(bigpricedata)==""){
-//						layer.msg("最大配置不能为空");
-//					}
-//				});
-//				//判断总和为1
-//				$("input[name='money']").each(function(){
-////					moneyresult = moneyresult+$(this).val();
-//					moneyresult.push($(this).val());
-//				});
-////				var ratiototal = eval(moneyresult.join("+"));
-////				console.log(ratiototal);
-//				$("input[name='ratio']").each(function(){
-//					ratioresult.push($(this).val());
-//				})
-//				var moneytotal = eval(ratioresult.join("+"));
-//				if(moneytotal!=100){
-//					layer.msg("比值之和必须为1")
-//				}
-//				
-//			})
-
 		
 	</script>
 	
@@ -1314,7 +1253,7 @@
 		})
 //		时长区删除本行
 		$(".charge_wrap").on("click",".time_regulation_photo",function(){
-			if(confirm("确认删除吗?")){
+			if(confirm("确认删除这个价格吗?")){
 				$(this).parent().addClass('remove1');
 				$(this).parent().find().addClass('remove1')
 				$(".remove1").remove()
@@ -1328,14 +1267,15 @@
 			$(".tiered_price").last().append('<div class="equinox_top equinox_myself margin_top">'
 			+'<div><input type="text" class="jyname" value="" placeholder="姓名"/></div>'
 			+'<div><input type="text" value="" placeholder="手机号" maxlength="11"/ id="tel" class="tel jytel"></div>'
-			+'<div class="person_proportion jydividePrice inp1"><input type="text" value="0.1" name="money" id="inp1"/>'
+			+'<div class="person_proportion jydividePrice inp1"><input type="text" value="" name="money" id="inp1"/>'
 				+'<span class="right">或</span>'
 				+'<input class="right inp2 jydivideRatio" id="inp2" name="ratio" type="text" value="10"/></div>'
-			+'<img class="del" id="del" src="../images/area/del.png" alt="del"/></div>')
+			+'<img class="del" id="del" src="../images/area/del.png" alt="del"/></div>');
+
 		})
 		//删除本行
 		$(".partner_wrap").on('click','.del',function(){
-			if(confirm("确认删除吗?")){
+			if(confirm("确认删除这个合伙人吗?")){
 				$(this).parent().addClass('remove');
 				$(this).parent().find().addClass('remove')
 				$(".remove").remove()
@@ -1345,7 +1285,6 @@
 		
 		//比值与金额单选
 		//本人
-//		rgb(253,108,33"}
 		$(".point").css({"color":"","background-color":""});
 		$(".partner_wrap").on("focus",".point",function(){
 			$(this).css({"color":"white","background-color":"rgb(253,108,33)"});
@@ -1525,65 +1464,7 @@
                     return;
                 }
 			});	
-//			console.log(JSON.stringify(Eles)) 
-//			console.log(JSON.stringify(actualCharges))
-//			console.log(JSON.stringify(FullStop))
-//			console.log(JSON.stringify(Parents))
-//			var actualChargesJson = '';
-//			actualChargesJson = JSON.stringify(actualCharges);
-//			var ElesJson = '';
-//			ElesJson = JSON.stringify(Eles);
-//			var FullStopJson = '';
-//			FullStopJson = JSON.stringify(FullStop);
-//			var ParentsJson = '';
-//			ParentsJson = JSON.stringify(Parents);
-//			var actualChargesJson = JSON.stringify(actualCharges);
-//			var FullStopJson = JSON.stringify(FullStop);
-//			var ParentsJson = JSON.stringify(Parents);
-//			plus.storage.setItem(
-//				"actualChargesJson",actualChargesJson
-//			);
-//			plus.storage.setItem(
-//				"ElesJson",ElesJson
-//			);
-//			plus.storage.setItem(
-//				"FullStopJson",FullStopJson
-//			);
-//			plus.storage.setItem(
-//				"ParentsJson",ParentsJson
-//			);
-//			console.log("####actualChargesJson####"+plus.storage.getItem("actualChargesJson")) 
-//			console.log("####ElesJson####"+plus.storage.getItem("ElesJson"))
-//			console.log("####FullStopJson####"+plus.storage.getItem("FullStopJson"))
-//			console.log("####ParentsJson####"+plus.storage.getItem("ParentsJson"))
 			
-//			var flagCharges = false;
-//			var flagFullstop = false;
-//          var flagParents= false;
-//          var flagEles = false;
-//          var flagZero = false;
-//          var flagMobileNumber = false;
-//          var flagMobile = false;
-			
-			
-//			//显示遮道层
-//			$(".concealer_wrap").css("display","block")
-//			//叉掉遮道层
-//			$(".close").click(function(){
-//				$(".concealer_wrap").css("display","none")
-//			})
-//			//不提交关闭遮道层跳转至片区列表
-//			$("#thanks").click(function(){
-////				$(".concealer_wrap").css("display","none")
-//				$(location).attr("href","areaApplicationList.html")
-//			})
-//			//跳转至添加套餐
-//			$("#href").click(function(){
-////				$(location).attr("href","areaApplicationCombo.html")
-//				$(".concealer_wrap").css("display","none")
-//				$(".continue_wrap").css("display","block")
-//			})
-//			console.log(JSON.stringify(defaultData));
 			defaultData.advanceCharges = actualCharges;
 //			defaultData.eles = Eles;
 			$.each(Eles, function(k ,v) {
@@ -1600,14 +1481,15 @@
 			console.log(JSON.stringify(defaultData));
 			
 			
-			
+			var uuid = plus.storage.getItem("uuid");
 			postJSON(API_URL.ApiChargingBusinessGetcheckJsonSetmeal, {
-	    		uuid: '615cd7b2d8f84377bd4d3bcd9bc9f731',
+	    		uuid: uuid,
 	    		jsonSetmeal: JSON.stringify(defaultData)
     		}, function(res) {
 			    if("0" == res.code){
 			    	console.log(res.msg)
-			    	
+			    } else {
+			    	layer.msg(res.msg);
 			    }
 			})
 		})
