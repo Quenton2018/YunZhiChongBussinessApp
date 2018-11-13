@@ -340,6 +340,12 @@
 				var priceSetmealJson = res.data.priceSetmealJson;
 				$('#areaName').html(areaName);
 				$('#site').html(address);
+				
+				if('待处理' == res.data.status || '编辑' == res.data.status ){
+                    $('#updateChargingGroup').hide();
+                }else{
+                    $('#updateChargingGroup').show();
+                }
 				if(vaildeParam(priceSetmealJson)){
 					$('#setmeals').show();
 					plus.storage.setItem( "priceSetmealJson", priceSetmealJson);

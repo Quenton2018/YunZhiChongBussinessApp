@@ -200,13 +200,6 @@
         if(vaildeParam(areaId)){
             postJSON(API_URL.ApiGetApplyChargingGroupById,{"areaId":areaId},function(res){
                 if("0" == res.code){
-
-                    if('待处理' == res.data.status || '编辑' == res.data.status ){
-                        $('#submitBtn').css('display','none');
-                    }else{
-                        $('#submitBtn').css('display','block');
-                    }
-
                     var address = res.data.address;
                     $(".address").text(address);
                     var proportionsJson = res.data.proportionsJson;  //分成比例

@@ -592,6 +592,11 @@
 		}
 		postJSON(API_URL.ApiGetApplyChargingGroupById,params,function(res){
 			if(res.code == '0'){
+				if('待处理' == res.data.status || '编辑' == res.data.status ){
+                    $('#iconBtn').hide();
+                }else{
+                    $('#iconBtn').show();
+                }
 				var priceSetmealJson = res.data.priceSetmealJson;
 				if(vaildeParam(priceSetmealJson)){
 					plus.storage.setItem("priceSetmealJson", priceSetmealJson);
