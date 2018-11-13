@@ -51,6 +51,8 @@
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
+    align-items:center;
+    justify-content:center;
 }
 
 /*li 平均分配*/  

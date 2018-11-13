@@ -37,7 +37,7 @@
         }
         .tabBox span{
             display: inline-block;
-            padding: 5px 10px;
+            padding: 5px 20px;
             font-size: 0.8rem;
             line-height: 50px;
         }
@@ -436,7 +436,7 @@
 </header>
 
 <div class="mui-content" style="background: #fff">
-    <div class="tabBox">
+    <div class="tabBox flex">
         <span class="tabItem setmeal select" data-type="sfxx"><i></i>收费信息</span>
         <span class="tabItem cdz" data-type="cdz"><i></i>充电桩</span>
     </div>
@@ -512,16 +512,7 @@
 	            <div class="clearfix"></div>
 	        </div>
 	        <ul class="mui-table-view dataList">
-				<li class="mui-table-view-cell">
-			        <table class="mui-table" >
-			            <tbody >
-			            <tr>
-			                <td align="left"><span class="yc"></span>{{/if}}A1900000</td>
-			        		<td align="right">{{item.qos}}:<span class="progress"><i style="width: {{item.qosPrecent}}%;" class="progressInner"></i></span></td>
-			            </tr>
-			            </tbody>
-			        </table>
-			   </li>
+
 	        </ul>
 	        <div id="loadMore" class="loadMore">加载更多</div>
 	        <div id="noMore" class="noMore">没有更多了</div>

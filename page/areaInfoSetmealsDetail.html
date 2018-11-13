@@ -3,7 +3,7 @@
 	<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>我的充电桩</title>
+    <title>申请片区列表详情页</title>
     <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" href="../css/mui.picker.min.css">
     <link rel="stylesheet" href="../css/iconfont.css">
@@ -133,11 +133,15 @@
 			display: inline-block;
 			font-size: 12px;
 			position: relative;
-			top: 4px;
+			top: 0px;
 			margin-right: 4px;
 		}
 		.mui-bar span.compose{
 			float: right;
+		}
+		.mui-btn-blue, .mui-btn-primary, input[type=submit]{
+			border: 1px solid #FF6D22;
+    		background-color: #FF6D22;
 		}
     </style>
 </head>
@@ -145,7 +149,7 @@
 		
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <span class="compose mui-icon mui-icon-compose"></span>
+    <span class="compose mui-icon mui-icon-compose" id="updateChargingGroup"></span>
     <h1 class="mui-title" id="areaName"></h1>
 </header>
 
@@ -347,7 +351,8 @@
 							'value':'',
 							'text':item.name
 						});
-					});				
+					});
+					plus.storage.setItem("setmealName",name);
 					$('#setmealName').html(name).data('pick',setmealData);
 					getAllData(priceSetmealData[0]);
 				}else{
@@ -446,7 +451,7 @@
 				priceSetmealData = item;
 			}
 		});	
-  		getAllData(priceSetmealData)
+  		getAllData(priceSetmealData);
   	}
   	
   	//套餐下拉选择器
@@ -457,6 +462,7 @@
         	setmealPick.setData(setmealData);
       		setmealPick.show(function(item) {
       			var name = item[0].text;
+      			plus.storage.setItem("setmealName",name);
          		$('#setmealName').html(name);
          		getSetmeal(name);
         	});
@@ -472,7 +478,9 @@
 		$('#'+type).show();		
 	});
 	
-	
+	$('#updateChargingGroup').on('click',function(){
+		clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
+	});
 </script>
 
 </body>

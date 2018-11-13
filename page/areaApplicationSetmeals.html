@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>申请片区</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+
+    <style type="text/css">
+    	.area-form{
+    		margin: 15px 0;
+    	}
+    	.mui-input-group .mui-input-row:after{
+    		height: 0;
+    	}
+    	.form-group {
+    		font-size: 15px;
+    	}
+    	.form-group input{
+    		text-align: right;
+    		font-size: 15px;
+    	}
+    	.mui-input-row label~input.price{
+    		width: 48%;
+    	}
+    	.dw{
+    		width: 17%;
+    		float: right;
+    		padding: 10px 0px;
+    	}
+    	.set_meal {
+		    margin: 0 10px;
+		    background: #fff;
+		    overflow: hidden;
+		    border-radius: 6px;
+		    padding: 0 0 15px;
+		}
+
+		.set_meal_top{
+		    font-size: 15px;
+		    padding: 10px 0;
+		    margin: 0 15px;
+			border-bottom: 1px solid #ff6d22;
+		}
+		.set_meal_top img{
+			width: 18px;
+			height: 18px;
+			vertical-align: top;
+		}
+		
+		.setmeal_charge{
+		    padding: 10px 15px;
+		    overflow: hidden;
+		}
+
+		.setmeal_charge_left {
+		    float: left;
+		    margin-right: 10px;
+		}
+		.circle_wrap {
+		    width: 26px;
+		    height: 26px;
+		    border-radius: 50%;
+		    border: 1px solid #ff6d22;
+		    position: relative;
+		    top: 4px;
+		}
+		.circle {
+		    width: 16px;
+		    height: 16px;
+		    border: 1px solid #ff6d22;
+		    border-radius: 100%;
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    margin: auto;
+		}
+		.circle_radio {
+		    background-color: #ff6d22;
+		}
+		.setmeal_charge_right{
+			padding: 7px 18px;
+		    border-radius: 4px;
+		    float: left;
+		    text-align: center;
+		    font-size: 15px;	    
+		    background-color: #e6e3e3;
+		}
+		.radio {
+		    color: white;
+		    background-color: #ff6d22;
+		}
+    	.footer_wrap {
+		    width: 100%;
+		    height: 50px;
+		    background: linear-gradient(to left,#f08200,#f2800b,#ff7546);
+		    text-align: center;
+		    line-height: 50px;
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    color: #fff;
+		}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">申请片区</h1>
+	</header>
+	
+	<div class="mui-content">
+		<div class="mui-input-group area-form">
+			<div class="mui-input-row form-group">
+				<label>片区名称</label>
+				<input type="text" value="" id="area" name="area" placeholder="请输入市+小区">
+			</div>
+			<div class="mui-input-row form-group">
+				<label>电费单价</label>
+				<span class="dw">元/度电</span>
+				<input type="number" value="0.8" class="price" name="price">		
+			</div>
+		</div>
+		
+		<div class="set_meal_wrap">
+			<div class="set_meal">
+				<div class="set_meal_top">
+					<img src="../images/area/jibentaocan.png" alt="基本套餐">
+					<span>基本套餐</span>
+				</div>
+
+				<div class="setmeal_charge">
+					<div class="setmeal_charge_left">
+						<div class="circle_wrap">
+							<div class="circle circle_radio" id="circle"></div>
+						</div>
+					</div>
+					<div class="setmeal_charge_right radio" state="1" id="fullStopAndAdvance.html">充满自停</div>
+				</div>
+				<div class="setmeal_charge">
+					<div class="setmeal_charge_left">
+						<div class="circle_wrap">
+							<div class="circle" id="circleSecond"></div>
+						</div>
+					</div>
+					<div class="setmeal_charge_right" state="2" id="fullStopAndAdvance.html">充电时长</div>
+				</div>
+				<div class="setmeal_charge" id="bottom">
+					<div class="setmeal_charge_left">
+						<div class="circle_wrap">
+							<div class="circle" id="circleThird"></div>
+						</div>
+					</div>
+					<div class="full_stop_right_prepay setmeal_charge_right" state="3" id="fullStopAndAdvance.html">充满自停 + 充电时长</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="footer_wrap" id="next">
+	   	<span>下一步</span>
+	</footer>
+	<script type="text/javascript">
+		//选择套餐
+		$('.setmeal_charge').click(function() {
+			if ($(this).find('.setmeal_charge_right').hasClass('radio')) {
+				return;
+			}
+			
+			$(this).siblings().parent().parent().parent().parent().parent().find(".setmeal_charge_right").removeClass('radio');
+			$(this).siblings().parent().parent().parent().parent().parent().find(".circle").removeClass('circle_radio');
+			$(this).find(".setmeal_charge_right").addClass('radio').end().siblings().find(".setmeal_charge_right").removeClass('radio');
+			$(this).find(".circle").addClass('circle_radio').end().siblings().find(".circle").removeClass('circle_radio');	
+			
+		});
+		
+		
+		//点击下一步
+		$("#next").click(function(){
+			// var setmealCategory = $('.setmeal_charge .setmeal_charge_right.radio').attr('id');
+			// $(location).attr("href", setmealCategory)
+			var name = $('input[name="area"]').val();
+			if (name.trim().length == 0) {
+				layer.msg('请输入片区名称');
+				return;
+			}
+			var price = $('input[name="price"]').val();
+			if (price.trim().length == 0) {
+				layer.msg('请输入电费单价');
+				return;
+			}
+			price = parseFloat(price);
+			if (isNaN(price)) {
+				layer.msg('请输入正确的电费单价');
+				return;
+			}
+			var state = '';
+			$('.setmeal_charge_right').each(function() {
+				if ($(this).hasClass('radio')) {
+					state = $(this).attr('state');
+					return true;
+				}
+			});
+			if (state == '') {
+				layer.msg('请选择套餐类型');
+				return;
+			}
+			
+			localStorage.setItem("apply_name", name);
+			localStorage.setItem("apply_price", price);
+			localStorage.setItem("apply_state", state);
+			clicked('fullStopAndAdvance.html');
+		})
+			
+	</script>
+</body>
+</html>
