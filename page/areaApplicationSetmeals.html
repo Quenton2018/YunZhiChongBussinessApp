@@ -218,10 +218,24 @@
 				return;
 			}
 			
-			localStorage.setItem("apply_name", name);
-			localStorage.setItem("apply_price", price);
-			localStorage.setItem("apply_state", state);
-			clicked('fullStopAndAdvance.html');
+			var uuid = plus.storage.getItem("uuid");
+			postJSONNoIcon(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
+				uuid: uuid,
+				name: name
+			}, function(res) {
+				if (res.code == '0') {
+					var applyGroup = {
+						name: name,
+						price: price,
+						state: state
+					};
+					plus.storage.setItem('applyGroup', JSON.stringify(applyGroup));
+					
+					clicked('fullStopAndAdvance.html');
+				} else {
+					layer.msg(res.msg);
+				}
+			});
 		})
 			
 	</script>
