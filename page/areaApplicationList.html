@@ -187,7 +187,7 @@
             <div class="clearfix"></div>
         </div>
         <!--<div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">-->
-        <div class="box02" data-id="{{areaid}}"  onclick="clicked('areaInfoSetmealsDetail.html?areaid={{areaid}}')">
+        <div class="box02" data-id="{{areaid}}"  onclick="{{onclicks}}">
             <h1>电价：{{electricPrice}}元/千瓦时</h1>
             <h1>地址：{{address}}</h1>
             <h1>申请时间：{{createDate}}</h1>
@@ -308,7 +308,7 @@
 
     function getList(){
         var uuid = plus.storage.getItem("uuid");
-        var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
+//      var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
         if(vaildeParam(uuid)){
             var dataParam = {
                 "uuid":uuid,
@@ -344,13 +344,20 @@
                         }else if(status =="编辑"){
                             statusDiv = '<div class="zhuangtai02">(编辑)等待审核</div>';
                         }
+                        var priceSetmealJson = item.priceSetmealJson;
+                        if(priceSetmealJson){
+                        	clickDiv = "clicked('areaInfoSetmealsDetail.html?areaid={{areaid}}')";
+                        }else{
+                        	clickDiv = "areaApplicationDeatil(this)";
+                        }
 //                      console.log("status=========="+status);
 //                      console.log("statusDiv========="+statusDiv);
-
+//
                         html += tmpl.replace(/{{name}}/g,areaName)
                             .replace(/{{createDate}}/g,createDate)
                             .replace(/{{status}}/g,statusDiv)
                             .replace(/{{electricPrice}}/g,electricPrice)
+                            .replace(/{{onclicks}}/g,clickDiv)
                             .replace(/{{address}}/g,address)
                             .replace(/{{areaid}}/g,id)
                             .replace(/{{id}}/g,keid);

@@ -173,7 +173,7 @@
     var pageNumber = 1;
     var pageSize = 10;
     var type = 0;
-    var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
+    var uuid = '';
 
     var ws=null;
     // 处理沉浸式状态栏
@@ -192,7 +192,7 @@
     function pagePlusReady(){
         checkLogin();
 
-//      uuid = plus.storage.getItem("uuid");
+        uuid = plus.storage.getItem("uuid");
 
         getChargingCountByPartner(uuid);
 

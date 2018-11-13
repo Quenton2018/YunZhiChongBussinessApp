@@ -618,7 +618,7 @@
 
 <script type="text/javascript">
     mui.init();
-    var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
+    var uuid = '';
     var code = getQueryString('code') || 42;
     var roadPickData = [];      //套餐name数据
     
@@ -638,7 +638,7 @@
 	
     function pagePlusReady(){
         checkLogin();
-//      uuid = plus.storage.getItem("uuid");		
+        uuid = plus.storage.getItem("uuid");		
         getDataList();
         
         ws=plus.webview.currentWebview();

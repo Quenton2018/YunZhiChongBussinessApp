@@ -209,7 +209,7 @@
 			<!--时长区-->
 			<div class="setmeal_tap_content" style="display: none;" id="charges">
 				<div class="setmeal_tap_header flex">
-					<span class="flex-item first_span">最多扣款(元)</span>
+					<span class="flex-item">价格(元)</span>
 					<span class="flex-item">时长(小时)</span>
 				</div>
 				<div class="setmeal_tap_table">
@@ -272,7 +272,7 @@
 <script type="text/html" id="chargesTmpl">
 	{{each list as item index}}
 	<li class="table_list flex">
-		<span class="flex-item first_span">{{item.amount}}</span>
+		<span class="flex-item">{{item.amount}}</span>
 		<span class="flex-item">{{item.minutes}}</span>
 	</li>
 	{{/each}}
@@ -292,9 +292,9 @@
 <script type="text/javascript">
 	mui.init();
 	
-    var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
+    var uuid = '';
     var areaId = getQueryString('areaid');
-//  var areaId = 42;
+
     var setmealData = [];      //套餐name数据
     
     var ws=null;
@@ -313,7 +313,7 @@
 	
     function pagePlusReady(){
         checkLogin();
-		//uuid = plus.storage.getItem("uuid");		
+		uuid = plus.storage.getItem("uuid");		
         getDataList();
         
         ws=plus.webview.currentWebview();
@@ -355,8 +355,6 @@
 					plus.storage.setItem("setmealName",name);
 					$('#setmealName').html(name).data('pick',setmealData);
 					getAllData(priceSetmealData[0]);
-				}else{
-					clicked('areaApplicationDetail.html');
 				}
 			}else{
 				layer.msg(res.msg);
@@ -370,8 +368,8 @@
 		var actualCharges = priceSetmealData.actualCharges;
 		var advanceCharges = priceSetmealData.advanceCharges;
 		var partners = priceSetmealData.partners;
-		var state = priceSetmealData.state;
-		$('#state').html(state);
+		var stateName = priceSetmealData.stateName;
+		$('#state').html(stateName);
     	var HeadData = [];
   		if(vaildeParam(eles)){
   			HeadData.push({

@@ -97,6 +97,7 @@ API_URL.ApiChargingBusinessGetSetmeal = apiHost + "/api/setmeal/getSetmeal"; //�
 API_URL.ApiChargingBusinessGetSetmealPrice = apiHost + "/api/setmeal/getDefaultSetmealPrice"; //合伙人收费
 API_URL.ApiChargingBusinessGetcheckJsonSetmeal = apiHost + "/api/applyChargingGroup/checkJsonSetmeal"; //合伙人套餐校验
 
+API_URL.updateChargingGroup = apiHost + "/api/applyChargingGroup/updateChargingGroup";
 
 
 API_URL.saveSetmealMember = apiHost + "/api/setmeal/saveSetmealMember"; //添加套餐用户
