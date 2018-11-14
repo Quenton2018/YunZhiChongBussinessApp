@@ -47,6 +47,9 @@
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
 			"waiting": true
 		},
+		"statusbar": {
+			"immersed": true /* 沉浸式状态栏 */
+		},
 		"popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
 		"runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
@@ -191,7 +194,8 @@
 					"page/honorList.html",
 					"page/myIncome.html",
 					"page/myWallet.html",
-					"page/setting.html"
+					"page/setting.html",
+					"page/areaApplicationList.html"
 				],
 				"priority": 0
 			},
@@ -208,7 +212,9 @@
 				"resources": [],
 				"refer": [
 					"page/userInfo.html",
-					"page/myCdz.html"
+					"page/myCdz.html",
+					"page/setting.html",
+					"page/customerService.html"
 				],
 				"priority": 0
 			},
@@ -242,7 +248,8 @@
 					"page/myCdzUnNormal.html",
 					"page/areaList.html",
 					"page/areaListUnNormal.html",
-					"page/areaInfoSetmeals.html"
+					"page/areaInfoSetmeals.html",
+					"page/areaDataXinxi.html"
 				],
 				"priority": 0
 			},
@@ -271,6 +278,13 @@
 				"resources": [],
 				"refer": [
 					"page/putforward.html"
+				],
+				"priority": 0
+			},
+			"page/areaApplicationList.html": {
+				"resources": [],
+				"refer": [
+					"page/t.html"
 				],
 				"priority": 0
 			}

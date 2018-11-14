@@ -1037,3 +1037,46 @@ $(function(){
 		back()
 	})
 })
+
+$.plusReady = function(pageReady, pageRefresh) {
+	var ws = null;
+    if (window.plus) {
+        pagePlusReady();
+    } else {
+        document.addEventListener('plusready', pagePlusReady, false);
+    }
+    function pagePlusReady() {
+        ws = plus.webview.currentWebview();
+    	// 处理沉浸式状态栏
+	    var topoffset = 0;
+	    var ms = (/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+	    if (ms && ms.length >= 3) {
+	        topoffset = parseFloat(ms[2]);
+	    }
+	    // 兼容沉浸式状态栏模式
+        if (plus.navigator.isImmersedStatusbar()) {
+            topoffset = Math.round(plus.navigator.getStatusbarHeight());
+        } else {
+            $('.header').removeClass('header-immersed');
+            $('.mui-content').css('margin-top', '0px');
+        }
+        ws.setPullToRefresh({
+        	support: true,
+        	style: 'circle',
+        	offset: topoffset + 45 + 'px'
+        }, onRefresh);
+        
+        pageReady();
+    }
+
+    // 刷新页面
+    function onRefresh(){
+        console.log("### onRefresh ###");
+        if (pageRefresh) {
+        	pageRefresh();
+        } else {
+        	pageReady();
+        }
+        ws.endPullToRefresh();
+    }
+}

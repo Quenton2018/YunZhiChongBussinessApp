@@ -1,69 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>主页</title>
-	<link rel="stylesheet" href="css/mui.min.css">
-	<link rel="stylesheet" href="css/iconfont.css">
-	<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
-	<link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="plugins/layer/layer.js"></script>
-	<script src="js/hammer.min.js"></script>
-	<script src="js/jquery.hammer.js"></script>
-	<script src="js/common.js"></script>
-	<script src="js/base.js"></script>
-    <script src="js/mui.min.js"></script>
-    <style type="text/css">
-        *{
-            margin: 0;
-            padding: 0;
-            text-decoration: none;
-            list-style: none;
-            font-weight: normal;
-            border-style: none;
-        }
-        img{display: block;}
-        body{background: white;}
-        .top{
-            width: 100%;
-            height: 44px;
-            background: #fb7833;
-            font-size: 16px;
-            color:white;
-            text-align: center;
-            line-height: 44px;
-            box-shadow: none;
-        }
-        .top .left{
-            float: left;
-            color: #EB0C00;
-            padding-left: 30px;
-            background: url("images/index/wode@3x.png") 10px center no-repeat;
-            background-size: 20px 20px;
-            height: 44px;
-        }
-        .top .right{
-            float: right;
-            color: #EB0C00;
-            padding-right: 10px;
-            padding-left: 20px;
-            background: url("images/index/shezhi@3x.png") 0 center no-repeat;
-            background-size: 20px 20px;
-            height: 44px;
-
-        }
-        .top h1{
-            z-index: -100;
-            margin: 0;
-            padding: 0;
-            color: white;
-        }
-        .box01{
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>主页</title>
+	<link rel="stylesheet" href="css/mui.min.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="plugins/layer/theme/default/layer.css" />
+	<style>
+		.header {
+			box-shadow: none;
+		}
+		.box01{
             height: 230px;
-            margin-top: 44px;
             background: url("images/index/beijing@3x.png") no-repeat;
             background-size: 100% 100%;
             text-align: center;
@@ -101,153 +52,97 @@
             font-size: 13px;
             color: white;
         }
-        .box02{
+        
+        a img {
+        	width: 44px;
         }
-        .box03{
-            float: left;
-            width: calc(100% / 3);
-            text-align: center;
-            border-bottom: 1px solid #ececec;
-            border-right: 1px solid #ececec;
-
-        }
-        .box03 .imgbox{
-            margin-top: 28px;
-        }
-        .imgbox img{
-            width: 44px;
-            margin: 0 auto;
-        }
-        .box03 h1{
-            color: black;
-            font-size: 15px;
-            margin-bottom: 20px;
-            margin-top: 20px;
-        }
-
-
-    </style>
-
+	</style>
 </head>
-<body>
 
-    <header class="top mui-bar mui-bar-nav">
-        <div class="left" onclick="clicked('page/menu.html')" ></div>
-        <div class="right" onclick="clicked('page/setting.html')" ></div>
-        <h1 class="mui-title">云智充</h1>
-    </header>
-    <div class="box01">
-        <h1 class="totalMoney">0.00</h1>
-        <h2>收入总计(元)</h2>
-        <div class="conbox01">
-            <h3 class="dayMoney">0.00</h3>
-            <h4>今日总收入(元)</h4>
-        </div>
-        <div class="conbox01">
-            <h3 class="cdzCount">0</h3>
-            <h4>充电桩总数(台)</h4>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="box02">
-        <div class="box03" onclick="clicked('page/myCdz.html')">
-            <div class="imgbox">
-                <img src="images/index/wodecdz@3x.png">
-                <h1>我的充电桩</h1>
-            </div>
-        </div>
-        <div class="box03" onclick="clicked('page/myIncome.html')">
-            <div class="imgbox">
-                <img src="images/index/wodeshouru@3x.png">
-                <h1>我的收入</h1>
-            </div>
-        </div>
-        <div class="box03" onclick="clicked('page/myWallet.html')">
-            <div class="imgbox" >
-                <img src="images/index/wodeqianbao@3x.png">
-                <h1>我的钱包</h1>
-            </div>
-        </div>
-        <div class="box03" style="display: none;" id="areaApplicationList">
-            <div class="imgbox" onclick="clicked('page/areaApplicationList.html');">
-                <img src="images/index/pianqushenqing@3x.png">
-                <h1>片区申请</h1>
-            </div>
-        </div>
-        <div class="box03" style="display: none;" id="applyCdz">
-            <div class="imgbox" onclick="clicked('page/applyCdz/list.html')">
-                <img src="images/index/cdzsq@3x.png">
-                <h1>充电桩申请</h1>
-            </div>
-        </div>
-       <!-- <div class="box03" onclick="clicked('page/honorList.html')">
-            <div class="imgbox">
-                <img src="images/index/ryb@3x.png">
-                <h1>荣誉榜</h1>
-            </div>
-        </div>-->
-    </div>
-
-
-	<script type="text/javascript">
-        mui.init();
-
-
-        var ws=null;
-        // 处理沉浸式状态栏
-        var topoffset=0;
-        var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-        if(ms&&ms.length>=3){
-            topoffset=parseFloat(ms[2]);
-        }
-
-        if(window.plus){
-            pagePlusReady();
-        }else{
-            document.addEventListener('plusready',pagePlusReady,false);
-        }
-
-        function pagePlusReady(){
-            checkLogin('page/login.html');
+<body style="background-color: #FFFFF;">
+	
+	<header class="header header-immersed mui-bar mui-bar-nav">
+	    <a class="mui-icon mui-icon-person" onclick="clicked('page/menu.html')"></a>
+	    <h1 class="mui-title">云智充</h1>
+	    <a class="mui-icon mui-icon-gear mui-icon-right-nav mui-pull-right" onclick="clicked('page/setting.html')"></a>
+	</header>
+	
+	<div class="mui-content">
+		<!-- box01 -->
+		<div class="box01">
+	        <h1 class="totalMoney">0.00</h1>
+	        <h2>收入总计(元)</h2>
+	        <div class="conbox01">
+	            <h3 class="dayMoney">0.00</h3>
+	            <h4>今日总收入(元)</h4>
+	        </div>
+	        <div class="conbox01">
+	            <h3 class="cdzCount">0</h3>
+	            <h4>充电桩总数(台)</h4>
+	        </div>
+	        <div class="clearfix"></div>
+	    </div>
+		
+        <ul class="mui-table-view mui-grid-view mui-grid-9">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            	<a onclick="clicked('page/myCdz.html')">
+                    <img src="images/index/wodecdz@3x.png">
+                    <div class="mui-media-body">我的充电桩</div>
+            	</a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            	<a onclick="clicked('page/myIncome.html')">
+                    <img src="images/index/wodeshouru@3x.png">
+                    <div class="mui-media-body">我的收入</div>
+            	</a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            	<a onclick="clicked('page/myWallet.html')">
+                    <img src="images/index/wodeqianbao@3x.png">
+                    <div class="mui-media-body">我的钱包</div>
+            	</a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            	<a onclick="clicked('page/areaApplicationList.html')">
+                    <img src="images/index/pianqushenqing@3x.png">
+                    <div class="mui-media-body">片区申请</div>
+            	</a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            	<a onclick="clicked('page/applyCdz/list.html')">
+                    <img src="images/index/cdzsq@3x.png">
+                    <div class="mui-media-body">充电桩申请</div>
+            	</a>
+            </li>
+        </ul> 
+	</div>
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="plugins/layer/layer.js"></script>
+	<script src="js/hammer.min.js"></script>
+	<script src="js/jquery.hammer.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/base.js"></script>
+    <script src="js/mui.min.js"></script>
+    <script>
+    	mui.init();
+    	
+    	$.plusReady(function() {
+    		checkLogin('page/login.html');
 
             getUserInfo();
             GetADaylyIncomeDetail();
 
             checkVersion();
-
-            plus.push.addEventListener( "receive", function( msg ) {
-                layer.msg(msg);
-            }, false );
-
-            ws=plus.webview.currentWebview();
-            if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-                topoffset=Math.round(plus.navigator.getStatusbarHeight());
-            }
-            ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-        }
-
-        // 刷新页面
-        function onRefresh(){
-            getUserInfo();
+    	}, function() {
+    		getUserInfo();
             GetADaylyIncomeDetail();
-            ws.endPullToRefresh();
-        }
-
-
-
-      /*  $("#areaApplicationList").click(function(){
-            if(pianquFlag){
-
-            }else{
-                layer.msg("您没有权限申请片区");
-            }
-        });*/
-
-
-        /**
+    	});
+    	
+    	/**
          * 获取用户信息
          */
-       function getUserInfo(){
+       	function getUserInfo(){
             var uuid = plus.storage.getItem("uuid");
             if(!vaildeParam(uuid)){
                 return;
@@ -356,7 +251,6 @@
                 }
             })
         }
-
     </script>
 </body>
 </html>

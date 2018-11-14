@@ -39,43 +39,25 @@
             display: inline-block;
             padding: 5px 10px;
             font-size: .8rem;
+            margin-bottom: 3px;
         }
         .tabBox span.select{
             border-bottom: #EC8131 solid 2px;
         }
-        .midRow{
-            /*background: #F0F1F3;
-            padding: 10px 15px;
-            font-size: .8rem;*/    
-            background: #EEE;
-		    padding: 15px;
-		    font-size: .8rem;
-		    border-radius: 6px;
-		    color: #000;
-		    box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;
-		    overflow: hidden;
+        .tabBox b {
+        	font-weight: 500;
+        	padding: 0 3px;
         }
-		.midBox{
-			padding: 10px;
-    		background: #F0F1F3;
-		}
+        .midRow{
+            background: #F0F1F3;
+            padding: 10px 15px;
+            font-size: .8rem;
+            color: #979797;
+        }
+
         .mui-table-view{
             font-size: .9rem;
-            margin-top: 10px;
-            background: none;
         }
-        .mui-table-view li{
-        	margin-bottom: 5px;
-        	background: #fff;
-        	border-radius: 6px;
-        	font-size: 0.8rem;
-        	padding: 12px 15px;
-        	box-shadow: inset #999 0px -1px 3px 0px;
-        	overflow: hidden;
-        }
-        .mui-table-view-cell:after,.mui-table-view:after,.mui-table-view:before{
-			height:0;
-		}
         .mui-table-view .mui-badge{
             background: transparent;
             font-size: .9rem;
@@ -98,19 +80,17 @@
             font-size: .8rem;
             display: none;
         }
-
-
     </style>
 
 </head>
 <body style="background: #F0F1F3">
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">我的充电桩</h1>
 </header>
 
-<div class="mui-content" style="background: #fff">
+<div class="mui-content" style="background: #FFFFFF">
 
     <div class="topInfoBox">
         <h1 id="countAll">0</h1>
@@ -118,12 +98,11 @@
     </div>
 
     <div class="tabBox">
-        <span id="normal" class="tabItem select" data-type="0">充电桩详情
-            <!--(<span id="countValid">0</span>)-->
-        </span>
-        <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<span id="countInvalid">0</span>)</span>
-        <span class="tabItem" data-type="3" >未安装(<span id="countUnInstall">0</span>)</span>
+        <span id="normal" class="tabItem select" data-type="0">充电桩详情</span>
+        <span id="abnormal" class="tabItem" data-type="2">异常充电桩(<b id="countInvalid">0</b>)</span>
+        <span class="tabItem" data-type="3" >未安装(<b id="countUnInstall">0</b>)</span>
     </div>
+    
 	<div class="midBox">
 	    <div class="midRow">
 	        <div class="left" id="midInfoBox">片区(<span id="groupCount">0</span>)</div>
@@ -175,54 +154,34 @@
     var type = 0;
     var uuid = '';
 
-    var ws=null;
-    // 处理沉浸式状态栏
-    var topoffset=0;
-    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if(ms&&ms.length>=3){
-        topoffset=parseFloat(ms[2]);
-    }
-
-
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-    function pagePlusReady(){
-        checkLogin();
-
+    $.plusReady(function() {
         uuid = plus.storage.getItem("uuid");
-
+        
+    	checkLogin();
         getChargingCountByPartner(uuid);
-
         getChargingGroup(uuid);
-
-        ws=plus.webview.currentWebview();
-        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+    }, function() {
+    	var type = $('.select').attr('data-type');
+        if (type == 3) {
+        	$(".tabItem").removeClass('select');
+        	$('#normal').addClass("select");
         }
-        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-
-    }
-
-
-    // 刷新页面
-    function onRefresh(){
         pageNumber=1;
         getChargingCountByPartner(uuid);
         getChargingGroup(uuid);
-        ws.endPullToRefresh();
-    }
+    });
 
     /**
      * 获取充电桩数量
      */
-    function getChargingCountByPartner(uuid){
+    function getChargingCountByPartner(uuid) {
         var param = {
             'uuid':uuid
         }
-        postJSON(API_URL.ApiChargingGetChargingCountByPartner,param,function(res){
+        
+        postJSON(API_URL.ApiChargingGetChargingCountByPartner, {
+        	'uuid' : uuid
+        }, function(res){
             if("0" == res.code){
                 $("#countAll").text(res.data.countAll);
                 $("#countValid").text(res.data.countValid);
@@ -231,7 +190,7 @@
             }else{
                 layer.msg(res.msg);
             }
-        })
+        });
     }
 
 
@@ -243,7 +202,7 @@
         $(this).addClass("select");
 
         pageNumber = 1;
-
+		
         if(type != 3){
             $("#midInfoBox").html('片区(<span id="groupCount">0</span>)');
             $("#midInfoBoxRight").html("台数");
@@ -299,8 +258,6 @@
                         falgLast =false;
                     }
                 });
-
-                console.log("ids:"+ids)
 
                 $(".dataList").append(html);
 
