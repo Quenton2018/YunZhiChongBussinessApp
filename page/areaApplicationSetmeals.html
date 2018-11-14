@@ -130,9 +130,9 @@
 <body>
 	<div id="app">
 		
-	<header class="mui-bar mui-bar-nav">
+	<header class="header header-immersed mui-bar mui-bar-nav">
 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	    <h1 class="mui-title">申请片区</h1>
+	    <h1 class="mui-title">{{areaTitle}}</h1>
 	</header>
 	
 	<div class="mui-content">
@@ -185,7 +185,7 @@
 		
 	</div>
 	<div id="footer" style="height: 100px;">
-		<div class="footer_wrap" id="next" @click="submits">
+		<div class="fixed btn-submit" id="next" @click="submits">
 		   	<span>下一步</span>
 		</div>
 	</div>
@@ -223,6 +223,7 @@
 		var vm = new Vue({
 			el:'#app',
 			data:{
+				areaTitle:'申请片区',
 				areaName:'',
 				stateName:'',
 				setmealList:[{
@@ -241,7 +242,7 @@
 					var setmealData = updateGroup.setmealData;
 //					console.log(JSON.stringify(setmealData))
 					areaType = updateGroup.areaType;
-					$('.mui-title').text(areaName);
+					this.areaTitle = areaName;
 					this.areaName = areaName;
 					$("#area").attr('disabled','true');
 					if(areaType == 'update'){//片区套餐修改
@@ -250,7 +251,16 @@
 							"isSelect":true,
 							"text":setmealName
 						}]
-					}else{
+					}else if(areaType == 'add'){
+						this.setmealList = setmealData;
+						var applySetmealName = "套餐" + toDx(this.setmealList.length);
+						plus.storage.setItem('applySetmealName', applySetmealName);
+						this.setmealList.unshift({
+							"state": "1",
+							"isSelect":true,
+							"text":applySetmealName
+						})
+					}else if(areaType == 'otheradd'){
 						this.setmealList = setmealData;
 						var applySetmealName = "套餐" + toDx(this.setmealList.length);
 						plus.storage.setItem('applySetmealName', applySetmealName);
@@ -263,9 +273,6 @@
 				}
 			},
 			methods:{
-				tapClick:function(type){
-
-				},
 				submits:function(){
 					var name = $('input[name="area"]').val();
 					if (name.trim().length == 0) {

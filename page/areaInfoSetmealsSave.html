@@ -265,14 +265,103 @@
 			right: 0px;
 			top: 18px;
 		}
-		
+		/*弹窗*/
+
+		.mui-mask{
+        	width: 100%;
+        	height: 100%;
+        	background-color: rgba(0,0,0,0.7);
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	margin: auto;
+        	z-index: 98;
+        }
+        .set_complete_wrap,.continue_top_wrap {
+        	width: 60%;
+        	height: 250px;
+        	background-color: #fff;
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	margin: auto;
+        	border-radius: 6px;
+        	z-index: 100;
+        }
+        .set_top {
+        	height: 130px;
+        	position: relative;
+        }
+        .set_bottom {
+        	height: 120px;
+        	background-color: #ff6d22;
+        	border-bottom-left-radius: 6px;
+        	border-bottom-right-radius: 6px;
+        	position: relative;
+        	overflow: hidden;
+        }
+        .set_top .gou_photo {
+        	width: 80px;
+        	height: 80px;
+        	position: absolute;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	margin: auto;
+        }
+        .set_top .close {
+        	width: 14px;
+        	height: 14px;
+        	position: absolute;
+        	top: 10px;
+        	right: 10px;
+        }
+        .set_bottom p {
+        	height: 15px;
+        	line-height: 15px;
+        	text-align: center;
+        	color: #fff;
+        	font-size: 0.8rem;
+        }
+        .set_bottom p:first-child {
+        	margin-top: 25px;
+        }
+        .set_bottom p:last-child {
+        	margin-top: 8px;
+        }
+        .set_btn {
+        	width: 80%;
+        	margin: 0 auto;
+        	overflow: hidden;
+        }
+        .set_btn button {
+        	padding: 4px 6px;
+        	border: 1px solid #fff;
+        	border-radius: 4px;
+        	background-color: #fff;
+        	font-size: 0.8rem;
+        }
+        .set_btn button:first-child {
+        	float: left;
+        	background-color: transparent;
+        	color: #fff;
+        }
+        .set_btn button:last-child {
+ 			float: right;
+        	color: #ff6d22;
+        }
     </style>
 </head>
 <body background="#f0f1f3" >
 
 <div id="app">
 	
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title" id="stateName">{{stateName}}</h1>
 </header>
@@ -395,13 +484,61 @@
 	</div>
 </div>
 
+	<!--遮挡层弹窗-->
+	<div class="mui-mask" style="display: none;" id="setMask">
+		<div class="set_complete_wrap">
+			<div class="set_top">
+				<img class="gou_photo" src="../images/area/gou.png" alt="勾" />
+				<img class="close" @click="closeMask" src="../images/pianqushenqing/guanbi@3x.png" alt="关闭" />
+			</div>
+			<div class="set_bottom">
+				<div class="continue">
+					<p>您的<span>基本套餐</span>设置完成, 是</p>
+					<p>否需要添加其他套餐</p>
+					<div class="set_btn">
+						<button id="thanks" @click="closeMask">不用,谢谢</button>
+						<button id="href" @click="otherAdd">添加其他套餐</button>
+					</div>
+				</div>
+			</div>
+			<!---->
+		</div>
+	</div>
+	
+	<!--判断选择其他套餐-->
+	<!--<div class="mui-mask" style="display: none;">
+		<div class="continue_top_wrap">
+			<div class="continue_top">
+				<img class="comeback" src="../images/pianqushenqing/guanbi@3x.png" alt"关闭"/>
+			</div>
+			<div class="select_combo">
+				<div class="combo">
+					<div class="basic">套餐一</div>
+					<div class="select_other">
+						<p class="combo_vip">套餐二</p>
+						<p class="combo_vip">套餐三</p>
+						<p class="combo_vip">套餐四</p>
+					</div>
+				</div>
+			</div>
+			<div class="method-of-triads">
+				<p class="one sure"><input type="radio" name="combo" id="1" value="" checked=""/> 充满自停</p>
+				<p class="one"><input type="radio" name="combo" id="2" value="" /> 充电时长</p>
+				<p class="one"><input type="radio" name="combo" id="3" value="" /> 充满自停+充电时长</p>
+			</div>
+			<div class="combo_bottom" id="AddCombo">
+				添加套餐
+			</div>
+		</div>
+	</div>-->
+
 <footer id="footer" style="height: 50px;">
-	<div class="footer_wrap" id="submit" v-on:click="submits">
+	<div class="fixed btn-submit" id="submit" v-on:click="submits">
 		<span>提交</span>
 	</div>
 </footer>
-
 </div>
+
 <script type="text/javascript">
 	mui.init();
 	
@@ -409,37 +546,19 @@
     var areaId = getQueryString('areaid');
     var setmealName = '';
     var applyGroup = '';
-    
-    var ws=null;
-    // 处理沉浸式状态栏
-    var topoffset=0;
-    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if(ms&&ms.length>=3){
-        topoffset=parseFloat(ms[2]);
-    }
-  
-	mui.plusReady(pagePlusReady);
-    function pagePlusReady(){
-        checkLogin();
+  	if(window.plus){
+  		var jsonSetmealJsonStr = JSON.parse(plus.storage.getItem("jsonSetmealJsonStr")) || [];  //套餐数组
+  	}  
+  	$.plusReady(function() {
+     	checkLogin();
 		uuid = plus.storage.getItem("uuid");
 		setmealName = plus.storage.getItem("setmealName");
         getDataList();
-        
-        ws=plus.webview.currentWebview();
-        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-            topoffset=Math.round(plus.navigator.getStatusbarHeight());
-        }
-        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-
-    }
-    // 刷新页面
-    function onRefresh(){
-        getDataList();
-        ws.endPullToRefresh();
-    }
-    Vue.filter('gethours', function (value) {
-	 	return value/60
-	})
+      
+    },function(){
+    	getDataList();
+    });
+  
 	var vm = new Vue({
 		el:'#app',
 		data:{
@@ -605,6 +724,27 @@
 					}
 				}
 			},
+			closeMask:function(){
+				$('.mui-mask').hide();
+				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("jsonSetmealJSON"))
+				jsonSetmealJsonStr.push(jsonSetmealJSON);
+				plus.storage.setItem("jsonSetmealJsonStr",JSON.stringify(jsonSetmealJsonStr));
+				SaveChargingGroup(jsonSetmealJsonStr);
+			},
+			otherAdd:function(){
+				$('.mui-mask').hide();
+				var applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
+				
+				var updateGroup = {
+					'areaName': applyGroup.name,
+					'state':this.state,
+					'setmealName':setmealName,
+					'setmealData':setmealData,
+					'areaType':'otheradd'
+				}
+				plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+				clicked('areaApplicationSetmeals.html?areaId=other');
+			},
 			submits:function(){
 				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("priceSetmealData"));
 				var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
@@ -645,7 +785,7 @@
 				jsonSetmealJSON.eles = vm.elesList;
 				jsonSetmealJSON.fullStop = vm.fullStopList;
 				jsonSetmealJSON.partners = vm.partnersList;
-				console.log(this.state);
+				
 				jsonSetmealJSON.state = vm.state;
 				
 				if(jsonSetmealJSON.state == '1'){       //充满自停
@@ -674,9 +814,12 @@
 					uuid:uuid,
 					jsonSetmeal:JSON.stringify(jsonSetmealJSON)
 				}
+//				console.log(JSON.stringify(jsonSetmealJSON))
 				postJSON(API_URL.ApiChargingBusinessGetcheckJsonSetmeal,params,function(res){
 					if(res.code == '0'){
-						AddChargingGroup(jsonSetmealJSON);
+						plus.storage.setItem("jsonSetmealJSON",JSON.stringify(jsonSetmealJSON));
+						$("#setMask").show();
+						//SaveChargingGroup(jsonSetmealJSON);					
 					}else{
 						layer.msg(res.msg);
 					}
@@ -695,7 +838,7 @@
 		postJSON(API_URL.ApiChargingBusinessGetSetmealPrice,params,function(res){
 			if(res.code == '0'){			
 				var priceSetmealData = res.data;
-				var applySetmealName = plus.storage.getItem('applySetmealName');
+				var applySetmealName = plus.storage.getItem('saveSetmealName') || '基本套餐';
 				priceSetmealData.name = applySetmealName;
 			  	getAllData(priceSetmealData);
 			}else{
@@ -730,16 +873,22 @@
   		}
 	}
 
-	function AddChargingGroup(jsonSetmealJSON){
+	function SaveChargingGroup(jsonSetmealJSON){
+		var applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
 		var params = {
 			uuid:uuid,
-			applyChargingGroupId:areaId,
-			jsonSetmeal:JSON.stringify(jsonSetmealJSON)
-		}
-		console.log(JSON.stringify(jsonSetmealJSON))
-		postJSON(API_URL.ApiChargingBusinessAddSetmeal,params,function(res){
+			app_name:applyGroup.name,
+			app_address:applyGroup.name,
+			app_latitude:'0',
+			app_longitude:'0',
+			app_electricPrice:applyGroup.price,
+			memberListJson:'[]',
+			dianjiaListJson:'[]',
+			priceSetmealJson:JSON.stringify(jsonSetmealJSON)
+		};
+		postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,params,function(res){
 			if(res.code == '0'){
-				clicked('areaInfoSetmealsDetail.html?areaid='+areaId);
+				clicked('areaApplicationList.html');
 			}else{
 				layer.msg(res.msg);
 			}

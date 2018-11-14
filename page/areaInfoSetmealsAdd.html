@@ -272,7 +272,7 @@
 
 <div id="app">
 	
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title" id="stateName">{{stateName}}</h1>
 </header>
@@ -396,7 +396,7 @@
 </div>
 
 <footer id="footer" style="height: 50px;">
-	<div class="footer_wrap" id="submit" v-on:click="submits">
+	<div class="fixed btn-submit" id="submit" v-on:click="submits">
 		<span>提交</span>
 	</div>
 </footer>
@@ -410,36 +410,16 @@
     var setmealName = '';
     var applyGroup = '';
     
-    var ws=null;
-    // 处理沉浸式状态栏
-    var topoffset=0;
-    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if(ms&&ms.length>=3){
-        topoffset=parseFloat(ms[2]);
-    }
-  
-	mui.plusReady(pagePlusReady);
-    function pagePlusReady(){
-        checkLogin();
+    $.plusReady(function() {
+     	checkLogin();
 		uuid = plus.storage.getItem("uuid");
 		setmealName = plus.storage.getItem("setmealName");
         getDataList();
-        
-        ws=plus.webview.currentWebview();
-        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-            topoffset=Math.round(plus.navigator.getStatusbarHeight());
-        }
-        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+      
+    },function(){
+    	getDataList();
+    });
 
-    }
-    // 刷新页面
-    function onRefresh(){
-        getDataList();
-        ws.endPullToRefresh();
-    }
-    Vue.filter('gethours', function (value) {
-	 	return value/60
-	})
 	var vm = new Vue({
 		el:'#app',
 		data:{
