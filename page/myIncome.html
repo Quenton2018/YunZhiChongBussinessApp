@@ -8,14 +8,6 @@
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../plugins/layer/layer.js"></script>
-    <script src="../js/hammer.min.js"></script>
-    <script src="../js/jquery.hammer.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/base.js"></script>
-    <script src="../js/mui.min.js"></script>
     <style type="text/css">
 
         .topBox{
@@ -48,12 +40,12 @@
 </head>
 <body style="background: #fff">
 
-<header class="mui-bar mui-bar-nav" style="box-shadow:none;">
+<header class="header header-immersed mui-bar mui-bar-nav" style="box-shadow: none;">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">我的收入</h1>
 </header>
 
-<div class="mui-content" style="background: #fff">
+<div class="mui-content" style="background: #fff; margin-top: 18px;">
     
     <div class="topBox">
         <img src="../images/shouru2.png" style="display: block;width: 100%">
@@ -87,44 +79,26 @@
 
 </script>
 
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../plugins/layer/layer.js"></script>
+<script src="../js/hammer.min.js"></script>
+<script src="../js/jquery.hammer.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/base.js"></script>
+<script src="../js/mui.min.js"></script>
 <script type="text/javascript">
     mui.init();
 
-    var ws=null;
-    // 处理沉浸式状态栏
-    var topoffset=0;
-    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if(ms&&ms.length>=3){
-        topoffset=parseFloat(ms[2]);
-    }
-
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-
-    function pagePlusReady(){
-        checkLogin();
+    $.plusReady(function() {
+    	checkLogin();
 
         getUserInfoDateBase();
 
-        getList(); //
-
-        ws=plus.webview.currentWebview();
-        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-            topoffset=Math.round(plus.navigator.getStatusbarHeight());
-        }
-        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-    }
-
-    // 刷新页面
-    function onRefresh(){
-        console.log("onRefresh==================");
-        $(".dataList").html("");
         getList();
-        ws.endPullToRefresh();
-    }
+    }, function() {
+    	$(".dataList").html("");
+        getList();
+    });
 
     function getList(){
         var uuid = plus.storage.getItem("uuid");

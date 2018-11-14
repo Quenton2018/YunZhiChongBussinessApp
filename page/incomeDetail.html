@@ -68,7 +68,7 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">收入明细</h1>
 </header>
@@ -112,11 +112,22 @@
     var year;
     var month;
 
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
+    $.plusReady(function() {
+    	checkLogin();
+        year =  new Date().getFullYear();
+        month = plus.storage.getItem("month");
+        var parnterMoney = plus.storage.getItem("parnterMoney");
+        monthParam =month;
+        yearParam =year;
+
+        $(".selectDate span").text(year+"年"+month+"月");
+        $("#benyuemoney").text(parnterMoney);
+        $(".dataList").html("");
+        getList(month,year);
+    }, function() {
+    	$(".dataList").html("");
+    	getList(month,year);
+    });
 
     function pagePlusReady(){
         checkLogin();

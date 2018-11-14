@@ -82,7 +82,7 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">桩收入明细</h1>
 </header>
@@ -161,18 +161,12 @@
     console.log("## getCdz ## firstDay:"+firstDay)
     console.log("## getCdz ## lastDay:"+lastDay)
 
-
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-
-    function pagePlusReady(){
-
-        uuid = plus.storage.getItem("uuid");
+	$.plusReady(function() {
+		uuid = plus.storage.getItem("uuid");
         getCdz();
-    }
+	}, function() {
+		getCdz();
+	});
 
     
     function getCdz(){
