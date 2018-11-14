@@ -82,7 +82,7 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">桩收入明细</h1>
 </header>
@@ -154,66 +154,17 @@
 
     $(".dateBox").html(year+"年"+month+"月")
 
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-
     function mGetDate(year, month){
         var d = new Date(year, month, 0);
         return d.getDate();
     }
-
-    // $(".selectDate").click(function () {
-    //
-    //     var monthDayCount = mGetDate(year,month);
-    //
-    //     var options = {
-    //         'type':'day'
-    //     }
-    //
-    //     var dayArr = new Array();
-    //
-    //     for(var i=1;i<=monthDayCount;i++){
-    //         var dayObj = new Object();
-    //         dayObj.value = i+"";
-    //         dayObj.text = i+"日";
-    //         dayArr.push(dayObj);
-    //     }
-    //
-    //     var picker = new mui.PopPicker({
-    //         layer: 2
-    //     });
-    //     picker.setData( [{
-    //         value: month,
-    //         text: month+'月',
-    //         children: dayArr
-    //     }])
-    //     picker.show(function (selectItems) {
-    //         console.log(JSON.stringify(selectItems));
-    //         console.log(selectItems[1].value);
-    //         day = selectItems[1].value+"";
-    //
-    //         $(".dateBox").html(year+"年"+month+"月"+day+"日")
-    //
-    //
-    //         $(".sumMoney").html("加载中...")
-    //         $(".partnerMoney").html("加载中...")
-    //
-    //
-    //         pageNumber = 1;
-    //
-    //         getDivideMoneyLogList();
-    //     })
-    // })
-
-
-    function pagePlusReady(){
-        uuid = plus.storage.getItem("uuid");
-
+	
+	$.plusReady(function() {
+		uuid = plus.storage.getItem("uuid");
         getDivideMoneyLogList();
-    }
+	}, function() {
+		getDivideMoneyLogList();
+	});
 
 
     function getDivideMoneyLogList() {
