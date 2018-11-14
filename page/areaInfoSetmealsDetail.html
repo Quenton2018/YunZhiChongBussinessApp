@@ -21,7 +21,7 @@
     <script src="../js/artTemplate.min.js"></script>
     <style type="text/css">
     	.address_wrap{
-    		margin: 10px 0;
+    		margin: 15px 0;
     		background-color: #fff;
     		border-top: 1px solid #dce1e6;
     		border-bottom: 1px solid #dce1e6;
@@ -72,7 +72,7 @@
     		padding: 12px 0 0;
     		border-top: 1px solid #dce1e6;
     		border-bottom: 2px solid #ff6d22;
-    		margin-bottom: 10px;
+    		margin-bottom: 15px;
     	}
     	.setmeal_tap_list{
     		text-align: center;
@@ -175,7 +175,10 @@
 			top: 98px;
 			right: 0;
 		}
-		
+		#statedesc{
+			font-size: 0.8rem;
+			color: #7a7d80;
+		}
     </style>
 </head>
 <body background="#f0f1f3">
@@ -202,7 +205,7 @@
 			<div class="setmeal">
 				<span class="setmeal_Sel" id="setmealName">基本套餐</span>
 				<span class="setmeal_icon mui-icon mui-icon-arrowdown"></span>
-				<span class="setmeal_state" id="state"></span>
+				<span class="setmeal_state" id="state"></span><span id="statedesc"></span>
 			</div>		
 		</div>
 		
@@ -229,7 +232,7 @@
 			<!--充满自停-->
 			<div class="setmeal_tap_content" style="display: none;" id="fullStop">
 				<div class="setmeal_tap_header flex">
-					<span class="flex-item first_span">最大电量(度)</span>
+					<span class="flex-item">最大电量(度)</span>
 					<span class="flex-item">最大时长(小时)</span>
 					<span class="flex-item">最多扣款(元)</span>
 				</div>
@@ -243,7 +246,7 @@
 			<div class="setmeal_tap_content" style="display: none;" id="charges">
 				<div class="setmeal_tap_header flex">
 					<span class="flex-item">价格(元)</span>
-					<span class="flex-item">时长(小时)</span>
+					<span class="flex-item">时长(分钟)</span>
 				</div>
 				<div class="setmeal_tap_table">
 					<ul class="table_ul" id="chargesList">
@@ -295,8 +298,8 @@
 <!--充满自停-->
 <script type="text/html" id="fullStopTmpl" >
 	<li class="table_list flex">
-		<span class="flex-item first_span">{{list.power}}</span>
-		<span class="flex-item">{{list.minutes}}</span>
+		<span class="flex-item">{{list.power}}</span>
+		<span class="flex-item">{{list.minutes/60}}</span>
 		<span class="flex-item">{{list.amount}}</span>
 	</li>	
 </script>
@@ -379,11 +382,11 @@
 				$('#areaName').html(areaName);
 				$('#site').html(address);
 				
-				if('待处理' == res.data.status || '编辑' == res.data.status ){
-                    $('#updateChargingGroup').hide();
-                }else{
-                    $('#updateChargingGroup').show();
-                }
+//				if('待处理' == res.data.status || '编辑' == res.data.status ){
+//                  $('#updateChargingGroup').hide();
+//              }else{
+//                  $('#updateChargingGroup').show();
+//              }
 				if(vaildeParam(priceSetmealJson)){
 					$('#setmeals').show();
 					plus.storage.setItem( "priceSetmealJson", priceSetmealJson);
@@ -412,8 +415,27 @@
 		var actualCharges = priceSetmealData.actualCharges;
 		var advanceCharges = priceSetmealData.advanceCharges;
 		var partners = priceSetmealData.partners;
-		var stateName = priceSetmealData.stateName;
+		var state = priceSetmealData.state;
+		var stateName = '';
+		var statedesc = '';
+		if(state == '1'){
+			stateName = '充满自停';
+		}else if(state == '-1'){
+			stateName = '充电时长';
+			statedesc = '（时间收费）';
+		}else if(state == '2'){
+			stateName = '充电时长';
+			statedesc = '（电量收费）';
+		}else if(state == '1:-1'){
+			stateName = '充满自停+充电时长';
+			statedesc = '（时间收费）';
+		}else if(state == '1:2'){
+			stateName = '充满自停+充电时长';
+			statedesc = '（电量收费）';
+		}
+		
 		$('#state').html(stateName);
+		$("#statedesc").text(statedesc);
     	var HeadData = [];
   		if(vaildeParam(eles)){
   			HeadData.push({
@@ -531,17 +553,37 @@
 		
 		var html = '<div>'
 						+'<div class="mymeal">'+'我的套餐'+'('+'2'+')'+'</div>'
-						+'<div class="addmeal"><img src="../images/tianjia.png" alt="添加套餐" /><span>'+'添加套餐'+'</span></div>'
-						+'<div class="setmeal1" ><img src="../images/xiugai.png" alt="修改套餐"/><span>'+'修改套餐'+'</span></div>'
+						+'<div class="addmeal"><img src="../images/area/tianjia.png" alt="添加套餐" /><span>'+'添加套餐'+'</span></div>'
+						+'<div class="setmeal1" ><img src="../images/area/xiugai.png" alt="修改套餐"/><span>'+'修改套餐'+'</span></div>'
 						+'<div class="line"></div>'
 				   '</div>'
 		$(".mui-poppicker").html(html)
 		$(".setmeal1").click(function(){
-			roadPick.hide();
-			clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
+			roadPick.hide();		
+			var areaName = $('#areaName').text();
+			var setmealName = plus.storage.getItem("setmealName");
+			var stateName = $('#state').text();
+			var updateGroup = {
+				'areaName': areaName,
+				'stateName':stateName,
+				'setmealName':setmealName,
+				'areaType':'update'
+			}
+			plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+			clicked('areaApplicationSetmeals.html?areaid='+areaId);
 		});
 		$(".addmeal").click(function(){
 			roadPick.hide();
+			var areaName = $('#areaName').text();
+			var setmealName = plus.storage.getItem("setmealName");
+			var stateName = $('#state').text();
+			var updateGroup = {
+				'areaName': areaName,
+				'stateName':stateName,
+				'setmealName':setmealName,
+				'areaType':'add'
+			}
+			plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
 			clicked('areaApplicationSetmeals.html?areaid='+areaId);
 		})
       	roadPick.show();

@@ -88,8 +88,8 @@
 		    left: 0;
 		    margin: auto;
 		}
-		.circle_radio {
-		    background-color: #ff6d22;
+		.select .circle{
+			background-color: #ff6d22;
 		}
 		.setmeal_charge_right{
 			padding: 7px 18px;
@@ -99,8 +99,8 @@
 		    font-size: 15px;	    
 		    background-color: #e6e3e3;
 		}
-		.radio {
-		    color: white;
+		.select .setmeal_charge_right{
+			color: white;
 		    background-color: #ff6d22;
 		}
     	.footer_wrap {
@@ -139,32 +139,32 @@
 			<div class="set_meal">
 				<div class="set_meal_top">
 					<img src="../images/area/jibentaocan.png" alt="基本套餐">
-					<span>基本套餐</span>
+					<span id="setmealName">基本套餐</span>
 				</div>
 
-				<div class="setmeal_charge">
+				<div class="setmeal_charge select" state="1" statename="充满自停">
 					<div class="setmeal_charge_left">
 						<div class="circle_wrap">
-							<div class="circle circle_radio" id="circle"></div>
+							<div class="circle" id="circle"></div>
 						</div>
 					</div>
-					<div class="setmeal_charge_right radio" state="1" id="fullStopAndAdvance.html">充满自停</div>
+					<div class="setmeal_charge_right">充满自停</div>
 				</div>
-				<div class="setmeal_charge">
+				<div class="setmeal_charge" state="2" statename="充电时长">
 					<div class="setmeal_charge_left">
 						<div class="circle_wrap">
 							<div class="circle" id="circleSecond"></div>
 						</div>
 					</div>
-					<div class="setmeal_charge_right" state="2" id="fullStopAndAdvance.html">充电时长</div>
+					<div class="setmeal_charge_right">充电时长</div>
 				</div>
-				<div class="setmeal_charge" id="bottom">
+				<div class="setmeal_charge" state="3" statename="充满自停+充电时长">
 					<div class="setmeal_charge_left">
 						<div class="circle_wrap">
 							<div class="circle" id="circleThird"></div>
 						</div>
 					</div>
-					<div class="full_stop_right_prepay setmeal_charge_right" state="3" id="fullStopAndAdvance.html">充满自停 + 充电时长</div>
+					<div class="full_stop_right_prepay setmeal_charge_right">充满自停 + 充电时长</div>
 				</div>
 			</div>
 		</div>
@@ -173,16 +173,33 @@
 	   	<span>下一步</span>
 	</footer>
 	<script type="text/javascript">
+		var areaId = getQueryString('areaid');
+		var areaType = '';
+		//从申请片区列表详情页入口进来
+		if(areaId){
+			var updateGroup = JSON.parse(plus.storage.getItem('updateGroup'));
+			var areaName = updateGroup.areaName;
+			var setmealName = updateGroup.setmealName;
+			var stateName = updateGroup.stateName;
+			areaType = updateGroup.areaType;
+			$('.mui-title').text(areaName);
+			$("#area").val(areaName).attr('disabled','true');
+			$("#setmealName").text(setmealName);
+			$(".setmeal_charge[statename='"+stateName+"']").addClass('select').siblings().removeClass('select');
+		}
+		
 		//选择套餐
 		$('.setmeal_charge').click(function() {
-			if ($(this).find('.setmeal_charge_right').hasClass('radio')) {
-				return;
-			}
+			$(this).addClass('select').siblings().removeClass('select');
 			
-			$(this).siblings().parent().parent().parent().parent().parent().find(".setmeal_charge_right").removeClass('radio');
-			$(this).siblings().parent().parent().parent().parent().parent().find(".circle").removeClass('circle_radio');
-			$(this).find(".setmeal_charge_right").addClass('radio').end().siblings().find(".setmeal_charge_right").removeClass('radio');
-			$(this).find(".circle").addClass('circle_radio').end().siblings().find(".circle").removeClass('circle_radio');	
+//			if ($(this).find('.setmeal_charge_right').hasClass('radio')) {
+//				return;
+//			}
+//			
+//			$(this).siblings().parent().parent().parent().parent().parent().find(".setmeal_charge_right").removeClass('radio');
+//			$(this).siblings().parent().parent().parent().parent().parent().find(".circle").removeClass('circle_radio');
+//			$(this).find(".setmeal_charge_right").addClass('radio').end().siblings().find(".setmeal_charge_right").removeClass('radio');
+//			$(this).find(".circle").addClass('circle_radio').end().siblings().find(".circle").removeClass('circle_radio');	
 			
 		});
 		
@@ -207,8 +224,8 @@
 				return;
 			}
 			var state = '';
-			$('.setmeal_charge_right').each(function() {
-				if ($(this).hasClass('radio')) {
+			$('.setmeal_charge').each(function() {
+				if ($(this).hasClass('select')) {
 					state = $(this).attr('state');
 					return true;
 				}
@@ -219,23 +236,32 @@
 			}
 			
 			var uuid = plus.storage.getItem("uuid");
-			postJSONNoIcon(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
-				uuid: uuid,
-				name: name
-			}, function(res) {
-				if (res.code == '0') {
-					var applyGroup = {
-						name: name,
-						price: price,
-						state: state
-					};
-					plus.storage.setItem('applyGroup', JSON.stringify(applyGroup));
+			var applyGroup = {
+				name: name,
+				price: price,
+				state: state
+			};
+			plus.storage.setItem('applyGroup', JSON.stringify(applyGroup));
+			
+			if(areaId){  
+				if(areaType == 'update'){//片区套餐修改
+					clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
+				}else if(areaType == 'add'){ //片区套餐添加
 					
-					clicked('fullStopAndAdvance.html');
-				} else {
-					layer.msg(res.msg);
 				}
-			});
+			}else{//申请片区
+				postJSONNoIcon(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
+					uuid: uuid,
+					name: name
+				}, function(res) {
+					if (res.code == '0') {				
+						clicked('fullStopAndAdvance.html');
+					} else {
+						layer.msg(res.msg);
+					}
+				});
+			}
+		
 		})
 			
 	</script>

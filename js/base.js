@@ -105,7 +105,7 @@ API_URL.saveSetmealMember = apiHost + "/api/setmeal/saveSetmealMember"; //添加
 API_URL.deleteSetmealMember = apiHost + "/api/setmeal/deleteSetmealMember"; //删除套餐用户
 API_URL.updateSetmealMember = apiHost + "/api/setmeal/updateSetmealMember"; //修改套餐用户
 
-// TODO
+API_URL.ApiChargingBusinessupdateSetmeal = apiHost + "/api/setmeal/updateSetmeal";
 //API_URL.ApiChargingGroupSetmeal = "../mockData/powerprice.json";
 //API_URL.ApiChargingGroupSetmealType = "../mockData/setmealtype.json";
 
