@@ -143,13 +143,46 @@
 			border: 1px solid #FF6D22;
     		background-color: #FF6D22;
 		}
+		
+		/*菜单选择增加或修改*/
+		.mui-poppicker.mui-active {
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+		}
+		.mymeal {
+			border-bottom: 1px solid #c4c4c4;
+			padding: 16px 25px;
+			font-size: 1rem;
+			color: #404040;
+		}
+		.addmeal,.setmeal1 {
+			padding: 12px 41px;
+			font-size: 1rem;
+			position: relative;
+		}
+		.addmeal span,.setmeal1 span {
+			margin-left: 5px;
+		}
+		.addmeal img,.setmeal1 img {
+			width: 20px;
+			height: 20px;
+			vertical-align: top;
+		}
+		.line {
+			border-top: 1px solid #c4c4c4;
+			width: 80%;
+			position: absolute;
+			top: 98px;
+			right: 0;
+		}
+		
     </style>
 </head>
 <body background="#f0f1f3">
 		
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <span class="compose mui-icon mui-icon-compose" id="updateChargingGroup"></span>
+    <span class="compose mui-icon mui-icon-more " id="updateChargingGroup"></span>
     <h1 class="mui-title" id="areaName"></h1>
 </header>
 
@@ -297,6 +330,8 @@
 
     var setmealData = [];      //套餐name数据
     
+    var roadPick = '';
+    
     var ws=null;
     // 处理沉浸式状态栏
     var topoffset=0;
@@ -326,6 +361,9 @@
     // 刷新页面
     function onRefresh(){
         getDataList();
+        if(roadPick){
+        	roadPick.hide();
+        }    
         ws.endPullToRefresh();
     }
     
@@ -482,9 +520,33 @@
 		$('#'+type).show();		
 	});
 	
-	$('#updateChargingGroup').on('click',function(){
-		clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
+	
+	//增加或修改套餐
+		//修改
+	document.querySelector('#updateChargingGroup').addEventListener("tap", function() {
+      	roadPick = new mui.PopPicker();
+		$(".mui-poppicker-header").hide();
+		$(".mui-picker-inner").hide();
+		$(".mui-picker").hide();
+		
+		var html = '<div>'
+						+'<div class="mymeal">'+'我的套餐'+'('+'2'+')'+'</div>'
+						+'<div class="addmeal"><img src="../images/tianjia.png" alt="添加套餐" /><span>'+'添加套餐'+'</span></div>'
+						+'<div class="setmeal1" ><img src="../images/xiugai.png" alt="修改套餐"/><span>'+'修改套餐'+'</span></div>'
+						+'<div class="line"></div>'
+				   '</div>'
+		$(".mui-poppicker").html(html)
+		$(".setmeal1").click(function(){
+			roadPick.hide();
+			clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
+		});
+		$(".addmeal").click(function(){
+			roadPick.hide();
+			clicked('areaApplicationSetmeals.html?areaid='+areaId);
+		})
+      	roadPick.show();
 	});
+	
 </script>
 
 </body>
