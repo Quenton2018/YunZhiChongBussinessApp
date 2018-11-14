@@ -546,15 +546,14 @@
     var areaId = getQueryString('areaid');
     var setmealName = '';
     var applyGroup = '';
-  	if(window.plus){
-  		var jsonSetmealJsonStr = JSON.parse(plus.storage.getItem("jsonSetmealJsonStr")) || [];  //套餐数组
-  	}  
+	var jsonSetmealJsonStr = [];
   	$.plusReady(function() {
      	checkLogin();
 		uuid = plus.storage.getItem("uuid");
 		setmealName = plus.storage.getItem("setmealName");
+		jsonSetmealJsonStr = JSON.parse(plus.storage.getItem("jsonSetmealJsonStr"));  //套餐数组
         getDataList();
-      
+ 
     },function(){
     	getDataList();
     });
