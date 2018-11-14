@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>添加片区申请</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/mui.picker.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/mui.picker.all.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <style type="text/css">
+    	input{  		
+		    -webkit-user-select: auto!important;  
+		}  	
+    	.setmeal_wrap{
+    		/*display: none;*/
+    	}
+		.setmeal_box{
+			padding: 10px;
+		}
+		.charges_tap{
+			margin: 0 30px 10px;
+			border: 1px solid #ff6d22;
+			border-radius: 6px;
+		}
+		.tap_list{
+			width: 50%;
+		    padding: 10px 0;
+		    text-align: center;
+		    font-size: 0.9rem;
+		}
+		.tap_list.select{
+			background: #ff6d22;
+			color: #FFF;
+		}
+		.setmeal_content{
+			padding: 15px 10px;
+			background: #fff;
+			border-radius: 6px;
+			margin-bottom: 10px;
+		}
+		.setmeal_title{
+			color: #4d4d4d;
+			font-size: 1rem;
+			font-weight: 400;
+		}
+		.setmeal_title:before{
+			border-left: 5px solid #ff6d22;
+			border-radius: 2px;
+			content: '';
+			margin-right: 6px;
+		}
+    	.setmeal_tap_header{
+    		padding: 15px 0;
+    		overflow: hidden;	
+    	}
+    	.setmeal_tap_header span{  		
+    		text-align: center;
+    		font-size: 0.9rem;
+    		width: 36%;
+    		display: inline-block;
+    	}
+    	.setmeal_tap_header span i{
+    		font-size: 0.8rem;
+    		color: #acacac;
+    		font-style: normal;
+    	}
+    	.table_ul{
+    		padding: 0;
+    		margin: 0;
+    		margin-top: -15px;
+    	}
+    	.table_list{
+    		padding: 12px 0;
+    		border-bottom: 1px dashed #808080;
+    		list-style: none;
+    		overflow: hidden;
+    		position: relative;
+    	}
+    	.table_list:last-child{
+    		border-bottom: none;
+    	}
+    	.table_list span{
+    		text-align: center;
+    		font-size: 1rem;
+    	}
+		.table_list span.first_span{
+    		text-align: left;
+    		padding-left: 10px;
+    	}
+
+    	.table_list span .circle {
+			width: 16px;
+			height: 16px;
+			line-height: 14px;
+			border-radius: 50%;
+			box-sizing: border-box;
+			border: 1px solid #ff6d22;
+			text-align: center;
+			display: inline-block;
+			font-size: 14px;
+			color: #ff6d22;
+			margin-right: 4px;
+			vertical-align: 1px;
+			font-style: normal;
+		}
+		.list-item{
+			margin-left: 24px;
+			width: 36%;
+		}
+		.list-del span{
+			position: absolute;
+			right: 8px;
+			top: 16px;
+			font-size: 28px;
+		}
+
+		.mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
+			background-color: #ff6d22;
+			color: #fff;
+		}
+		.mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
+			background: #eeeeee;
+			border:none!important
+		}
+		.footer_wrap {
+		    width: 100%;
+		    height: 50px;
+		    background: linear-gradient(to left,#f08200,#f2800b,#ff7546);
+		    text-align: center;
+		    line-height: 50px;
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    color: #fff;
+		}
+		#eles .setmeal_tap_header {
+			padding: 15px 5px;
+		}
+
+		#fullStopList{
+			padding: 0;
+			margin-top: 10px;
+		}
+		#fullStopList .table_list span{
+			font-size: 0.9rem;
+		}
+		.yellow{
+			color: #ff6d22;
+			font-style: normal;
+		}
+		input.yellow-input{
+			width: 32px;
+		    padding: 2px 6px;
+		    margin: 0 2px;
+		    height: 24px;
+		    line-height: 20px;
+		    text-align: center;
+		    font-size: 0.9rem;
+		}
+		.addCharges{
+			float: right;
+			font-size: 0.8rem;
+			padding: 0 6px;
+		}
+		.addCharges .mui-icon{
+			font-size: 18px;
+			padding-right: 4px;
+			color: #ff6d22;
+			font-weight: bold;
+		}
+		.mui-numboxs {
+		    position: relative;
+		    display: inline-block;
+		    overflow: hidden;
+		    width: 100%;
+		    height: 35px;
+		    /*padding: 0 30px;*/
+		    vertical-align: top;
+		    vertical-align: middle;
+		    border: solid 1px #bbb;
+		    border-radius: 3px;
+		    background-color: #efeff4;
+		}
+		.mui-numboxs [class*=btn-numbox], .mui-numboxs [class*=numbox-btn] {
+		    font-size: 18px;
+		    font-weight: 400;
+		    line-height: 100%;
+		    position: absolute;
+		    top: 0;
+		    overflow: hidden;
+		    width: 28%;
+		    height: 100%;
+		    padding: 0;
+		    color: #555;
+		    border: none;
+		    border-radius: 0;
+		    background-color: #f9f9f9;
+		    background-color: #ff6d22;
+    		color: #fff;
+		}
+		.mui-numboxs .mui-numbox-btn-minuss{
+			left: 0;
+    		border-top-left-radius: 3px;
+    		border-bottom-left-radius: 3px;
+		}
+		.mui-numboxs .mui-numbox-btn-pluss{
+		    right: 0;
+		    border-top-right-radius: 3px;
+		    border-bottom-right-radius: 3px;
+		}
+		.mui-numboxs{
+			border:none;
+		}
+
+		.mui-numboxs .mui-input-numbox, .mui-numboxs .mui-numbox-input {
+		    display: inline-block;
+		    overflow: hidden;
+		    width: 100%!important;
+		    height: 100%;
+		    margin: 0;
+		    padding: 0 3px!important;
+		    text-align: center;
+		    text-overflow: ellipsis;
+		    word-break: normal;
+		    border: none!important;
+			background: #eeeeee;
+		    border-radius: 0!important;
+		    font-size: 1rem;
+		}
+		#partners .setmeal_tap_header{
+			padding: 15px 0;
+		}
+		#partners .partners-item{
+			width: 25%;
+			float: left;
+			text-align: center;
+			display: inline-block;
+			font-size: 0.9rem;
+			padding: 3px 5px;
+			margin-right: 1%;
+			margin-bottom: 0;	
+		}
+		#partners input.partners-item{
+			color: #969696;
+			background: #eeeeee;
+		}
+		#partners input[readonly] {
+		    background: #fff;
+		    border: none;
+		    color: #4d4d4d;
+		}
+		#partners .list-del span{
+			right: 0px;
+			top: 18px;
+		}
+		
+    </style>
+</head>
+<body background="#f0f1f3" >
+
+<div id="app">
+	
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" id="stateName">{{stateName}}</h1>
+</header>
+	
+<div class="mui-content" >
+	<div class="setmeal_wrap" id="setmeals">
+		<div class="setmeal_box">
+			<!--时长区-->
+			<div id="charges">
+				<div class="charges_tap flex">
+					<div class="tap_list flex-item" v-bind:class="isTime ? 'select':''" @click="tapClick('timesf')">时间收费</div>
+					<div class="tap_list flex-item" v-bind:class="!isTime ? 'select':''" @click="tapClick('dlsf')">电量收费</div>
+				</div>
+				<div class="setmeal_content">
+					<h3 class="setmeal_title">时长区<span class="addCharges" v-on:click="addCharges"><i class="mui-icon mui-icon-plus"></i>新增</span></h3>
+					<div class="setmeal_tap_header">
+						<span class="list-item left">价格<i>(元)</i></span>
+						<span class="list-item left">时长<i>(分钟)</i></span>
+					</div>
+					<div class="setmeal_tap_table">					
+						<ul class="table_ul" id="chargesList">
+							<li class="table_list" v-for="(item, index) in chargesList">
+								<div class="list-item left">
+									<div class="mui-numboxs">
+							            <button class="mui-btn mui-numbox-btn-minuss" type="button" @click="btnMinus(chargesList,'amount',index)">-</button>
+							            <input class="mui-numbox-input" type="number" name="price" v-model="item.amount" readonly="true">
+							            <button class="mui-btn mui-numbox-btn-pluss" type="button" @click="btnPlus(chargesList,'amount',index)">+</button>
+							            <div class="clearfix"></div>
+							        </div>
+								</div>
+								<div class="list-item left">
+									<div class="mui-numboxs">
+							            <button class="mui-btn mui-numbox-btn-minuss" type="button" @click="btnMinus(chargesList,'minutes',index)">-</button>
+							            <input class="mui-numbox-input" type="number" name="time" v-model="item.minutes" readonly="true">
+							            <button class="mui-btn mui-numbox-btn-pluss" type="button" @click="btnPlus(chargesList,'minutes',index)">+</button>
+							            <div class="clearfix"></div>
+							        </div>
+								</div>
+								<div class="list-del left" v-if="index!==0" @click="delCharges(index)">
+									<span class="mui-icon mui-icon-trash"></span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--阶梯价格-->
+			<div class="setmeal_content" id="eles" style="display: none;">
+				<h3 class="setmeal_title">阶梯价格</h3>
+				<div class="setmeal_tap_header">
+					<div class="flex">
+						<span class="eles-item" style="width: 30%;">功率</span>
+						<span class="eles-item" style="width: 30%;">最大成本</span>
+						<span class="eles-item" style="width: 40%;">价格</span>
+					</div>
+					<div class="flex">
+						<span class="eles-item" style="width: 30%;"><i>(W)</i></span>
+						<span class="eles-item" style="width: 30%;"><i>(元/小时)</i></span>
+						<span class="eles-item" style="width: 40%;"><i>(元/小时)</i></span>
+					</div>
+				</div>
+				<div class="setmeal_tap_table">
+					<ul class="table_ul" id="ElesList">
+						<li class="table_list flex" v-for="(item, index) in elesList">
+							<span class="eles-item" style="width: 30%;" v-if="item.max>1200"><i class="circle">{{index+1}}</i>1200以上</span>
+
+							<span class="eles-item" style="width: 30%;" v-else-if="item.min <=0"><i class="circle">{{index+1}}</i>100以下</span>
+
+							<span class="eles-item" v-else style="width: 30%;"><i class="circle">{{index+1}}</i>{{item.min}}-{{item.max}}</span>
+
+							<span class="eles-item" style="width: 30%;">{{item.cost}}</span>
+							
+							<div class="mui-numboxs eles-item" style="width: 40%;">
+					            <button class="mui-btn mui-numbox-btn-minuss" type="button" @click="btnMinus(elesList,'amount',index)">-</button>
+					            <input class="mui-numbox-input" type="number" name="time" v-model="item.amount">
+					            <button class="mui-btn mui-numbox-btn-pluss" type="button" @click="btnPlus(elesList,'amount',index)">+</button>
+					            <div class="clearfix"></div>
+					        </div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--充满自停-->
+			<div class="setmeal_content" id="fullStop">
+				<h3 class="setmeal_title">充满自停最大配置</h3>
+				<div class="setmeal_tap_table">
+					<ul class="table_ul" id="fullStopList">
+						<li class="table_list flex">
+							<span class="flex-item">最大电量<i class="yellow">{{fullStopList.power}}度</i></span>
+							<span class="flex-item">最大时长<i class="yellow">{{fullStopList.minutes/60}}小时</i></span>
+							<span class="flex-item">最多扣款<input type="number" class="yellow-input" v-model="fullStopList.amount">元</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--合伙人-->
+			<div class="setmeal_content" id="partners">
+				<h3 class="setmeal_title">合伙人分成设置<span class="addCharges" v-on:click="addPartners"><i class="mui-icon mui-icon-plus"></i>新增</span></h3>
+				<div class="setmeal_tap_header">
+					<span class="partners-item" style="width: 22%;">姓名</span>
+					<span class="partners-item" style="width: 30%;">账号</span>
+					<span class="partners-item" style="width: 18%;">金额<i>(元)</i></span>
+					<span class="partners-item" style="width: 18%;">比值<i>(%)</i></span>
+				</div>
+				<div class="setmeal_tap_table">
+					<ul class="table_ul" id="partnersList">
+						<li class="table_list" v-for="(item, index) in partnersList">
+							<input type="text" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
+							<input type="tel" style="width: 30%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0)? false : 'readonly'" />
+							<input type="number" style="width: 18%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
+							<input type="number" style="width: 18%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
+							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
+								<span class="mui-icon mui-icon-trash"></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer id="footer" style="height: 50px;">
+	<div class="footer_wrap" id="submit" v-on:click="submits">
+		<span>提交</span>
+	</div>
+</footer>
+
+</div>
+<script type="text/javascript">
+	mui.init();
+	
+	var uuid = '';
+    var areaId = getQueryString('areaid');
+    var setmealName = '';
+    var applyGroup = '';
+    
+    var ws=null;
+    // 处理沉浸式状态栏
+    var topoffset=0;
+    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if(ms&&ms.length>=3){
+        topoffset=parseFloat(ms[2]);
+    }
+  
+	mui.plusReady(pagePlusReady);
+    function pagePlusReady(){
+        checkLogin();
+		uuid = plus.storage.getItem("uuid");
+		setmealName = plus.storage.getItem("setmealName");
+        getDataList();
+        
+        ws=plus.webview.currentWebview();
+        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
+            topoffset=Math.round(plus.navigator.getStatusbarHeight());
+        }
+        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
+
+    }
+    // 刷新页面
+    function onRefresh(){
+        getDataList();
+        ws.endPullToRefresh();
+    }
+    Vue.filter('gethours', function (value) {
+	 	return value/60
+	})
+	var vm = new Vue({
+		el:'#app',
+		data:{
+			state:'',
+			stateName:'',
+			chargesList:[{
+		        "state": "-1",
+		        "minutes": 240,
+		        "power": 1,
+		        "amount": 0.96
+		    },{
+		        "state": "-1",
+		        "minutes": 360,
+		        "power": 1.5,
+		        "amount": 1.45
+		    },{
+		        "state": "-1",
+		        "minutes": 480,
+		        "power": 2,
+		        "amount": 1.92
+		    },{
+		        "state": "-1",
+		        "minutes": 600,
+		        "power": 2.5,
+		        "amount": 2.4
+		    }],
+			elesList:[{
+		        "seq": 0,
+		        "min": 0,
+		        "max": 100,
+		        "cost": 0.08,
+		        "amount": 0.1
+		    },{
+		        "seq": 1,
+		        "min": 100,
+		        "max": 300,
+		        "cost": 0.24,
+		        "amount": 0.29
+		    },{
+		        "seq": 2,
+		        "min": 300,
+		        "max": 600,
+		        "cost": 0.48,
+		        "amount": 0.58
+		    },{
+		        "seq": 3,
+		        "min": 600,
+		        "max": 900,
+		        "cost": 0.72,
+		        "amount": 0.87
+		    },{
+		        "seq": 4,
+		        "min": 900,
+		        "max": 1200,
+		        "cost": 0.96,
+		        "amount": 1.16
+		    },{
+		        "seq": 5,
+		        "min": 1200,
+		        "max": 1500,
+		        "cost": 1.2,
+		        "amount": 1.44
+		    }],
+			fullStopList:{
+		      "state": "1",
+		      "minutes": 600,
+		      "power": 5,
+		      "amount": 4.8
+		    },
+			partnersList:[],
+			isTime:true
+		},
+		created:function(){
+			applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
+			var state = applyGroup.state;
+			this.state = state;
+			if (state == '1') {
+				this.stateName = '充满自停';
+				$("#charges").hide();
+				$("#eles").show();
+			}
+			if (state == '2') {
+				this.stateName = '充电时长';
+				this.state = '-1';
+				$("#fullStop").hide();
+			}
+			if (state == '3') {
+				this.stateName = '充满自停+充电时长';
+				this.state = '1:-1';
+				$("#eles").show();
+			}
+		},
+		methods:{
+			addCharges:function(){
+				vm.chargesList.push({
+					amount:0.96,
+					minutes:240,
+					power:1,
+					state:''
+				});
+			},
+			delCharges:function(index){
+				vm.chargesList.splice(index, 1);
+			},
+			addPartners:function(){
+				vm.partnersList.push({
+					name:'',
+					mobile:'',
+					dividePrice:'',
+					divideRatio:''
+				});
+			},
+			delPartners:function(index){
+				vm.partnersList.splice(index, 1);
+			},
+			btnMinus:function(List,name,index){
+				var num = 30;
+				var prices = parseFloat(List[index][name]);
+				if(isNaN(prices)){
+					layer.msg('请输入正确的数字');
+					return;
+				}
+				if(name == 'amount'){
+					num = 0.5
+				}
+				if (prices < 1){
+                    prices = 0
+                }else{
+                    List[index][name] = prices - num;
+                }
+			},
+			btnPlus:function(List,name,index){
+				var num = 30;
+				var prices = parseFloat(List[index][name]);
+
+				if(isNaN(prices)){
+					layer.msg('请输入正确的数字');
+					return;
+				}
+				if(name == 'amount'){
+					num = 0.5
+				}
+                List[index][name] = prices + num;	
+			},
+			tapClick:function(type){
+				if(type == 'timesf'){
+					vm.isTime = true;
+					if(this.stateName == '充电时长'){
+						this.state = '-1';
+						$("#eles").hide();
+					}else if(this.stateName == '充满自停+充电时长'){
+						this.state = '1:-1';
+						$("#eles").show();
+					}
+				}else if(type == 'dlsf'){
+					vm.isTime = false;
+					if(this.stateName == '充电时长'){
+						this.state = '2';
+						$("#eles").show();
+					}else if(this.stateName == '充满自停+充电时长'){
+						this.state = '1:2';
+						$("#eles").show();
+					}
+				}
+			},
+			submits:function(){
+				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("priceSetmealData"));
+				var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+				var rateSum = 0;
+				var flag = false;
+				var flagNumber = false;
+				$.each(vm.partnersList,function(index,item){				
+					var name = item.name;
+					var mobile = item.mobile;
+					var dividePrice = item.dividePrice;
+					var divideRatio = item.divideRatio;
+					rateSum += parseInt(divideRatio);
+					
+					if(!vaildeParam(name) || !vaildeParam(mobile) || !vaildeParam(divideRatio)){
+	                    flag = true;
+	                    return;
+	                }
+					
+					//校验是数字
+	                if(!reg.test(divideRatio)){
+	                    flagNumber = true;
+	                    return;
+	                }
+				})
+				
+				if(flag){
+	                layer.msg("请补全合伙人信息");
+	                return;
+	            }
+				if(flagNumber){
+	                layer.msg("合伙人金额与比值必须为数字");
+	                return;
+	            }
+				if(rateSum!=100){
+	                layer.msg("合伙人比值为整数且相加必须为100%");
+	                return;
+	            }
+				jsonSetmealJSON.eles = vm.elesList;
+				jsonSetmealJSON.fullStop = vm.fullStopList;
+				jsonSetmealJSON.partners = vm.partnersList;
+				console.log(this.state);
+				jsonSetmealJSON.state = vm.state;
+				
+				if(jsonSetmealJSON.state == '1'){       //充满自停
+					jsonSetmealJSON.advanceCharges = null;
+					jsonSetmealJSON.actualCharges = null;
+				}else if(jsonSetmealJSON.state == '-1'){	//充电时长(时间收费)			
+					jsonSetmealJSON.fullStop = null;
+					jsonSetmealJSON.advanceCharges = vm.chargesList;
+					jsonSetmealJSON.actualCharges = null;
+					jsonSetmealJSON.eles = null;
+				}else if(jsonSetmealJSON.state ==  '2'){   //充电时长(电量收费)			
+					jsonSetmealJSON.fullStop = null;
+					jsonSetmealJSON.advanceCharges = null;
+					jsonSetmealJSON.actualCharges = vm.chargesList;
+				}else if(jsonSetmealJSON.state == '1:-1'){   //充满自停+充电时长(时间收费)
+					jsonSetmealJSON.advanceCharges = vm.chargesList;
+					jsonSetmealJSON.actualCharges = null;			    					
+				}else if(jsonSetmealJSON.state == '1:-1'){ 
+					jsonSetmealJSON.advanceCharges = null;
+					jsonSetmealJSON.actualCharges = vm.chargesList;
+				}else{
+					layer.msg("套餐类型不正确");
+				}
+				//套餐检验
+				var params = {
+					uuid:uuid,
+					jsonSetmeal:JSON.stringify(jsonSetmealJSON)
+				}
+				postJSON(API_URL.ApiChargingBusinessGetcheckJsonSetmeal,params,function(res){
+					if(res.code == '0'){
+						AddChargingGroup(jsonSetmealJSON);
+					}else{
+						layer.msg(res.msg);
+					}
+				})
+			}
+		}
+	});
+	
+    function getDataList(){
+    	
+    	var params = {
+    		'uuid':uuid,
+    		'state':applyGroup.state,
+			'price':applyGroup.price	
+		}
+		postJSON(API_URL.ApiChargingBusinessGetSetmealPrice,params,function(res){
+			if(res.code == '0'){			
+				var priceSetmealData = res.data;
+				var applySetmealName = plus.storage.getItem('applySetmealName');
+				priceSetmealData.name = applySetmealName;
+			  	getAllData(priceSetmealData);
+			}else{
+				layer.msg(res.msg);
+			}
+		});
+    }
+	function getAllData(priceSetmealData){
+		var eles = priceSetmealData.eles;				
+		var fullStop = priceSetmealData.fullStop;
+		var actualCharges = priceSetmealData.actualCharges;
+		var advanceCharges = priceSetmealData.advanceCharges;
+		var partners = priceSetmealData.partners;
+
+		plus.storage.setItem("priceSetmealData", JSON.stringify(priceSetmealData));
+  		if(vaildeParam(eles)){
+			vm.elesList = eles;
+  		}
+  		if(vaildeParam(fullStop)){
+			vm.fullStopList = fullStop;
+  		}
+  		if(vaildeParam(actualCharges)||vaildeParam(advanceCharges)){
+  			if(vaildeParam(actualCharges)){
+  				var Charges = actualCharges;
+  			}else if(vaildeParam(advanceCharges)){
+  				var Charges = advanceCharges;
+  			}
+			vm.chargesList = Charges;
+  		}
+  		if(vaildeParam(partners)){
+  			vm.partnersList = partners;
+  		}
+	}
+
+	function AddChargingGroup(jsonSetmealJSON){
+		var params = {
+			uuid:uuid,
+			applyChargingGroupId:areaId,
+			jsonSetmeal:JSON.stringify(jsonSetmealJSON)
+		}
+		console.log(JSON.stringify(jsonSetmealJSON))
+		postJSON(API_URL.ApiChargingBusinessAddSetmeal,params,function(res){
+			if(res.code == '0'){
+				clicked('areaInfoSetmealsDetail.html?areaid='+areaId);
+			}else{
+				layer.msg(res.msg);
+			}
+		})
+	}
+
+</script>
+
+</body>
+</html>

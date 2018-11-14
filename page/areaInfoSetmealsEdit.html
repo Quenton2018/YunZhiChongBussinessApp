@@ -18,7 +18,6 @@
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
     <script src="../js/mui.picker.all.js"></script>
-    <script src="../js/artTemplate.min.js"></script>
     <script src="../js/vue.min.js"></script>
     <style type="text/css">
     	input{  		
@@ -693,11 +692,6 @@
 		}
 		postJSON(API_URL.ApiGetApplyChargingGroupById,params,function(res){
 			if(res.code == '0'){
-				if('待处理' == res.data.status || '编辑' == res.data.status ){
-                    $('#iconBtn').hide();
-                }else{
-                    $('#iconBtn').show();
-                }
 				var priceSetmealJson = res.data.priceSetmealJson;
 				if(vaildeParam(priceSetmealJson)){
 					plus.storage.setItem("priceSetmealJson", priceSetmealJson);

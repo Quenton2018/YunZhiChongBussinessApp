@@ -392,14 +392,17 @@
 					plus.storage.setItem( "priceSetmealJson", priceSetmealJson);
 					var priceSetmealData = JSON.parse(priceSetmealJson);				
 					var name = priceSetmealData[0].name;
+					var state = priceSetmealData[0].state;
 					var setmealData = [];
 					$.each(priceSetmealData, function(index,item) {
 						setmealData.push({
 							'value':'',
+							'state':item.state,
 							'text':item.name
 						});
 					});
 					plus.storage.setItem("setmealName",name);
+					plus.storage.setItem("setmealState",state);
 					$('#setmealName').html(name).data('pick',setmealData);
 					getAllData(priceSetmealData[0]);
 				}
@@ -422,16 +425,16 @@
 			stateName = '充满自停';
 		}else if(state == '-1'){
 			stateName = '充电时长';
-			statedesc = '（时间收费）';
+			statedesc = '(时间收费)';
 		}else if(state == '2'){
 			stateName = '充电时长';
-			statedesc = '（电量收费）';
+			statedesc = '(电量收费)';
 		}else if(state == '1:-1'){
 			stateName = '充满自停+充电时长';
-			statedesc = '（时间收费）';
+			statedesc = '(时间收费)';
 		}else if(state == '1:2'){
 			stateName = '充满自停+充电时长';
-			statedesc = '（电量收费）';
+			statedesc = '(电量收费)';
 		}
 		
 		$('#state').html(stateName);
@@ -526,6 +529,8 @@
         	setmealPick.setData(setmealData);
       		setmealPick.show(function(item) {
       			var name = item[0].text;
+      			var state = item[0].state;
+      			plus.storage.setItem("setmealState",state);
       			plus.storage.setItem("setmealName",name);
          		$('#setmealName').html(name);
          		getSetmeal(name);
@@ -561,12 +566,14 @@
 		$(".setmeal1").click(function(){
 			roadPick.hide();		
 			var areaName = $('#areaName').text();
-			var setmealName = plus.storage.getItem("setmealName");
-			var stateName = $('#state').text();
+			var setmealName = $('#setmealName').text();
+			var setmealData = $('#setmealName').data('pick');
+			var setmealState = plus.storage.getItem("setmealState");			
 			var updateGroup = {
 				'areaName': areaName,
-				'stateName':stateName,
+				'state':setmealState,
 				'setmealName':setmealName,
+				'setmealData':setmealData,
 				'areaType':'update'
 			}
 			plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
@@ -575,12 +582,14 @@
 		$(".addmeal").click(function(){
 			roadPick.hide();
 			var areaName = $('#areaName').text();
-			var setmealName = plus.storage.getItem("setmealName");
-			var stateName = $('#state').text();
+			var setmealName = $('#setmealName').text();
+			var setmealData = $('#setmealName').data('pick');
+			var setmealState = plus.storage.getItem("setmealState");
 			var updateGroup = {
 				'areaName': areaName,
-				'stateName':stateName,
+				'state':setmealState,
 				'setmealName':setmealName,
+				'setmealData':setmealData,
 				'areaType':'add'
 			}
 			plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));

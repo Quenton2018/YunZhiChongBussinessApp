@@ -16,7 +16,8 @@
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
-
+	<script src="../js/vue.min.js"></script>
+	
     <style type="text/css">
     	.area-form{
     		margin: 15px 0;
@@ -40,13 +41,22 @@
     		padding: 10px 0px;
     	}
     	.set_meal {
-		    margin: 0 10px;
+		    margin: 0 10px 10px 10px;
 		    background: #fff;
 		    overflow: hidden;
 		    border-radius: 6px;
 		    padding: 0 0 15px;
+		    position: relative;
 		}
-
+		.set_mask{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(255,255,255,.5);
+			z-index: 2;
+		}
 		.set_meal_top{
 		    font-size: 15px;
 		    padding: 10px 0;
@@ -113,10 +123,13 @@
 		    bottom: 0;
 		    left: 0;
 		    color: #fff;
+		    z-index: 10;
 		}
     </style>
 </head>
 <body>
+	<div id="app">
+		
 	<header class="mui-bar mui-bar-nav">
 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	    <h1 class="mui-title">申请片区</h1>
@@ -126,7 +139,7 @@
 		<div class="mui-input-group area-form">
 			<div class="mui-input-row form-group">
 				<label>片区名称</label>
-				<input type="text" value="" id="area" name="area" placeholder="请输入市+小区">
+				<input type="text" id="area" name="area" placeholder="请输入市+小区" v-model="areaName">
 			</div>
 			<div class="mui-input-row form-group">
 				<label>电费单价</label>
@@ -136,13 +149,14 @@
 		</div>
 		
 		<div class="set_meal_wrap">
-			<div class="set_meal">
+			<div class="set_meal" v-for="(item, index) in setmealList">
+				<div class="set_mask" v-if='!item.isSelect'></div>
 				<div class="set_meal_top">
-					<img src="../images/area/jibentaocan.png" alt="基本套餐">
-					<span id="setmealName">基本套餐</span>
+					<img src="../images/area/jibentaocan.png">
+					<span id="setmealName">{{item.text}}</span>
 				</div>
 
-				<div class="setmeal_charge select" state="1" statename="充满自停">
+				<div class="setmeal_charge" :class="item.state=='1'? 'select':''" state="1" statename="充满自停">
 					<div class="setmeal_charge_left">
 						<div class="circle_wrap">
 							<div class="circle" id="circle"></div>
@@ -150,7 +164,7 @@
 					</div>
 					<div class="setmeal_charge_right">充满自停</div>
 				</div>
-				<div class="setmeal_charge" state="2" statename="充电时长">
+				<div class="setmeal_charge" :class="(item.state=='-1'||item.state=='2') ? 'select':''" state="2" statename="充电时长">
 					<div class="setmeal_charge_left">
 						<div class="circle_wrap">
 							<div class="circle" id="circleSecond"></div>
@@ -158,7 +172,7 @@
 					</div>
 					<div class="setmeal_charge_right">充电时长</div>
 				</div>
-				<div class="setmeal_charge" state="3" statename="充满自停+充电时长">
+				<div class="setmeal_charge" :class="(item.state=='1:-1'||item.state=='1:2') ? 'select':''" state="3" statename="充满自停+充电时长">
 					<div class="setmeal_charge_left">
 						<div class="circle_wrap">
 							<div class="circle" id="circleThird"></div>
@@ -168,102 +182,155 @@
 				</div>
 			</div>
 		</div>
+		
 	</div>
-	<footer class="footer_wrap" id="next">
-	   	<span>下一步</span>
-	</footer>
+	<div id="footer" style="height: 100px;">
+		<div class="footer_wrap" id="next" @click="submits">
+		   	<span>下一步</span>
+		</div>
+	</div>
+	
+	</div>
 	<script type="text/javascript">
 		var areaId = getQueryString('areaid');
 		var areaType = '';
-		//从申请片区列表详情页入口进来
-		if(areaId){
-			var updateGroup = JSON.parse(plus.storage.getItem('updateGroup'));
-			var areaName = updateGroup.areaName;
-			var setmealName = updateGroup.setmealName;
-			var stateName = updateGroup.stateName;
-			areaType = updateGroup.areaType;
-			$('.mui-title').text(areaName);
-			$("#area").val(areaName).attr('disabled','true');
-			$("#setmealName").text(setmealName);
-			$(".setmeal_charge[statename='"+stateName+"']").addClass('select').siblings().removeClass('select');
-		}
+		var updateGroup = '';
+		function toDx(n) {
+	        switch (n) {
+	            case 0:
+	                return "基本套餐";
+	            case 1:
+	                return "一";
+	            case 2:
+	                return "二";
+	            case 3:
+	                return "三";
+	            case 4:
+	                return "四";
+	            case 5:
+	                return "五";
+	            case 6:
+	                return "六";
+	            case 7:
+	                return "七";
+	            case 8:
+	                return "八";
+	            case 9:
+	                return "九";
+	        }
+	    }
 		
+		var vm = new Vue({
+			el:'#app',
+			data:{
+				areaName:'',
+				stateName:'',
+				setmealList:[{
+					"state": "1",
+					"isSelect":true,
+					"text":'基本套餐'
+				}]
+			},
+			created:function(){
+				//从申请片区列表详情页入口进来
+				if(areaId){
+					updateGroup = JSON.parse(plus.storage.getItem('updateGroup'));
+					var areaName = updateGroup.areaName;
+					var state = updateGroup.state;
+					var setmealName = updateGroup.setmealName;
+					var setmealData = updateGroup.setmealData;
+//					console.log(JSON.stringify(setmealData))
+					areaType = updateGroup.areaType;
+					$('.mui-title').text(areaName);
+					this.areaName = areaName;
+					$("#area").attr('disabled','true');
+					if(areaType == 'update'){//片区套餐修改
+						this.setmealList = [{
+							"state":state,
+							"isSelect":true,
+							"text":setmealName
+						}]
+					}else{
+						this.setmealList = setmealData;
+						var applySetmealName = "套餐" + toDx(this.setmealList.length);
+						plus.storage.setItem('applySetmealName', applySetmealName);
+						this.setmealList.unshift({
+							"state": "1",
+							"isSelect":true,
+							"text":applySetmealName
+						})
+					}
+				}
+			},
+			methods:{
+				tapClick:function(type){
+
+				},
+				submits:function(){
+					var name = $('input[name="area"]').val();
+					if (name.trim().length == 0) {
+						layer.msg('请输入片区名称');
+						return;
+					}
+					var price = $('input[name="price"]').val();
+					if (price.trim().length == 0) {
+						layer.msg('请输入电费单价');
+						return;
+					}
+					price = parseFloat(price);
+					if (isNaN(price)) {
+						layer.msg('请输入正确的电费单价');
+						return;
+					}
+					var state = '';
+					$('.setmeal_charge').each(function() {
+						if ($(this).hasClass('select')) {
+							state = $(this).attr('state');
+							return true;
+						}
+					});
+					if (state == '') {
+						layer.msg('请选择套餐类型');
+						return;
+					}
+					
+					var uuid = plus.storage.getItem("uuid");
+					
+					var applyGroup = {
+						name: name,
+						price: price,
+						state: state
+					};
+					plus.storage.setItem('applyGroup', JSON.stringify(applyGroup));
+					
+					if(areaId){  
+						if(areaType == 'update'){//片区套餐修改
+							clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
+						}else if(areaType == 'add'){ //片区套餐添加
+							clicked('areaInfoSetmealsAdd.html?areaid='+areaId);
+						}
+					}else{//申请片区
+						postJSONNoIcon(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
+							uuid: uuid,
+							name: name
+						}, function(res) {
+							if (res.code == '0') {				
+								clicked('areaInfoSetmealsSave.html');
+							} else {
+								layer.msg(res.msg);
+							}
+						});
+					}
+				}
+			}
+		});
+
+
 		//选择套餐
 		$('.setmeal_charge').click(function() {
-			$(this).addClass('select').siblings().removeClass('select');
-			
-//			if ($(this).find('.setmeal_charge_right').hasClass('radio')) {
-//				return;
-//			}
-//			
-//			$(this).siblings().parent().parent().parent().parent().parent().find(".setmeal_charge_right").removeClass('radio');
-//			$(this).siblings().parent().parent().parent().parent().parent().find(".circle").removeClass('circle_radio');
-//			$(this).find(".setmeal_charge_right").addClass('radio').end().siblings().find(".setmeal_charge_right").removeClass('radio');
-//			$(this).find(".circle").addClass('circle_radio').end().siblings().find(".circle").removeClass('circle_radio');	
-			
+			$(this).addClass('select').siblings().removeClass('select');			
 		});
-		
-		
-		//点击下一步
-		$("#next").click(function(){
-			// var setmealCategory = $('.setmeal_charge .setmeal_charge_right.radio').attr('id');
-			// $(location).attr("href", setmealCategory)
-			var name = $('input[name="area"]').val();
-			if (name.trim().length == 0) {
-				layer.msg('请输入片区名称');
-				return;
-			}
-			var price = $('input[name="price"]').val();
-			if (price.trim().length == 0) {
-				layer.msg('请输入电费单价');
-				return;
-			}
-			price = parseFloat(price);
-			if (isNaN(price)) {
-				layer.msg('请输入正确的电费单价');
-				return;
-			}
-			var state = '';
-			$('.setmeal_charge').each(function() {
-				if ($(this).hasClass('select')) {
-					state = $(this).attr('state');
-					return true;
-				}
-			});
-			if (state == '') {
-				layer.msg('请选择套餐类型');
-				return;
-			}
-			
-			var uuid = plus.storage.getItem("uuid");
-			var applyGroup = {
-				name: name,
-				price: price,
-				state: state
-			};
-			plus.storage.setItem('applyGroup', JSON.stringify(applyGroup));
-			
-			if(areaId){  
-				if(areaType == 'update'){//片区套餐修改
-					clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
-				}else if(areaType == 'add'){ //片区套餐添加
-					
-				}
-			}else{//申请片区
-				postJSONNoIcon(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
-					uuid: uuid,
-					name: name
-				}, function(res) {
-					if (res.code == '0') {				
-						clicked('fullStopAndAdvance.html');
-					} else {
-						layer.msg(res.msg);
-					}
-				});
-			}
-		
-		})
-			
+				
 	</script>
 </body>
 </html>
