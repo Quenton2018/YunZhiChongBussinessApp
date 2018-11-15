@@ -59,7 +59,7 @@
 </head>
 <body style="background: #fff">
 
-    <header class="mui-bar mui-bar-nav">
+    <header class="header header-immersed mui-bar mui-bar-nav">
         <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
         <h1 class="mui-title">申请成为合伙人</h1>
     </header>
@@ -99,16 +99,7 @@
 	<script type="text/javascript">
         mui.init();
 
-        if(window.plus){
-            pagePlusReady();
-        }else{
-            document.addEventListener('plusready',pagePlusReady,false);
-        }
-        function pagePlusReady(){
-
-           // uploadLoginInfo();
-
-        }
+        $.plusReady();
 
         $("#submitBtn").click(function(){
             var contacts = $("input[name='contacts']").val();

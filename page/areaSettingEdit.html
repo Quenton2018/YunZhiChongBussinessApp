@@ -243,13 +243,13 @@
 
 </head>
 <body>
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">申请片区修改</h1>
 </header>
 
-<div class="conbox01">
-    <div class="box01">
+<div class="mui-content">
+    <div class="box01" style="margin-top: 20px;">
         <div class="zhuangtai" style="background: #ff6d22;color:#ffcaaf;">
             <img src="../images/pianqushenqing/pianqumingchen02.png">
             片区申请
@@ -376,15 +376,8 @@
 <script type="text/javascript">
     mui.init();
 
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-
-
-    function pagePlusReady(){
-        var  memberListJson =  plus.storage.getItem( "memberListJson");
+    $.plusReady(function() {
+    	var  memberListJson =  plus.storage.getItem( "memberListJson");
         var memberListJsonObj =  JSON.parse(memberListJson);
 
         var tmpl = $("#heHuoRenTmplTwo").html();
@@ -504,9 +497,9 @@
             clicked('electricityPriceEdit.html');  //下一步
 
         });
+    });
 
 
-    }
 
 
     /**

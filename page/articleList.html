@@ -39,14 +39,14 @@
 </head>
 <body style="background: #F0F1F3;">
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">常见问题</h1>
 </header>
 
 <div class="mui-content" style="">
 
-	<div class="dataList"  style="margin-top: 15px">
+	<div class="dataList"  style="margin-top: 25px">
 
 	</div>
 
@@ -66,24 +66,12 @@
 </script>
 
 <script type="text/javascript">
-    var ws=null;
-    // 处理沉浸式状态栏
-    var topoffset=0;
-    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if(ms&&ms.length>=3){
-        topoffset=parseFloat(ms[2]);
-    }
 
     var pageNumber = 1;
     var pageSize = 10;
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
 
-    function pagePlusReady(){
-        console.log("pagePlusReady==================");
+    $.plusReady(function() {
+    	console.log("pagePlusReady==================");
         //拨打电话
         document.getElementById("telephone").addEventListener('tap',function(){
             var btnArray=['拨打','取消'];
@@ -97,22 +85,12 @@
 
 
         getList();
-        ws=plus.webview.currentWebview();
-        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-            topoffset=Math.round(plus.navigator.getStatusbarHeight());
-        }
-        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-    }
-
-    // 刷新页面
-    function onRefresh(){
-        console.log("onRefresh==================");
-        pageNumber = 1;
+    }, function() {
+    	pageNumber = 1;
         $(".dataList").html("")
         getList();
+    });
 
-        ws.endPullToRefresh();
-    }
     function getList(){
             var dataParam = {
                 "pageSize":pageSize,
