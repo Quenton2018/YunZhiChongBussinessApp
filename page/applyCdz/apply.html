@@ -5,9 +5,8 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>申请</title>
 
-    <link rel="stylesheet" href="../../css/iconfont.css">
-    <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/mui.min.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
 
@@ -28,12 +27,6 @@
         }
         body{
             background: #F0F1F3;
-        }
-        .mui-bar-nav{
-            box-shadow:none;
-        }
-        .mui-bar{
-            background: #fff;
         }
         .mui-content{
             background: transparent;
@@ -107,13 +100,13 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" style="color: #333">申请充电桩</h1>
+    <h1 class="mui-title">申请充电桩</h1>
 </header>
 
 <div class="mui-content" style="padding-bottom: 80px">
-    <div class="mui-card">
+    <div class="mui-card" style="margin-top: 20px;">
         <div class="mui-card-header" style="font-size: 13px">
             充电桩桩号
         </div>
@@ -284,16 +277,12 @@
 <script type="application/javascript">
     mui.init();
 
-
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-    function pagePlusReady(){
+    $.plusReady(function() {
         $("#username").val(plus.storage.getItem( "nickname"));
         $("#mobile").val(plus.storage.getItem( "mobile"));
-    }
+    }, function() {
+    	
+    });
 
 
     $(".jia").click(function () {

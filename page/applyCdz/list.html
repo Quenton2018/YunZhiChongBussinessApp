@@ -141,20 +141,18 @@
 </head>
 <body>
 
-    <header class="top mui-bar mui-bar-nav">
-        <div class="left mui-action-back"></div>
-        <h1 class="mui-title">申请列表</h1>
-    </header>
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">申请列表</h1>
+</header>
 
-    <div class="conbox01" id="dataListBox" style="padding-bottom: 50px">
+<div class="btn-submit mui-bar mui-bar-tab" onclick="clicked('apply.html')">申请充电桩</div>
 
-    </div>
-
+<div class="mui-content">
+    <div class="conbox01" id="dataListBox" style="margin-top: 20px;"></div>
     <div class="loadMore" id="loadMore">加载更多</div>
+</div>
 
-    <div class="dbbt mui-bar mui-bar-tab" onclick="clicked('apply.html')">
-        申请充电桩
-    </div>
 
     <script type="text/html" id="dataTmpl">
         <div class="conbox" onclick="clicked('detail.html?id={{id}}')">
@@ -181,46 +179,17 @@
         var pageNumber = 1;
         var pageSize = 10;
 
-        var ws=null;
         var uuid = null;
 
         var $dataListBox = $("#dataListBox");
 
-        var topoffset=0;
-        var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-        if(ms&&ms.length>=3){
-            topoffset=parseFloat(ms[2]);
-        }
-
-        if(window.plus){
-            pagePlusReady();
-        }else{
-            document.addEventListener('plusready',pagePlusReady,false);
-        }
-
-        function pagePlusReady() {
-
-            uuid = plus.storage.getItem("uuid");
-
+        $.plusReady(function() {
+        	uuid = plus.storage.getItem("uuid");
             getPageData();
-
-            ws=plus.webview.currentWebview();
-            if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-                topoffset=Math.round(plus.navigator.getStatusbarHeight());
-            }
-            ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-
-        }
-
-        // 刷新页面
-        function onRefresh(){
-
-            pageNumber = 1;
+        }, function() {
+        	pageNumber = 1;
             getPageData();
-
-            ws.endPullToRefresh();
-        }
-
+        });
         
         function getPageData() {
 
