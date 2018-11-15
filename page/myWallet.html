@@ -93,7 +93,7 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">我的钱包</h1>
 </header>
@@ -145,36 +145,28 @@
 <script type="text/javascript">
     mui.init();
 
-    var ws=null;
-    // 处理沉浸式状态栏
-    var topoffset=0;
-    var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if(ms&&ms.length>=3){
-        topoffset=parseFloat(ms[2]);
-    }
-
     var pageNumber = 1;
     var pageSize = 10;
 
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-    function pagePlusReady(){
-        checkLogin();
+    $.plusReady(function() {
+    	checkLogin();
 
         getUserInfoDateBase();
 
         getList(); //审核中
 
         getListTwo(); //审核通过
-        ws=plus.webview.currentWebview();
-        if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
-            topoffset=Math.round(plus.navigator.getStatusbarHeight());
-        }
-        ws.setPullToRefresh({support:true,style:'circle',offset:topoffset+45+'px'},onRefresh);
-    }
+    }, function() {
+    	$("#loadMore").css({"display":"none"});
+        $("#noMore").css({"display":"none"});
+        pageNumber = 1;
+        $(".dataList").html("");
+        $(".dataList1").html("");
+
+        getUserInfoDateBase();
+        getList();
+        getListTwo();
+    });
 
 
     function getList(){
@@ -255,24 +247,6 @@
             }
         })
     }
-
-
-    // 刷新页面
-    function onRefresh(){
-        console.log("onRefresh==================");
-        $("#loadMore").css({"display":"none"});
-        $("#noMore").css({"display":"none"});
-        pageNumber = 1;
-        $(".dataList").html("");
-        $(".dataList1").html("");
-
-        getUserInfoDateBase();
-        getList();
-        getListTwo();
-        ws.endPullToRefresh();
-    }
-
-
 
     $("#loadMore").click(function(){
         pageNumber++;
