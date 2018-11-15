@@ -34,14 +34,14 @@
 	</head>
 <body style="background: #fff">
 
-		<header class="mui-bar mui-bar-nav">
+		<header class="header header-immersed mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title"></h1>
 		</header>
 
 		<div class="mui-content" style="    background-color: #fff;">
 
-			<div class="myList dataList" id="dataList" >
+			<div class="myList dataList" id="dataList" style="margin-top: 20px;">
 				<article class="article">
 
 				</article>
@@ -55,14 +55,11 @@
 		</script>
    </body>
      <script type="text/javascript" charset="utf-8">
-    		if(window.plus){
-				pagePlusReady();
-			}else{
-				document.addEventListener('plusready',pagePlusReady,false);
-			}
-			function pagePlusReady(){
-                getArticleContent();
-			}
+    		mui.init();
+    		
+			$.plusReady(function() {
+				getArticleContent();
+			})
 			
 			function getArticleContent(){
                 var uuid = plus.storage.getItem("uuid");
