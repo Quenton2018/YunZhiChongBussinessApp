@@ -86,13 +86,15 @@
 	<body >
 
 
-	<header class="mui-bar mui-bar-nav">
+	<header class="header header-immersed mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">绑定银行卡</h1>
 	</header>
+	
+	<div class="btn-submit mui-bar mui-bar-tab" id="submitBtn">确定绑卡</div>
 
-
-		<div class="topAlertIfo" style="    padding-top: 60px;">
+	<div class="mui-content">
+		<div class="topAlertIfo">
 			请绑定持卡人本人的银行卡
 		</div>
 
@@ -112,7 +114,7 @@
 		<form class="mui-input-group">
 			<div class="mui-input-row">
 				<label>所属银行</label>
-				<input type="text" placeholder="所请输入持卡人身份证号" name="bank">
+				<input type="text" placeholder="请输入银行卡开户行" name="bank">
 			</div>
 			<div class="mui-input-row">
 				<label>银行卡号码</label>
@@ -130,12 +132,12 @@
 				<span class="getCode">获取验证码</span>
 			</div>
 		</form>
-		<div class="foot-btn">
+		<!--<div class="foot-btn">
 			<div class="submitBtn">
 				确定绑卡
 			</div>
-		</div>
-
+		</div>-->
+	</div>
 
 
     </body>
@@ -193,19 +195,10 @@
 
 
 
-        if(window.plus){
-            pagePlusReady();
-        }else{
-            document.addEventListener('plusready',pagePlusReady,false);
-        }
-        function pagePlusReady(){
-
-
-
-        }
+        $.plusReady(function() {});
 
        	 var canPostFlag = true;
-        	$(".submitBtn").click(function(){
+        	$("#submitBtn").click(function(){
         		var uuid = plus.storage.getItem("uuid");
                 if(!canPostFlag){
                     layer.msg("已提交,不可重复提交！");
@@ -263,16 +256,16 @@
 				}
         	postJSON(API_URL.ApiAdminBingBank,data,function(res){
 					if("0" == res.code){
-						layer.msg("绑定成功");
                         var moneyAmount = res.data.moneyAmount;
                         var bankCode = res.data.bankCode;
                         var bank = res.data.bank;
                         plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
                         plus.storage.setItem( "bankCode", bankCode);
                         plus.storage.setItem( "bank", bank);
-						setTimeout(function(){
-                            clicked('putforward.html');
-						},3000);
+                        
+						layer.msg("绑定成功", function() {
+							clicked('putforward.html');
+						});
 					}else{
 						layer.msg(res.msg);
 					}
