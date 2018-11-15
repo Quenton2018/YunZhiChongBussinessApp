@@ -157,6 +157,15 @@
         .dataList{
         	padding: 20px 0 0 0;
         }
+        .nodata-img img{
+        	width: 60%;
+        	margin: 0 auto;
+        	margin-bottom: 45px;
+        }
+        .nodata-p{
+        	text-align: center;
+        	font-size: 14px;
+        }
     </style>
 
 </head>
@@ -178,7 +187,15 @@
 
 
 </div>
-
+<div id="nodata" style="display: none;">
+	<div class="nodata-img">
+		<img src="../images/area/null.png" />
+	</div>
+	<div class="nodata-p">
+		<p>你目前还没有片区</p>
+		<p>请前往申请片区吧</p>
+	</div>
+</div>
 
 <script type="text/html" id="dataTmpl">
     <div class="conbox">
@@ -227,10 +244,7 @@
         document.addEventListener('plusready',pagePlusReady,false);
     }
     function pagePlusReady() {
-        $("#loadMore").css({"display":"none"});
-        $("#noMore").css({"display":"none"});
         getList();
-
         ws=plus.webview.currentWebview();
         if(plus.navigator.isImmersedStatusbar()){// 兼容沉浸式状态栏模式
             topoffset=Math.round(plus.navigator.getStatusbarHeight());
@@ -241,8 +255,6 @@
     // 刷新页面
     function onRefresh(){
         console.log("onRefresh==================");
-        $("#loadMore").css({"display":"none"});
-        $("#noMore").css({"display":"none"});
         pageNumber = 1;
         $(".dataList").html("");
         getList();
@@ -322,6 +334,11 @@
             postJSON(API_URL.ApiGetApplyChargingGroupList,dataParam,function(res){
                 if("0" == res.code){
                     var data = res.data.pagedata.content;
+                    if(!vaildeParam(data)){
+                    	$("#nodata").show();
+                    }else{
+                    	$("#nodata").hide();
+                    }
                     var tmpl = $("#dataTmpl").html();
                     var html = '';
                     $.each(data, function(index,item) {
@@ -373,10 +390,10 @@
                     //   bindItemClick();
                     if(true == res.data.pagedata.last){
                         $("#loadMore").css({"display":"none"});
-                        $("#noMore").css({"display":"block"});
+//                      $("#noMore").css({"display":"block"});
                     }else{
                         $("#loadMore").css({"display":"block"});
-                        $("#noMore").css({"display":"none"});
+//                      $("#noMore").css({"display":"none"});
                     }
                 }else{
                     layer.msg(res.msg);

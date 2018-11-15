@@ -538,7 +538,7 @@
 				if (prices < 1){
                     prices = 0
                 }else{
-                    List[index][name] = prices - num;
+                    List[index][name] = (prices - num).toFixed(2);
                 }
 			},
 			btnPlus:function(List,name,index){
@@ -552,7 +552,7 @@
 				if(name == 'amount'){
 					num = 0.5
 				}
-                List[index][name] = prices + num;	
+                List[index][name] = (prices + num).toFixed(2);	
 			},
 			tapClick:function(type){
 				if(type == 'timesf'){
@@ -581,6 +581,16 @@
 				var rateSum = 0;
 				var flag = false;
 				var flagNumber = false;
+				var amountFullStop = vm.fullStopList.amount;
+				if(!vaildeParam(amountFullStop)){
+					layer.msg("请正确输入充满自停配置信息");
+					return false;
+				}
+				//校验是数字
+                if(!reg.test(amountFullStop)){  
+                    layer.msg("充满自停最多扣款配置必须为数字");
+                    return false;
+                }
 				$.each(vm.partnersList,function(index,item){				
 					var name = item.name;
 					var mobile = item.mobile;
