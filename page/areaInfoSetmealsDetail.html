@@ -183,9 +183,9 @@
 </head>
 <body background="#f0f1f3">
 		
-<header class="header header-immersed  mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <span class="compose mui-icon mui-icon-more " id="updateChargingGroup"></span>
+    <span class="mui-icon mui-icon-compose mui-icon-right-nav mui-pull-right" id="updateChargingGroup"></span>
     <h1 class="mui-title" id="areaName"></h1>
 </header>
 
@@ -270,6 +270,25 @@
 		</div>
 	</div>
 </div>
+
+<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action">
+    <!-- 可选择菜单 -->
+    <ul class="mui-table-view">
+      <li class="mui-table-view-cell" id="addSetmeals">
+        <a>添加套餐</a>
+      </li>
+      <li class="mui-table-view-cell" id="updateSetmeals">
+        <a>修改套餐</a>
+      </li>
+    </ul>
+    <!-- 取消菜单 -->
+    <ul class="mui-table-view">
+      <li class="mui-table-view-cell">
+        <a href="#sheet1"><b>取消</b></a>
+      </li>
+    </ul>
+</div>
+
 <!--tab header模板-->
 <script type="text/html" id="headTmpl" >
 	{{each list as item index}}
@@ -333,7 +352,7 @@
 
     var setmealData = [];      //套餐name数据
     
-    var roadPick = '';
+
     
     $.plusReady(function() {
      	checkLogin();
@@ -342,9 +361,7 @@
       
     },function(){
     	getDataList();
-        if(roadPick){
-        	roadPick.hide();
-        }
+ 
     });
     function getDataList(){
     	var params = {
@@ -525,55 +542,42 @@
 	
 	
 	//增加或修改套餐
-		//修改
-	document.querySelector('#updateChargingGroup').addEventListener("tap", function() {
-      	roadPick = new mui.PopPicker();
-		$(".mui-poppicker-header").hide();
-		$(".mui-picker-inner").hide();
-		$(".mui-picker").hide();
-		
-		var html = '<div>'
-						+'<div class="mymeal">'+'我的套餐'+'('+'2'+')'+'</div>'
-						+'<div class="addmeal"><img src="../images/area/tianjia.png" alt="添加套餐" /><span>'+'添加套餐'+'</span></div>'
-						+'<div class="setmeal1" ><img src="../images/area/xiugai.png" alt="修改套餐"/><span>'+'修改套餐'+'</span></div>'
-						+'<div class="line"></div>'
-				   '</div>'
-		$(".mui-poppicker").html(html)
-		$(".setmeal1").click(function(){
-			roadPick.hide();		
-			var areaName = $('#areaName').text();
-			var setmealName = $('#setmealName').text();
-			var setmealData = $('#setmealName').data('pick');
-			var setmealState = plus.storage.getItem("setmealState");			
-			var updateGroup = {
-				'areaName': areaName,
-				'state':setmealState,
-				'setmealName':setmealName,
-				'setmealData':setmealData,
-				'areaType':'update'
-			}
-			plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
-			clicked('areaApplicationSetmeals.html?areaid='+areaId);
-		});
-		$(".addmeal").click(function(){
-			roadPick.hide();
-			var areaName = $('#areaName').text();
-			var setmealName = $('#setmealName').text();
-			var setmealData = $('#setmealName').data('pick');
-			var setmealState = plus.storage.getItem("setmealState");
-			var updateGroup = {
-				'areaName': areaName,
-				'state':setmealState,
-				'setmealName':setmealName,
-				'setmealData':setmealData,
-				'areaType':'add'
-			}
-			plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
-			clicked('areaApplicationSetmeals.html?areaid='+areaId);
-		})
-      	roadPick.show();
+	$('#updateChargingGroup').click(function() {
+		mui('#sheet1').popover('toggle');
+	});//修改
+	$("#updateSetmeals").click(function(){
+		mui('#sheet1').popover('toggle');
+		var areaName = $('#areaName').text();
+		var setmealName = $('#setmealName').text();
+		var setmealData = $('#setmealName').data('pick');
+		var setmealState = plus.storage.getItem("setmealState");			
+		var updateGroup = {
+			'areaName': areaName,
+			'state':setmealState,
+			'setmealName':setmealName,
+			'setmealData':setmealData,
+			'areaType':'update'
+		}
+		plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+		clicked('areaApplicationSetmeals.html?areaid='+areaId);
 	});
-	
+	$("#addSetmeals").click(function(){
+		mui('#sheet1').popover('toggle');
+		var areaName = $('#areaName').text();
+		var setmealName = $('#setmealName').text();
+		var setmealData = $('#setmealName').data('pick');
+		var setmealState = plus.storage.getItem("setmealState");
+		var updateGroup = {
+			'areaName': areaName,
+			'state':setmealState,
+			'setmealName':setmealName,
+			'setmealData':setmealData,
+			'areaType':'add'
+		}
+		plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+		clicked('areaApplicationSetmeals.html?areaid='+areaId);
+	});
+
 </script>
 
 </body>
