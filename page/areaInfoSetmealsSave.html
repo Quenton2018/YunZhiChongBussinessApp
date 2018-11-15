@@ -583,7 +583,18 @@
 		};
 		postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,params,function(res){
 			if(res.code == '0'){
-				clicked('areaApplicationList.html');
+				/*var ws = plus.webview.currentWebview();
+	            var wo = ws.opener();
+	            wo.evalJS('goToAreaList()');*/
+	            
+	            
+		
+				var ws = plus.webview.currentWebview();
+				var wo = ws.opener();
+				wo.evalJS("back()");
+				wo.opener().evalJS("dataRefresh()");
+				back();
+//				clicked('areaApplicationList.html');
 			}else{
 				layer.msg(res.msg);
 			}
