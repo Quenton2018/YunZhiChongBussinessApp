@@ -182,32 +182,7 @@
 		var updateGroup = null;
 		$.plusReady(function() {
 	     	updateGroup = JSON.parse(plus.storage.getItem('updateGroup'));	            
-	    });
-		function toDx(n) {
-	        switch (n) {
-	            case 0:
-	                return "基本套餐";
-	            case 1:
-	                return "一";
-	            case 2:
-	                return "二";
-	            case 3:
-	                return "三";
-	            case 4:
-	                return "四";
-	            case 5:
-	                return "五";
-	            case 6:
-	                return "六";
-	            case 7:
-	                return "七";
-	            case 8:
-	                return "八";
-	            case 9:
-	                return "九";
-	        }
-	    }
-		
+	    });	
 		var vm = new Vue({
 			el:'#app',
 			data:{
@@ -241,7 +216,7 @@
 						}]
 					}else if(areaType == 'add'){
 						this.setmealList = setmealData;
-						var applySetmealName = "套餐" + toDx(this.setmealList.length);
+						var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
 						this.applySetmealName = applySetmealName;
 						this.setmealList.unshift({
 							"state": "1",
@@ -250,7 +225,7 @@
 						})
 					}else if(areaType == 'otheradd'){
 						this.setmealList = setmealData;
-						var applySetmealName = "套餐" + toDx(this.setmealList.length);
+						var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
 						this.applySetmealName = applySetmealName;
 						this.setmealList.unshift({
 							"state": "1",

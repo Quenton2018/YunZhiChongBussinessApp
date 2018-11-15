@@ -591,3 +591,34 @@ function getLastDay(year,month) {
     var new_date = new Date(new_year,new_month,1);                //取当年当月中的第一天
     return (new Date(new_date.getTime()-1000*60*60*24));//获取当月最后一天日期
 }
+/**
+ * 数字转中文
+ * @returns {Number}
+ */
+function NumberToChinese(num){
+		if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(num)) return "数据非法";
+    var chnNumChar = ["零","一","二","三","四","五","六","七","八","九"];
+    var chnUnitSection = ["","万","亿","万亿","亿亿"];
+    var chnUnitChar = ["","十","百","千"];
+
+    var strIns = '', chnStr = '';
+    var unitPos = 0;
+    var zero = true;
+    while(num > 0){
+        var v = num % 10;
+        if(v === 0){
+            if(!zero){
+                zero = true;
+                chnStr = chnNumChar[v] + chnStr;
+            }
+        }else{
+            zero = false;
+            strIns = chnNumChar[v];
+            strIns += chnUnitChar[unitPos];
+            chnStr = strIns + chnStr;
+        }
+        unitPos++;
+        num = Math.floor(num / 10);
+    }
+    return chnStr;
+}
