@@ -5,19 +5,16 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>片区新申请添加</title>
     <link rel="stylesheet" href="../css/mui.min.css">
-    <link rel="stylesheet" href="../css/mui.picker.min.css">
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
     <script src="../plugins/layer/layer.js"></script>
     <script src="../js/hammer.min.js"></script>
     <script src="../js/jquery.hammer.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
-    <script src="../js/mui.picker.all.js"></script>
     <script src="../js/vue.min.js"></script>
     <style type="text/css">
     	input{  		
@@ -52,8 +49,9 @@
 		}
 		.setmeal_title{
 			color: #4d4d4d;
-			font-size: 1rem;
+			font-size: 16px;
 			font-weight: 400;
+			margin-bottom: 15px;
 		}
 		.setmeal_title:before{
 			border-left: 5px solid #ff6d22;
@@ -62,7 +60,6 @@
 			margin-right: 6px;
 		}
     	.setmeal_tap_header{
-    		padding: 15px 0;
     		overflow: hidden;	
     	}
     	.setmeal_tap_header span{  		
@@ -79,7 +76,6 @@
     	.table_ul{
     		padding: 0;
     		margin: 0;
-    		margin-top: -15px;
     	}
     	.table_list{
     		padding: 12px 0;
@@ -134,28 +130,6 @@
 			background: #eeeeee;
 			border:none!important
 		}
-		.footer_wrap {
-		    width: 100%;
-		    height: 50px;
-		    background: linear-gradient(to left,#f08200,#f2800b,#ff7546);
-		    text-align: center;
-		    line-height: 50px;
-		    position: fixed;
-		    bottom: 0;
-		    left: 0;
-		    color: #fff;
-		}
-		#eles .setmeal_tap_header {
-			padding: 15px 5px;
-		}
-
-		#fullStopList{
-			padding: 0;
-			margin-top: 10px;
-		}
-		#fullStopList .table_list span{
-			font-size: 0.9rem;
-		}
 		.yellow{
 			color: #ff6d22;
 			font-style: normal;
@@ -166,8 +140,7 @@
 		    margin: 0 2px;
 		    height: 24px;
 		    line-height: 20px;
-		    text-align: center;
-		    font-size: 0.9rem;
+		    text-align: center;	    
 		}
 		.addCharges{
 			float: right;
@@ -239,9 +212,22 @@
 		    border-radius: 0!important;
 		    font-size: 1rem;
 		}
-		#partners .setmeal_tap_header{
-			padding: 15px 0;
+		.fullstop-item{
+			float: left;
+			text-align: center;
+			font-size: 1rem;
 		}
+		.table_list .fullstop-item{
+			line-height: 40px;
+		}
+		.fullstop-item input{
+			padding: 0 10px;
+    		margin: 0;
+    		text-align: center;
+    		color: #969696;
+    		background: #eeeeee;
+		}
+
 		#partners .partners-item{
 			width: 25%;
 			float: left;
@@ -365,6 +351,10 @@
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title" id="stateName">{{stateName}}</h1>
 </header>
+
+<footer class="mui-bar mui-bar-footer btn-submit" v-on:click="submits">
+	<span>提交</span>
+</footer>
 	
 <div class="mui-content" >
 	<div class="setmeal_wrap" id="setmeals">
@@ -447,14 +437,19 @@
 			<!--充满自停-->
 			<div class="setmeal_content" id="fullStop">
 				<h3 class="setmeal_title">充满自停最大配置</h3>
+				<div class="setmeal_tap_header">
+					<span class="fullstop-item" style="width: 30%;">电量<i>(度)</i></span>
+					<span class="fullstop-item" style="width: 30%;">时长<i>(分钟)</i></span>
+					<span class="fullstop-item" style="width: 40%;">最多扣款<i>(元)</i></span>
+				</div>
 				<div class="setmeal_tap_table">
-					<ul class="table_ul" id="fullStopList">
-						<li class="table_list flex">
-							<span class="flex-item">最大电量<i class="yellow">{{fullStopList.power}}度</i></span>
-							<span class="flex-item">最大时长<i class="yellow">{{fullStopList.minutes/60}}小时</i></span>
-							<span class="flex-item">最多扣款<input type="number" class="yellow-input" v-model="fullStopList.amount">元</span>
-						</li>
-					</ul>
+					<div class="table_list mui-clearfix" id="fullStopList">
+						<span class="fullstop-item" style="width: 30%;"><i class="yellow">{{fullStopList.power}}</i></span>
+						<span class="fullstop-item" style="width: 30%;"><i class="yellow">{{fullStopList.minutes/60}}</i></span>
+						<span class="fullstop-item" style="width: 40%;">
+							<input type="number" style="width: 50%;" v-model="fullStopList.amount" maxlength="10"/>
+						</span>
+					</div>
 				</div>
 			</div>
 			<!--合伙人-->
@@ -504,54 +499,24 @@
 			<!---->
 		</div>
 	</div>
-	
-	<!--判断选择其他套餐-->
-	<!--<div class="mui-mask" style="display: none;">
-		<div class="continue_top_wrap">
-			<div class="continue_top">
-				<img class="comeback" src="../images/pianqushenqing/guanbi@3x.png" alt"关闭"/>
-			</div>
-			<div class="select_combo">
-				<div class="combo">
-					<div class="basic">套餐一</div>
-					<div class="select_other">
-						<p class="combo_vip">套餐二</p>
-						<p class="combo_vip">套餐三</p>
-						<p class="combo_vip">套餐四</p>
-					</div>
-				</div>
-			</div>
-			<div class="method-of-triads">
-				<p class="one sure"><input type="radio" name="combo" id="1" value="" checked=""/> 充满自停</p>
-				<p class="one"><input type="radio" name="combo" id="2" value="" /> 充电时长</p>
-				<p class="one"><input type="radio" name="combo" id="3" value="" /> 充满自停+充电时长</p>
-			</div>
-			<div class="combo_bottom" id="AddCombo">
-				添加套餐
-			</div>
-		</div>
-	</div>-->
 
-<footer id="footer" style="height: 50px;">
-	<div class="fixed btn-submit" id="submit" v-on:click="submits">
-		<span>提交</span>
-	</div>
-</footer>
+
 </div>
 
 <script type="text/javascript">
 	mui.init();
 	
 	var uuid = '';
-    var areaId = getQueryString('areaid');
     var setmealName = '';
-    var applyGroup = '';
+    var applyGroup = {};
 	var jsonSetmealJsonStr = [];
   	$.plusReady(function() {
      	checkLogin();
 		uuid = plus.storage.getItem("uuid");
 		setmealName = plus.storage.getItem("setmealName");
-		jsonSetmealJsonStr = JSON.parse(plus.storage.getItem("jsonSetmealJsonStr"));  //套餐数组
+		applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
+		jsonSetmealJsonStr = JSON.parse(plus.storage.getItem("jsonSetmealJsonStr")) || [];  //套餐数组
+		console.log(jsonSetmealJsonStr.length);
         getDataList();
  
     },function(){
@@ -631,7 +596,6 @@
 			isTime:true
 		},
 		created:function(){
-			applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
 			var state = applyGroup.state;
 			this.state = state;
 			if (state == '1') {
@@ -725,24 +689,33 @@
 			},
 			closeMask:function(){
 				$('.mui-mask').hide();
-				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("jsonSetmealJSON"))
+				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("jsonSetmealJSON"));
 				jsonSetmealJsonStr.push(jsonSetmealJSON);
 				plus.storage.setItem("jsonSetmealJsonStr",JSON.stringify(jsonSetmealJsonStr));
 				SaveChargingGroup(jsonSetmealJsonStr);
 			},
 			otherAdd:function(){
 				$('.mui-mask').hide();
-				var applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
-				
+				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("jsonSetmealJSON"));
+					jsonSetmealJsonStr.push(jsonSetmealJSON);
+					plus.storage.setItem("jsonSetmealJsonStr",JSON.stringify(jsonSetmealJsonStr));
+				var setmealData = [];
+				$.each(jsonSetmealJsonStr, function(index,item) {
+					setmealData.push({
+						'value':'',
+						'state':item.state,
+						'text':item.name
+					});
+				});
 				var updateGroup = {
 					'areaName': applyGroup.name,
 					'state':this.state,
-					'setmealName':setmealName,
+					'setmealName':applyGroup.applySetmealName,
 					'setmealData':setmealData,
 					'areaType':'otheradd'
 				}
 				plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
-				clicked('areaApplicationSetmeals.html?areaId=other');
+				clicked('areaApplicationSetmeals.html?areaid=other');
 			},
 			submits:function(){
 				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("priceSetmealData"));
@@ -828,7 +801,6 @@
 	});
 	
     function getDataList(){
-    	
     	var params = {
     		'uuid':uuid,
     		'state':applyGroup.state,
@@ -837,8 +809,7 @@
 		postJSON(API_URL.ApiChargingBusinessGetSetmealPrice,params,function(res){
 			if(res.code == '0'){			
 				var priceSetmealData = res.data;
-				var applySetmealName = plus.storage.getItem('saveSetmealName') || '基本套餐';
-				priceSetmealData.name = applySetmealName;
+				priceSetmealData.name = applyGroup.applySetmealName || '基本套餐';
 			  	getAllData(priceSetmealData);
 			}else{
 				layer.msg(res.msg);
