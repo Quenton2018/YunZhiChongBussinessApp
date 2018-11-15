@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
     <script src="../plugins/layer/layer.js"></script>
     <script src="../js/hammer.min.js"></script>
     <script src="../js/jquery.hammer.js"></script>
@@ -58,7 +57,7 @@
 			z-index: 2;
 		}
 		.set_meal_top{
-		    font-size: 15px;
+		    font-size: 14px;
 		    padding: 10px 0;
 		    margin: 0 15px;
 			border-bottom: 1px solid #ff6d22;
@@ -106,126 +105,91 @@
 		    border-radius: 4px;
 		    float: left;
 		    text-align: center;
-		    font-size: 15px;	    
+		    font-size: 14px;	    
 		    background-color: #e6e3e3;
 		}
 		.select .setmeal_charge_right{
 			color: white;
 		    background-color: #ff6d22;
 		}
-    	.footer_wrap {
-		    width: 100%;
-		    height: 50px;
-		    background: linear-gradient(to left,#f08200,#f2800b,#ff7546);
-		    text-align: center;
-		    line-height: 50px;
-		    position: fixed;
-		    bottom: 0;
-		    left: 0;
-		    color: #fff;
-		    z-index: 10;
-		}
     </style>
 </head>
 <body>
-	<div id="app">
+<div id="app">
 		
-	<header class="header header-immersed mui-bar mui-bar-nav">
-	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	    <h1 class="mui-title">{{areaTitle}}</h1>
-	</header>
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">{{areaTitle}}</h1>
+</header>
 	
-	<div class="mui-content">
-		<div class="mui-input-group area-form">
-			<div class="mui-input-row form-group">
-				<label>片区名称</label>
-				<input type="text" id="area" name="area" placeholder="请输入市+小区" v-model="areaName">
-			</div>
-			<div class="mui-input-row form-group">
-				<label>电费单价</label>
-				<span class="dw">元/度电</span>
-				<input type="number" value="0.8" class="price" name="price">		
-			</div>
+<footer class="mui-bar mui-bar-footer btn-submit" v-on:click="submits" id="next">
+	<span>下一步</span>
+</footer>
+	
+<div class="mui-content">
+	<div class="mui-input-group area-form">
+		<div class="mui-input-row form-group">
+			<label>片区名称</label>
+			<input type="text" id="area" name="area" placeholder="请输入市+小区" v-model="areaName">
 		</div>
-		
-		<div class="set_meal_wrap">
-			<div class="set_meal" v-for="(item, index) in setmealList">
-				<div class="set_mask" v-if='!item.isSelect'></div>
-				<div class="set_meal_top">
-					<img src="../images/area/jibentaocan.png">
-					<span id="setmealName">{{item.text}}</span>
-				</div>
+		<div class="mui-input-row form-group">
+			<label>电费单价</label>
+			<span class="dw">元/度电</span>
+			<input type="number" value="0.8" class="price" name="price">		
+		</div>
+	</div>
 
-				<div class="setmeal_charge" :class="item.state=='1'? 'select':''" state="1" statename="充满自停">
-					<div class="setmeal_charge_left">
-						<div class="circle_wrap">
-							<div class="circle" id="circle"></div>
-						</div>
+	<div class="set_meal_wrap">
+		<div class="set_meal" v-for="(item, index) in setmealList">
+			<div class="set_mask" v-if='!item.isSelect'></div>
+			<div class="set_meal_top">
+				<img src="../images/area/jibentaocan.png">
+				<span id="setmealName">{{item.text}}</span>
+			</div>
+
+			<div class="setmeal_charge" :class="item.state=='1'? 'select':''" state="1">
+				<div class="setmeal_charge_left">
+					<div class="circle_wrap">
+						<div class="circle" id="circle"></div>
 					</div>
-					<div class="setmeal_charge_right">充满自停</div>
 				</div>
-				<div class="setmeal_charge" :class="(item.state=='-1'||item.state=='2') ? 'select':''" state="2" statename="充电时长">
-					<div class="setmeal_charge_left">
-						<div class="circle_wrap">
-							<div class="circle" id="circleSecond"></div>
-						</div>
+				<div class="setmeal_charge_right">充满自停</div>
+			</div>
+			<div class="setmeal_charge" :class="(item.state=='-1'||item.state=='2') ? 'select':''" state="2">
+				<div class="setmeal_charge_left">
+					<div class="circle_wrap">
+						<div class="circle" id="circleSecond"></div>
 					</div>
-					<div class="setmeal_charge_right">充电时长</div>
 				</div>
-				<div class="setmeal_charge" :class="(item.state=='1:-1'||item.state=='1:2') ? 'select':''" state="3" statename="充满自停+充电时长">
-					<div class="setmeal_charge_left">
-						<div class="circle_wrap">
-							<div class="circle" id="circleThird"></div>
-						</div>
+				<div class="setmeal_charge_right">充电时长</div>
+			</div>
+			<div class="setmeal_charge" :class="(item.state=='1:-1'||item.state=='1:2') ? 'select':''" state="3">
+				<div class="setmeal_charge_left">
+					<div class="circle_wrap">
+						<div class="circle" id="circleThird"></div>
 					</div>
-					<div class="full_stop_right_prepay setmeal_charge_right">充满自停 + 充电时长</div>
 				</div>
+				<div class="full_stop_right_prepay setmeal_charge_right">充满自停 + 充电时长</div>
 			</div>
 		</div>
-		
 	</div>
-	<div id="footer" style="height: 100px;">
-		<div class="fixed btn-submit" id="next" @click="submits">
-		   	<span>下一步</span>
-		</div>
-	</div>
-	
-	</div>
+</div>
+
+</div>
 	<script type="text/javascript">
 		var areaId = getQueryString('areaid');
 		var areaType = '';
-		var updateGroup = '';
-		function toDx(n) {
-	        switch (n) {
-	            case 0:
-	                return "基本套餐";
-	            case 1:
-	                return "一";
-	            case 2:
-	                return "二";
-	            case 3:
-	                return "三";
-	            case 4:
-	                return "四";
-	            case 5:
-	                return "五";
-	            case 6:
-	                return "六";
-	            case 7:
-	                return "七";
-	            case 8:
-	                return "八";
-	            case 9:
-	                return "九";
-	        }
-	    }
-		
+		var updateGroup = null;
+		$.plusReady(function() {
+	     	updateGroup = JSON.parse(plus.storage.getItem('updateGroup'));	            
+	    });	
 		var vm = new Vue({
 			el:'#app',
 			data:{
 				areaTitle:'申请片区',
 				areaName:'',
-				stateName:'',
+				state:'',
+				applySetmealName:'基本套餐',
 				setmealList:[{
 					"state": "1",
 					"isSelect":true,
@@ -234,8 +198,7 @@
 			},
 			created:function(){
 				//从申请片区列表详情页入口进来
-				if(areaId){
-					updateGroup = JSON.parse(plus.storage.getItem('updateGroup'));
+				if(areaId && updateGroup){
 					var areaName = updateGroup.areaName;
 					var state = updateGroup.state;
 					var setmealName = updateGroup.setmealName;
@@ -253,8 +216,8 @@
 						}]
 					}else if(areaType == 'add'){
 						this.setmealList = setmealData;
-						var applySetmealName = "套餐" + toDx(this.setmealList.length);
-						plus.storage.setItem('applySetmealName', applySetmealName);
+						var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
+						this.applySetmealName = applySetmealName;
 						this.setmealList.unshift({
 							"state": "1",
 							"isSelect":true,
@@ -262,14 +225,17 @@
 						})
 					}else if(areaType == 'otheradd'){
 						this.setmealList = setmealData;
-						var applySetmealName = "套餐" + toDx(this.setmealList.length);
-						plus.storage.setItem('applySetmealName', applySetmealName);
+						var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
+						this.applySetmealName = applySetmealName;
 						this.setmealList.unshift({
 							"state": "1",
 							"isSelect":true,
 							"text":applySetmealName
 						})
 					}
+				}else{
+					plus.storage.removeItem("jsonSetmealJsonStr");
+					plus.storage.removeItem("updateGroup");
 				}
 			},
 			methods:{
@@ -289,21 +255,16 @@
 						layer.msg('请输入正确的电费单价');
 						return;
 					}
-					var state = '';
-					$('.setmeal_charge').each(function() {
-						if ($(this).hasClass('select')) {
-							state = $(this).attr('state');
-							return true;
-						}
-					});
+					var state = this.state;			
 					if (state == '') {
-						layer.msg('请选择套餐类型');
-						return;
+						state = $('.select').attr('state');
 					}
-					
+
+					var applySetmealName = this.applySetmealName;
 					var uuid = plus.storage.getItem("uuid");
 					
 					var applyGroup = {
+						applySetmealName:applySetmealName,
 						name: name,
 						price: price,
 						state: state
@@ -315,6 +276,8 @@
 							clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
 						}else if(areaType == 'add'){ //片区套餐添加
 							clicked('areaInfoSetmealsAdd.html?areaid='+areaId);
+						}else if(areaType == 'otheradd'){ //片区套餐继续添加
+							clicked('areaInfoSetmealsSave.html');
 						}
 					}else{//申请片区
 						postJSONNoIcon(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
@@ -335,7 +298,9 @@
 
 		//选择套餐
 		$('.setmeal_charge').click(function() {
-			$(this).addClass('select').siblings().removeClass('select');			
+			var state = $(this).attr('state');
+			$(this).addClass('select').siblings().removeClass('select');
+			vm.state = state;
 		});
 				
 	</script>

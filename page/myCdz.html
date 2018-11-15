@@ -37,8 +37,13 @@
         }
         .tabBox span{
             display: inline-block;
-            padding: 5px 10px;
+            padding: 5px 10px 16px 10px;
             font-size: .8rem;
+        }
+        .tabBox span em{
+        	padding: 0 5px;
+        	font-size: .8rem;
+        	font-style: normal;
         }
         .tabBox span.select{
             border-bottom: #EC8131 solid 2px;
@@ -116,11 +121,9 @@
     </div>
 
     <div class="tabBox">
-        <span id="normal" class="tabItem select" data-type="0">充电桩详情
-            <!--(<span id="countValid">0</span>)-->
-        </span>
-        <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<span id="countInvalid">0</span>)</span>
-        <span class="tabItem" data-type="3" >未安装(<span id="countUnInstall">0</span>)</span>
+        <span id="normal" class="tabItem select" data-type="0">充电桩详情</span>
+        <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<em id="countInvalid">0</em>)</span>
+        <span class="tabItem" data-type="3" >未安装(<em id="countUnInstall">0</em>)</span>
     </div>
     
 	<div class="midBox">
