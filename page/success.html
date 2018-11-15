@@ -78,21 +78,23 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">提现</h1>
 </header>
 
-<div class="mui-content" style="    padding-bottom: 60px;">
+<div class="btn-submit mui-bar mui-bar-tab" onclick="clicked('myWallet.html')">完成</div>
+
+<div class="mui-content" style="padding-bottom: 60px;">
     
     <div class="topBox">
         <img class="logo-img" src="../images/yesIcon.png">
         <h3>提现申请成功</h3>
         <h5>预计<span id="dateBox">三天后</span>到账</h5>
 
-        <div class="Box-tixian" onclick="clicked('myWallet.html')">
+        <!--<div class="Box-tixian" onclick="clicked('myWallet.html')">
             <img class="Button-Img putForwardBtn"  src="../images/wancheng.png" />
-        </div>
+        </div>-->
     </div>
 
 
@@ -101,20 +103,9 @@
 <script type="text/javascript">
     mui.init();
 
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-    function pagePlusReady(){
-
-    }
-
-
-
-
-
-
+    $.plusReady(function() {
+    	
+    });
 </script>
 </body>
 </html>

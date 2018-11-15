@@ -591,3 +591,136 @@ function getLastDay(year,month) {
     var new_date = new Date(new_year,new_month,1);                //取当年当月中的第一天
     return (new Date(new_date.getTime()-1000*60*60*24));//获取当月最后一天日期
 }
+/**
+ * 数字转中文
+ * @returns {Number}
+ */
+function NumberToChinese(num){
+		if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(num)) return "数据非法";
+    var chnNumChar = ["零","一","二","三","四","五","六","七","八","九"];
+    var chnUnitSection = ["","万","亿","万亿","亿亿"];
+    var chnUnitChar = ["","十","百","千"];
+
+    var strIns = '', chnStr = '';
+    var unitPos = 0;
+    var zero = true;
+    while(num > 0){
+        var v = num % 10;
+        if(v === 0){
+            if(!zero){
+                zero = true;
+                chnStr = chnNumChar[v] + chnStr;
+            }
+        }else{
+            zero = false;
+            strIns = chnNumChar[v];
+            strIns += chnUnitChar[unitPos];
+            chnStr = strIns + chnStr;
+        }
+        unitPos++;
+        num = Math.floor(num / 10);
+    }
+    return chnStr;
+}
+
+/**
+ * wgt html/css/js
+ * wgtu 差量更新,需要对照appStore或应用宝中的升级
+ */
+function heatUpdate(appType) {
+	appType = appType + "HeatUpdate";
+	postJSONNoIcon(API_URL.AppVersionGetNewest, {
+		'appType': appType
+	}, function(res) {
+		if('0' == res.code && vaildeParam(res.data)) {
+			if(compareVersion(res.data.version)) {
+				plus.nativeUI.confirm('检测到新版本,是否更新?', function(e) {
+					if(e.index == 0) {
+						console.log('检测到新版本更新');
+						downloadWgt(res.data.url);
+					}
+				});
+			}
+		}
+	});
+}
+
+function compareVersion(version) {
+	if(!vaildeParam(version)) {
+		console.log('版本号不能为空');
+		return false;
+	}
+	if(!version.startsWith('v') || version.length == 1) {
+		console.log('错误的版本号');
+		return false;
+	}
+
+	var array1 = version.substr(1).split('.');
+	var array2 = appVersion.substr(1).split('.');
+	var len = Math.min(array1.length, array2.length);
+	var index = 0,
+		diff = 0;
+	while(index < len &&
+		(diff = parseInt(array1[index]) - parseInt(array2[index])) == 0) {
+		index++;
+	}
+	return diff == 0 ? array1.length - array2.length : diff > 0;
+}
+
+function downloadWgt(url) {
+	var showLoading = plus.nativeUI.showWaiting(' 正在下载...... ');
+
+	var downloadTask = plus.downloader.createDownload(url, {
+		filename: '_doc/update/'
+	}, function(d, status) {
+		plus.nativeUI.closeWaiting();
+		if(status == 200) {
+			installWgt(d.filename);
+		} else {
+			plus.nativeUI.alert('下载升级文件失败！');
+		}
+	});
+	downloadTask.start();
+
+	var count = 0;
+	downloadTask.addEventListener('statechanged', function(task, status) {
+		switch(task.state) {
+			case 1:
+
+				break;
+			case 2:
+				showLoading.setTitle(" 已连接到服务器 ...... ");
+				break;
+			case 3:
+				var prg = parseInt(parseFloat(task.downloadedSize) / parseFloat(task.totalSize) * 100);
+				if(count < prg) {
+					count = prg;
+					showLoading.setTitle(' 正在下载 ' + count + '% ...... ');
+				}
+				break;
+			case 4:
+				break;
+			default:
+				break;
+		}
+	});
+}
+
+function installWgt(path) {
+	plus.nativeUI.showWaiting('正在安装...');
+
+	plus.runtime.install(path, {
+		force: true
+	}, function() {
+		plus.nativeUI.closeWaiting();
+		console.log('安装wgt文件成功！');
+
+		plus.nativeUI.alert('应用资源更新完成！', function() {
+			plus.runtime.restart();
+		});
+	}, function(e) {
+		plus.nativeUI.closeWaiting();
+		console.log('安装wgt文件失败[' + e.code + ']：' + e.message);
+		plus.nativeUI.alert('应用资源更新失败' + e.message);
+	});
+}

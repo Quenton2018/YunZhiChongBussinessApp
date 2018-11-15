@@ -47,7 +47,7 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">客服中心</h1>
 </header>
@@ -99,39 +99,10 @@
 
 <script type="text/javascript">
     mui.init();
-
-    if (window.plus) {
-        pagePlusReady();
-    } else {
-        document.addEventListener('plusready', pagePlusReady, false);
-    }
-    function pagePlusReady() {
-
-        // uploadLoginInfo();
-
-        checkLogin('page/login.html');
-        var uuid = plus.storage.getItem("uuid");
-        if (!vaildeParam(uuid)) {
-            return;
-        }
-
-
-        //拨打电话
-        /* document.getElementById("telephone").addEventListener('tap',function(){
-         var btnArray=['拨打','取消'];
-         var phone="4008251068";
-         mui.confirm('是否拨打'+phone+'?','提示',btnArray,function(e){
-         if(e.index == 0){
-         plus.device.dial(phone,false);
-         }
-         });
-         });
-
-         */
-
-    }
-
-
+	
+	$.plusReady(function() {
+		checkLogin('page/login.html');
+	});
 </script>
 </body>
 </html>

@@ -37,18 +37,20 @@
 	<body >
 
 
-	<header class="mui-bar mui-bar-nav">
+	<header class="header header-immersed mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">意见反馈</h1>
 	</header>
+	
+	<div class="btn-submit mui-bar mui-bar-tab" id="submitBtn">提交</div>
 
 	<div class="mui-content" style=" ">
 		<div class="topBox">
 				<textarea id="textarea" name="content" rows="8" maxlength="300"  placeholder="请留下您的宝贵建议，我们将努力改进（不少于5个字，最多不超过200字）"></textarea>
 				<!--确认按键-->
-				<div type='button' class="submitBtn" style="padding-top: 20px ;border: none;">
+				<!--<div type='button' class="submitBtn" style="padding-top: 20px ;border: none;">
                     <img src="../images/wancheng.png" style="display: block;width: 80%;margin: 0 auto">
-                </div>
+                </div>-->
 		</div>
 	</div>
 			
@@ -57,18 +59,11 @@
 
     <script type="text/javascript" charset="utf-8">
         mui.init();
-
-        if(window.plus){
-            pagePlusReady();
-        }else{
-            document.addEventListener('plusready',pagePlusReady,false);
-        }
-        function pagePlusReady(){
-
-        }
+        
+        $.plusReady();
 
         var canPostFlag = true;
-        	$(".submitBtn").click(function(){
+        	$("#submitBtn").click(function(){
         		var uuid = plus.storage.getItem("uuid");
 				var content = $('#textarea').val();
 
