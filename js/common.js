@@ -1039,6 +1039,10 @@ $(function(){
 })
 
 $.plusReady = function(pageReady, pageRefresh) {
+	if (!pageReady) {
+		pageReady = function() {}
+	}
+	
 	var ws = null;
     if (window.plus) {
         pagePlusReady();

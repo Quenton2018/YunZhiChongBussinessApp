@@ -35,12 +35,16 @@
 		"Push": {},
 		"Maps": {},
 		"OAuth": {},
-		"Speech": {},
-		"Contacts": {},
-		"Messaging": {},
-		"LivePusher": {},
-		"VideoPlayer": {},
-		"Fingerprint": {},"Storage":{},"Webview":{},"NativeUI":{},"Navigator":{},"XMLHttpRequest":{}
+
+
+
+
+
+		"Storage": {},
+		"Webview": {},
+		"NativeUI": {},
+		"Navigator": {},
+		"XMLHttpRequest": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -49,13 +53,19 @@
 		},
 		"statusbar": {
 			"immersed": true, /* 沉浸式状态栏 */
-            "style": "light"
+			"style": "light"
 		},
 		"popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
 		"runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
 			"plugins": {
+				"oauth": {
+					"weixin": {
+						"appid": "wx78a9e9e640aa4367",
+						"appsecret": "992674aa65ccce89466d27f9bbac516c"
+					}
+				},
 				"maps": {
 					"baidu": {
 						"appkey_ios": "tnrUD5Gd9EaqKVDqllc2ACRBouFCV3Dv",
@@ -96,7 +106,25 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.GET_TASKS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission  android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.GET_TOP_ACTIVITY_INFO\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.SEND_SMS\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-permission android:name=\"android.permission.INTERACT_ACROSS_USERS_FULL\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.USE_FINGERPRINT\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.WRITE_SMS\"/>","<uses-permission android:name=\"android.permission.READ_SMS\"/>"]
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+					"<uses-permission android:name=\"android.permission.GET_TASKS\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.GET_TOP_ACTIVITY_INFO\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.INTERNET\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.INTERACT_ACROSS_USERS_FULL\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+				]
 			},
 			"orientation": [
 				"portrait-primary"
@@ -179,7 +207,10 @@
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": "","hdpi":"images/qidong/qd_750x1334.png","xhdpi":"images/qidong/qd_750x1334.png","xxhdpi":"images/qidong/qd_750x1334.png"
+					"ldpi": "",
+					"hdpi": "images/qidong/qd_750x1334.png",
+					"xhdpi": "images/qidong/qd_750x1334.png",
+					"xxhdpi": "images/qidong/qd_750x1334.png"
 				}
 			}
 		}
@@ -196,7 +227,9 @@
 					"page/myIncome.html",
 					"page/myWallet.html",
 					"page/setting.html",
-					"page/areaApplicationList.html"
+					"page/areaApplicationList.html",
+					"page/applyCdz/list.html",
+					"index2.html"
 				],
 				"priority": 0
 			},
@@ -264,7 +297,11 @@
 			"page/setting.html": {
 				"resources": [],
 				"refer": [
-					"page/customerService.html"
+					"page/customerService.html",
+					"page/feedback.html",
+					"page/edition.html",
+					"page/currencyArticleContent.html",
+					"page/login.html"
 				],
 				"priority": 0
 			},
@@ -278,14 +315,67 @@
 			"page/myWallet.html": {
 				"resources": [],
 				"refer": [
-					"page/putforward.html"
+					"page/putforward.html",
+					"page/bingBank.html"
 				],
 				"priority": 0
 			},
 			"page/areaApplicationList.html": {
 				"resources": [],
 				"refer": [
-					"page/t.html"
+					"page/t.html",
+					"page/areaApplicationSetmeals.html"
+				],
+				"priority": 0
+			},
+			"page/incomeDetail.html": {
+				"resources": [],
+				"refer": [
+					"page/incomeDetailCdz.html"
+				],
+				"priority": 0
+			},
+			"page/incomeDetailCdz.html": {
+				"resources": [],
+				"refer": [
+					"page/incomeDetailCz.html"
+				],
+				"priority": 0
+			},
+			"page/bingBank.html": {
+				"resources": [],
+				"refer": [
+					"page/putforward.html"
+				],
+				"priority": 0
+			},
+			"page/applyCdz/list.html": {
+				"resources": [],
+				"refer": [
+					"page/applyCdz/detail.html",
+					"page/applyCdz/apply.html"
+				],
+				"priority": 0
+			},
+			"page/areaApplicationSetmeals.html": {
+				"resources": [],
+				"refer": [
+					"page/areaInfoSetmealsSave.html"
+				],
+				"priority": 0
+			},
+			"page/customerService.html": {
+				"resources": [],
+				"refer": [
+					"page/currencyArticleContent.html"
+				],
+				"priority": 0
+			},
+			"index2.html": {
+				"resources": [],
+				"refer": [
+					"page/setting.html",
+					"page/myCdz.html"
 				],
 				"priority": 0
 			}

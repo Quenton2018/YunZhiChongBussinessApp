@@ -50,7 +50,7 @@
 </head>
 <body>
 
-<header class="mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">检查版本</h1>
 </header>
@@ -70,21 +70,16 @@
 
 <script type="text/javascript" charset="utf-8">
     $(".appVersion").text(appVersion);
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-    function pagePlusReady(){
 
-        plus.key.addEventListener("backbutton",function(){
+	$.plusReady(function() {
+		plus.key.addEventListener("backbutton",function(){
             plus.runtime.quit();
         });
 
         $(".appVersion1").text(appVersion)
 
         checkVersion();
-    }
+	});
 
     /**
      * 检查版本
@@ -97,23 +92,17 @@
 
             if('0' == res.code){
                 if(vaildeParam(res.data)){
-					writeObj(res.data)
-                    console.log(res.data)
-                    console.log(res.data.version)
-                    console.log(res.data.url)
-
-                    var v = res.data.version;
-                    $(".appVersion2").text(v)
-
-                    var versionNum = parseFloat(version.replace('v',''));
-                    var vNum = parseFloat(v.replace('v',''));
-
-                    if(versionNum < vNum){
+					writeObj(res.data);
+					
+					if (compareVersion(res.data.version)) {
 						$("#downloadBtn").css("display",'block');
 						$("#downloadBtn").click(function () {
                             plus.runtime.openURL(res.data.url);
                         });
-                    }
+						$(".appVersion2").text(res.data.version);
+					} else {
+						$(".appVersion2").text(appVersion);
+					}
                 }
             }
         })
