@@ -395,19 +395,17 @@
 	
 	var uuid = '';
     var areaId = getQueryString('areaid');
-    var setmealName = '';
     var applyGroup = {};
     $.plusReady(function() {
      	checkLogin();
 		uuid = plus.storage.getItem("uuid");
-		setmealName = plus.storage.getItem("setmealName");
 		applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
         getDataList();
       
     },function(){
     	getDataList();
     });
-
+    
 	var vm = new Vue({
 		el:'#app',
 		data:{
@@ -672,7 +670,6 @@
 	});
 	
     function getDataList(){
-    	
     	var params = {
 			'areaId':areaId	
 		}
@@ -683,9 +680,8 @@
 					plus.storage.setItem("priceSetmealJson", priceSetmealJson);
 					var priceSetmealJSON = JSON.parse(priceSetmealJson);				
 					var priceSetmealData = {};
-					
 			  		$.each(priceSetmealJSON, function(index,item) {
-						if(item.name == setmealName){
+						if(item.name == applyGroup.applySetmealName){
 							priceSetmealData = item;
 						}
 					});	
@@ -724,7 +720,7 @@
   			vm.partnersList = partners;
   		}
 	}
-
+	//修改套餐请求
 	function updateChargingGroup(jsonSetmealJSON){
 		var params = {
 			uuid:uuid,
@@ -734,7 +730,22 @@
 		console.log(JSON.stringify(jsonSetmealJSON))
 		postJSON(API_URL.ApiChargingBusinessupdateSetmeal,params,function(res){
 			if(res.code == '0'){
-				clicked('areaInfoSetmealsDetail.html?areaid='+areaId);
+				var ws = plus.webview.currentWebview();
+	            var wo = ws.opener();
+	            do {
+	            	if (wo.getURL().endsWith("areaInfoSetmealsDetail.html?areaid="+areaId)) {
+	            		break;
+	            	}
+	            	
+	            	var temp = wo.opener();
+	            	wo.close("none");
+	            	wo = temp;
+	            } while (true);
+		
+				setTimeout(function() {
+					wo.evalJS("dataRefresh()");
+					ws.close();
+				}, 300);
 			}else{
 				layer.msg(res.msg);
 			}

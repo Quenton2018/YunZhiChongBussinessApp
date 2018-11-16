@@ -353,15 +353,16 @@
     var setmealData = [];      //套餐name数据
     
 
-    
+    function dataRefresh() {
+    	getDataList();
+    }
     $.plusReady(function() {
      	checkLogin();
         uuid = plus.storage.getItem("uuid");		
         getDataList();
       
     },function(){
-    	getDataList();
- 
+    	dataRefresh();
     });
     function getDataList(){
     	var params = {
