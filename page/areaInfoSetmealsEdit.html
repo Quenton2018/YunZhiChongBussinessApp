@@ -396,279 +396,281 @@
 	var uuid = '';
     var areaId = getQueryString('areaid');
     var applyGroup = {};
+    var vm = null;
     $.plusReady(function() {
      	checkLogin();
 		uuid = plus.storage.getItem("uuid");
 		applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
         getDataList();
-      
+      	setVueData();
     },function(){
     	getDataList();
+    	setVueData();
     });
-    
-	var vm = new Vue({
-		el:'#app',
-		data:{
-			state:'',
-			stateName:'',
-			chargesList:[{
-		        "state": "-1",
-		        "minutes": 240,
-		        "power": 1,
-		        "amount": 0.96
-		    },{
-		        "state": "-1",
-		        "minutes": 360,
-		        "power": 1.5,
-		        "amount": 1.45
-		    },{
-		        "state": "-1",
-		        "minutes": 480,
-		        "power": 2,
-		        "amount": 1.92
-		    },{
-		        "state": "-1",
-		        "minutes": 600,
-		        "power": 2.5,
-		        "amount": 2.4
-		    }],
-			elesList:[{
-		        "seq": 0,
-		        "min": 0,
-		        "max": 100,
-		        "cost": 0.08,
-		        "amount": 0.1
-		    },{
-		        "seq": 1,
-		        "min": 100,
-		        "max": 300,
-		        "cost": 0.24,
-		        "amount": 0.29
-		    },{
-		        "seq": 2,
-		        "min": 300,
-		        "max": 600,
-		        "cost": 0.48,
-		        "amount": 0.58
-		    },{
-		        "seq": 3,
-		        "min": 600,
-		        "max": 900,
-		        "cost": 0.72,
-		        "amount": 0.87
-		    },{
-		        "seq": 4,
-		        "min": 900,
-		        "max": 1200,
-		        "cost": 0.96,
-		        "amount": 1.16
-		    },{
-		        "seq": 5,
-		        "min": 1200,
-		        "max": 1500,
-		        "cost": 1.2,
-		        "amount": 1.44
-		    }],
-			fullStopList:{
-		      "state": "1",
-		      "minutes": 600,
-		      "power": 5,
-		      "amount": 4.8
-		    },
-			partnersList:[],
-			isTime:true
-		},
-		created:function(){ 		
-			var state = applyGroup.state;
-			this.state = state;
-			if (state == '1') {
-				this.stateName = '充满自停';
-				$("#charges").hide();
-				$("#eles").show();
-			}
-			if (state == '2') {
-				this.stateName = '充电时长';
-				this.state = '-1';
-				$("#fullStop").hide();
-			}
-			if (state == '3') {
-				this.stateName = '充满自停+充电时长';
-				this.state = '1:-1';
-				$("#eles").show();
-			}
-		},
-		methods:{
-			addCharges:function(){
-				vm.chargesList.push({
-					amount:0.96,
-					minutes:240,
-					power:1,
-					state:''
-				});
+    function setVueData(){
+		vm = new Vue({
+			el:'#app',
+			data:{
+				state:'',
+				stateName:'',
+				chargesList:[{
+			        "state": "-1",
+			        "minutes": 240,
+			        "power": 1,
+			        "amount": 0.96
+			    },{
+			        "state": "-1",
+			        "minutes": 360,
+			        "power": 1.5,
+			        "amount": 1.45
+			    },{
+			        "state": "-1",
+			        "minutes": 480,
+			        "power": 2,
+			        "amount": 1.92
+			    },{
+			        "state": "-1",
+			        "minutes": 600,
+			        "power": 2.5,
+			        "amount": 2.4
+			    }],
+				elesList:[{
+			        "seq": 0,
+			        "min": 0,
+			        "max": 100,
+			        "cost": 0.08,
+			        "amount": 0.1
+			    },{
+			        "seq": 1,
+			        "min": 100,
+			        "max": 300,
+			        "cost": 0.24,
+			        "amount": 0.29
+			    },{
+			        "seq": 2,
+			        "min": 300,
+			        "max": 600,
+			        "cost": 0.48,
+			        "amount": 0.58
+			    },{
+			        "seq": 3,
+			        "min": 600,
+			        "max": 900,
+			        "cost": 0.72,
+			        "amount": 0.87
+			    },{
+			        "seq": 4,
+			        "min": 900,
+			        "max": 1200,
+			        "cost": 0.96,
+			        "amount": 1.16
+			    },{
+			        "seq": 5,
+			        "min": 1200,
+			        "max": 1500,
+			        "cost": 1.2,
+			        "amount": 1.44
+			    }],
+				fullStopList:{
+			      "state": "1",
+			      "minutes": 600,
+			      "power": 5,
+			      "amount": 4.8
+			    },
+				partnersList:[],
+				isTime:true
 			},
-			delCharges:function(index){
-				vm.chargesList.splice(index, 1);
-			},
-			addPartners:function(){
-				vm.partnersList.push({
-					name:'',
-					mobile:'',
-					dividePrice:'',
-					divideRatio:''
-				});
-			},
-			delPartners:function(index){
-				vm.partnersList.splice(index, 1);
-			},
-			btnMinus:function(List,name,index){
-				var num = 30;
-				var prices = parseFloat(List[index][name]);
-				if(isNaN(prices)){
-					layer.msg('请输入正确的数字');
-					return;
+			created:function(){ 		
+				var state = applyGroup.state;
+				this.state = state;
+				if (state == '1') {
+					this.stateName = '充满自停';
+					$("#charges").hide();
+					$("#eles").show();
 				}
-				if(name == 'amount'){
-					num = 0.5;
-					if (prices < 1){
-	                    prices = 0;
-	                }else{
-	                    List[index][name] = (prices - num).toFixed(2);
-	                }
-				}else{
-					if (prices < 1){
-	                    prices = 0;
-	                }else{
-						prices = parseInt(List[index][name]);
-						List[index][name] = (prices - num);
+				if (state == '2') {
+					this.stateName = '充电时长';
+					this.state = '-1';
+					$("#fullStop").hide();
+				}
+				if (state == '3') {
+					this.stateName = '充满自停+充电时长';
+					this.state = '1:-1';
+					$("#eles").show();
+				}
+			},
+			methods:{
+				addCharges:function(){
+					vm.chargesList.push({
+						amount:0.96,
+						minutes:240,
+						power:1,
+						state:''
+					});
+				},
+				delCharges:function(index){
+					vm.chargesList.splice(index, 1);
+				},
+				addPartners:function(){
+					vm.partnersList.push({
+						name:'',
+						mobile:'',
+						dividePrice:'',
+						divideRatio:''
+					});
+				},
+				delPartners:function(index){
+					vm.partnersList.splice(index, 1);
+				},
+				btnMinus:function(List,name,index){
+					var num = 30;
+					var prices = parseFloat(List[index][name]);
+					if(isNaN(prices)){
+						layer.msg('请输入正确的数字');
+						return;
 					}
-				}				
-			},
-			btnPlus:function(List,name,index){
-				var num = 30;
-				var prices = parseFloat(List[index][name]);
-
-				if(isNaN(prices)){
-					layer.msg('请输入正确的数字');
-					return;
-				}
-				if(name == 'amount'){
-					num = 0.5;
-					List[index][name] = (prices + num).toFixed(2);
-				}else{
-					prices = parseInt(List[index][name]);
-					List[index][name] = (prices + num);
-				}            	
-			},
-			tapClick:function(type){
-				if(type == 'timesf'){
-					vm.isTime = true;
-					if(this.stateName == '充电时长'){
-						this.state = '-1';
-						$("#eles").hide();
-					}else if(this.stateName == '充满自停+充电时长'){
-						this.state = '1:-1';
-						$("#eles").show();
-					}
-				}else if(type == 'dlsf'){
-					vm.isTime = false;
-					if(this.stateName == '充电时长'){
-						this.state = '2';
-						$("#eles").show();
-					}else if(this.stateName == '充满自停+充电时长'){
-						this.state = '1:2';
-						$("#eles").show();
-					}
-				}
-			},
-			submits:function(){
-				var jsonSetmealJSON = JSON.parse(plus.storage.getItem("priceSetmealData"));
-				var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
-				var rateSum = 0;
-				var flag = false;
-				var flagNumber = false;
-				var amountFullStop = vm.fullStopList.amount;
-				if(!vaildeParam(amountFullStop)){
-					layer.msg("请正确输入充满自停配置信息");
-					return false;
-				}
-				//校验是数字
-                if(!reg.test(amountFullStop)){  
-                    layer.msg("充满自停最多扣款配置必须为数字");
-                    return false;
-                }
-				$.each(vm.partnersList,function(index,item){				
-					var name = item.name;
-					var mobile = item.mobile;
-					var dividePrice = item.dividePrice;
-					var divideRatio = item.divideRatio;
-					rateSum += parseInt(divideRatio);
-					
-					if(!vaildeParam(name) || !vaildeParam(mobile) || !vaildeParam(divideRatio)){
-	                    flag = true;
-	                    return;
-	                }
-					
-					//校验是数字
-	                if(!reg.test(divideRatio)){
-	                    flagNumber = true;
-	                    return;
-	                }
-				})
-				if(flag){
-	                layer.msg("请补全合伙人信息");
-	                return;
-	            }
-				if(flagNumber){
-	                layer.msg("合伙人金额与比值必须为数字");
-	                return;
-	            }
-				if(rateSum!=100){
-	                layer.msg("合伙人比值为整数且相加必须为100%");
-	                return;
-	            }
-				jsonSetmealJSON.eles = vm.elesList;
-				jsonSetmealJSON.fullStop = vm.fullStopList;
-				jsonSetmealJSON.partners = vm.partnersList;
-				console.log(this.state);
-				jsonSetmealJSON.state = vm.state;
-				
-				if(jsonSetmealJSON.state == '1'){       //充满自停
-					jsonSetmealJSON.advanceCharges = null;
-					jsonSetmealJSON.actualCharges = null;
-				}else if(jsonSetmealJSON.state == '-1'){	//充电时长(时间收费)			
-					jsonSetmealJSON.fullStop = null;
-					jsonSetmealJSON.advanceCharges = vm.chargesList;
-					jsonSetmealJSON.actualCharges = null;
-					jsonSetmealJSON.eles = null;
-				}else if(jsonSetmealJSON.state ==  '2'){   //充电时长(电量收费)			
-					jsonSetmealJSON.fullStop = null;
-					jsonSetmealJSON.advanceCharges = null;
-					jsonSetmealJSON.actualCharges = vm.chargesList;
-				}else if(jsonSetmealJSON.state == '1:-1'){   //充满自停+充电时长(时间收费)
-					jsonSetmealJSON.advanceCharges = vm.chargesList;
-					jsonSetmealJSON.actualCharges = null;			    					
-				}else if(jsonSetmealJSON.state == '1:2'){ 
-					jsonSetmealJSON.advanceCharges = null;
-					jsonSetmealJSON.actualCharges = vm.chargesList;
-				}else{
-					layer.msg("套餐类型不正确");
-				}
-				//套餐检验
-				var params = {
-					uuid:uuid,
-					jsonSetmeal:JSON.stringify(jsonSetmealJSON)
-				}
-				postJSON(API_URL.ApiChargingBusinessGetcheckJsonSetmeal,params,function(res){
-					if(res.code == '0'){
-						updateChargingGroup(jsonSetmealJSON);
+					if(name == 'amount'){
+						num = 0.5;
+						if (prices < 1){
+		                    prices = 0;
+		                }else{
+		                    List[index][name] = (prices - num).toFixed(2);
+		                }
 					}else{
-						layer.msg(res.msg);
-					}
-				})
-			}
-		}
-	});
+						if (prices < 1){
+		                    prices = 0;
+		                }else{
+							prices = parseInt(List[index][name]);
+							List[index][name] = (prices - num);
+						}
+					}				
+				},
+				btnPlus:function(List,name,index){
+					var num = 30;
+					var prices = parseFloat(List[index][name]);
 	
+					if(isNaN(prices)){
+						layer.msg('请输入正确的数字');
+						return;
+					}
+					if(name == 'amount'){
+						num = 0.5;
+						List[index][name] = (prices + num).toFixed(2);
+					}else{
+						prices = parseInt(List[index][name]);
+						List[index][name] = (prices + num);
+					}            	
+				},
+				tapClick:function(type){
+					if(type == 'timesf'){
+						vm.isTime = true;
+						if(this.stateName == '充电时长'){
+							this.state = '-1';
+							$("#eles").hide();
+						}else if(this.stateName == '充满自停+充电时长'){
+							this.state = '1:-1';
+							$("#eles").show();
+						}
+					}else if(type == 'dlsf'){
+						vm.isTime = false;
+						if(this.stateName == '充电时长'){
+							this.state = '2';
+							$("#eles").show();
+						}else if(this.stateName == '充满自停+充电时长'){
+							this.state = '1:2';
+							$("#eles").show();
+						}
+					}
+				},
+				submits:function(){
+					var jsonSetmealJSON = JSON.parse(plus.storage.getItem("priceSetmealData"));
+					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+					var rateSum = 0;
+					var flag = false;
+					var flagNumber = false;
+					var amountFullStop = vm.fullStopList.amount;
+					if(!vaildeParam(amountFullStop)){
+						layer.msg("请正确输入充满自停配置信息");
+						return false;
+					}
+					//校验是数字
+	                if(!reg.test(amountFullStop)){  
+	                    layer.msg("充满自停最多扣款配置必须为数字");
+	                    return false;
+	                }
+					$.each(vm.partnersList,function(index,item){				
+						var name = item.name;
+						var mobile = item.mobile;
+						var dividePrice = item.dividePrice;
+						var divideRatio = item.divideRatio;
+						rateSum += parseInt(divideRatio);
+						
+						if(!vaildeParam(name) || !vaildeParam(mobile) || !vaildeParam(divideRatio)){
+		                    flag = true;
+		                    return;
+		                }
+						
+						//校验是数字
+		                if(!reg.test(divideRatio)){
+		                    flagNumber = true;
+		                    return;
+		                }
+					})
+					if(flag){
+		                layer.msg("请补全合伙人信息");
+		                return;
+		            }
+					if(flagNumber){
+		                layer.msg("合伙人金额与比值必须为数字");
+		                return;
+		            }
+					if(rateSum!=100){
+		                layer.msg("合伙人比值为整数且相加必须为100%");
+		                return;
+		            }
+					jsonSetmealJSON.eles = vm.elesList;
+					jsonSetmealJSON.fullStop = vm.fullStopList;
+					jsonSetmealJSON.partners = vm.partnersList;
+					console.log(this.state);
+					jsonSetmealJSON.state = vm.state;
+					
+					if(jsonSetmealJSON.state == '1'){       //充满自停
+						jsonSetmealJSON.advanceCharges = null;
+						jsonSetmealJSON.actualCharges = null;
+					}else if(jsonSetmealJSON.state == '-1'){	//充电时长(时间收费)			
+						jsonSetmealJSON.fullStop = null;
+						jsonSetmealJSON.advanceCharges = vm.chargesList;
+						jsonSetmealJSON.actualCharges = null;
+						jsonSetmealJSON.eles = null;
+					}else if(jsonSetmealJSON.state ==  '2'){   //充电时长(电量收费)			
+						jsonSetmealJSON.fullStop = null;
+						jsonSetmealJSON.advanceCharges = null;
+						jsonSetmealJSON.actualCharges = vm.chargesList;
+					}else if(jsonSetmealJSON.state == '1:-1'){   //充满自停+充电时长(时间收费)
+						jsonSetmealJSON.advanceCharges = vm.chargesList;
+						jsonSetmealJSON.actualCharges = null;			    					
+					}else if(jsonSetmealJSON.state == '1:2'){ 
+						jsonSetmealJSON.advanceCharges = null;
+						jsonSetmealJSON.actualCharges = vm.chargesList;
+					}else{
+						layer.msg("套餐类型不正确");
+					}
+					//套餐检验
+					var params = {
+						uuid:uuid,
+						jsonSetmeal:JSON.stringify(jsonSetmealJSON)
+					}
+					postJSON(API_URL.ApiChargingBusinessGetcheckJsonSetmeal,params,function(res){
+						if(res.code == '0'){
+							updateChargingGroup(jsonSetmealJSON);
+						}else{
+							layer.msg(res.msg);
+						}
+					})
+				}
+			}
+		});
+	}
     function getDataList(){
     	var params = {
 			'areaId':areaId	

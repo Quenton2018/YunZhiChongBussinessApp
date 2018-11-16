@@ -522,7 +522,7 @@
         var setmealPick = new mui.PopPicker();
         if(vaildeParam(setmealData)){
         	setmealPick.setData(setmealData);
-      		setmealPick.show(function(item) {
+      		setmealPick.show(function(item) {  			
       			var name = item[0].text;
       			var state = item[0].state;
       			plus.storage.setItem("setmealState",state);
