@@ -270,12 +270,15 @@
 
                                 plus.storage.setItem( "headImage", retUrl); //图片回写进对象
                                 layer.msg("上传成功");
+                                var ws = plus.webview.currentWebview();
+	            				var wo = ws.opener();
+	            				wo.evalJS("getPhotos()");
                             }else{
                                 layer.msg(data.msg);
                             }
 
                         },
-                 error: function(xhr, type, errorThrown) {
+                 		error: function(xhr, type, errorThrown) {
                              mui.toast('网络异常，请稍后再试！');
                         }
             });
