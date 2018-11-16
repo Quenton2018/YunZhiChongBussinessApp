@@ -1069,13 +1069,10 @@
     	var $this = $(this);
     	var memberId = $this.attr('data-memberid');
     	var setmealId = $this.attr('data-setmealid');
-//  	layer.confirm("是否确定删除",function (index) {
-//          delSetmeals(memberId,setmealId,$this);
-//          layer.close(index);
-//      });
-        mui.confirm('是否确定删除',null,[],function(res){
-        	console.log(JSON.stringify(res))
-        	if(res.index == 0){
+		var btnArray = ['取消', '确定'];
+		mui.confirm('确定要删除吗？', '提示信息', btnArray, function(e) {
+//      	console.log(JSON.stringify(e))
+        	if(e.index == 1){
         		delSetmeals(memberId,setmealId,$this);
         	}	
     	});
