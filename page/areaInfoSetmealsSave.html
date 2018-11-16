@@ -507,14 +507,12 @@
 	mui.init();
 	
 	var uuid = '';
-    var setmealName = '';
     var applyGroup = {};
 	var jsonSetmealJsonStr = [];
 	var vm = null;
   	$.plusReady(function() {
      	checkLogin();
 		uuid = plus.storage.getItem("uuid");
-		setmealName = plus.storage.getItem("setmealName");
 		applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
 		jsonSetmealJsonStr = JSON.parse(plus.storage.getItem("jsonSetmealJsonStr")) || [];  //套餐数组
 //		console.log(jsonSetmealJsonStr.length);

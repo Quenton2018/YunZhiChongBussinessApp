@@ -579,7 +579,7 @@
 				{{/if}}
 				{{if manager == "true"}}
 				<span class="handle-icon">
-					<img id="updataSetmeals" class="xg-icon" src="../images/areaInfo/xg_icon.png" width="26" height="26" data-mobile="{{item.mobile}}" data-time="{{item.timeLimit}}" data-electricity="{{item.electricityLimit}}" data-times="{{item.timesLimit}}" data-setmealid="{{item.setmealId}}">
+					<img id="updataSetmeals" class="xg-icon" src="../images/areaInfo/xg_icon.png" width="26" height="26" data-mobile="{{item.mobile}}" data-time="{{item.timeLimit}}" data-electricity="{{item.electricityLimit}}" expired="{{item.expired}}"  data-times="{{item.timesLimit}}" data-setmealid="{{item.setmealId}}">
 					<img id="delSetmeals" class="del-icon" src="../images/areaInfo/del_icon.png" width="26" height="26" data-memberid="{{item.memberId}}" data-setmealid="{{item.setmealId}}">
 				</span>
 				{{/if}}
@@ -983,7 +983,9 @@
     });
     //日期选择器
     $('#dateSel').on("click", function() {
+    	var dateValue = $(this).val();
     	var Date = new mui.DtPicker({type:'date'});
+    	Date.setSelectedValue(dateValue);
 		Date.show(function(item){
 			//console.log(JSON.stringify(item));
 		    var endDate = item.y.text + '-' + item.m.text + '-' + item.d.text;
@@ -997,7 +999,8 @@
     	var times = $(this).attr('data-times');
     	var time = $(this).attr('data-time');
     	var electricity = $(this).attr('data-electricity');
-    	var date = getCurDates();
+    	var expired = parseInt($(this).attr('expired'));
+    	var date = new Date(expired).format("yyyy-MM-dd");
     	$('#dateSel').val(date);
     	$('#saveSetmeal').hide();
     	$('#updataSetmeal').show();
