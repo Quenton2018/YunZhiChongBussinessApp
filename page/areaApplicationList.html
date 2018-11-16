@@ -210,7 +210,7 @@
         <!--<div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">-->
         <div class="box02" data-id="{{areaid}}"  onclick="{{onclicks}}">
             <h1>电价：{{electricPrice}}元/千瓦时</h1>
-            <h1>地址：{{address}}</h1>
+            <!--<h1>地址：{{address}}</h1>-->
             <h1>申请时间：{{createDate}}</h1>
         </div>
 
@@ -329,7 +329,7 @@
                         if(vaildeParam(chargingGroup)){
                             keid =chargingGroup.id;
                         }
-                        console.log("keid:"+keid);
+//                      console.log("keid:"+keid);
                         var id = item.id+'';
                         var status = item.status+'';
                         var areaName =  item.areaName;

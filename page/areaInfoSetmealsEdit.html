@@ -530,13 +530,20 @@
 					return;
 				}
 				if(name == 'amount'){
-					num = 0.5
-				}
-				if (prices < 1){
-                    prices = 0
-                }else{
-                    List[index][name] = (prices - num).toFixed(2);
-                }
+					num = 0.5;
+					if (prices < 1){
+	                    prices = 0;
+	                }else{
+	                    List[index][name] = (prices - num).toFixed(2);
+	                }
+				}else{
+					if (prices < 1){
+	                    prices = 0;
+	                }else{
+						prices = parseInt(List[index][name]);
+						List[index][name] = (prices - num);
+					}
+				}				
 			},
 			btnPlus:function(List,name,index){
 				var num = 30;
@@ -547,9 +554,12 @@
 					return;
 				}
 				if(name == 'amount'){
-					num = 0.5
-				}
-                List[index][name] = (prices + num).toFixed(2);	
+					num = 0.5;
+					List[index][name] = (prices + num).toFixed(2);
+				}else{
+					prices = parseInt(List[index][name]);
+					List[index][name] = (prices + num);
+				}            	
 			},
 			tapClick:function(type){
 				if(type == 'timesf'){

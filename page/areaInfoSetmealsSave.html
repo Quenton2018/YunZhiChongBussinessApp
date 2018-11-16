@@ -517,7 +517,7 @@
 		setmealName = plus.storage.getItem("setmealName");
 		applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
 		jsonSetmealJsonStr = JSON.parse(plus.storage.getItem("jsonSetmealJsonStr")) || [];  //套餐数组
-		console.log(jsonSetmealJsonStr.length);
+//		console.log(jsonSetmealJsonStr.length);
         getDataList();
 		setVueData();
     },function(){
@@ -570,6 +570,7 @@
 
 	function SaveChargingGroup(jsonSetmealJSON){
 		var applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
+		console.log("####申请页电价price####"+applyGroup.price);
 		var params = {
 			uuid:uuid,
 			app_name:applyGroup.name,
@@ -737,13 +738,20 @@
 						return;
 					}
 					if(name == 'amount'){
-						num = 0.5
-					}
-					if (prices < 1){
-	                    prices = 0
-	                }else{
-	                    List[index][name] = (prices - num).toFixed(2);
-	                }
+						num = 0.5;
+						if (prices < 1){
+		                    prices = 0;
+		                }else{
+		                    List[index][name] = (prices - num).toFixed(2);
+		                }
+					}else{
+						if (prices < 1){
+		                    prices = 0;
+		                }else{
+							prices = parseInt(List[index][name]);
+							List[index][name] = (prices - num);
+						}
+					}				
 				},
 				btnPlus:function(List,name,index){
 					var num = 30;
@@ -754,9 +762,12 @@
 						return;
 					}
 					if(name == 'amount'){
-						num = 0.5
-					}
-	                List[index][name] = (prices + num).toFixed(2);	
+						num = 0.5;
+						List[index][name] = (prices + num).toFixed(2);
+					}else{
+						prices = parseInt(List[index][name]);
+						List[index][name] = (prices + num);
+					}            	
 				},
 				tapClick:function(type){
 					if(type == 'timesf'){
@@ -801,6 +812,7 @@
 					});
 					var updateGroup = {
 						'areaName': applyGroup.name,
+						'price':'0.8',
 						'state':this.state,
 						'setmealName':applyGroup.applySetmealName,
 						'setmealData':setmealData,
@@ -877,7 +889,7 @@
 					}else if(jsonSetmealJSON.state == '1:-1'){   //充满自停+充电时长(时间收费)
 						jsonSetmealJSON.advanceCharges = vm.chargesList;
 						jsonSetmealJSON.actualCharges = null;			    					
-					}else if(jsonSetmealJSON.state == '1:-1'){ 
+					}else if(jsonSetmealJSON.state == '1:2'){ 
 						jsonSetmealJSON.advanceCharges = null;
 						jsonSetmealJSON.actualCharges = vm.chargesList;
 					}else{

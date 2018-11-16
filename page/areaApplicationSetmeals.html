@@ -135,7 +135,7 @@
 		<div class="mui-input-row form-group">
 			<label>电费单价</label>
 			<span class="dw">元/度电</span>
-			<input type="number" value="0.8" class="price" name="price">		
+			<input type="number" v-model="price" class="price" id="price" name="price">		
 		</div>
 	</div>
 
@@ -195,6 +195,7 @@
 				data:{
 					areaTitle:'申请片区',
 					areaName:'',
+					price:'0.8',
 					state:'',
 					applySetmealName:'基本套餐',
 					setmealList:[{
@@ -210,11 +211,13 @@
 						var state = updateGroup.state;
 						var setmealName = updateGroup.setmealName;
 						var setmealData = updateGroup.setmealData;
-	//					console.log(JSON.stringify(setmealData))
+						console.log(JSON.stringify(updateGroup))
 						areaType = updateGroup.areaType;
 						this.areaTitle = areaName;
 						this.areaName = areaName;
+						this.price = updateGroup.price;
 						$("#area").attr('disabled','true');
+						$("#price").attr('disabled','true');
 						if(areaType == 'update'){//片区套餐修改
 							this.setmealList = [{
 								"state":state,
@@ -231,7 +234,7 @@
 								"text":applySetmealName
 							})
 						}else if(areaType == 'otheradd'){
-							this.setmealList = setmealData;
+							this.setmealList = setmealData;							
 							var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
 							this.applySetmealName = applySetmealName;
 							this.setmealList.unshift({

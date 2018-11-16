@@ -372,9 +372,11 @@
 				var areaName = res.data.areaName;
 				var address = res.data.address;
 				var priceSetmealJson = res.data.priceSetmealJson;
+				var electricPrice = res.data.electricPrice;
 				$('#areaName').html(areaName);
-				$('#site').html(address);
-				
+				$('#site').html(address);			
+//				console.log("####详情页电价price####"+electricPrice);
+				$('#areaName').attr('elect',electricPrice);
 //				if('待处理' == res.data.status || '编辑' == res.data.status ){
 //                  $('#updateChargingGroup').hide();
 //              }else{
@@ -411,7 +413,7 @@
 		var actualCharges = priceSetmealData.actualCharges;
 		var advanceCharges = priceSetmealData.advanceCharges;
 		var partners = priceSetmealData.partners;
-		var state = priceSetmealData.state;
+		var state = priceSetmealData.state;	
 		var stateName = '';
 		var statedesc = '';
 		if(state == '1'){
@@ -429,7 +431,6 @@
 			stateName = '充满自停+充电时长';
 			statedesc = '(电量收费)';
 		}
-		
 		$('#state').html(stateName);
 		$("#statedesc").text(statedesc);
     	var HeadData = [];
@@ -548,11 +549,13 @@
 	$("#updateSetmeals").click(function(){
 		mui('#sheet1').popover('toggle');
 		var areaName = $('#areaName').text();
+		var electricPrice = $('#areaName').attr('elect');
 		var setmealName = $('#setmealName').text();
 		var setmealData = $('#setmealName').data('pick');
 		var setmealState = plus.storage.getItem("setmealState");			
 		var updateGroup = {
 			'areaName': areaName,
+			'price':electricPrice,
 			'state':setmealState,
 			'setmealName':setmealName,
 			'setmealData':setmealData,
@@ -564,11 +567,13 @@
 	$("#addSetmeals").click(function(){
 		mui('#sheet1').popover('toggle');
 		var areaName = $('#areaName').text();
+		var electricPrice = $('#areaName').attr('elect');
 		var setmealName = $('#setmealName').text();
 		var setmealData = $('#setmealName').data('pick');
 		var setmealState = plus.storage.getItem("setmealState");
 		var updateGroup = {
 			'areaName': areaName,
+			'price':electricPrice,
 			'state':setmealState,
 			'setmealName':setmealName,
 			'setmealData':setmealData,

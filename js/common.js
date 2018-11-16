@@ -1031,12 +1031,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// 新增头部返回上一步按钮
-$(function(){
-	$("#back").click(function(){
-		back()
-	})
-})
+
+//document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+//window.onresize = function(){
+// document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+//}
 
 $.plusReady = function(pageReady, pageRefresh) {
 	if (!pageReady) {
