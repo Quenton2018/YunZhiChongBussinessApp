@@ -107,8 +107,8 @@ API_URL.updateSetmealMember = apiHost + "/api/setmeal/updateSetmealMember"; //ä¿
 
 API_URL.ApiChargingBusinessupdateSetmeal = apiHost + "/api/setmeal/updateSetmeal";
 API_URL.ApiChargingBusinessAddSetmeal = apiHost + "/api/setmeal/saveSetmeal";
-//API_URL.ApiChargingGroupSetmeal = "../mockData/powerprice.json";
-//API_URL.ApiChargingGroupSetmealType = "../mockData/setmealtype.json";
+API_URL.ApiChargingBusinessdeleteChargingGroup = apiHost + "/api/applyChargingGroup/deleteChargingGroup";
+
 
 
 var WX_URL = {};

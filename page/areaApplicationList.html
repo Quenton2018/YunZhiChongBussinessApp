@@ -208,7 +208,7 @@
 <script type="text/html" id="dataTmpl">
     <li class="conbox mui-table-view-cell" style="margin: 0px; padding: 0;">
     	<div class="mui-slider-right mui-disabled">
-			<a class="mui-btn mui-btn-red">删除</a>
+			<a class="mui-btn mui-btn-red" data-id="{{areaid}}">删除</a>
 		</div>
 		<div class="mui-slider-handle">
 			
@@ -269,11 +269,11 @@
     
     $('.dataList').on('tap', '.mui-btn', function(event) {
 		var elem = this;
-		var li = elem.parentNode.parentNode;
+		var id = $(this).attr('data-id');
 		mui.confirm('确定删除这个片区申请？', '', ['确认', '取消'], function(e) {
 			// 确认删除
 			if (e.index == 0) {
-				
+				handleDel(id);
 			}
 		});
 	});
@@ -461,7 +461,16 @@
 		//clicked('areaApplication.html');
 		clicked('areaApplicationSetmeals.html');
     });
-	
+	function handleDel(id){
+		var uuid = plus.storage.getItem("uuid");
+		var params = {
+			uuid:uuid,
+			areaId:id
+		}
+		postJSON(API_URL.ApiChargingBusinessdeleteChargingGroup,params,function(res){
+			layer.msg(res.msg)
+		});
+	}
 </script>
 
 </body>

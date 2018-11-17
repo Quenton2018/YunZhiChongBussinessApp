@@ -16,13 +16,7 @@
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
     <script src="../js/vue.min.js"></script>
-    <style type="text/css">
-    	input{  		
-		    -webkit-user-select: auto!important;  
-		}  	
-    	.setmeal_wrap{
-    		/*display: none;*/
-    	}
+    <style type="text/css">	
 		.setmeal_box{
 			padding: 10px;
 		}
@@ -303,11 +297,13 @@
         	margin: auto;
         }
         .set_top .close {
-        	width: 14px;
-        	height: 14px;
+        	width: 34px;
+        	height: 34px;
         	position: absolute;
-        	top: 10px;
-        	right: 10px;
+        	top: 0;
+        	right: 0;
+        	padding: 10px;
+        	z-index: 110;
         }
         .set_bottom p {
         	height: 15px;
@@ -487,15 +483,15 @@
 		<div class="set_complete_wrap">
 			<div class="set_top">
 				<img class="gou_photo" src="../images/area/gou.png" alt="勾" />
-				<img class="close" @click="closeMask" src="../images/pianqushenqing/guanbi@3x.png" alt="关闭" />
+				<img class="close" @tap="closeMask" src="../images/pianqushenqing/guanbi@3x.png" alt="关闭" />
 			</div>
 			<div class="set_bottom">
 				<div class="continue">
 					<p>您的<span>基本套餐</span>设置完成, 是</p>
 					<p>否需要添加其他套餐</p>
 					<div class="set_btn">
-						<button id="thanks" @click="closeMask">不用,谢谢</button>
-						<button id="href" @click="otherAdd">添加其他套餐</button>
+						<button id="thanks" @tap="closeMask">不用,谢谢</button>
+						<button id="href" @tap="otherAdd">添加其他套餐</button>
 					</div>
 				</div>
 			</div>

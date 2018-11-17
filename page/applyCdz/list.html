@@ -147,51 +147,87 @@
 
 <div class="btn-submit mui-bar mui-bar-tab" onclick="clicked('apply.html')">申请充电桩</div>
 
-<div class="mui-content">
-    <div class="conbox01" id="dataListBox" style="margin-top: 20px;"></div>
-    <div class="loadMore" id="loadMore">加载更多</div>
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<ul class="conbox01 mui-table-view" id="dataListBox" style="margin-top: 20px;">
+    	
+    	</ul>
+	</div>
+    <!--<div class="loadMore" id="loadMore">加载更多</div>-->
 </div>
 
 
     <script type="text/html" id="dataTmpl">
-        <div class="conbox" onclick="clicked('detail.html?id={{id}}')">
-            <div class="box01">
-                <div class="imgbox">
-                    <img src="../../images/pianqushenqing/pianqu@3x.png">
-                </div>
-                <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">{{totalCount}}</span>（实际{{realCount}}台）</h1>
-                <div class="{{zhuangtai}}">{{status}}</div>
-                <div class="clearfix"></div>
+        <li class="conbox mui-table-view-cell" onclick="clicked('detail.html?id={{id}}')">
+        	<div class="mui-slider-right mui-disabled">
+				<a class="mui-btn mui-btn-red" data-id="{{id}}">删除</a>
+			</div>
+			<div class="mui-slider-handle">
+	            <div class="box01">
+	                <div class="imgbox">
+	                    <img src="../../images/pianqushenqing/pianqu@3x.png">
+	                </div>
+	                <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">{{totalCount}}</span>（实际{{realCount}}台）</h1>
+	                <div class="{{zhuangtai}}">{{status}}</div>
+	                <div class="clearfix"></div>
+	            </div>
+	            <div class="box02">
+	                <h1>sn：{{sn}}</h1>
+	                <h1>收货人电话：{{mobile}}</h1>
+	                <h1>地址：{{address}}</h1>
+	                <h1>申请时间：{{createDate}}</h1>
+	                <h1>快递单号：{{expressInfo}}</h1>
+	            </div>
             </div>
-            <div class="box02">
-                <h1>sn：{{sn}}</h1>
-                <h1>收货人电话：{{mobile}}</h1>
-                <h1>地址：{{address}}</h1>
-                <h1>申请时间：{{createDate}}</h1>
-                <h1>快递单号：{{expressInfo}}</h1>
-            </div>
-        </div>
+        </li>
     </script>
 
     <script type="application/javascript">
 
         var pageNumber = 1;
-        var pageSize = 10;
+        var pageSize = 5;
 
         var uuid = null;
 
         var $dataListBox = $("#dataListBox");
 
-        $.plusReady(function() {
-        	uuid = plus.storage.getItem("uuid");
-            getPageData();
-        }, function() {
-        	pageNumber = 1;
-            getPageData();
-        });
-        
-        function getPageData() {
-
+		mui.init({
+	    	pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					style:'circle',
+					offset: '75px',
+					callback: function() {
+						mui('#pullrefresh').pullRefresh().refresh(true);
+						dataRefresh();
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					}
+				},
+	    		up: {
+	    			contentrefresh: '正在加载...',
+	    			auto: false,
+	    			callback: function() {
+	    				setTimeout(function() {
+	    					pageNumber++;
+							getPageData(function(len) {
+	    						mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
+							});
+	    				}, 300);
+	    			}
+	    		}
+	    	}
+	    });
+        // 刷新页面
+	    function dataRefresh(){
+	        pageNumber = 1;      
+	        getPageData();
+	    }
+	    mui.plusReady(function(){
+	    	uuid = plus.storage.getItem("uuid");
+	    	getPageData();
+	    });
+        function getPageData(callback) {
+	
             var data = {
                 'uuid':uuid,
                 'pageSize':pageSize,
@@ -206,14 +242,16 @@
 
                 if('0' == res.code){
 
-                    if(res.data.pagedata.last){
-                        $("#loadMore").css("display",'none');
-                    }else{
-                        $("#loadMore").css("display",'block');
-                    }
+//                  if(res.data.pagedata.last){
+//                      $("#loadMore").css("display",'none');
+//                  }else{
+//                      $("#loadMore").css("display",'block');
+//                  }
 
                     var data = res.data.pagedata.content;
-
+					if (callback) {
+                    	callback(data.length);
+                    }
                     var html = '';
                     var tmpl = $("#dataTmpl").html();
 
@@ -254,11 +292,30 @@
             })
         }
 
-
-        $("#loadMore").click(function () {
-            pageNumber++;
-            getPageData();
-        })
+		$dataListBox.on('tap', '.mui-btn', function(event) {
+			var elem = this;
+			var id = $(this).attr('data-id');
+			mui.confirm('确定删除这个片区申请？', '', ['确认', '取消'], function(e) {
+				// 确认删除
+				if (e.index == 0) {
+					handleDel(id);
+				}
+			});
+		});
+		function handleDel(id){
+//			var uuid = plus.storage.getItem("uuid");
+//			var params = {
+//				uuid:uuid,
+//				areaId:id
+//			}
+//			postJSON(API_URL.ApiChargingBusinessdeleteChargingGroup,params,function(res){
+//				layer.msg(res.msg)
+//			});
+		}
+//      $("#loadMore").click(function () {
+//          pageNumber++;
+//          getPageData();
+//      })
 
 
     </script>
