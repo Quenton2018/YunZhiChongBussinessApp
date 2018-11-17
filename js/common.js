@@ -65,10 +65,10 @@ w.clicked=function(id,wa,ns,ws){
 		var pre='';//'http://192.168.1.178:8080/h5/';
 		openw=plus.webview.create(pre+id,id,ws);
 		ns||openw.addEventListener('loaded',function(){//页面加载完成后才显示
-//		setTimeout(function(){//延后显示可避免低端机上动画时白屏
+		setTimeout(function(){//延后显示可避免低端机上动画时白屏
 			openw.show(as);
 			closeWaiting();
-//		},200);
+		},200);
 		},false);
 		openw.addEventListener('close',function(){//页面关闭后可再次打开
 			openw=null;
