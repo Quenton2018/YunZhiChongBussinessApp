@@ -158,11 +158,11 @@
 
 
     <script type="text/html" id="dataTmpl">
-        <li class="conbox mui-table-view-cell" onclick="clicked('detail.html?id={{id}}')">
+        <li class="conbox mui-table-view-cell">
         	<div class="mui-slider-right mui-disabled">
 				<a class="mui-btn mui-btn-red" data-id="{{id}}">删除</a>
 			</div>
-			<div class="mui-slider-handle">
+			<div class="mui-slider-handle" onclick="clicked('detail.html?id={{id}}')">
 	            <div class="box01">
 	                <div class="imgbox">
 	                    <img src="../../images/pianqushenqing/pianqu@3x.png">
