@@ -307,7 +307,7 @@
 			});
 
 			//选择套餐
-			$('.setmeal_charge').click(function() {
+			$('.setmeal_charge').on('tap',function() {
 				var state = $(this).attr('state');
 				$(this).addClass('select').siblings().removeClass('select');
 				vm.state = state;

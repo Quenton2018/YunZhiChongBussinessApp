@@ -878,7 +878,7 @@
 			getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager);
 		});
 	}
-	$('.tabBox .tabItem').on('click',function(){
+	$('.tabBox .tabItem').on('tap',function(){
 		var index = $(this).index();
 		var type = $(this).attr('data-type');
         $(this).addClass("select").siblings().removeClass('select');
@@ -923,7 +923,7 @@
         getType(type);
     };
     //下拉选择器
-	$('#roadPick').on("click", function() {   	
+	$('#roadPick').on("tap", function() {   	
         var roadPickData = $('#roadPick').attr('data-pick');
         if(roadPickData && JSON.parse(roadPickData).length){
         	var roadPick = new mui.PopPicker();//获取弹出列表组建，假如是二联则在括号里面加入{layer:2}
@@ -938,7 +938,7 @@
         }
         return false;
    	});
-   	$('#electricitySel').on("click", function() {
+   	$('#electricitySel').on("tap", function() {
     	var Times = new mui.PopPicker();
     	var TimesJsonData = [];
     	for(var i=1;i<=100;i++){
@@ -953,7 +953,7 @@
 		});
     });
    	//时长选择器
-   	$('#timeSel').on("click", function() {
+   	$('#timeSel').on("tap", function() {
     	var Time = new mui.PopPicker();
     	var TimeJsonData = [];
     	for(var i=1;i<=300;i++){
@@ -968,7 +968,7 @@
 		});
     });
     //次数选择器
-    $('#timesSel').on("click", function() {
+    $('#timesSel').on("tap", function() {
     	var Times = new mui.PopPicker();
     	var TimesJsonData = [];
     	for(var i=1;i<=50;i++){
@@ -983,7 +983,7 @@
 		});
     });
     //日期选择器
-    $('#dateSel').on("click", function() {
+    $('#dateSel').on("tap", function() {
     	var dateValue = $(this).val();
     	var Date = new mui.DtPicker({type:'date'});
     	Date.setSelectedValue(dateValue);
@@ -995,7 +995,7 @@
 		})
     });
     //修改用户
-    $('#tableList').on('click','#updataSetmeals',function(){
+    $('#tableList').on('tap','#updataSetmeals',function(){
     	var mobile = $(this).attr('data-mobile');
     	var times = $(this).attr('data-times');
     	var time = $(this).attr('data-time');
@@ -1012,7 +1012,7 @@
     	$('#electricitySel').val(electricity);
     	$('.memberbox').show();
     });
-    $('#updataSetmeal').on('click',function(){
+    $('#updataSetmeal').on('tap',function(){
     	updataSetmeals();
     });
     function updataSetmeals(){
@@ -1066,7 +1066,7 @@
 		});
     }
     //删除用户
-    $('#tableList').on('click','#delSetmeals',function(){
+    $('#tableList').on('tap','#delSetmeals',function(){
     	var $this = $(this);
     	var memberId = $this.attr('data-memberid');
     	var setmealId = $this.attr('data-setmealid');
@@ -1095,7 +1095,7 @@
     	return (new Date().getFullYear()+1) + '-' +(new Date().getMonth()+1) + '-' + ultZeroize(new Date().getDate());
     }
     //新增用户
-    $('.addmember').on('click',function(){
+    $('.addmember').on('tap',function(){
     	var date = getCurDates();
     	$('#dateSel').val(date);
     	$('#mobileSel').val('').attr('disabled',false).focus();
@@ -1108,7 +1108,7 @@
     	$('.memberbox').show();
     });
     //确认添加用户
-    $('#saveSetmeal').on('click',function(){
+    $('#saveSetmeal').on('tap',function(){
     	saveSetmeals();
     });
     function saveSetmeals(){
@@ -1183,7 +1183,7 @@
 			}
 		});
     }
-    $('.form-close').on('click',function(){
+    $('.form-close').on('tap',function(){
     	$('.memberbox').hide();
     });
 

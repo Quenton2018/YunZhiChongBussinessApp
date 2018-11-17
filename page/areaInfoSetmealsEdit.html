@@ -85,7 +85,7 @@
     		position: relative;
     	}
     	.table_list:last-child{
-    		border-bottom: none;
+    		/*border-bottom: none;*/
     	}
     	.table_list span{
     		text-align: center;
@@ -93,10 +93,10 @@
     	}
 		.table_list span.first_span{
     		text-align: left;
-    		padding-left: 10px;
+    		padding-left: 18px;
     	}
 
-    	.table_list span .circle {
+    	.table_list .circle {
 			width: 16px;
 			height: 16px;
 			line-height: 14px;
@@ -105,11 +105,13 @@
 			border: 1px solid #ff6d22;
 			text-align: center;
 			display: inline-block;
-			font-size: 14px;
+			font-size: 12px;
 			color: #ff6d22;
-			margin-right: 4px;
 			vertical-align: 1px;
 			font-style: normal;
+			position: absolute;
+			top: 22px;
+			left: 0;
 		}
 		.list-item{
 			margin-left: 24px;
@@ -136,7 +138,7 @@
 		}
 		input.yellow-input{
 			width: 32px;
-		    padding: 2px 6px;
+		    padding: 2px 4px;
 		    margin: 0 2px;
 		    height: 24px;
 		    line-height: 20px;
@@ -230,16 +232,19 @@
 		#partners .partners-item{
 			width: 25%;
 			float: left;
-			text-align: center;
+			text-align: left;
 			display: inline-block;
 			font-size: 0.9rem;
-			padding: 3px 5px;
+			padding: 3px 3px;
 			margin-right: 1%;
 			margin-bottom: 0;	
 		}
 		#partners input.partners-item{
-			color: #969696;
-			background: #eeeeee;
+			/*color: #969696;*/
+			/*background: #eeeeee;*/
+			border: none;
+			border-radius:0;
+			border-bottom: 1px solid rgba(0,0,0,.2);
 		}
 		#partners input[readonly] {
 		    background: #fff;
@@ -326,11 +331,12 @@
 				<div class="setmeal_tap_table">
 					<ul class="table_ul" id="ElesList">
 						<li class="table_list flex" v-for="(item, index) in elesList">
-							<span class="eles-item" style="width: 30%;" v-if="item.max>1200"><i class="circle">{{index+1}}</i>1200以上</span>
+							<i class="circle">{{index+1}}</i>
+							<span class="eles-item first_span" style="width: 30%;" v-if="item.max>1200">1200以上</span>
 
-							<span class="eles-item" style="width: 30%;" v-else-if="item.min <=0"><i class="circle">{{index+1}}</i>100以下</span>
+							<span class="eles-item first_span" style="width: 30%;" v-else-if="item.min <=0">100以下</span>
 
-							<span class="eles-item" v-else style="width: 30%;"><i class="circle">{{index+1}}</i>{{item.min}}-{{item.max}}</span>
+							<span class="eles-item first_span" v-else style="width: 30%;">{{item.min}}-{{item.max}}</span>
 
 							<span class="eles-item" style="width: 30%;">{{item.cost}}</span>
 							
@@ -368,16 +374,16 @@
 				<div class="setmeal_tap_header">
 					<span class="partners-item" style="width: 22%;">姓名</span>
 					<span class="partners-item" style="width: 30%;">账号</span>
-					<span class="partners-item" style="width: 17%;">金额<i>(元)</i></span>
-					<span class="partners-item" style="width: 17%;">比值<i>(%)</i></span>
+					<span class="partners-item" style="width: 18%;">金额<i>(元)</i></span>
+					<span class="partners-item" style="width: 18%;">比值<i>(%)</i></span>
 				</div>
 				<div class="setmeal_tap_table">
 					<ul class="table_ul" id="partnersList">
 						<li class="table_list" v-for="(item, index) in partnersList">
 							<input type="text" placeholder="姓名" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1) ? false : 'readonly'" />
-							<input type="tel" placeholder="账号" style="width: 32%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1) ? false : 'readonly'" />
-							<input type="number" placeholder="金额" style="width: 17%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
-							<input type="number" placeholder="比值" style="width: 17%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
+							<input type="tel" placeholder="账号" style="width: 30%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1) ? false : 'readonly'" />
+							<input type="number" placeholder="金额" style="width: 18%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
+							<input type="tel" placeholder="比值" style="width: 18%;" class="partners-item" v-model="item.divideRatio" maxlength="2"/>
 							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
 								<span class="mui-icon mui-icon-trash"></span>
 							</div>
@@ -498,6 +504,15 @@
 					$("#eles").show();
 				}
 			},
+			watch: {
+			    // 如果 `partnersList` 发生改变，这个函数就会运行
+			    partnersList:{
+			    	handler: function (newData, oldData) {
+				      	this.sumRatio();
+				    },
+				    deep: true
+			    }
+			},
 			methods:{
 				addCharges:function(){
 					vm.chargesList.push({
@@ -511,6 +526,10 @@
 					vm.chargesList.splice(index, 1);
 				},
 				addPartners:function(){
+					if(vm.partnersList.length>4){
+						layer.msg("合伙人最多5个人");
+						return false;
+					}
 					vm.partnersList.push({
 						name:'',
 						mobile:'',
@@ -520,6 +539,28 @@
 				},
 				delPartners:function(index){
 					vm.partnersList.splice(index, 1);
+				},
+				sumRatio:function(){
+					var rateSum = 0;
+					var rateSum1 = 0;
+					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+					$.each(vm.partnersList,function(index,item){				
+						var name = item.name;
+						var divideRatio = item.divideRatio;
+						rateSum1 += divideRatio;
+						//校验是数字
+		                if(!reg.test(divideRatio)){
+		                    return false;
+		                }
+						if(index !== 0){
+							rateSum += parseInt(item.divideRatio);
+						}					
+					});
+					if(rateSum >= 90){
+						layer.msg("合伙人比值为整数且相加必须为100%");
+						return false;
+					}
+					vm.partnersList[0].divideRatio = 100 - rateSum;			
 				},
 				btnMinus:function(List,name,index){
 					var num = 30;
