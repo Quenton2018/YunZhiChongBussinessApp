@@ -166,12 +166,16 @@
         	text-align: center;
         	font-size: 14px;
         }
+        
+        .conbox {
+        	margin-bottom: 20px;
+        }
     </style>
 
 </head>
 <body>
 	
-<header class="header header-immersed mui-bar mui-bar-nav">
+<header class="header header-immersed mui-bar mui-bar-nav" style="box-shadow: none;">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">片区申请列表</h1>
 </header>
@@ -179,10 +183,14 @@
 	<span>申请片区</span>
 </footer>
 <div class="mui-content">
-    <div class="dataList">
 
-    </div>
-    <div id="loadMore" class="loadMore">加载更多</div>
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+    	<ul class="dataList mui-table-view" style="margin: 0; padding: 0;"></ul>
+   	</div>
+</div>
+
+    <!--<div id="loadMore" class="loadMore">加载更多</div>-->
     <div id="noMore" class="noMore">没有更多了</div>
 
 
@@ -198,25 +206,31 @@
 </div>
 
 <script type="text/html" id="dataTmpl">
-    <div class="conbox">
-        <div class="box01"  data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)" >
-            <div class="imgbox">
-                <img src="../images/pianqushenqing/pianqu@3x.png">
-            </div>
-            <h1>片区:{{name}}</h1>
-            {{status}}
-            <div class="clearfix"></div>
-        </div>
-        <!--<div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">-->
-        <div class="box02" data-id="{{areaid}}"  onclick="{{onclicks}}">
-            <h1>电价：{{electricPrice}}元/千瓦时</h1>
-            <!--<h1>地址：{{address}}</h1>-->
-            <h1>申请时间：{{createDate}}</h1>
-        </div>
+    <li class="conbox mui-table-view-cell" style="margin: 0px; padding: 0;">
+    	<div class="mui-slider-right mui-disabled">
+			<a class="mui-btn mui-btn-red">删除</a>
+		</div>
+		<div class="mui-slider-handle">
+			
+	        <div class="box01"  data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)" >
+	            <div class="imgbox">
+	                <img src="../images/pianqushenqing/pianqu@3x.png">
+	            </div>
+	            <h1>片区:{{name}}</h1>
+	            {{status}}
+	            <div class="clearfix"></div>
+	        </div>
+	        <!--<div class="box02" data-id="{{areaid}}"  onclick="areaApplicationDeatil(this)">-->
+	        <div class="box02" data-id="{{areaid}}"  onclick="{{onclicks}}">
+	            <h1>电价：{{electricPrice}}元/千瓦时</h1>
+	            <!--<h1>地址：{{address}}</h1>-->
+	            <h1>申请时间：{{createDate}}</h1>
+	        </div>
+	
+	        <i class="iconfont icon-erweima qrCodeIcon" data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)"></i>
 
-        <i class="iconfont icon-erweima qrCodeIcon" data-id="{{id}}"  data-name="{{name}}" onclick="getqrCode(this)"></i>
-
-    </div>
+		</div>
+    </li>
 </script>
 
 
@@ -224,7 +238,47 @@
 
 
 <script type="text/javascript">
-    mui.init();
+	
+    mui.init({
+    	pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				style:'circle',
+				offset: '75px',
+				callback: function() {
+					mui('#pullrefresh').pullRefresh().refresh(true);
+					$('.mui-pull-caption').html('');
+					dataRefresh();
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+				}
+			},
+    		up: {
+    			contentrefresh: '正在加载...',
+    			auto: false,
+    			callback: function() {
+    				setTimeout(function() {
+    					pageNumber++;
+						getList(function(len) {
+    						mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
+						});
+    				}, 300);
+    			}
+    		}
+    	}
+    });
+    
+    $('.dataList').on('tap', '.mui-btn', function(event) {
+		var elem = this;
+		var li = elem.parentNode.parentNode;
+		mui.confirm('确定删除这个片区申请？', '', ['确认', '取消'], function(e) {
+			// 确认删除
+			if (e.index == 0) {
+				
+			}
+		});
+	});
+	
+	mui.plusReady(getList);
 
     var pageNumber = 1;
     var pageSize = 5;
@@ -233,15 +287,17 @@
     // 刷新页面
     function dataRefresh(){
         pageNumber = 1;
-        $(".dataList").html("");
-        getList();
+        
+        getList(function() {
+        	$(".dataList").html("");
+        });
     }
     
-    $.plusReady(function() {
+    /*$.plusReady(function() {
     	getList();
     }, function() {
     	dataRefresh();
-    });
+    });*/
 
     //跳转详情页
     function areaApplicationDeatil(that) {
@@ -304,9 +360,8 @@
         });
     }
 
-    function getList(){
+    function getList(callback){
         var uuid = plus.storage.getItem("uuid");
-//      var uuid = '615cd7b2d8f84377bd4d3bcd9bc9f731';
         if(vaildeParam(uuid)){
             var dataParam = {
                 "uuid":uuid,
@@ -316,6 +371,14 @@
             postJSON(API_URL.ApiGetApplyChargingGroupList,dataParam,function(res){
                 if("0" == res.code){
                     var data = res.data.pagedata.content;
+                    if (callback) {
+                    	callback(data.length);
+                    }
+                    
+                    if (data.length == 0 && pageNumber > 1) {
+                    	return;
+                    }
+                    
                     if(!vaildeParam(data)){
                     	$("#nodata").show();
                     }else{
