@@ -19,6 +19,7 @@
     <script src="../js/mui.min.js"></script>
     <script src="../js/mui.picker.all.js"></script>
     <script src="../js/artTemplate.min.js"></script>
+    <script src="../js/px2rem.js"></script>
     <style type="text/css">
     	.address_wrap{
     		margin: 15px 0;
@@ -35,13 +36,13 @@
     	}
     	.address_left span{
     		color: #7a7d80;
-    		font-size: 0.9rem;
+    		font-size: 0.3rem;
     	}
     	.address_right{
     		float: right;
     	}
     	.address_right span{
-    		font-size: 0.9rem;
+    		font-size: 0.3rem;
     	}
     	.setmeal_wrap{
     		display: none;
@@ -55,17 +56,17 @@
     	}
     	.setmeal_Sel{
     		color: #ff6d22;
-    		font-size: 1rem;
+    		font-size: 0.3rem;
     		padding: 10px;
     	}
     	.setmeal_icon{
     		color: #737373;
-    		font-size: 1.2rem;
+    		font-size: 0.34rem;
     	}
     	.setmeal_state{
-    		margin-left: 40px;
+    		margin-left: 0.4rem;
     		color: #7a7d80;
-    		font-size: 0.9rem;
+    		font-size: 0.26rem;
     	}
     	.setmeal_header_wrap{
     		background: #fff;  		
@@ -77,7 +78,7 @@
     	.setmeal_tap_list{
     		text-align: center;
     		color: #808080;
-    		font-size: 0.9rem;
+    		font-size: 0.26rem;
     	}
     	.setmeal_tap_list.select{
     		background: url(../images/area/trapezoid.png) center no-repeat;
@@ -100,7 +101,7 @@
     	.setmeal_tap_header span{
     		color: #7a7d80;
     		text-align: center;
-    		font-size: 0.9rem;
+    		font-size: 0.26rem;
     	}
     	.table_ul{
     		padding: 0 15px;
@@ -116,7 +117,7 @@
     	}
     	.table_list span{
     		text-align: center;
-    		font-size: 1rem;
+    		font-size: 0.3rem;
     	}
     	.setmeal_tap_header span.first_span,.table_list span.first_span{
     		text-align: left;
@@ -131,7 +132,7 @@
 			border: 1px solid #484848;
 			text-align: center;
 			display: inline-block;
-			font-size: 12px;
+			font-size: 0.24rem;
 			position: relative;
 			top: 0px;
 			margin-right: 4px;
@@ -143,40 +144,8 @@
 			border: 1px solid #FF6D22;
     		background-color: #FF6D22;
 		}
-		
-		/*菜单选择增加或修改*/
-		.mui-poppicker.mui-active {
-			border-top-left-radius: 10px;
-			border-top-right-radius: 10px;
-		}
-		.mymeal {
-			border-bottom: 1px solid #c4c4c4;
-			padding: 16px 25px;
-			font-size: 1rem;
-			color: #404040;
-		}
-		.addmeal,.setmeal1 {
-			padding: 12px 41px;
-			font-size: 1rem;
-			position: relative;
-		}
-		.addmeal span,.setmeal1 span {
-			margin-left: 5px;
-		}
-		.addmeal img,.setmeal1 img {
-			width: 20px;
-			height: 20px;
-			vertical-align: top;
-		}
-		.line {
-			border-top: 1px solid #c4c4c4;
-			width: 80%;
-			position: absolute;
-			top: 98px;
-			right: 0;
-		}
 		#statedesc{
-			font-size: 0.8rem;
+			font-size: 0.26rem;
 			color: #7a7d80;
 		}
     </style>
@@ -522,7 +491,7 @@
         var setmealPick = new mui.PopPicker();
         if(vaildeParam(setmealData)){
         	setmealPick.setData(setmealData);
-      		setmealPick.show(function(item) {  			
+      		setmealPick.show(function(item) {
       			var name = item[0].text;
       			var state = item[0].state;
       			plus.storage.setItem("setmealState",state);
