@@ -426,7 +426,7 @@
 							
 							<div class="mui-numboxs eles-item" style="width: 40%;">
 					            <button class="mui-btn mui-numbox-btn-minuss" type="button" @click="btnMinus(elesList,'amount',index)">-</button>
-					            <input class="mui-numbox-input" type="number" name="time" v-model="item.amount">
+					            <input class="mui-numbox-input" type="number" name="time" v-model="item.amount" readonly="true">
 					            <button class="mui-btn mui-numbox-btn-pluss" type="button" @click="btnPlus(elesList,'amount',index)">+</button>
 					            <div class="clearfix"></div>
 					        </div>
@@ -458,16 +458,16 @@
 				<div class="setmeal_tap_header">
 					<span class="partners-item" style="width: 22%;">姓名</span>
 					<span class="partners-item" style="width: 30%;">账号</span>
-					<span class="partners-item" style="width: 18%;">金额<i>(元)</i></span>
-					<span class="partners-item" style="width: 18%;">比值<i>(%)</i></span>
+					<span class="partners-item" style="width: 17%;">金额<i>(元)</i></span>
+					<span class="partners-item" style="width: 17%;">比值<i>(%)</i></span>
 				</div>
 				<div class="setmeal_tap_table">
 					<ul class="table_ul" id="partnersList">
 						<li class="table_list" v-for="(item, index) in partnersList">
-							<input type="text" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
-							<input type="tel" style="width: 30%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0)? false : 'readonly'" />
-							<input type="number" style="width: 18%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
-							<input type="number" style="width: 18%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
+							<input type="text" placeholder="姓名" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
+							<input type="tel" placeholder="账号" style="width: 32%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
+							<input type="number" placeholder="金额" style="width: 17%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
+							<input type="number" placeholder="比值" style="width: 17%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
 							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
 								<span class="mui-icon mui-icon-trash"></span>
 							</div>
@@ -520,7 +520,7 @@
 		setVueData();
     },function(){
     	getDataList();
-    });
+    },false);
 	
     function getDataList(){
     	var params = {
@@ -721,7 +721,7 @@
 						name:'',
 						mobile:'',
 						dividePrice:'',
-						divideRatio:''
+						divideRatio:10
 					});
 				},
 				delPartners:function(index){
@@ -735,14 +735,14 @@
 						return;
 					}
 					if(name == 'amount'){
-						num = 0.5;
-						if (prices < 1){
+						num = 0.1;
+						if (prices < 0.11){
 		                    prices = 0;
 		                }else{
 		                    List[index][name] = (prices - num).toFixed(2);
 		                }
 					}else{
-						if (prices < 1){
+						if (prices < 60){
 		                    prices = 0;
 		                }else{
 							prices = parseInt(List[index][name]);
@@ -759,7 +759,7 @@
 						return;
 					}
 					if(name == 'amount'){
-						num = 0.5;
+						num = 0.1;
 						List[index][name] = (prices + num).toFixed(2);
 					}else{
 						prices = parseInt(List[index][name]);
