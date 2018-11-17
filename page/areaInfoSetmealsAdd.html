@@ -503,6 +503,15 @@
 					$("#eles").show();
 				}
 			},
+			watch: {
+			    // 如果 `partnersList` 发生改变，这个函数就会运行
+			    partnersList:{
+			    	handler: function (newData, oldData) {
+				      	this.sumRatio();
+				    },
+				    deep: true
+			    }
+			},
 			methods:{
 				addCharges:function(){
 					vm.chargesList.push({
@@ -522,24 +531,25 @@
 						dividePrice:'',
 						divideRatio:10
 					});
-					var localMobile = plus.storage.getItem('mobile');
-					console.log(localMobile)
-	                var rateSum1 = 0;
-					$.each(vm.partnersList,function(index,item){				
-						var name = item.name;
-						var mobile = item.mobile;
-				
-						if(localMobile !== item.mobile){
-							rateSum1 += parseInt(item.divideRatio);
-						}
-						if(localMobile == item.mobile){
-							console.log(rateSum1)
-							item.divideRatio = 100 - rateSum1;
-						}
-					});
 				},
 				delPartners:function(index){
 					vm.partnersList.splice(index, 1);
+				},
+				sumRatio:function(){
+					var rateSum = 0;
+					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+					$.each(vm.partnersList,function(index,item){				
+						var name = item.name;
+						var divideRatio = item.divideRatio;
+						//校验是数字
+		                if(!reg.test(divideRatio)){
+		                    return false;
+		                }
+						if(index !== 0){
+							rateSum += parseInt(item.divideRatio);
+						}					
+					});
+					vm.partnersList[0].divideRatio = 100 - rateSum;
 				},
 				btnMinus:function(List,name,index){
 					var num = 30;

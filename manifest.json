@@ -388,6 +388,13 @@
 					"page/areaApplicationSetmeals.html"
 				],
 				"priority": 0
+			},
+			"page/areaInfoSetmealsSave.html": {
+				"resources": [],
+				"refer": [
+					"page/areaApplicationSetmeals.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

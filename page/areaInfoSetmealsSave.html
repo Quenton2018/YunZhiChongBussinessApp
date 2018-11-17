@@ -458,16 +458,16 @@
 				<div class="setmeal_tap_header">
 					<span class="partners-item" style="width: 22%;">姓名</span>
 					<span class="partners-item" style="width: 30%;">账号</span>
-					<span class="partners-item" style="width: 17%;">金额<i>(元)</i></span>
-					<span class="partners-item" style="width: 17%;">比值<i>(%)</i></span>
+					<span class="partners-item" style="width: 18%;">金额<i>(元)</i></span>
+					<span class="partners-item" style="width: 18%;">比值<i>(%)</i></span>
 				</div>
 				<div class="setmeal_tap_table">
 					<ul class="table_ul" id="partnersList">
 						<li class="table_list" v-for="(item, index) in partnersList">
 							<input type="text" placeholder="姓名" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
-							<input type="tel" placeholder="账号" style="width: 32%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
-							<input type="number" placeholder="金额" style="width: 17%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
-							<input type="number" placeholder="比值" style="width: 17%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
+							<input type="tel" placeholder="账号" style="width: 30%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
+							<input type="number" placeholder="金额" style="width: 18%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
+							<input type="number" placeholder="比值" style="width: 18%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
 							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
 								<span class="mui-icon mui-icon-trash"></span>
 							</div>
@@ -704,6 +704,15 @@
 					$("#eles").show();
 				}
 			},
+			watch: {
+			    // 如果 `partnersList` 发生改变，这个函数就会运行
+			    partnersList:{
+			    	handler: function (newData, oldData) {
+				      	this.sumRatio();
+				    },
+				    deep: true
+			    }
+			},
 			methods:{
 				addCharges:function(){
 					vm.chargesList.push({
@@ -716,7 +725,7 @@
 				delCharges:function(index){
 					vm.chargesList.splice(index, 1);
 				},
-				addPartners:function(){
+				addPartners:function(){				
 					vm.partnersList.push({
 						name:'',
 						mobile:'',
@@ -726,6 +735,22 @@
 				},
 				delPartners:function(index){
 					vm.partnersList.splice(index, 1);
+				},
+				sumRatio:function(){
+					var rateSum = 0;
+					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+					$.each(vm.partnersList,function(index,item){				
+						var name = item.name;
+						var divideRatio = item.divideRatio;
+						//校验是数字
+		                if(!reg.test(divideRatio)){
+		                    return false;
+		                }
+						if(index !== 0){
+							rateSum += parseInt(item.divideRatio);
+						}					
+					});
+					vm.partnersList[0].divideRatio = 100 - rateSum;
 				},
 				btnMinus:function(List,name,index){
 					var num = 30;
@@ -809,7 +834,7 @@
 					});
 					var updateGroup = {
 						'areaName': applyGroup.name,
-						'price':'0.8',
+						'price': applyGroup.price,
 						'state':this.state,
 						'setmealName':applyGroup.applySetmealName,
 						'setmealData':setmealData,
