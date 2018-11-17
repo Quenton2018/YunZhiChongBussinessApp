@@ -1037,7 +1037,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 //}
 
-$.plusReady = function(pageReady, pageRefresh) {
+$.plusReady = function(pageReady, pageRefresh, useRefresh) {
 	if (!pageReady) {
 		pageReady = function() {}
 	}
@@ -1063,11 +1063,14 @@ $.plusReady = function(pageReady, pageRefresh) {
             $('.header').removeClass('header-immersed');
             $('.mui-content').css('margin-top', '0px');
         }
-        ws.setPullToRefresh({
-        	support: true,
-        	style: 'circle',
-        	offset: topoffset + 45 + 'px'
-        }, onRefresh);
+        
+        if (useRefresh || typeof useRefresh == "undefined") {
+	        ws.setPullToRefresh({
+	        	support: true,
+	        	style: 'circle',
+	        	offset: topoffset + 45 + 'px'
+	        }, onRefresh);
+        }
         
         pageReady();
     }
