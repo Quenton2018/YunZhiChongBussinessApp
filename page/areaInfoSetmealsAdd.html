@@ -387,8 +387,8 @@
 						<li class="table_list" v-for="(item, index) in partnersList">
 							<input type="text" placeholder="姓名" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
 							<input type="tel" placeholder="账号" style="width: 32%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
-							<input type="number" placeholder="金额" style="width: 17%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
-							<input type="number" placeholder="比值" style="width: 17%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
+							<input type="number" name="gold" placeholder="金额" style="width: 17%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
+							<input type="tel" name="biz" placeholder="比值" style="width: 17%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
 							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
 								<span class="mui-icon mui-icon-trash"></span>
 							</div>
@@ -553,14 +553,25 @@
 					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
 					$.each(vm.partnersList,function(index,item){				
 						var name = item.name;
+						var dividePrice = item.dividePrice;
 						var divideRatio = item.divideRatio;
+						var $inputParent = $('#partnersList').find('.table_list').eq(index);
+						if(!vaildeParam(dividePrice) && !vaildeParam(divideRatio)){
+							$inputParent.find('input[name="gold"]').removeAttr('readonly');
+							$inputParent.find('input[name="biz"]').removeAttr('readonly');
+		               	} else if (!vaildeParam(dividePrice)) {
+		               		$inputParent.find('input[name="gold"]').attr('readonly', 'readonly');
+		               	} else if (!vaildeParam(divideRatio)) {
+		               		$inputParent.find('input[name="biz"]').attr('readonly', 'readonly');
+		               	}
 						//校验是数字
 		                if(!reg.test(divideRatio)){
-		                    return false;
-		                }
-						if(index !== 0){
-							rateSum += parseInt(item.divideRatio);
-						}					
+							//return false;
+		                }else{
+		                	if(index !== 0){
+								rateSum += parseInt(item.divideRatio);
+							}
+		                }					
 					});
 					if(rateSum >= 90){
 						layer.msg("合伙人比值为整数且相加必须为100%");
