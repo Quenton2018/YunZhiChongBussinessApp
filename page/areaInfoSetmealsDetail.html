@@ -277,8 +277,8 @@
 			{{else}}
 			<span class="flex-item first_span">{{item.min}}-{{item.max}}</span>
 			{{/if}}
-			<span class="flex-item">{{item.cost}}</span>
-			<span class="flex-item">{{item.amount}}</span>
+			<span class="flex-item">{{item.cost.toFixed(2)}}</span>
+			<span class="flex-item">{{item.amount.toFixed(2)}}</span>
 		</li>
 	{{/each}}
 </script>
@@ -308,7 +308,11 @@
 	<li class="table_list flex">
 		<span class="flex-item first_span">{{item.name}}</span>
 		<span class="flex-item">{{item.mobile}}</span>
+		{{if item.divideRatio}}
 		<span class="flex-item">{{item.divideRatio}}%</span>
+		{{else if item.dividePrice}}
+		<span class="flex-item">{{item.dividePrice}}元</span>
+		{{/if}}
 	</li>
 	{{/each}}
 </script>

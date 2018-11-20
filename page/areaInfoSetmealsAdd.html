@@ -387,7 +387,7 @@
 						<li class="table_list" v-for="(item, index) in partnersList">
 							<input type="text" placeholder="姓名" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
 							<input type="tel" placeholder="账号" style="width: 32%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
-							<input type="number" name="gold" placeholder="金额" style="width: 17%;" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
+							<input type="number" name="gold" placeholder="金额" style="width: 17%;" readonly="readonly" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
 							<input type="tel" name="biz" placeholder="比值" style="width: 17%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
 							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
 								<span class="mui-icon mui-icon-trash"></span>
@@ -660,17 +660,16 @@
 						var mobile = item.mobile;
 						var dividePrice = item.dividePrice;
 						var divideRatio = item.divideRatio;
-						rateSum += parseInt(divideRatio);
+//						rateSum += parseInt(divideRatio);
 						
-						if(!vaildeParam(name) || !vaildeParam(mobile) || !vaildeParam(divideRatio)){
+						if(!vaildeParam(name) || !vaildeParam(mobile)){
 		                    flag = true;
 		                    return;
 		                }
 						
 						//校验是数字
-		                if(!reg.test(divideRatio)){
-		                    flagNumber = true;
-		                    return;
+		                if(reg.test(divideRatio)){
+		                    rateSum += parseInt(divideRatio);
 		                }
 					})
 					

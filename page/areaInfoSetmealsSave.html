@@ -888,17 +888,16 @@
 						var mobile = item.mobile;
 						var dividePrice = item.dividePrice;
 						var divideRatio = item.divideRatio;
-						rateSum += parseInt(divideRatio);
 						
-						if(!vaildeParam(name) || !vaildeParam(mobile) || !vaildeParam(divideRatio)){
+						
+						if(!vaildeParam(name) || !vaildeParam(mobile)){
 		                    flag = true;
 		                    return;
 		                }
 						
 						//校验是数字
-		                if(!reg.test(divideRatio)){
-		                    flagNumber = true;
-		                    return;
+		                if(reg.test(divideRatio)){
+		                    rateSum += parseInt(divideRatio);
 		                }
 					})
 					
