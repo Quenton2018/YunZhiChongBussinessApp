@@ -270,7 +270,8 @@
     $('.dataList').on('tap', '.mui-btn', function(event) {
 		var elem = this;
 		var id = $(this).attr('data-id');
-		mui.confirm('确定删除这个片区申请？', '', ['确认', '取消'], function(e) {
+		var btnArray=['确定','取消'];
+		mui.confirm('确定删除这个片区申请？', '提示', btnArray, function(e) {
 			// 确认删除
 			if (e.index == 0) {
 				handleDel(id);

@@ -1070,10 +1070,10 @@
     	var $this = $(this);
     	var memberId = $this.attr('data-memberid');
     	var setmealId = $this.attr('data-setmealid');
-		var btnArray = ['取消', '确定'];
-		mui.confirm('确定要删除吗？', '提示信息', btnArray, function(e) {
+		var btnArray = ['确定','取消'];
+		mui.confirm('确定要删除当前用户吗？', '提示', btnArray, function(e) {
 //      	console.log(JSON.stringify(e))
-        	if(e.index == 1){
+        	if(e.index == 0){
         		delSetmeals(memberId,setmealId,$this);
         	}	
     	});
