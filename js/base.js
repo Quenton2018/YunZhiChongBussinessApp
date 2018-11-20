@@ -78,6 +78,7 @@ API_URL.ApiApplyCdzApply = apiHost + "/api/applyCdz/apply"; //合伙人申请充
 API_URL.ApiApplyCdzList = apiHost + "/api/applyCdz/list"; //合伙人申请充电桩 - 列表
 API_URL.ApiApplyCdzDetail = apiHost + "/api/applyCdz/detail"; //合伙人申请充电桩 - 详情
 API_URL.ApiApplyCdzConfirmGet = apiHost + "/api/applyCdz/confirmGet"; //合伙人申请充电桩 - 详情
+API_URL.ApiApplyCdzDelete = apiHost + "/api/applyCdz/delete" //合伙人申请充电桩 - 删除
 
 
 API_URL.ApiAdminGetSumMoney = apiHost + "/api/admin/getSumMoney"; //多维度获取合伙人赚的钱

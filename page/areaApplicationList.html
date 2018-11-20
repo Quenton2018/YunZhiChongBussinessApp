@@ -469,7 +469,8 @@
 			areaId:id
 		}
 		postJSON(API_URL.ApiChargingBusinessdeleteChargingGroup,params,function(res){
-			layer.msg(res.msg)
+			layer.msg(res.msg);
+			dataRefresh();
 		});
 	}
 </script>
