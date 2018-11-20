@@ -268,13 +268,13 @@
     });
     
     $('.dataList').on('tap', '.mui-btn', function(event) {
-		var elem = this;
+		var $elem = $(this);
 		var id = $(this).attr('data-id');
 		var btnArray=['确定','取消'];
 		mui.confirm('确定删除这个片区申请？', '提示', btnArray, function(e) {
 			// 确认删除
 			if (e.index == 0) {
-				handleDel(id);
+				handleDel($elem,id);
 			}
 		});
 	});
@@ -462,7 +462,7 @@
 		//clicked('areaApplication.html');
 		clicked('areaApplicationSetmeals.html');
     });
-	function handleDel(id){
+	function handleDel($elem,id){
 		var uuid = plus.storage.getItem("uuid");
 		var params = {
 			uuid:uuid,
@@ -470,7 +470,9 @@
 		}
 		postJSON(API_URL.ApiChargingBusinessdeleteChargingGroup,params,function(res){
 			layer.msg(res.msg);
-			dataRefresh();
+			if(res.code == '0'){
+				$elem.parents("li").remove();
+			}
 		});
 	}
 </script>
