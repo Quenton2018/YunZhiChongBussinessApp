@@ -472,7 +472,7 @@
 							<input type="text" placeholder="姓名" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
 							<input type="tel" placeholder="账号" style="width: 30%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
 							<input type="number" name="gold" placeholder="金额" style="width: 18%;" readonly="readonly" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
-							<input type="tel" name="biz" placeholder="比值" style="width: 18%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
+							<input type="number" name="biz" placeholder="比值" style="width: 18%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
 							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
 								<span class="mui-icon mui-icon-trash"></span>
 							</div>
@@ -746,7 +746,8 @@
 				},
 				sumRatio:function(){
 					var rateSum = 0;
-					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+//					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+					var reg =  /^[0-9]+\.?[0-9]*$/;
 					$.each(vm.partnersList,function(index,item){				
 						var name = item.name;
 						var dividePrice = item.dividePrice;
@@ -760,14 +761,23 @@
 		               	} else if (!vaildeParam(divideRatio)) {
 		               		$inputParent.find('input[name="biz"]').attr('readonly', 'readonly');
 		               	}
+		               	
+		               	/*if (divideRatio == '') {
+		                	item.divideRatio = '';
+		               		return true;
+		               	}*/
+		               	
 						//校验是数字
 		                if(!reg.test(divideRatio)){
-							//return false;
+//		                	layer.msg("合伙人金额与比值必须为数字");
+//		                	item.divideRatio = '';
+//							return false;
 		                }else{
 		                	if(index !== 0){
-								rateSum += parseInt(item.divideRatio);
+								rateSum += parseFloat(item.divideRatio);
 							}
-		                }										
+		                }
+		                
 					});
 					if(rateSum >= 90){
 						layer.msg("合伙人比值为整数且相加必须为100%");
@@ -897,7 +907,10 @@
 						
 						//校验是数字
 		                if(reg.test(divideRatio)){
-		                    rateSum += parseInt(divideRatio);
+		                    rateSum += parseFloat(divideRatio);
+		                }else{
+							flagNumber = true;
+		                	return;
 		                }
 					})
 					

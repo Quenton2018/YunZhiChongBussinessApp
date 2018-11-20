@@ -540,7 +540,7 @@
 				},
 				sumRatio:function(){
 					var rateSum = 0;
-					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+					var reg =  /^[0-9]+\.?[0-9]*$/;
 					$.each(vm.partnersList,function(index,item){				
 						var name = item.name;
 						var dividePrice = item.dividePrice;
@@ -556,10 +556,12 @@
 		               	}
 						//校验是数字
 		                if(!reg.test(divideRatio)){
-							//return false;
+//		                	layer.msg("合伙人金额与比值必须为数字");
+//		                	item.divideRatio = '';
+//							return false;
 		                }else{
 		                	if(index !== 0){
-								rateSum += parseInt(item.divideRatio);
+								rateSum += parseFloat(item.divideRatio);
 							}
 		                }					
 					});
@@ -659,7 +661,7 @@
 						
 						//校验是数字
 						if(reg.test(divideRatio)){
-		                    rateSum += parseInt(divideRatio);
+		                    rateSum += parseFloat(divideRatio);
 		                }
 					})
 					if(flag){
