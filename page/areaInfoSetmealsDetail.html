@@ -347,11 +347,11 @@
 				$('#site').html(address);			
 //				console.log("####详情页电价price####"+electricPrice);
 				$('#areaName').attr('elect',electricPrice);
-//				if('待处理' == res.data.status || '编辑' == res.data.status ){
-//                  $('#updateChargingGroup').hide();
-//              }else{
-//                  $('#updateChargingGroup').show();
-//              }
+				if('待处理' == res.data.status || '编辑' == res.data.status ){
+                    $('#updateChargingGroup').hide();
+                }else{
+                    $('#updateChargingGroup').show();
+                }
 				if(vaildeParam(priceSetmealJson)){
 					$('#setmeals').show();
 					plus.storage.setItem( "priceSetmealJson", priceSetmealJson);

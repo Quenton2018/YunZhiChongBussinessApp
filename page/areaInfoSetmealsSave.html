@@ -537,6 +537,7 @@
 			if(res.code == '0'){			
 				var priceSetmealData = res.data;
 				priceSetmealData.name = applyGroup.applySetmealName || '基本套餐';
+				priceSetmealData.seq = applyGroup.seq;
 			  	getAllData(priceSetmealData);
 			}else{
 				layer.msg(res.msg);

@@ -198,6 +198,7 @@
 					price:'0.8',
 					state:'',
 					applySetmealName:'基本套餐',
+					seq:0,
 					setmealList:[{
 						"state": "1",
 						"isSelect":true,
@@ -228,6 +229,7 @@
 						}else if(areaType == 'add'){
 							this.setmealList = setmealData;
 							var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
+							this.seq = this.setmealList.length;
 							this.applySetmealName = applySetmealName;
 							this.setmealList.unshift({
 								"state": "1",
@@ -237,6 +239,7 @@
 						}else if(areaType == 'otheradd'){
 							this.setmealList = setmealData;							
 							var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
+							this.seq = this.setmealList.length;
 							this.applySetmealName = applySetmealName;
 							this.setmealList.unshift({
 								"state": "1",
@@ -272,10 +275,12 @@
 						}
 //						console.log("####申请页套餐类型state####"+state);
 						var applySetmealName = this.applySetmealName;
+						var seq = this.seq;
 						var uuid = plus.storage.getItem("uuid");
 						
 						var applyGroup = {
 							applySetmealName:applySetmealName,
+							seq:seq,
 							name: name,
 							price: price,
 							state: state
