@@ -845,7 +845,7 @@
 						if(item.name == jsonSetmealJSON.name){
 							flag = false;
 						}
-					});
+					});				
 					if(flag){
 						jsonSetmealJsonStr.push(jsonSetmealJSON);
 					}
@@ -865,6 +865,10 @@
 							flag = false;
 						}
 					});
+					if(jsonSetmealJsonStr.length >= 2){
+						layer.msg("套餐只能添加3个");
+						return false;
+					}
 					if(flag){
 						jsonSetmealJsonStr.push(jsonSetmealJSON);
 					}
@@ -1007,6 +1011,11 @@
 					}else{
 						layer.msg("套餐类型不正确");
 						return;
+					}
+					console.log(jsonSetmealJsonStr.length)
+					if(jsonSetmealJsonStr.length > 2){
+						layer.msg("套餐只能添加3个");
+						return false;
 					}
 					//套餐检验
 					var params = {
