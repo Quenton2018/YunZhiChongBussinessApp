@@ -644,10 +644,12 @@
 				submits:function(){
 					var jsonSetmealJSON = JSON.parse(plus.storage.getItem("priceSetmealData"));
 					var reg = /^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+					var mobileReg = /^1[3|5|8|4|6]\d{9}$/;
 					var rateSum = 0;
 					var flag = false;
 					var flagNumber = false;
 					var flagNumber2 = false;
+					var flagMobile = false;
 					var amountFullStop = vm.fullStopList.amount;
 					if(!vaildeParam(amountFullStop)){
 						layer.msg("请正确输入充满自停配置信息");
@@ -663,13 +665,16 @@
 						var mobile = item.mobile;
 						var dividePrice = item.dividePrice;
 						var divideRatio = item.divideRatio;
-//						rateSum += parseInt(divideRatio);
 						
 						if(!vaildeParam(name) || !vaildeParam(mobile)){
 		                    flag = true;
 		                    return;
 		                }
-						
+						//校验手机号码
+		                if(!mobileReg.test(mobile)){  
+		                    flagMobile = true;
+		                    return;
+		                }
 						//校验金额是数字
 		                if(reg.test(dividePrice)){
 		                							
@@ -700,6 +705,10 @@
 		                layer.msg("请补全合伙人信息");
 		                return;
 		            }
+					if(flagMobile){
+						layer.msg("请输入正确的手机号码");
+		                return;
+					}
 					if(flagNumber){
 		                layer.msg("合伙人金额必须为数字");
 		                return;
