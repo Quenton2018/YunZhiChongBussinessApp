@@ -742,6 +742,17 @@
             getChargesList(tableData);
         }else if(type =="partners"){
         	var partnersData = JSON.parse(plus.storage.getItem("partnersJson"));
+        	try {
+        		for (var i in partnersData) {
+	        		if (partnersData[i].divideRatio == null) {
+	        			partnersData[i].divideRatio = partnersData[i].dividePrice + "元";
+	        		} else {
+	        			partnersData[i].divideRatio = partnersData[i].divideRatio + "%";
+	        		}
+	        	}
+        	} catch (e) {
+        		
+        	}
   		 	var tableData = {'type':'partners','list':partnersData};
             getPartnersList(tableData);
         }else if(type == 'members'){
