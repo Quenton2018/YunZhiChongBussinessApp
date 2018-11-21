@@ -1,8 +1,6 @@
-// var apiHost = "http://api.9n.jxyunge.com";
-//var apiHost = "http://api.jx9n.com";
-var appVersion = "v3.2";  //app当前版本
-//var apiHost = "http://192.168.1.134:8181";
-var apiHost = "http://39.106.62.16:8181";
+var apiHost = "http://api.jx9n.com";
+var appVersion = "v3.3";
+//apiHost = "http://39.106.62.16:8181";
 
 
 
