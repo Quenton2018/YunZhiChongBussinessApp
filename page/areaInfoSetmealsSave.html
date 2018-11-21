@@ -356,7 +356,7 @@
     <h1 class="mui-title" id="stateName">{{stateName}}</h1>
 </header>
 
-<footer class="mui-bar mui-bar-footer btn-submit" v-on:click="submits">
+<footer class="mui-bar mui-bar-footer btn-submit" @tap="submits">
 	<span>提交</span>
 </footer>
 	
@@ -856,8 +856,7 @@
 						layer.msg("套餐添加错误，请重新操作");
 					}
 				},
-				otherAdd:function(){
-					$('.mui-mask').hide();
+				otherAdd:function(){					
 					var jsonSetmealJSON = JSON.parse(plus.storage.getItem("jsonSetmealJSON"));
 					var flag = true;
 					jsonSetmealJsonStr.forEach(function(item){
@@ -869,6 +868,7 @@
 						layer.msg("套餐只能添加3个");
 						return false;
 					}
+					$('.mui-mask').hide();
 					if(flag){
 						jsonSetmealJsonStr.push(jsonSetmealJSON);
 					}
