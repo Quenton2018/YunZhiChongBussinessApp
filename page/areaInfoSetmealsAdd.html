@@ -289,7 +289,7 @@
 					<h3 class="setmeal_title">时长区<span class="addCharges" v-on:click="addCharges"><i class="mui-icon mui-icon-plus"></i>新增</span></h3>
 					<div class="setmeal_tap_header">
 						<span class="list-item left">价格<i>(元)</i></span>
-						<span class="list-item left">时长<i>(分钟)</i></span>
+						<span class="list-item left">时长<i>(小时)</i></span>
 					</div>
 					<div class="setmeal_tap_table">					
 						<ul class="table_ul" id="chargesList">
@@ -305,7 +305,7 @@
 								<div class="list-item left">
 									<div class="mui-numboxs">
 							            <button class="mui-btn mui-numbox-btn-minuss" type="button" @click="btnMinus(chargesList,'minutes',index)">-</button>
-							            <input class="mui-numbox-input" type="number" name="time" v-model="item.minutes" readonly="true">
+							            <input class="mui-numbox-input" type="number" name="time" :value="item.minutes/60" readonly="true">
 							            <button class="mui-btn mui-numbox-btn-pluss" type="button" @click="btnPlus(chargesList,'minutes',index)">+</button>
 							            <div class="clearfix"></div>
 							        </div>
@@ -360,7 +360,7 @@
 				<h3 class="setmeal_title">充满自停最大配置</h3>
 				<div class="setmeal_tap_header">
 					<span class="fullstop-item" style="width: 30%;">电量<i>(度)</i></span>
-					<span class="fullstop-item" style="width: 30%;">时长<i>(分钟)</i></span>
+					<span class="fullstop-item" style="width: 30%;">时长<i>(小时)</i></span>
 					<span class="fullstop-item" style="width: 40%;">最多扣款<i>(元)</i></span>
 				</div>
 				<div class="setmeal_tap_table">
@@ -378,7 +378,7 @@
 				<h3 class="setmeal_title">合伙人分成设置<span class="addCharges" v-on:click="addPartners"><i class="mui-icon mui-icon-plus"></i>新增</span></h3>
 				<div class="setmeal_tap_header">
 					<span class="partners-item" style="width: 22%;">姓名</span>
-					<span class="partners-item" style="width: 30%;">账号</span>
+					<span class="partners-item" style="width: 30%;">手机号码</span>
 					<span class="partners-item" style="width: 17%;">金额<i>(元)</i></span>
 					<span class="partners-item" style="width: 17%;">比值<i>(%)</i></span>
 				</div>
@@ -386,7 +386,7 @@
 					<ul class="table_ul" id="partnersList">
 						<li class="table_list" v-for="(item, index) in partnersList">
 							<input type="text" placeholder="姓名" style="width: 22%;" class="partners-item" v-model="item.name" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
-							<input type="tel" placeholder="账号" style="width: 32%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
+							<input type="tel" placeholder="手机号码" style="width: 32%;" class="partners-item"  v-model="item.mobile" maxlength="11" :readonly="(index!==0 && index!==1)? false : 'readonly'" />
 							<input type="number" name="gold" placeholder="金额" style="width: 17%;" readonly="readonly" class="partners-item" v-model="item.dividePrice" maxlength="11"/>
 							<input type="tel" name="biz" placeholder="比值" style="width: 17%;" class="partners-item" v-model="item.divideRatio" maxlength="3"/>
 							<div class="list-del"  v-if="index!==0 && index!==1" @click="delPartners(index)">
@@ -647,6 +647,7 @@
 					var rateSum = 0;
 					var flag = false;
 					var flagNumber = false;
+					var flagNumber2 = false;
 					var amountFullStop = vm.fullStopList.amount;
 					if(!vaildeParam(amountFullStop)){
 						layer.msg("请正确输入充满自停配置信息");
@@ -669,9 +670,29 @@
 		                    return;
 		                }
 						
-						//校验是数字
-		                if(reg.test(divideRatio)){
+						//校验金额是数字
+		                if(reg.test(dividePrice)){
+		                							
+		                }else{
+		                	if(dividePrice =='' && divideRatio ==''){
+								flagNumber = true;
+	                			return;
+							}	                	
+		                }
+						//校验比值是数字
+		                if(reg.test(divideRatio) && divideRatio){		                	
 		                    rateSum += parseFloat(divideRatio);
+		                    if(divideRatio == 0){
+		                    	flagNumber2 = true;
+		                		return;
+		                    }
+		                }else{
+		                	if(divideRatio =='' && dividePrice!==''){
+								return true;
+							}else{
+								flagNumber2 = true;
+		                		return;
+							}				
 		                }
 					})
 					
@@ -680,7 +701,11 @@
 		                return;
 		            }
 					if(flagNumber){
-		                layer.msg("合伙人金额与比值必须为数字");
+		                layer.msg("合伙人金额必须为数字");
+		                return;
+		            }
+					if(flagNumber2){
+		                layer.msg("合伙人比值必须为数字且不为0");
 		                return;
 		            }
 					if(rateSum!=100){

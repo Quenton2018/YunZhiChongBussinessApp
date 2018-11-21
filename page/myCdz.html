@@ -143,7 +143,7 @@
 
 <script type="text/html" id="dataTmpl">
     <li class="mui-table-view-cell">
-        <a class="mui-navigate-right" onclick="clicked('areaInfoSetmeals.html?code={{id}}')" data-id="{{id}}"> <!-- areaList-->
+        <a class="mui-navigate-right" onclick="{{jumpHtml}}" data-id="{{id}}"> <!-- areaList-->
             <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
             {{groupName}}-{{sn}}
         </a>
@@ -266,10 +266,17 @@
                 }
                 var ids = '';
                 var falgLast = true;
+                var jumpHtml = '';
                 $.each(data, function(index,item) {
                     var createDate = new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss");
+                    if(item.method){
+                    	jumpHtml = "clicked('areaDataXinxi.html?id={{id}}')";
+                    }else{
+                    	jumpHtml = "clicked('areaInfoSetmeals.html?code={{id}}')";
+                    }                
                     html += tmpl.replace(/{{createDate}}/g,createDate)
                         .replace(/{{groupName}}/g,item.name)
+                        .replace(/{{jumpHtml}}/g,jumpHtml)
                         .replace(/{{sn}}/g,item.sn)
                         .replace(/{{id}}/g,item.id)
                         .replace(/{{money}}/g,'<img src="../images/5-121204194028.gif" height="15">');

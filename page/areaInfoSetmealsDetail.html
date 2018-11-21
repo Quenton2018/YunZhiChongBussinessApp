@@ -215,7 +215,7 @@
 			<div class="setmeal_tap_content" style="display: none;" id="charges">
 				<div class="setmeal_tap_header flex">
 					<span class="flex-item">价格(元)</span>
-					<span class="flex-item">时长(分钟)</span>
+					<span class="flex-item">时长(小时)</span>
 				</div>
 				<div class="setmeal_tap_table">
 					<ul class="table_ul" id="chargesList">
@@ -227,7 +227,7 @@
 			<div class="setmeal_tap_content" style="display: none;" id="partners">
 				<div class="setmeal_tap_header flex">
 					<span class="flex-item first_span">姓名</span>
-					<span class="flex-item">账号</span>
+					<span class="flex-item">手机号码</span>
 					<span class="flex-item">分成</span>
 				</div>
 				<div class="setmeal_tap_table">
@@ -297,7 +297,7 @@
 	{{each list as item index}}
 	<li class="table_list flex">
 		<span class="flex-item">{{item.amount}}</span>
-		<span class="flex-item">{{item.minutes}}</span>
+		<span class="flex-item">{{item.minutes/60}}</span>
 	</li>
 	{{/each}}
 </script>
@@ -312,6 +312,8 @@
 		<span class="flex-item">{{item.divideRatio}}%</span>
 		{{else if item.dividePrice}}
 		<span class="flex-item">{{item.dividePrice}}元</span>
+		{{else}}
+		<span class="flex-item">-</span>
 		{{/if}}
 	</li>
 	{{/each}}
