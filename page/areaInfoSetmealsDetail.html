@@ -358,7 +358,8 @@
                 }else{
                     $('#updateChargingGroup').show();
                 }
-				if(vaildeParam(priceSetmealJson)){
+				if(vaildeParam(JSON.parse(priceSetmealJson))){
+					console.log(vaildeParam(priceSetmealJson))
 					$('#setmeals').show();
 					plus.storage.setItem( "priceSetmealJson", priceSetmealJson);
 					var priceSetmealData = JSON.parse(priceSetmealJson);				
@@ -376,6 +377,8 @@
 					plus.storage.setItem("setmealState",state);
 					$('#setmealName').html(name).data('pick',setmealData);
 					getAllData(priceSetmealData[0]);
+				}else{
+					layer.msg("套餐暂无数据!")
 				}
 			}else{
 				layer.msg(res.msg);

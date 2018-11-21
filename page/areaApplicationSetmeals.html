@@ -135,7 +135,7 @@
 		<div class="mui-input-row form-group">
 			<label>电费单价</label>
 			<span class="dw">元/度电</span>
-			<input type="number" v-model="price" class="price" id="price" name="price">		
+			<input type="number" v-model="price" class="price" id="price" name="price" oninput="if(value.length>5)value=value.slice(0,5)">		
 		</div>
 	</div>
 
@@ -212,7 +212,7 @@
 						var state = updateGroup.state;
 						var setmealName = updateGroup.setmealName;
 						var setmealData = updateGroup.setmealData;
-						console.log(JSON.stringify(updateGroup))
+//						console.log(JSON.stringify(updateGroup))
 						areaType = updateGroup.areaType;
 						this.areaTitle = areaName;
 						this.areaName = areaName;
@@ -245,7 +245,7 @@
 								"state": "1",
 								"isSelect":true,
 								"text":applySetmealName
-							})
+							});
 						}
 					}else{
 						plus.storage.removeItem("jsonSetmealJsonStr");
@@ -267,6 +267,10 @@
 						price = parseFloat(price);
 						if (isNaN(price)) {
 							layer.msg('请输入正确的电费单价');
+							return;
+						}
+						if(price <= 0 || price >=10){
+							layer.msg("电费单价需大于0元小于10元");
 							return;
 						}
 						var state = this.state;			

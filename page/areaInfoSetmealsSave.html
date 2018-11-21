@@ -574,7 +574,7 @@
 
 	function SaveChargingGroup(jsonSetmealJSON){
 		var applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
-		console.log("####申请页电价price####"+applyGroup.price);
+//		console.log("####申请页电价price####"+applyGroup.price);
 		var params = {
 			uuid:uuid,
 			app_name:applyGroup.name,
@@ -839,28 +839,36 @@
 				},
 				closeMask:function(){
 					$('.mui-mask').hide();
-					console.log("####jsonSetmealJSON1####"+plus.storage.getItem("jsonSetmealJSON"))
 					var jsonSetmealJSON = JSON.parse(plus.storage.getItem("jsonSetmealJSON"));
+					var flag = true;
+					jsonSetmealJsonStr.forEach(function(item){
+						if(item.name == jsonSetmealJSON.name){
+							flag = false;
+						}
+					});
+					if(flag){
 						jsonSetmealJsonStr.push(jsonSetmealJSON);
-//						$.each(jsonSetmealJsonStr,function(index,item){
-//							if(jsonSetmealJSON.name == item.name){
-//								jsonSetmealJsonStr.splice(index, 1);
-//							}
-//						});
-					plus.storage.setItem("jsonSetmealJsonStr",JSON.stringify(jsonSetmealJsonStr));
-					SaveChargingGroup(jsonSetmealJsonStr);
+					}
+					if(vaildeParam(jsonSetmealJsonStr)){
+						plus.storage.setItem("jsonSetmealJsonStr",JSON.stringify(jsonSetmealJsonStr));
+						SaveChargingGroup(jsonSetmealJsonStr);
+					}else{
+						layer.msg("套餐添加错误，请重新操作");
+					}
 				},
 				otherAdd:function(){
 					$('.mui-mask').hide();
-					console.log("####jsonSetmealJSON2####"+plus.storage.getItem("jsonSetmealJSON"))
 					var jsonSetmealJSON = JSON.parse(plus.storage.getItem("jsonSetmealJSON"));
+					var flag = true;
+					jsonSetmealJsonStr.forEach(function(item){
+						if(item.name == jsonSetmealJSON.name){
+							flag = false;
+						}
+					});
+					if(flag){
 						jsonSetmealJsonStr.push(jsonSetmealJSON);
-//						$.each(jsonSetmealJsonStr,function(index,item){
-//							if(jsonSetmealJSON.name == item.name){
-//								jsonSetmealJsonStr.splice(index, 1);
-//							}
-//						});					
-						plus.storage.setItem("jsonSetmealJsonStr",JSON.stringify(jsonSetmealJsonStr));
+					}
+					plus.storage.setItem("jsonSetmealJsonStr",JSON.stringify(jsonSetmealJsonStr));
 					var setmealData = [];
 					$.each(jsonSetmealJsonStr, function(index,item) {
 						setmealData.push({
