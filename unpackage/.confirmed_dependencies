@@ -1,79 +1,86 @@
 {
-	"index.html": {
-		"refer": [
-			"page/login.html",
-			"page/menu.html",
-			"page/areaApplicationList.html",
-			"page/myWallet.html",
-			"page/setting.html",
-			"page/myCdz.html",
-			"page/myIncome.html"
-		]
-	},
-	"page/login.html": {
-		"refer": [
-			"page/loginTwo.html"
-		]
-	},
-	"page/loginTwo.html": {
-		"refer": [
-			"index.html"
-		]
-	},
-	"page/menu.html": {
-		"refer": [
-			"page/userInfo.html",
-			"page/setting.html",
-			"page/customerService.html"
-		]
-	},
-	"page/areaApplicationList.html": {
-		"refer": [
-			"page/areaInfoSetmealsDetail.html",
-			"page/areaApplicationSetmeals.html"
-		]
-	},
-	"page/areaInfoSetmealsDetail.html": {
-		"refer": [
-			"page/areaApplicationSetmeals.html"
-		]
-	},
-	"page/areaApplicationSetmeals.html": {
-		"refer": [
-			"page/areaInfoSetmealsEdit.html",
-			"page/areaInfoSetmealsAdd.html",
-			"page/areaInfoSetmealsSave.html"
-		]
-	},
-	"page/myCdz.html": {
-		"refer": [
-			"page/areaInfoSetmeals.html"
-		]
-	},
-	"page/myWallet.html": {
-		"refer": [
-			"page/bingBank.html"
-		]
-	},
-	"page/incomeDetail.html": {
-		"refer": [
-			"page/incomeDetailCdz.html"
-		]
-	},
-	"page/myIncome.html": {
-		"refer": [
-			"page/incomeDetail.html"
-		]
-	},
-	"page/incomeDetailCdz.html": {
-		"refer": [
-			"page/incomeDetailCz.html"
-		]
-	},
-	"page/setting.html": {
-		"refer": [
-			"page/edition.html",
-			"page/feedback.html"
-		]
-	}
+  "index.html": {
+    "refer": [
+      "page/login.html",
+      "page/menu.html",
+      "page/areaApplicationList.html",
+      "page/myWallet.html",
+      "page/setting.html",
+      "page/myCdz.html",
+      "page/myIncome.html"
+    ]
+  },
+  "page/login.html": {
+    "refer": [
+      "page/loginTwo.html",
+      "index.html"
+    ]
+  },
+  "page/loginTwo.html": {
+    "refer": [
+      "index.html"
+    ]
+  },
+  "page/menu.html": {
+    "refer": [
+      "page/userInfo.html",
+      "page/setting.html",
+      "page/customerService.html"
+    ]
+  },
+  "page/areaApplicationList.html": {
+    "refer": [
+      "page/areaInfoSetmealsDetail.html",
+      "page/areaApplicationSetmeals.html"
+    ]
+  },
+  "page/areaInfoSetmealsDetail.html": {
+    "refer": [
+      "page/areaApplicationSetmeals.html"
+    ]
+  },
+  "page/areaApplicationSetmeals.html": {
+    "refer": [
+      "page/areaInfoSetmealsEdit.html",
+      "page/areaInfoSetmealsAdd.html",
+      "page/areaInfoSetmealsSave.html"
+    ]
+  },
+  "page/myCdz.html": {
+    "refer": [
+      "page/areaInfoSetmeals.html"
+    ]
+  },
+  "page/myWallet.html": {
+    "refer": [
+      "page/bingBank.html"
+    ]
+  },
+  "page/incomeDetail.html": {
+    "refer": [
+      "page/incomeDetailCdz.html"
+    ]
+  },
+  "page/myIncome.html": {
+    "refer": [
+      "page/incomeDetail.html"
+    ]
+  },
+  "page/incomeDetailCdz.html": {
+    "refer": [
+      "page/incomeDetailCz.html"
+    ]
+  },
+  "page/setting.html": {
+    "refer": [
+      "page/edition.html",
+      "page/feedback.html",
+      "page/login.html"
+    ]
+  },
+  "page/areaInfoSetmealsSave.html": {
+    "refer": [
+      "page/areaApplicationSetmeals.html"
+    ]
+  }
 }

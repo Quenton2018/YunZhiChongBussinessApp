@@ -4,7 +4,7 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "H59582D46",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "YunZhiChongBusinessAPP",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "云智充合作版",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "3.2",/*应用版本名称*/
@@ -61,10 +61,7 @@
 		"distribute": {
 			"plugins": {
 				"oauth": {
-					"weixin": {
-						"appid": "wx78a9e9e640aa4367",
-						"appsecret": "992674aa65ccce89466d27f9bbac516c"
-					}
+					"weixin": {"appid":"wx78a9e9e640aa4367","appsecret":"992674aa65ccce89466d27f9bbac516c"}
 				},
 				"maps": {
 					"baidu": {
@@ -147,7 +144,7 @@
 						"app@3x": "unpackage/res/icons/180x180.png",
 						"settings@3x": "unpackage/res/icons/87x87.png",
 						"settings@2x": "unpackage/res/icons/58x58.png",
-						"spotlight@2x": "unpackage/res/icons/80x80.png",
+						"spotlight@2x": "unpackage/res/icons/80X80.png",
 						"spotlight@3x": "unpackage/res/icons/120x120.png",
 						"notification@3x": "unpackage/res/icons/60x60.png",
 						"notification@2x": "unpackage/res/icons/40x40.png"
@@ -168,7 +165,7 @@
 						"proapp@2x": "unpackage/res/icons/167x167.png",
 						"spotlight": "unpackage/res/icons/40x40.png",
 						"settings@2x": "unpackage/res/icons/58x58.png",
-						"spotlight@2x": "unpackage/res/icons/80x80.png",
+						"spotlight@2x": "unpackage/res/icons/80X80.png",
 						"notification": "unpackage/res/icons/20x20.png",
 						"notification@2x": "unpackage/res/icons/40x40.png"
 					},
