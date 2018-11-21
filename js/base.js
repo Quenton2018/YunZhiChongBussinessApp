@@ -725,3 +725,17 @@ function installWgt(path) {
 		plus.nativeUI.alert('应用资源更新失败' + e.message);
 	});
 }
+/**
+ * 使用indexOf判断元素是否存在于数组中
+ * @param {Object} arr 数组
+ * @param {Object} value 元素值
+ */
+function isInArray(arr,value){
+    if(arr.indexOf&&typeof(arr.indexOf)=='function'){
+        var index = arr.indexOf(value);
+        if(index >= 0){
+            return true;
+        }
+    }
+    return false;
+}

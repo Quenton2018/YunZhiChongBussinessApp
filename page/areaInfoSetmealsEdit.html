@@ -640,6 +640,8 @@
 					var flagNumber = false;
 					var flagNumber2 = false;
 					var flagMobile = false;
+					var flagMobileRepeat = false;
+					var memberCheckArray = new Array();
 					var amountFullStop = vm.fullStopList.amount;
 					if(!vaildeParam(amountFullStop)){
 						layer.msg("请正确输入充满自停配置信息");
@@ -665,6 +667,12 @@
 		                    flagMobile = true;
 		                    return;
 		                }
+		                //校验成员是否重复memberCheck
+		                if(isInArray(memberCheckArray,mobile)){
+		                    flagMobileRepeat = true;
+		                    return;
+		                }
+		                memberCheckArray.push(mobile); //将元素放入数组
 						//校验金额是数字
 		                if(reg.test(dividePrice)){
 		                							
@@ -698,6 +706,10 @@
 						layer.msg("请输入正确的手机号码");
 		                return;
 					}
+					if(flagMobileRepeat){
+		                layer.msg("合伙人手机号码不能重复");
+		                return;
+		            }
 					if(flagNumber){
 		                layer.msg("合伙人金额必须为数字");
 		                return;
