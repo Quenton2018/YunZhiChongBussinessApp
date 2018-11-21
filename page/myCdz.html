@@ -330,16 +330,17 @@
 
 
     function getApplyCdzDataUnInstall(){
-
+		var unInstallNum = parseInt($('#countUnInstall').html());
+		unInstallNum = isNaN(unInstallNum) ? 10 : unInstallNum;
         var data = {
             "uuid":uuid,
-            "pageSize":pageSize,
-            "pageNumber":pageNumber
+            "pageSize":unInstallNum,
+            "pageNumber":1
         }
 
         postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall,data,function (res) {
 
-            $("#loadMore").css({"display":"block"});
+            // $("#loadMore").css({"display":"block"});
             $("#noMore").css({"display":"none"});
 
             if("0" == res.code){
