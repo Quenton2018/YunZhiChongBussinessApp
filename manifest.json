@@ -4,11 +4,11 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "YunZhiChongBusinessAPP",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "yunzhichongbusiness",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "云智充合作版",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "3.3",/*应用版本名称*/
-		"code": ""
+		"code": 42
 	},
 	"description": "云智充商家",/*应用描述信息*/
 	"icons": {
@@ -103,6 +103,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
+				"targetSdkVersion": 23,
 				"permissions": [
 					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
 					"<uses-permission android:name=\"android.permission.GET_TASKS\"/>",
