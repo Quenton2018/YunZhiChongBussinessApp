@@ -833,7 +833,22 @@
 			if(res.code == '0'){
 				layer.msg(applyGroup.applySetmealName+"添加成功");
 				if(pageFrom){
-					clicked("areaInfoSetmealsDetail.html?areaid="+areaId);
+					var ws = plus.webview.currentWebview();
+		            var wo = ws.opener();
+		            do {
+		            	if (wo.getURL().endsWith("areaApplicationList.html")) {
+		            		break;
+		            	}
+		            	
+		            	var temp = wo.opener();
+		            	wo.close("none");
+		            	wo = temp;
+		            } while (true);
+			
+					setTimeout(function() {
+						wo.evalJS("dataRefresh()");
+						ws.close();
+					}, 300);
 				}else{
 					var ws = plus.webview.currentWebview();
 		            var wo = ws.opener();
