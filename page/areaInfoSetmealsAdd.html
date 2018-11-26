@@ -406,6 +406,7 @@
 	
 	var uuid = '';
     var areaId = getQueryString('areaid');
+    var pageFrom = getQueryString('pagefrom');
     var applyGroup = {};
     var vm = null;
     
@@ -829,24 +830,28 @@
 		}
 		console.log(JSON.stringify(jsonSetmealJSON))
 		postJSON(API_URL.ApiChargingBusinessAddSetmeal,params,function(res){
-			if(res.code == '0'){			
-				var ws = plus.webview.currentWebview();
-	            var wo = ws.opener();
-	            do {
-	            	if (wo.getURL().endsWith("areaInfoSetmealsDetail.html?areaid="+areaId)) {
-	            		break;
-	            	}
-	            	
-	            	var temp = wo.opener();
-	            	wo.close("none");
-	            	wo = temp;
-	            } while (true);
-		
-				setTimeout(function() {
-					wo.evalJS("dataRefresh()");
-					ws.close();
-				}, 300);
-//				layer.msg(applyGroup.applySetmealName+"添加成功");
+			if(res.code == '0'){
+				layer.msg(applyGroup.applySetmealName+"添加成功");
+				if(pageFrom){
+					clicked("areaInfoSetmealsDetail.html?areaid="+areaId);
+				}else{
+					var ws = plus.webview.currentWebview();
+		            var wo = ws.opener();
+		            do {
+		            	if (wo.getURL().endsWith("areaInfoSetmealsDetail.html?areaid="+areaId)) {
+		            		break;
+		            	}
+		            	
+		            	var temp = wo.opener();
+		            	wo.close("none");
+		            	wo = temp;
+		            } while (true);
+			
+					setTimeout(function() {
+						wo.evalJS("dataRefresh()");
+						ws.close();
+					}, 300);
+				}
 			}else{
 				layer.msg(res.msg);
 			}

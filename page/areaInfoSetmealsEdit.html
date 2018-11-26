@@ -826,7 +826,8 @@
 		}
 		console.log(JSON.stringify(jsonSetmealJSON))
 		postJSON(API_URL.ApiChargingBusinessupdateSetmeal,params,function(res){
-			if(res.code == '0'){			
+			if(res.code == '0'){
+				layer.msg(applyGroup.applySetmealName+"修改成功");
 				var ws = plus.webview.currentWebview();
 	            var wo = ws.opener();
 	            do {
@@ -843,7 +844,6 @@
 					wo.evalJS("dataRefresh()");
 					ws.close();
 				}, 300);
-//				layer.msg(applyGroup.applySetmealName+"修改成功");
 			}else{
 				layer.msg(res.msg);
 			}
