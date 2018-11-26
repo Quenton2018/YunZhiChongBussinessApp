@@ -628,7 +628,7 @@ function NumberToChinese(num){
  */
 function heatUpdate(appType) {
 	appType = appType + "HeatUpdate";
-	postJSONNoIcon(API_URL.AppVersionGetNewest, {
+	postJSONNoIcon(API_URL.AppVersionPartnerGetNewest, {
 		'appType': appType
 	}, function(res) {
 		if('0' == res.code && vaildeParam(res.data)) {

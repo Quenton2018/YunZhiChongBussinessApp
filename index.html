@@ -112,13 +112,13 @@
                     <div class="mui-media-body">我的钱包</div>
             	</a>
             </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            <li style="display: none;" id="areaApplicationList" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
             	<a onclick="clicked('page/areaApplicationList.html')">
                     <img src="images/index/pianqushenqing@3x.png">
                     <div class="mui-media-body">片区申请</div>
             	</a>
             </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            <li style="display: none;" id="applyCdz" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
             	<a onclick="clicked('page/applyCdz/list.html')">
                     <img src="images/index/cdzsq@3x.png">
                     <div class="mui-media-body">充电桩申请</div>
@@ -142,6 +142,9 @@
     		
             getUserInfo();
             GetADaylyIncomeDetail();
+            
+            // 热更新
+        	heatUpdate(plus.os.name);
 
             checkVersion();
     	}, function() {
@@ -179,8 +182,8 @@
                         var userType = res.data.userType;
                         var totalIncome = res.data.totalIncome;
                         if("1"==userType){
-                            $("#areaApplicationList").css("display","block");
-                            $("#applyCdz").css("display","block");
+                            $("#areaApplicationList").css("display","inline-block");
+                            $("#applyCdz").css("display","inline-block");
                         }
                         plus.storage.setItem( "mobile", mobile);
                         plus.storage.setItem( "headImage", headImage);
@@ -255,22 +258,12 @@
 						if (compareVersion(res.data.version)) {
 							clicked("page/edition.html");
 						}
-						
-                        /*var versionNum = parseFloat(version.replace('v',''));
-                        var vNum = parseFloat(v.replace('v',''));
-
-                        console.log(versionNum);
-                        console.log(vNum);
-
-                        if(versionNum < vNum){
-
-                            clicked("page/edition.html");
-
-                        }*/
                     }
                 }
             })
         }
+        
+        
     </script>
 </body>
 </html>
