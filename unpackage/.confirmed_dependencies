@@ -7,80 +7,102 @@
       "page/myWallet.html",
       "page/setting.html",
       "page/myCdz.html",
-      "page/myIncome.html"
-    ]
+      "page/myIncome.html",
+      "page/applyCdz/list.html"
+    ],
+    "resources": []
   },
   "page/login.html": {
     "refer": [
       "page/loginTwo.html",
       "index.html"
-    ]
+    ],
+    "resources": []
   },
   "page/loginTwo.html": {
     "refer": [
       "index.html"
-    ]
+    ],
+    "resources": []
   },
   "page/menu.html": {
     "refer": [
       "page/userInfo.html",
       "page/setting.html",
       "page/customerService.html"
-    ]
+    ],
+    "resources": []
   },
   "page/areaApplicationList.html": {
     "refer": [
       "page/areaInfoSetmealsDetail.html",
       "page/areaApplicationSetmeals.html"
-    ]
+    ],
+    "resources": []
   },
   "page/areaInfoSetmealsDetail.html": {
     "refer": [
       "page/areaApplicationSetmeals.html"
-    ]
+    ],
+    "resources": []
   },
   "page/areaApplicationSetmeals.html": {
     "refer": [
       "page/areaInfoSetmealsEdit.html",
       "page/areaInfoSetmealsAdd.html",
       "page/areaInfoSetmealsSave.html"
-    ]
+    ],
+    "resources": []
   },
   "page/myCdz.html": {
     "refer": [
-      "page/areaInfoSetmeals.html"
-    ]
+      "page/areaInfoSetmeals.html",
+      "page/areaDataXinxi.html"
+    ],
+    "resources": []
   },
   "page/myWallet.html": {
     "refer": [
       "page/bingBank.html"
-    ]
+    ],
+    "resources": []
   },
   "page/incomeDetail.html": {
     "refer": [
       "page/incomeDetailCdz.html"
-    ]
+    ],
+    "resources": []
   },
   "page/myIncome.html": {
     "refer": [
       "page/incomeDetail.html"
-    ]
+    ],
+    "resources": []
   },
   "page/incomeDetailCdz.html": {
     "refer": [
       "page/incomeDetailCz.html"
-    ]
+    ],
+    "resources": []
   },
   "page/setting.html": {
     "refer": [
       "page/edition.html",
       "page/feedback.html",
       "page/login.html"
-    ]
+    ],
+    "resources": []
   },
   "page/areaInfoSetmealsSave.html": {
     "refer": [
       "page/areaApplicationSetmeals.html"
-    ]
+    ],
+    "resources": []
+  },
+  "page/applyCdz/list.html": {
+    "refer": [
+      "page/applyCdz/detail.html"
+    ],
+    "resources": []
   }
 }
