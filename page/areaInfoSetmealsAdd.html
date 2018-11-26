@@ -829,7 +829,7 @@
 		}
 		console.log(JSON.stringify(jsonSetmealJSON))
 		postJSON(API_URL.ApiChargingBusinessAddSetmeal,params,function(res){
-			if(res.code == '0'){
+			if(res.code == '0'){			
 				var ws = plus.webview.currentWebview();
 	            var wo = ws.opener();
 	            do {
@@ -846,6 +846,7 @@
 					wo.evalJS("dataRefresh()");
 					ws.close();
 				}, 300);
+//				layer.msg(applyGroup.applySetmealName+"添加成功");
 			}else{
 				layer.msg(res.msg);
 			}

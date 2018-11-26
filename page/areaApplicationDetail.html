@@ -119,7 +119,7 @@
 <body>
 <header class="header header-immersed mui-bar mui-bar-nav top">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <div class="right" id="submitBtn"></div>
+    <div class="mui-icon mui-icon-compose mui-icon-right-nav mui-pull-right" id="submitBtn"></div>
     <h1 class="mui-title">申请片区</h1>
 </header>
 
@@ -200,6 +200,11 @@
         if(vaildeParam(areaId)){
             postJSON(API_URL.ApiGetApplyChargingGroupById,{"areaId":areaId},function(res){
                 if("0" == res.code){
+                	if('待处理' == res.data.status || '编辑' == res.data.status ){
+                        $('#submitBtn').css('display','none');
+                    }else{
+                        $('#submitBtn').css('display','block');
+                    }
                     var address = res.data.address;
                     $(".address").text(address);
                     var proportionsJson = res.data.proportionsJson;  //分成比例
@@ -271,25 +276,44 @@
      * 去修改
      */
     $("#submitBtn").click(function(){
-        var  app_name =   plus.storage.getItem( "app_name");
-        var  app_address =    plus.storage.getItem( "app_address");
-        var  app_latitude =    plus.storage.getItem( "app_latitude");
-        var  app_longitude =   plus.storage.getItem( "app_longitude");
-        var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
-        var  memberListJson =  plus.storage.getItem( "memberListJson");
-        var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
+//      var  app_name =   plus.storage.getItem( "app_name");
+//      var  app_address =    plus.storage.getItem( "app_address");
+//      var  app_latitude =    plus.storage.getItem( "app_latitude");
+//      var  app_longitude =   plus.storage.getItem( "app_longitude");
+//      var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
+//      var  memberListJson =  plus.storage.getItem( "memberListJson");
+//      var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
+//
+//      console.log("## Detail ## areaName:"+app_name);
+//      console.log("## Detail ## address:"+app_address);
+//      console.log("## Detail ## latitude:"+app_latitude);
+//      console.log("## Detail ## longitude:"+app_longitude);
+//      console.log("## Detail ## electricPrice:"+app_electricPrice);
+//      console.log("## Detail ## proportionsJson:"+memberListJson);
+//      console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
+//
+//      clicked('areaApplicationEdit.html');
 
-        console.log("## Detail ## areaName:"+app_name);
-        console.log("## Detail ## address:"+app_address);
-        console.log("## Detail ## latitude:"+app_latitude);
-        console.log("## Detail ## longitude:"+app_longitude);
-        console.log("## Detail ## electricPrice:"+app_electricPrice);
-        console.log("## Detail ## proportionsJson:"+memberListJson);
-        console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
-
-        clicked('areaApplicationEdit.html');
-
-
+		var areaName = plus.storage.getItem( "app_name");
+		var electricPrice = plus.storage.getItem( "app_electricPrice");
+		var setmealName = "基本套餐";
+		var setmealData = [{
+			"state": "1",
+			"isSelect":true,
+			"text":'基本套餐'
+		}];
+		var setmealState = "1";
+		var areaId = plus.storage.getItem("areaId");
+		var updateGroup = {
+			'areaName': areaName,
+			'price':electricPrice,
+			'state':setmealState,
+			'setmealName':setmealName,
+			'setmealData':setmealData,
+			'areaType':'oldAdd'
+		}
+		plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+		clicked('areaApplicationSetmeals.html?areaid='+areaId);
     });
 
 

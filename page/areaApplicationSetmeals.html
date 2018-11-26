@@ -226,6 +226,9 @@
 								"isSelect":true,
 								"text":setmealName
 							}]
+						}else if(areaType == 'oldAdd'){
+							this.setmealList = setmealData;
+							this.seq = this.setmealList.length;
 						}else if(areaType == 'add'){
 							this.setmealList = setmealData;
 							var applySetmealName = "套餐" + NumberToChinese(this.setmealList.length);
@@ -294,6 +297,8 @@
 						if(areaId){  
 							if(areaType == 'update'){//片区套餐修改
 								clicked('areaInfoSetmealsEdit.html?areaid='+areaId);
+							}else if(areaType == 'oldAdd'){ //老片区套餐添加
+								clicked('areaInfoSetmealsAdd.html?areaid='+areaId);
 							}else if(areaType == 'add'){ //片区套餐添加
 								clicked('areaInfoSetmealsAdd.html?areaid='+areaId);
 							}else if(areaType == 'otheradd'){ //片区套餐继续添加
