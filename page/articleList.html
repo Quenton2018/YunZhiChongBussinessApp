@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>申请成为合伙人</title>
+	<link rel="stylesheet" href="../css/mui.min.css">
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+	<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../plugins/layer/layer.js"></script>
+	<script src="../js/hammer.min.js"></script>
+	<script src="../js/jquery.hammer.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/base.js"></script>
+	<script src="../js/mui.min.js"></script>
+	<style type="text/css">
+
+		.wentiBtn{
+			margin-top: 15px;
+			display: block;
+			color: #A7A7A7;
+			text-align: center;
+			font-size: .9rem;
+
+		}
+
+		/*.mui-table-view-cell {
+			padding: 15px 15px;
+		}
+		.mui-table-view-cell>a:not(.mui-btn) {
+			margin: -15px -15px;
+		}*/
+
+	</style>
+
+</head>
+<body style="background: #F0F1F3;">
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">常见问题</h1>
+</header>
+
+<div class="mui-content" style="">
+
+	<div class="dataList"  style="margin-top: 25px">
+
+	</div>
+
+	<a class="wentiBtn">有疑问? <span style="color: #FC1919" id ="telephone">请联系在线客服>> </span></a>
+</div>
+
+<script type="text/html" id="dataTmpl">
+
+	<ul class="mui-table-view listItem" data-id="{{id}}">
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				{{articleName}}
+			</a>
+		</li>
+	</ul>
+
+</script>
+
+<script type="text/javascript">
+
+    var pageNumber = 1;
+    var pageSize = 10;
+
+    $.plusReady(function() {
+    	console.log("pagePlusReady==================");
+        //拨打电话
+        document.getElementById("telephone").addEventListener('tap',function(){
+            var btnArray=['拨打','取消'];
+            var phone="4008251068";
+            mui.confirm('是否拨打'+phone+'?','提示',btnArray,function(e){
+                if(e.index == 0){
+                    plus.device.dial(phone,false);
+                }
+            });
+        });
+
+
+        getList();
+    }, function() {
+    	pageNumber = 1;
+        $(".dataList").html("")
+        getList();
+    });
+
+    function getList(){
+            var dataParam = {
+                "pageSize":pageSize,
+                "pageNumber":pageNumber,
+                "categoryName":'常见问题'
+            }
+
+            postJSON(API_URL.ApiArticleCategoryList,dataParam,function(res){
+                if("0" == res.code){
+                    if(true == res.data.pagedata.last){
+                        $("#loadMore").css({"display":"none"})
+                    }else{
+                        $("#loadMore").css({"display":"block"})
+                    }
+                    var data = res.data.pagedata.content;
+                    var tmpl = $("#dataTmpl").html();
+                    var html = '';
+                    $.each(data, function(index,item) {
+                        var articleName = item.name;
+                        var id = item.id;
+                        html += tmpl.replace(/{{articleName}}/g,articleName)
+                            .replace(/{{id}}/g,id);
+                    });
+                    if(1 == pageSize){
+                        $(".dataList").html("");
+                    }
+                    $(".dataList").append(html);
+                    bindItemClick()
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+    }
+
+    /**
+     * 绑定的点击事件
+     * @param {Object} item 跳转路径 ， 以及存好文章id
+     * @param {Object} dataId
+     */
+    function clickedTwo(item,dataId){
+        console.log(item+":"+dataId);
+        plus.storage.setItem( "articleId", dataId);
+        clicked(item);
+    }
+
+
+    function bindItemClick(){
+        $(".listItem").bind('click',function(){
+            var id = $(this).attr("data-id")
+            clickedTwo("../page/articleContent.html",id);
+        });
+    }
+
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getList();
+    })
+
+</script>
+</body>
+</html>

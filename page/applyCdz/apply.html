@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>申请</title>
+
+    <link rel="stylesheet" href="../../css/mui.min.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+
+    <!--引入公用样式-->
+    <link rel="stylesheet" type="text/css" href="../../css/public.css" />
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../plugins/layer/layer.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/base.js"></script>
+    
+    <script src="../../js/mui.picker.all.js"></script>
+	<script src="../../js/data.city.js"></script>
+
+    <style type="text/css">
+        .clearfix{
+            clear: both;
+        }
+        body{
+            background: #F0F1F3;
+        }
+        .mui-content{
+            background: transparent;
+        }
+        .mui-card{
+            margin: 0;
+            box-shadow:none;
+        }
+        .cdzGroup{
+            border-bottom: #F1F4F5 solid 1px;
+            padding: 5px 0;
+        }
+        .cdzItem{
+            float: left;
+            width: 50%;
+            text-align: center;
+        }
+        .cdzItem span{
+            display: inline-block;
+            padding: 5px;
+            margin-left: 10px;
+        }
+        .cdzItem span b{
+            display: inline-block;
+            padding: 5px 10px;
+            background: #F7F7F7;
+            font-weight: 400;
+        }
+        .cdzItem span b.selected{
+            background: #F96D44;
+            color: #fff;
+        }
+        .mui-input-group:before{
+            background-color: transparent;
+        }
+        .mui-input-group:after{
+            background-color: transparent;
+        }
+        .mui-input-group .mui-input-row:after{
+            background-color: transparent;
+        }
+
+        .footBtn{
+            position:fixed;
+            width: 100%;
+            bottom: 0;
+            background: #fff;
+        }
+        .footBtn .footBtnInner{
+            padding:20px 10px;
+            position: relative;
+        }
+        .footBtn .footBtnInner b{
+            color: #F87952;
+        }
+        .footBtn .footBtnInner span{
+            display: inline-block;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: #F87952;
+            border-radius: 20px;
+            color: #fff;
+            padding: 10px 40px;
+        }
+        .mui-btn-blue, .mui-btn-primary, input[type=submit]{
+			border: 1px solid #FF6D22;
+    		background-color: #FF6D22;
+		}
+    </style>
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">申请充电桩</h1>
+</header>
+
+<div class="mui-content" style="padding-bottom: 80px">
+    <div class="mui-card" style="margin-top: 20px;">
+        <div class="mui-card-header" style="font-size: 13px">
+            充电桩桩号
+        </div>
+        <div class="mui-card-content">
+
+            <div class="cdzList">
+
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        A <span><b class="jian">-</b><b class="count" data-letter="A">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        B <span><b class="jian">-</b><b class="count" data-letter="B">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        C <span><b class="jian">-</b><b class="count" data-letter="C">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        D <span><b class="jian">-</b><b class="count" data-letter="D">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        E <span><b class="jian">-</b><b class="count" data-letter="E">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        F <span><b class="jian">-</b><b class="count" data-letter="F">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        G <span><b class="jian">-</b><b class="count" data-letter="G">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        H <span><b class="jian">-</b><b class="count" data-letter="H">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        I <span><b class="jian">-</b><b class="count" data-letter="I">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        J <span><b class="jian">-</b><b class="count" data-letter="J">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        K <span><b class="jian">-</b><b class="count" data-letter="K">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        L <span><b class="jian">-</b><b class="count" data-letter="L">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        M <span><b class="jian">-</b><b class="count" data-letter="M">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        N <span><b class="jian">-</b><b class="count" data-letter="N">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        O <span><b class="jian">-</b><b class="count" data-letter="O">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        P <span><b class="jian">-</b><b class="count" data-letter="P">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        Q <span><b class="jian">-</b><b class="count" data-letter="Q">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        R <span><b class="jian">-</b><b class="count" data-letter="R">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        S <span><b class="jian">-</b><b class="count" data-letter="S">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        T <span><b class="jian">-</b><b class="count" data-letter="T">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        U <span><b class="jian">-</b><b class="count" data-letter="U">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        V <span><b class="jian">-</b><b class="count" data-letter="V">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        W <span><b class="jian">-</b><b class="count" data-letter="W">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        X <span><b class="jian">-</b><b class="count" data-letter="X">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="cdzGroup">
+                    <div class="cdzItem">
+                        Y <span><b class="jian">-</b><b class="count" data-letter="Y">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="cdzItem">
+                        Z <span><b class="jian">-</b><b class="count" data-letter="Z">0</b><b class="jia">+</b></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <form class="mui-input-group" style="margin-top: 10px">
+        <div class="mui-input-row">
+            <label>申请原因</label>
+            <input type="text" placeholder="请输入您的申请原因" name="reason">
+        </div>
+    </form>
+
+    <form class="mui-input-group" style="margin-top: 10px">
+        <div class="mui-input-row">
+            <label>收货人</label>
+            <input type="text" value="" id="username" name="username" placeholder="收货人姓名" >
+        </div>
+        <div class="mui-input-row">
+            <label>联系电话</label>
+            <input type="number" id="mobile" placeholder="请输入收货人联系电话" name="mobile" >
+        </div>
+        <div class="mui-input-row" style="position: relative">
+            <label>收货地址</label>
+            <i class="mui-icon mui-icon-arrowdown" style="position: absolute;right: 10px;top: 8px"></i>
+            <input type="text" placeholder="请选择省市区" name="address" id="address" readonly="true">
+            
+        </div>
+        <div class="mui-input-row" style="position: relative">
+            <label>详细地址</label>
+            <input type="text" placeholder="详细地址(街道、小区、乡镇)" name="addressDetail">        
+        </div>
+
+    </form>
+</div>
+
+<div class="footBtn">
+    <div class="footBtnInner">
+        充电桩总台数: <b id="allCount">0</b>
+        <span id="submitBox">提交</span>
+    </div>
+</div>
+
+<script type="application/javascript">
+    mui.init();
+
+    $.plusReady(function() {
+        $("#username").val(plus.storage.getItem( "nickname"));
+        $("#mobile").val(plus.storage.getItem( "mobile"));
+    }, function() {
+    	
+    });
+
+
+    $(".jia").click(function () {
+        addCount(this,1);
+    })
+
+    $(".jian").click(function () {
+        addCount(this,-1);
+    })
+
+
+    /**
+     * 获取用户全部选择的数量
+     */
+    function getAllCount() {
+
+        var $selected = $(".selected");
+
+        var sum = 0;
+
+        $.each($selected,function (index,item) {
+
+            var count = $(item).text();
+            count = parseInt(count);
+
+            sum += count;
+
+        })
+
+        return sum;
+    }
+
+    /**
+     * 加
+     * @param that
+     * @param count
+     */
+    function addCount(that,num) {
+        var $parent = $(that).parent();
+        var $countBox = $parent.find(".count");
+
+        var count = $countBox.text();
+        count = parseInt(count);
+
+        count += num;
+
+        if (count < 0){
+            count = 0
+        }
+        $countBox.text(count);
+
+        if(count > 0){
+            $countBox.addClass('selected')
+        }else{
+            $countBox.removeClass('selected')
+        }
+
+        $('#allCount').text(getAllCount());
+    }
+
+    /**
+     * 申请提交
+     */
+    $("#submitBox").click(function () {
+        var $selected = $(".selected");
+
+        var selectArr = new Array();
+
+        $.each($selected,function (index,item) {
+
+            var count = $(item).text();
+            var letter = $(item).attr("data-letter");
+
+            var selectItem = new Object();
+
+            selectItem.count = count;
+            selectItem.letter = letter;
+
+            selectArr.push(selectItem);
+        })
+
+        if(selectArr.length == 0){
+            layer.msg("你还没选择");
+            return;
+        }
+        var selectArrJson = JSON.stringify(selectArr);
+
+        var username = $("input[name='username']").val();
+        var reason = $("input[name='reason']").val();
+        var address1 = $("input[name='address']").val();
+        var addressDetail = $("input[name='addressDetail']").val();
+        var mobile = $("input[name='mobile']").val();
+		
+		var address = address1 + addressDetail;
+        if(!vaildeParam(username)){
+            layer.msg("收货人姓名不能为空");
+            return;
+        }
+        if(!vaildeParam(reason)){
+            layer.msg("原因不能为空");
+            return;
+        }
+        if(!vaildeParam(address1)){
+            layer.msg("省市不能为空");
+            return;
+        }
+        if(!vaildeParam(addressDetail)){
+            layer.msg("详细地址不能为空");
+            return;
+        }
+        if(!vaildeParam(mobile)){
+            layer.msg("手机不能为空");
+            return;
+        }
+
+        var uuid = plus.storage.getItem("uuid");
+
+        var totalCount = $("#allCount").text();
+		
+        var data = {
+            'uuid':uuid,
+            'selectCdzJson':selectArrJson,
+            'reason':reason,
+            'username':username,
+            'address':address,
+            'mobile':mobile,
+            'totalCount':totalCount
+        }
+
+        postJSON(API_URL.ApiApplyCdzApply,data,function (res) {
+
+            if('0' == res.code){
+
+                layer.msg("提交成功");
+                setTimeout(function () {
+					var ws=plus.webview.currentWebview();
+                    var wo = ws.opener();
+                    wo.evalJS('getPageData()');
+                    
+                    back();
+                },1000)
+
+            }else{
+                layer.msg(res.msg);
+            }
+
+        })
+
+
+    })
+
+
+    /**
+     * 手机号长度限制
+     */
+    $("input[name='mobile']").keyup(function () {
+        var $this = $(this);
+        var value = $this.val();
+        if(value.length > 11){
+            value = value.substr(0,11);
+            $this.val(value);
+        }
+        if(!isNumber(value)){
+            value = value.substr(0,value.length-1);
+            $this.val(value);
+        }
+    })
+
+    function isNumber(val){
+        var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+        if(regPos.test(val) || regNeg.test(val)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    function fullAddress( latitude,longitude,address) {
+        console.log("fullAddress=========address"+address);
+        console.log("fullAddress=========latitude"+latitude);
+        console.log("fullAddress=========longitude"+longitude);
+
+        $("#latitude").val(latitude);
+        $("#longitude").val(longitude);
+        $("#address").val(address);
+    }
+	//选择省市区 
+    var addressPicker = new mui.PopPicker({
+        layer: 3
+    });
+    $("#address").on("click", function() {
+    	addressPicker.setData(cityData3);
+		var adressStr = '';
+        addressPicker.show(function (selectItems) {
+            //将选择的省、市、区显示到屏幕上
+            for (var i = 0; i < selectItems.length; i++) {
+                adressStr += selectItems[i].text;
+            }
+            $("#address").val(adressStr);
+        });
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

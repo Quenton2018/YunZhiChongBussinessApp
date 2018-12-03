@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>荣誉榜</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        #dataTable{
+            white-space: nowrap;
+            text-align: center;
+            font-size: .8rem;
+        }
+        #dataTable img{
+            width: 20px;
+            vertical-align: middle;
+        }
+        #dataTable thead{
+            background: #EF7F35;
+            padding: 10px 0;
+            color: #fff;
+        }
+        #dataTable thead td{
+            padding: 10px 0;
+        }
+        #dataTable tbody tr{
+            border-bottom: #EEF0F3 solid 1px;
+        }
+        #dataTable tbody tr td{
+            padding: 10px 0;
+        }
+
+        .colorTd{
+            color: #EF7F35;
+        }
+
+        #loadMore{
+            background: #eaeaea;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+           display: none;
+        }
+        .noMore{
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+
+    </style>
+
+</head>
+<body style="background: #fff">
+
+<header class="header header-immersed mui-bar mui-bar-nav" style="box-shadow: none;">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">荣誉榜</h1>
+</header>
+
+<div class="mui-content" style="background: #fff">
+
+
+    <table class="mui-table" id="dataTable" style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <td style="width: 30%">排名</td>
+                <td>手机号码</td>
+                <td>合伙人收入</td>
+            </tr>
+        </thead>
+        <tbody class="dataList">	
+        	
+        		<tr>
+        			<td colspan="3" style="text-align: center;">暂未开放</td>
+        		</tr>
+
+        </tbody>
+    </table>
+    <div id="loadMore">加载更多</div>
+    <div id="noMore" class="noMore">没有更多了</div>
+
+</div>
+
+<script type="text/html" id="dataTmpl">
+        <tr>
+            <td>{{ranking}}</td>
+            <td>{{username}}</td>
+            <td class="colorTd">{{money}}</td>
+        </tr>
+</script>
+
+
+<script type="text/javascript">
+    mui.init();
+	
+	$.plusReady(function() {
+		checkLogin();
+		getList();
+	}, function() {
+		pageNumber = 1;
+		$(".dataList").html("");
+		getList();
+	});
+
+    function getList(){
+        var dataParam = {
+            "pageSize":pageSize,
+            "pageNumber":pageNumber,
+        }
+
+        postJSON(API_URL.ApiHonorGetHonorList,dataParam,function(res){
+            if("0" == res.code){
+
+                var data = res.data.pagedata.content;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                $.each(data, function(index,item) {
+                    index++;
+                    var imgText;
+                    var count =  (pageNumber-1)*pageSize;
+                    index =index+count;
+                    if(1==index){
+                        imgText = '<img src="../images/1.png">';
+                    }else if(2==index) {
+                        imgText = '<img src="../images/2.png">';
+                    }else if(3==index) {
+                        imgText = '<img src="../images/3.png">';
+                    }else{
+                        imgText =index;
+                    }
+                    var username = item.username;
+                    if(username.length>11){
+                        username  = username.substr(0, 3) + '****' + username.substr(7);
+                    }
+                    var totalIncome = item.totalIncome;
+                    if(!vaildeParam(totalIncome)){
+                        totalIncome = 0;
+                    }
+                    var id = item.id;
+
+                    var reg = /^(\d{3})\d{4}(\d{4})$/;
+                    var username = username.replace(reg, "$1****$2");
+
+                    html += tmpl.replace(/{{username}}/g,username)
+                        .replace(/{{money}}/g,totalIncome)
+                        .replace(/{{ranking}}/g,imgText);
+                });
+                if(1 == pageSize){
+                    $(".dataList").html("");
+                }
+                $(".dataList").append(html);
+
+                if(true == res.data.pagedata.last){
+                    $("#loadMore").css({"display":"none"});
+                    $("#noMore").css({"display":"block"});
+                }else{
+                    $("#loadMore").css({"display":"block"});
+                    $("#noMore").css({"display":"none"});
+                }
+
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getList();
+    })
+
+
+
+
+
+</script>
+</body>
+</html>

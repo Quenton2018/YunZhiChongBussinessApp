@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>申请片区列表详情页</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/mui.picker.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/mui.picker.all.js"></script>
+    <script src="../js/artTemplate.min.js"></script>
+    <script src="../js/px2rem.js"></script>
+    <style type="text/css">
+    	.address_wrap{
+    		margin: 15px 0;
+    		background-color: #fff;
+    		border-top: 1px solid #dce1e6;
+    		border-bottom: 1px solid #dce1e6;
+    	}
+    	.address{
+    		padding: 15px 20px;
+    		overflow: hidden;
+    	}
+    	.address_left{
+    		float: left;
+    	}
+    	.address_left span{
+    		color: #7a7d80;
+    		font-size: 0.3rem;
+    	}
+    	.address_right{
+    		float: right;
+    	}
+    	.address_right span{
+    		font-size: 0.3rem;
+    	}
+    	.setmeal_wrap{
+    		display: none;
+    	}
+    	.setmeal_top{
+    		background: #fff;
+    		border-top: 1px solid #dce1e6;
+    	}
+    	.setmeal{
+    		padding: 12px 20px;
+    	}
+    	.setmeal_Sel{
+    		color: #ff6d22;
+    		font-size: 0.3rem;
+    		padding: 10px;
+    	}
+    	.setmeal_icon{
+    		color: #737373;
+    		font-size: 0.34rem;
+    	}
+    	.setmeal_state{
+    		margin-left: 0.4rem;
+    		color: #7a7d80;
+    		font-size: 0.26rem;
+    	}
+    	.setmeal_header_wrap{
+    		background: #fff;  		
+    		padding: 12px 0 0;
+    		border-top: 1px solid #dce1e6;
+    		border-bottom: 2px solid #ff6d22;
+    		margin-bottom: 15px;
+    	}
+    	.setmeal_tap_list{
+    		text-align: center;
+    		color: #808080;
+    		font-size: 0.26rem;
+    	}
+    	.setmeal_tap_list.select{
+    		background: url(../images/area/trapezoid.png) center no-repeat;
+			background-size: 100%;
+			color: #fff;
+			padding-top: 6px;
+    	}
+    	.setmeal_tap_list.select span{
+    		position: relative;
+    		top: -4px;
+    	}
+    	.setmeal_table_wrap{
+    		background: #fff;
+    		border-top: 1px solid #dce1e6;
+    		border-bottom: 1px solid #dce1e6;
+    	}
+    	.setmeal_tap_header{
+    		padding: 15px;	
+    	}
+    	.setmeal_tap_header span{
+    		color: #7a7d80;
+    		text-align: center;
+    		font-size: 0.26rem;
+    	}
+    	.table_ul{
+    		padding: 0 15px;
+    		margin: 0;
+    		margin-top: -15px;
+    	}
+    	.table_list{
+    		padding: 12px 0;
+    		border-bottom: 1px dashed #808080;
+    	}
+    	.table_list:last-child{
+    		border-bottom: none;
+    	}
+    	.table_list span{
+    		text-align: center;
+    		font-size: 0.3rem;
+    	}
+    	.setmeal_tap_header span.first_span,.table_list span.first_span{
+    		text-align: left;
+    		padding-left: 4px;
+    	}
+    	.table_list span.circle {
+			width: 14px;
+			height: 14px;
+			line-height: 12px;
+			border-radius: 50%;
+			box-sizing: border-box;
+			border: 1px solid #484848;
+			text-align: center;
+			display: inline-block;
+			font-size: 0.24rem;
+			position: relative;
+			top: 0px;
+			margin-right: 4px;
+		}
+		.mui-bar span.compose{
+			float: right;
+		}
+		.mui-btn-blue, .mui-btn-primary, input[type=submit]{
+			border: 1px solid #FF6D22;
+    		background-color: #FF6D22;
+		}
+		#statedesc{
+			font-size: 0.26rem;
+			color: #7a7d80;
+		}
+    </style>
+</head>
+<body background="#f0f1f3">
+		
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <span class="mui-icon mui-icon-compose mui-icon-right-nav mui-pull-right" id="updateChargingGroup"></span>
+    <h1 class="mui-title" id="areaName"></h1>
+</header>
+
+<div class="mui-content" id="areaDetail">
+	<div class="address_wrap">
+		<div class="address">
+			<div class="address_left">
+				<span>地址</span>
+			</div>
+			<div class="address_right">
+				<span id="site"></span>
+			</div>
+		</div>
+	</div>
+	<div class="setmeal_wrap" id="setmeals">
+		<div class="setmeal_top">
+			<div class="setmeal">
+				<span class="setmeal_Sel" id="setmealName">基本套餐</span>
+				<span class="setmeal_icon mui-icon mui-icon-arrowdown"></span>
+				<span class="setmeal_state" id="state"></span><span id="statedesc"></span>
+			</div>		
+		</div>
+		
+		<div class="setmeal_header_wrap">
+			<div class="setmeal_tap flex">
+					
+			</div>		
+		</div>
+		
+		<div class="setmeal_table_wrap">
+			<!--阶梯价格-->
+			<div class="setmeal_tap_content" style="display: none;" id="eles">
+				<div class="setmeal_tap_header flex">
+					<span class="flex-item first_span">功率(W)</span>
+					<span class="flex-item">最大成本(元/小时)</span>
+					<span class="flex-item">价格(元/小时)</span>
+				</div>
+				<div class="setmeal_tap_table">
+					<ul class="table_ul" id="ElesList">
+						
+					</ul>
+				</div>
+			</div>
+			<!--充满自停-->
+			<div class="setmeal_tap_content" style="display: none;" id="fullStop">
+				<div class="setmeal_tap_header flex">
+					<span class="flex-item">最大电量(度)</span>
+					<span class="flex-item">最大时长(小时)</span>
+					<span class="flex-item">最多扣款(元)</span>
+				</div>
+				<div class="setmeal_tap_table">
+					<ul class="table_ul" id="fullStopList">
+						
+					</ul>
+				</div>
+			</div>
+			<!--时长区-->
+			<div class="setmeal_tap_content" style="display: none;" id="charges">
+				<div class="setmeal_tap_header flex">
+					<span class="flex-item">价格(元)</span>
+					<span class="flex-item">时长(小时)</span>
+				</div>
+				<div class="setmeal_tap_table">
+					<ul class="table_ul" id="chargesList">
+						
+					</ul>
+				</div>
+			</div>
+			<!--合伙人-->
+			<div class="setmeal_tap_content" style="display: none;" id="partners">
+				<div class="setmeal_tap_header flex">
+					<span class="flex-item first_span">姓名</span>
+					<span class="flex-item">手机号码</span>
+					<span class="flex-item">分成</span>
+				</div>
+				<div class="setmeal_tap_table">
+					<ul class="table_ul" id="partnersList">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action">
+    <!-- 可选择菜单 -->
+    <ul class="mui-table-view">
+      <li class="mui-table-view-cell" id="addSetmeals">
+        <a>添加套餐</a>
+      </li>
+      <li class="mui-table-view-cell" id="updateSetmeals">
+        <a>修改套餐</a>
+      </li>
+    </ul>
+    <!-- 取消菜单 -->
+    <ul class="mui-table-view">
+      <li class="mui-table-view-cell">
+        <a href="#sheet1"><b>取消</b></a>
+      </li>
+    </ul>
+</div>
+
+<!--tab header模板-->
+<script type="text/html" id="headTmpl" >
+	{{each list as item index}}
+		<div class="setmeal_tap_list flex-item {{if index==0}}select{{/if}}" data-type="{{item.type}}"><span>{{item.title}}</span></div>
+	{{/each}}
+</script>
+
+<!--阶梯价格-->
+<script type="text/html" id="elesTmpl" >
+	{{each list as item index}}
+		<li class="table_list flex">
+			<span class="circle">{{index+1}}</span>
+			{{if item.max>1200}}
+				<span class="flex-item first_span">1200以上</span>
+			{{else if item.min <=0}}
+				<span class="flex-item first_span">100以下</span>
+			{{else}}
+			<span class="flex-item first_span">{{item.min}}-{{item.max}}</span>
+			{{/if}}
+			<span class="flex-item">{{item.cost}}</span>
+			<span class="flex-item">{{item.amount}}</span>
+		</li>
+	{{/each}}
+</script>
+
+<!--充满自停-->
+<script type="text/html" id="fullStopTmpl" >
+	<li class="table_list flex">
+		<span class="flex-item">{{list.power}}</span>
+		<span class="flex-item">{{list.minutes/60}}</span>
+		<span class="flex-item">{{list.amount}}</span>
+	</li>	
+</script>
+
+<!--时长区-->
+<script type="text/html" id="chargesTmpl">
+	{{each list as item index}}
+	<li class="table_list flex">
+		<span class="flex-item">{{item.amount}}</span>
+		<span class="flex-item">{{item.minutes/60}}</span>
+	</li>
+	{{/each}}
+</script>
+
+<!--合伙人-->
+<script type="text/html" id="partnersTmpl">
+	{{each list as item index}}
+	<li class="table_list flex">
+		<span class="flex-item first_span">{{item.name}}</span>
+		<span class="flex-item">{{item.mobile}}</span>
+		{{if item.divideRatio}}
+		<span class="flex-item">{{item.divideRatio}}%</span>
+		{{else if item.dividePrice}}
+		<span class="flex-item">{{item.dividePrice}}元</span>
+		{{else}}
+		<span class="flex-item">-</span>
+		{{/if}}
+	</li>
+	{{/each}}
+</script>
+
+<script type="text/javascript">
+	mui.init();
+	
+    var uuid = '';
+    var areaId = getQueryString('areaid');
+
+    var setmealData = [];      //套餐name数据
+    
+
+    function dataRefresh() {
+    	getDataList();
+    }
+    $.plusReady(function() {
+     	checkLogin();
+        uuid = plus.storage.getItem("uuid");		
+        getDataList();
+      
+    },function(){
+    	dataRefresh();
+    },false);
+    function getDataList(){
+    	var params = {
+			'areaId':areaId	
+		}
+		postJSON(API_URL.ApiGetApplyChargingGroupById,params,function(res){
+			if(res.code == '0'){
+				var areaName = res.data.areaName;
+				var address = res.data.address;
+				var priceSetmealJson = res.data.priceSetmealJson;
+				var electricPrice = res.data.electricPrice;
+				$('#areaName').html(areaName);
+				$('#site').html(address);			
+//				console.log("####详情页电价price####"+electricPrice);
+				$('#areaName').attr('elect',electricPrice);
+				if('待处理' == res.data.status || '编辑' == res.data.status ){
+                    $('#updateChargingGroup').hide();
+                }else{
+                    $('#updateChargingGroup').show();
+                }
+				if(vaildeParam(JSON.parse(priceSetmealJson))){
+					console.log(vaildeParam(priceSetmealJson))
+					$('#setmeals').show();
+					plus.storage.setItem( "priceSetmealJson", priceSetmealJson);
+					var priceSetmealData = JSON.parse(priceSetmealJson);				
+					var name = priceSetmealData[0].name;
+					var state = priceSetmealData[0].state;
+					var setmealData = [];
+					$.each(priceSetmealData, function(index,item) {
+						setmealData.push({
+							'value':'',
+							'state':item.state,
+							'text':item.name
+						});
+					});
+					plus.storage.setItem("setmealName",name);
+					plus.storage.setItem("setmealState",state);
+					$('#setmealName').html(name).data('pick',setmealData);
+					getAllData(priceSetmealData[0]);
+				}else{
+					layer.msg("套餐暂无数据!")
+				}
+			}else{
+				layer.msg(res.msg);
+			}
+		});
+		
+    }
+    function getAllData(priceSetmealData){
+		var eles = priceSetmealData.eles;				
+		var fullStop = priceSetmealData.fullStop;
+		var actualCharges = priceSetmealData.actualCharges;
+		var advanceCharges = priceSetmealData.advanceCharges;
+		var partners = priceSetmealData.partners;
+		var state = priceSetmealData.state;	
+		var stateName = '';
+		var statedesc = '';
+		if(state == '1'){
+			stateName = '充满自停';
+		}else if(state == '-1'){
+			stateName = '充电时长';
+			statedesc = '(时间收费)';
+		}else if(state == '2'){
+			stateName = '充电时长';
+			statedesc = '(电量收费)';
+		}else if(state == '1:-1'){
+			stateName = '充满自停+充电时长';
+			statedesc = '(时间收费)';
+		}else if(state == '1:2'){
+			stateName = '充满自停+充电时长';
+			statedesc = '(电量收费)';
+		}
+		$('#state').html(stateName);
+		$("#statedesc").text(statedesc);
+    	var HeadData = [];
+  		if(vaildeParam(eles)){
+  			HeadData.push({
+  				'type':'eles',
+  				'title':'阶梯价格'
+  			});
+			getElesData(eles);
+  		}
+  		if(vaildeParam(fullStop)){
+  			HeadData.push({
+  				'type':'fullStop',
+  				'title':'充满自停'
+  			})
+			getFullStopData(fullStop);
+  		}
+  		if(vaildeParam(actualCharges)||vaildeParam(advanceCharges)){
+  			HeadData.push({
+  				'type':'charges',
+  				'title':'时长区'
+  			})
+  			if(vaildeParam(actualCharges)){
+  				var Charges = actualCharges;
+  			}else if(vaildeParam(advanceCharges)){
+  				var Charges = advanceCharges;
+  			}
+			getChargesData(Charges);
+  		}
+  		if(vaildeParam(partners)){
+  			HeadData.push({
+  				'type':'partners',
+  				'title':'合伙人'
+  			})
+			getPartnersData(partners);
+  		}
+  		getHeadData(HeadData);
+    }
+    //获取头部数据
+    function getHeadData(HeadData){
+  		var data = {'list':HeadData};
+  		var headHtml = template('headTmpl', data);
+  		$('.setmeal_tap').html(headHtml);
+  		var type = $('.setmeal_tap_list').eq(0).attr('data-type');
+		$('.setmeal_tap_content').hide();
+		$('#'+type).show();
+  	}
+    //获取阶梯价格数据
+    function getElesData(eles){
+  		var data = {'list':eles};
+  		var elesHtml = template('elesTmpl', data);
+  		$('#ElesList').html(elesHtml);
+  	}
+    //获取充满自停数据
+    function getFullStopData(fullStop){
+  		var data = {'list':fullStop};
+  		var fullStopHtml = template('fullStopTmpl', data);
+  		$('#fullStopList').html(fullStopHtml);	
+  	}
+    //获取时长区数据
+    function getChargesData(charges){
+  		var data = {'list':charges};
+  		var ChargesHtml = template('chargesTmpl', data);
+  		$('#chargesList').html(ChargesHtml);
+  	}
+  	//获取合伙人数据
+  	function getPartnersData(partners){
+		var data = {'list':partners};
+		var partnersHtml = template('partnersTmpl', data);
+		$('#partnersList').html(partnersHtml);
+  	}
+  	
+  	function getSetmeal(name){
+  		var priceSetmealStr = plus.storage.getItem( "priceSetmealJson");
+  		var priceSetmealJSON = JSON.parse(priceSetmealStr);
+  		var priceSetmealData = {};
+  		$.each(priceSetmealJSON, function(index,item) {
+			if(item.name == name){
+				priceSetmealData = item;
+			}
+		});	
+  		getAllData(priceSetmealData);
+  	}
+  	
+  	//套餐下拉选择器
+	$('#setmealName').on("click", function() {   	
+        var setmealData = $('#setmealName').data('pick');
+        var setmealPick = new mui.PopPicker();
+        if(vaildeParam(setmealData)){
+        	setmealPick.setData(setmealData);
+      		setmealPick.show(function(item) {
+      			var name = item[0].text;
+      			var state = item[0].state;
+      			plus.storage.setItem("setmealState",state);
+      			plus.storage.setItem("setmealName",name);
+         		$('#setmealName').html(name);
+         		getSetmeal(name);
+        	});
+        }
+        return false;
+   	});
+  	
+	$('.setmeal_tap').on('click','.setmeal_tap_list',function(){
+		var index = $(this).index();
+		var type = $(this).attr('data-type');
+		$(this).addClass('select').siblings().removeClass('select');
+		$('.setmeal_tap_content').hide();
+		$('#'+type).show();		
+	});
+	
+	
+	//增加或修改套餐
+	$('#updateChargingGroup').click(function() {
+		mui('#sheet1').popover('toggle');
+	});//修改
+	$("#updateSetmeals").click(function(){
+		mui('#sheet1').popover('toggle');
+		var areaName = $('#areaName').text();
+		var electricPrice = $('#areaName').attr('elect');
+		var setmealName = $('#setmealName').text();
+		var setmealData = $('#setmealName').data('pick');
+		var setmealState = plus.storage.getItem("setmealState");			
+		var updateGroup = {
+			'areaName': areaName,
+			'price':electricPrice,
+			'state':setmealState,
+			'setmealName':setmealName,
+			'setmealData':setmealData,
+			'areaType':'update'
+		}
+		plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+		clicked('areaApplicationSetmeals.html?areaid='+areaId);
+	});
+	$("#addSetmeals").click(function(){
+		mui('#sheet1').popover('toggle');
+		var areaName = $('#areaName').text();
+		var electricPrice = $('#areaName').attr('elect');
+		var setmealName = $('#setmealName').text();
+		var setmealData = $('#setmealName').data('pick');
+		var setmealState = plus.storage.getItem("setmealState");
+		var updateGroup = {
+			'areaName': areaName,
+			'price':electricPrice,
+			'state':setmealState,
+			'setmealName':setmealName,
+			'setmealData':setmealData,
+			'areaType':'add'
+		}
+		plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+		clicked('areaApplicationSetmeals.html?areaid='+areaId);
+	});
+
+</script>
+
+</body>
+</html>

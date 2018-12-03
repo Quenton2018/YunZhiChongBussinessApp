@@ -1,0 +1,505 @@
+{
+	"@platforms": [
+		"android",
+		"iPhone",
+		"iPad"
+	],
+	"id": "yunzhichongbusiness",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"name": "云智充合作版",/*应用名称，程序桌面图标名称*/
+	"version": {
+		"name": "3.3",/*应用版本名称*/
+		"code": 42
+	},
+	"description": "云智充商家",/*应用描述信息*/
+	"icons": {
+		"72": "icon.png"
+	},
+	"launch_path": "index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"developer": {
+		"name": "",/*开发者名称*/
+		"email": "",/*开发者邮箱地址*/
+		"url": ""
+	},
+	"permissions": {
+
+		"Cache": {
+			"description": "管理应用缓存"
+		},
+		"Console": {
+			"description": "跟踪调试输出日志"
+		},
+
+		"Events": {
+			"description": "应用扩展事件"
+		},
+		"Push": {},
+		"Maps": {},
+		"OAuth": {},
+
+
+
+
+
+		"Storage": {},
+		"Webview": {},
+		"NativeUI": {},
+		"Navigator": {},
+		"XMLHttpRequest": {}
+	},
+	"plus": {
+		"splashscreen": {
+			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
+			"waiting": true
+		},
+		"statusbar": {
+			"immersed": true, /* 沉浸式状态栏 */
+			"style": "light"
+		},
+		"popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
+		"runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
+		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
+		"distribute": {
+			"plugins": {
+				"oauth": {
+					"weixin": {"appid":"wx78a9e9e640aa4367","appsecret":"992674aa65ccce89466d27f9bbac516c"}
+				},
+				"maps": {
+					"baidu": {
+						"appkey_ios": "tnrUD5Gd9EaqKVDqllc2ACRBouFCV3Dv",
+						"appkey_android": "f5VvE7SxGGaXAi6QvHFxHs39Ecdd8qv5",
+						"appkey": "",
+						"description": ""
+					}
+				},
+				"push": {
+					"mipush": {
+						"appid_android": "2882303761517542346",
+						"appkey_android": "5771754257346",
+						"appid_ios": "2882303761517786047",
+						"appkey_ios": "5441778696047"
+					}
+				}
+			},
+			"apple": {
+				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
+				"mobileprovision": "",/*iOS应用打包配置文件*/
+				"password": "",/*iOS应用打包个人证书导入密码*/
+				"p12": "",/*iOS应用打包个人证书，打包配置文件关联的个人证书*/
+				"devices": "universal",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
+				"frameworks": [],
+				"plistcmds": [
+					"Set :NSContactsUsageDescription 说明读取用户通讯录的原因",
+					"Set :NSMicrophoneUsageDescription 说明使用麦克风的原因",
+					"Set :NSPhotoLibraryUsageDescription 读取用户相册用来上传用户头像",
+					"Set :NSCameraUsageDescription 使用用户相机来上传用户头像",
+					"Set :NSPhotoLibraryAddUsageDescription 说明向用户相册添加图片的原因",
+					"Set :NSLocationAlwaysUsageDescription 持续获取用户地理位置用于获取用户附近的充电桩片区",
+					"Set :NSLocationWhenInUseUsageDescription 使用用户地理位置用于获取用户附近的充电桩片区",
+					"Set :NSLocationAlwaysAndWhenInUseUsageDescription 使用用户地理位置用于获取用户附近的充电桩片区"
+				]
+			},
+			"google": {
+				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
+				"keystore": "",/*Android应用打包使用的密钥库文件*/
+				"password": "",/*Android应用打包使用密钥库中证书的密码*/
+				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
+				"targetSdkVersion": 23,
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+					"<uses-permission android:name=\"android.permission.GET_TASKS\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.GET_TOP_ACTIVITY_INFO\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.INTERNET\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.INTERACT_ACROSS_USERS_FULL\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+				]
+			},
+			"orientation": [
+				"portrait-primary"
+			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"icons": {
+				"ios": {
+					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
+					/*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+					"iphone": {
+						"normal": "", /*iPhone3/3GS程序图标，分辨率：57x57*/
+						"retina": "", /*iPhone4程序图标，分辨率：114x114*/
+						/*iPhone4S/5/6程序图标，分辨率：120x120*/
+						/*iPhone6 Plus程序图标，分辨率：180x180*/
+						"spotlight-normal": "", /*iPhone3/3GS Spotlight搜索程序图标，分辨率：29x29*/
+						"spotlight-retina": "", /*iPhone4 Spotlight搜索程序图标，分辨率：58x58*/
+						/*iPhone4S/5/6 Spotlight搜索程序图标，分辨率：80x80*/
+						"settings-normal": "", /*iPhone4设置页面程序图标，分辨率：29x29*/
+						/*iPhone4S/5/6设置页面程序图标，分辨率：58x58*/
+						"app@2x": "unpackage/res/icons/120x120.png",
+						"app@3x": "unpackage/res/icons/180x180.png",
+						"settings@3x": "unpackage/res/icons/87x87.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"spotlight@2x": "unpackage/res/icons/80X80.png",
+						"spotlight@3x": "unpackage/res/icons/120x120.png",
+						"notification@3x": "unpackage/res/icons/60x60.png",
+						"notification@2x": "unpackage/res/icons/40x40.png"
+					},
+					"ipad": {
+						"normal": "", /*iPad普通屏幕程序图标，分辨率：72x72*/
+						"retina": "", /*iPad高分屏程序图标，分辨率：144x144*/
+						/*iPad iOS7程序图标，分辨率：76x76*/
+						/*iPad iOS7高分屏程序图标，分辨率：152x152*/
+						"spotlight-normal": "", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
+						"spotlight-retina": "", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
+						/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
+						/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+						/*iPad设置页面程序图标，分辨率：29x29*/
+						"app": "unpackage/res/icons/76x76.png",
+						"app@2x": "unpackage/res/icons/152x152.png",
+						"settings": "unpackage/res/icons/29x29.png",
+						"proapp@2x": "unpackage/res/icons/167x167.png",
+						"spotlight": "unpackage/res/icons/40x40.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"spotlight@2x": "unpackage/res/icons/80X80.png",
+						"notification": "unpackage/res/icons/20x20.png",
+						"notification@2x": "unpackage/res/icons/40x40.png"
+					},
+					"appstore": "unpackage/res/icons/1024x1024.png"
+				},
+				"android": {
+					"mdpi": "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
+					"ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
+					"hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
+					"xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
+					"xxhdpi": "unpackage/res/icons/144x144.png",
+					"xxxhdpi": "unpackage/res/icons/192x192.png"
+				}
+			},
+			"splashscreen": {
+				"ios": {
+					"iphone": {
+						"default": "images/qidong/qd_320x480.png", /*iPhone3启动图片选，分辨率：320x480*/
+						"retina35": "images/qidong/qd_640x960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "images/qidong/qd_640x1136.png",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
+						"retina47": "images/qidong/qd_750x1334.png",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
+						"retina55": "images/qidong/qd_750x1334.png",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
+						"retina55l": "",
+						"iphonex": "images/qidong/qd.png"
+					},
+					"ipad": {
+						"portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": ""
+					}
+				},
+				"android": {
+					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
+					"ldpi": "",
+					"hdpi": "images/qidong/qd_750x1334.png",
+					"xhdpi": "images/qidong/qd_750x1334.png",
+					"xxhdpi": "images/qidong/qd_750x1334.png"
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"pages": {
+			"index.html": {
+				"resources": [],
+				"refer": [
+					"page/menu.html",
+					"page/login.html",
+					"page/myCdz.html",
+					"page/honorList.html",
+					"page/myIncome.html",
+					"page/myWallet.html",
+					"page/setting.html",
+					"page/areaApplicationList.html",
+					"page/applyCdz/list.html",
+					"index2.html",
+					"page/edition.html"
+				],
+				"priority": 0
+			},
+			"page/login.html": {
+				"resources": [],
+				"refer": [
+					"page/applyPartner.html",
+					"index.html",
+					"page/loginTwo.html"
+				],
+				"priority": 0
+			},
+			"page/menu.html": {
+				"resources": [],
+				"refer": [
+					"page/userInfo.html",
+					"page/myCdz.html",
+					"page/setting.html",
+					"page/customerService.html"
+				],
+				"priority": 0
+			},
+			"page/userInfo.html": {
+				"resources": [],
+				"refer": [
+					"page/login.html",
+					"page/contactInformation.html"
+				],
+				"priority": 0
+			},
+			"page/applyPartner.html": {
+				"resources": [],
+				"refer": [
+					"page/myCdz.html",
+					"page/articleList.html"
+				],
+				"priority": 0
+			},
+			"page/myCdzUnNormal.html": {
+				"resources": [],
+				"refer": [
+					"page/myCdz.html",
+					"page/areaListUnNormal.html"
+				],
+				"priority": 0
+			},
+			"page/myCdz.html": {
+				"resources": [],
+				"refer": [
+					"page/myCdzUnNormal.html",
+					"page/areaList.html",
+					"page/areaListUnNormal.html",
+					"page/areaInfoSetmeals.html",
+					"page/areaDataXinxi.html"
+				],
+				"priority": 0
+			},
+			"page/myIncome.html": {
+				"resources": [],
+				"refer": [
+					"page/incomeDetail.html"
+				],
+				"priority": 0
+			},
+			"page/setting.html": {
+				"resources": [],
+				"refer": [
+					"page/customerService.html",
+					"page/feedback.html",
+					"page/edition.html",
+					"page/currencyArticleContent.html",
+					"page/login.html"
+				],
+				"priority": 0
+			},
+			"page/loginTwo.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
+				],
+				"priority": 0
+			},
+			"page/myWallet.html": {
+				"resources": [],
+				"refer": [
+					"page/putforward.html",
+					"page/bingBank.html"
+				],
+				"priority": 0
+			},
+			"page/areaApplicationList.html": {
+				"resources": [],
+				"refer": [
+					"page/t.html",
+					"page/areaApplicationSetmeals.html",
+					"page/areaInfoSetmealsDetail.html",
+					"page/areaApplicationDetail.html"
+				],
+				"priority": 0
+			},
+			"page/incomeDetail.html": {
+				"resources": [],
+				"refer": [
+					"page/incomeDetailCdz.html"
+				],
+				"priority": 0
+			},
+			"page/incomeDetailCdz.html": {
+				"resources": [],
+				"refer": [
+					"page/incomeDetailCz.html"
+				],
+				"priority": 0
+			},
+			"page/bingBank.html": {
+				"resources": [],
+				"refer": [
+					"page/putforward.html"
+				],
+				"priority": 0
+			},
+			"page/applyCdz/list.html": {
+				"resources": [],
+				"refer": [
+					"page/applyCdz/detail.html",
+					"page/applyCdz/apply.html"
+				],
+				"priority": 0
+			},
+			"page/areaApplicationSetmeals.html": {
+				"resources": [],
+				"refer": [
+					"page/areaInfoSetmealsSave.html",
+					"page/areaInfoSetmealsEdit.html",
+					"page/areaInfoSetmealsAdd.html"
+				],
+				"priority": 0
+			},
+			"page/customerService.html": {
+				"resources": [],
+				"refer": [
+					"page/currencyArticleContent.html"
+				],
+				"priority": 0
+			},
+			"index2.html": {
+				"resources": [],
+				"refer": [
+					"page/setting.html",
+					"page/myCdz.html"
+				],
+				"priority": 0
+			},
+			"page/areaInfoSetmealsDetail.html": {
+				"resources": [],
+				"refer": [
+					"page/areaApplicationSetmeals.html"
+				],
+				"priority": 0
+			},
+			"page/areaInfoSetmealsSave.html": {
+				"resources": [],
+				"refer": [
+					"page/areaApplicationSetmeals.html"
+				],
+				"priority": 0
+			},
+			"page/areaApplicationDetail.html": {
+				"resources": [],
+				"refer": [
+					"page/areaApplicationEdit.html",
+					"page/areaApplicationSetmeals.html"
+				],
+				"priority": 0
+			},
+			"page/areaApplicationEdit.html": {
+				"resources": [],
+				"refer": [
+					"page/areaSettingEdit.html"
+				],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf",
+				"page/articleContent.html",
+				"css/public.css",
+				"images/shouru.png",
+				"css/iconfont.eot",
+				"css/iconfont.svg",
+				"images/yingdaoye.png",
+				"images/qianbao.png",
+				"js/common.js",
+				"images/3.png",
+				"css/iconfont.css",
+				"js/bootstrap.min.js",
+				"js/jquery-3.3.1.min.js",
+				"css/iconfont.woff",
+				"css/mui.picker.min.css",
+				"README.md",
+				"plugins/font-awesome-4.7.0/fonts/FontAwesome.otf",
+				"images/menu/kefu.png",
+				"js/qrcode.min.js",
+				"js/mui.pullToRefresh.material.js",
+				"fonts/mui.ttf",
+				"images/rongyubang2.png",
+				"plugins/layer/theme/default/icon-ext.png",
+				"images/rongyubang.png",
+				"js/immersed.js",
+				"images/menu/shouru.png",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.woff",
+				"images/menu/rongyubang.png",
+				"plugins/layer/mobile/layer.js",
+				"images/menu/chongdian.png",
+				"css/iconfont.ttf",
+				"images/jiaruBtn.png",
+				"images/menu/qianbao.png",
+				"plugins/layer/layer.js",
+				"plugins/layer/theme/default/icon.png",
+				"js/update.js",
+				"plugins/layer/theme/default/loading-2.gif",
+				"plugins/swiper-4.2.2/swiper-4.2.2.min.js",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.eot",
+				"js/update.json",
+				"images/qianbao2.png",
+				"js/hammer.min.js",
+				"plugins/swiper-4.2.2/swiper-4.2.2.min.css",
+				"images/cdz.png",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.svg",
+				"js/mui.min.js",
+				"plugins/layer/theme/default/layer.css",
+				"css/common.css",
+				"plugins/layer/theme/default/loading-1.gif",
+				"images/menu/home.png",
+				"css/mui.poppicker.css",
+				"plugins/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2",
+				"plugins/layer/theme/default/loading-0.gif",
+				"plugins/font-awesome-4.7.0/css/font-awesome.css",
+				"js/mui.pullToRefresh.js",
+				"images/shouru2.png",
+				"plugins/layer/mobile/need/layer.css",
+				"images/app_back.png",
+				"images/wancheng.png",
+				"plugins/font-awesome-4.7.0/css/font-awesome.min.css",
+				"css/iconfont.js",
+				"js/mui.picker.all.js",
+				"images/tixian.png",
+				"images/tijiaoshenqing.png",
+				"images/back.png",
+				"js/base.js",
+				"images/yesIcon.png",
+				"images/xiaoxi.png",
+				"images/2.png",
+				"images/menu/shezhi.png",
+				"images/1.png",
+				"css/mui.min.css",
+				"images/app_10.png",
+				"js/jquery.hammer.js",
+				"images/loginBtn.png",
+				"js/shortcut.js"
+			]
+		}
+	},
+	"unpackage":[
+	  "images/qianbao.png",
+	  "images/rongyubang.png",
+	  "images/rongyubang2.png",
+	  "images/shouru.png",
+	  "images/wancheng.png",
+	  "images/xiaoxi.png",
+	  "images/yingdaoye.png"
+	]
+}

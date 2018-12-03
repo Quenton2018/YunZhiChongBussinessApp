@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>收入明细</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        .topBox{
+            position: relative;
+        }
+
+        .dataList{
+            font-size: .9rem;
+        }
+        .dataList .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+            color: #333;
+            font-weight: 300;
+        }
+        .dataList .mui-badge b{
+            font-weight: 300;
+        }
+
+        .topBox .row1{
+            padding: 10px;
+            color: #6F6F70;
+            font-size: .9rem;
+            padding-bottom: 0px;
+        }
+        .topBox .row2{
+            font-size: .7rem;
+            padding: 0 10px;
+            color: #A9A9AA;
+            padding-bottom: 5px;
+        }
+
+        #loadMore{
+            background: #eaeaea;
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            display: none;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">收入明细</h1>
+</header>
+
+<div class="mui-content">
+
+    <div class="topBox">
+        <div class="row1 selectDate"><span></span> <i class="iconfont icon-xiala1"></i> </div>
+        <div class="row2">
+            <div class="left">总收入 : <span id="benyuemoney"></span>元</div>
+            <div class="right">明细</div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <ul class="mui-table-view dataList">
+
+
+    </ul>
+
+    <div id="loadMore">加载更多</div>
+    <div id="noMore" class="noMore">没有更多了</div>
+</div>
+
+<script type="text/html" id="dataTmpl">
+    <li class="mui-table-view-cell" onclick="clicked('incomeDetailCdz.html?chargingGroupID={{chargingGroupID}}&year={{yearParam}}&month={{monthParam}}&parnterMoney={{parnterMoney}}')">
+        <a class="mui-navigate-right">
+            {{chargingGroupName}} <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
+        </a>
+    </li>
+</script>
+
+<script type="text/javascript" src="../js/mui.picker.all.js"></script>
+<script type="text/javascript">
+    mui.init();
+
+    var pageNumber = 1;
+    var pageSize = 10;
+    var yearParam =  new Date().getFullYear();
+    var monthParam = 1;
+    var year;
+    var month;
+
+    $.plusReady(function() {
+    	checkLogin();
+        year =  new Date().getFullYear();
+        month = plus.storage.getItem("month");
+        var parnterMoney = plus.storage.getItem("parnterMoney");
+        monthParam =month;
+        yearParam =year;
+
+        $(".selectDate span").text(year+"年"+month+"月");
+        $("#benyuemoney").text(parnterMoney);
+        $(".dataList").html("");
+        getList(month,year);
+    }, function() {
+    	$(".dataList").html("");
+    	getList(month,year);
+    });
+
+    function pagePlusReady(){
+        checkLogin();
+         year =  new Date().getFullYear();
+         month = plus.storage.getItem("month");
+        var parnterMoney = plus.storage.getItem("parnterMoney");
+        monthParam =month;
+        yearParam =year;
+
+        $(".selectDate span").text(year+"年"+month+"月");
+        $("#benyuemoney").text(parnterMoney);
+        $(".dataList").html("");
+        getList(month,year);
+    }
+
+    function getList(month,year){
+        var uuid = plus.storage.getItem("uuid");
+        var dataParam = {
+            "uuid":uuid,
+            "month":month,
+            "year":year,
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
+        }
+        console.log("getList:dataParam:"+dataParam);
+
+        postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
+            if("0" == res.code){
+                var parnterMoneyToTal = res.data.parnterMoneyToTal;
+                var data = res.data.listRet;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                var falgLast = true;
+                $.each(data, function(index,item) {
+                    var parnterMoney = item.parnterMoney;
+                    var chargingGroupName = item.chargingGroupName;
+                    html += tmpl.replace(/{{parnterMoney}}/g,parnterMoney)
+                        .replace(/{{chargingGroupID}}/g,item.chargingGroupId)
+                        .replace(/{{yearParam}}/g,yearParam)
+                        .replace(/{{monthParam}}/g,monthParam)
+                        .replace(/{{chargingGroupName}}/g,chargingGroupName);
+
+                    if(index<9){
+                        falgLast =true;
+                    }else{
+                        falgLast =false;
+                    }
+                });
+                $("#benyuemoney").text(parnterMoneyToTal);
+                $(".dataList").append(html);
+                if(falgLast){
+                    $("#loadMore").css({"display":"none"});
+                    $("#noMore").css({"display":"block"});
+                }else{
+                    $("#loadMore").css({"display":"block"});
+                    $("#noMore").css({"display":"none"});
+                }
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+
+
+    // $(".selectDate").click(function () {
+    //
+    //     var options = {
+    //         'type':'month'
+    //     }
+    //     var dtPicker = new mui.DtPicker(options);
+    //
+    //     dtPicker.show(function (selectItems) {
+    //         $("#loadMore").css({"display":"none"});
+    //         $("#noMore").css({"display":"none"});
+    //         pageNumber=1;
+    //         console.log(selectItems.y);//{text: "2016",value: 2016}
+    //         console.log(selectItems.m);//{text: "05",value: "05"}
+    //         var month = selectItems.m.value;
+    //         var year = selectItems.y.value;
+    //         $(".selectDate span").text(year+"年"+month+"月");
+    //         $(".dataList").html("");
+    //
+    //         getList(month,year);
+    //
+    //     })
+    // })
+
+
+    $(".selectDate").click(function () {
+
+        var dayArr = new Array();
+
+        var day = new Date().getMonth() + 1;
+
+
+        for(var i=1;i<=day;i++){
+            var dayObj = new Object();
+            dayObj.value = i+"";
+            dayObj.text = i+"月";
+            dayArr.push(dayObj);
+        }
+
+        var picker = new mui.PopPicker({
+            layer: 2
+        });
+        picker.setData( [{
+            value: year,
+            text: year+'年',
+            children: dayArr
+        }])
+        picker.show(function (selectItems) {
+
+            var yearNew = selectItems[0].value+"";
+            var monthNew = selectItems[1].value+"";
+
+            year = yearNew;
+            month = monthNew;
+
+            $("#loadMore").css({"display":"none"});
+            $("#noMore").css({"display":"none"});
+            pageNumber=1;
+            $(".selectDate span").text(year+"年"+month+"月");
+            $(".dataList").html("");
+            getList(month,year);
+
+        })
+    })
+
+    function mGetDate(year, month){
+        var d = new Date(year, month, 0);
+        return d.getDate();
+    }
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getList(monthParam,yearParam);
+    })
+
+
+</script>
+</body>
+</html>

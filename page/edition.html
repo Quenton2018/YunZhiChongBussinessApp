@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>检查版本更新</title>
+	<link rel="stylesheet" href="../css/mui.min.css">
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+	<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../plugins/layer/layer.js"></script>
+	<script src="../js/hammer.min.js"></script>
+	<script src="../js/jquery.hammer.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/base.js"></script>
+	<script src="../js/mui.min.js"></script>
+
+	<style type="text/css">
+		#invitation{
+			display: block;
+			width: 50%;
+			margin: 0 auto;
+			margin-top: 50px;
+		}
+		.bottom-content{
+			margin-top: 20px;
+			text-align: center;
+		}
+		.bottom-content p{
+			font-size: 18px;
+			color: #707070;
+		}
+
+		#versionBox p{
+			line-height: 20px;
+		}
+
+		#downloadBtn{
+			display: block;
+			background: #F57A41;
+			color: #fff;
+			margin: 2rem;
+			line-height: 40px;
+			border-radius: 5px;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">检查版本</h1>
+</header>
+
+
+<div class="mui-content" style=" ">
+	<img id="invitation" src="../images/hezuologo.png" >
+	<div class="bottom-content" id="versionBox">
+		<p>当前版本 : <span class="appVersion1">加载中...</span></p>
+		<p>最新版本 : <span class="appVersion2">加载中...</span></p>
+
+		<div id="downloadBtn">点击下载</div>
+	</div>
+</div>
+
+</body>
+
+<script type="text/javascript" charset="utf-8">
+    $(".appVersion").text(appVersion);
+
+	$.plusReady(function() {
+		plus.key.addEventListener("backbutton",function(){
+            plus.runtime.quit();
+        });
+
+        $(".appVersion1").text(appVersion)
+
+        checkVersion();
+	});
+
+    /**
+     * 检查版本
+     */
+    function checkVersion() {
+        var osName = plus.os.name;
+        var version = appVersion;
+
+        postJSON(API_URL.AppVersionPartnerGetNewest,{"appType":osName},function (res) {
+
+            if('0' == res.code){
+                if(vaildeParam(res.data)){
+					writeObj(res.data);
+					
+					if (compareVersion(res.data.version)) {
+						$("#downloadBtn").css("display",'block');
+						$("#downloadBtn").click(function () {
+                            plus.runtime.openURL(res.data.url);
+                        });
+						$(".appVersion2").text(res.data.version);
+					} else {
+						$(".appVersion2").text(appVersion);
+					}
+                }
+            }
+        })
+    }
+
+
+
+
+</script>
+
+</html>

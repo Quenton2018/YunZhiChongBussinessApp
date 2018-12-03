@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>我的钱包</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        .topBox{
+            position: relative;
+            padding-top: 30px;
+            background-color: #fff;
+            padding-bottom: 20px;
+        }
+        .topBox .logo-img{
+            display: block;
+            width: 20%;
+            vertical-align: middle;
+            dispaly: block;
+            margin: 0 auto;
+        }
+        .topBox h3{
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: 300;
+            color:#333333;
+            margin-top: 10px;
+            margin-bottom: 5px;
+
+        }
+        .topBox h1{
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            color: #333333;;
+        }
+
+        .dataList .mui-badge b{
+            font-weight: 300;
+        }
+        .Box-tixian{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .Button-Img{
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+        }
+        .mui-table-view .mui-media-object {
+            max-width: 70px;
+        }
+        .mui-table-view:after{
+         background-color: inherit;
+            height:0px;
+        }
+        .mui-table-view:before{
+            height:0px;
+        }
+        #loadMore{
+            background: #eaeaea;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">我的钱包</h1>
+</header>
+
+<div class="mui-content" style="    padding-bottom: 60px;">
+    
+    <div class="topBox">
+        <img class="logo-img" src="../images/qianbao2.png">
+        <h3>我的钱包</h3>
+        <h1>&yen;<span id="moneyAmountBox"></span></h1>
+
+        <div class="Box-tixian">
+            <img class="Button-Img putForwardBtn"  src="../images/tixian.png" />
+        </div>
+
+    </div>
+
+
+    <div class="">
+
+        <ul class="mui-table-view dataList" style="margin-top: 30px;">
+
+
+        </ul>
+
+        <ul class="mui-table-view dataList1" style="margin-top: 20px;">
+
+
+        </ul>
+        <div id="loadMore">加载更多</div>
+        <div id="noMore" class="noMore">没有更多了</div>
+
+    </div>
+
+</div>
+
+<script type="text/html" id="dataTmpl">
+    <li class="mui-table-view-cell mui-media">
+        <a href="javascript:;">
+            <div class="mui-media-object mui-pull-right">{{status}}</div>
+            <div class="mui-media-body">
+                <span>{{money}}</span>
+                <p class="mui-ellipsis">{{time}}</p>
+            </div>
+        </a>
+    </li>
+</script>
+
+<script type="text/javascript">
+    mui.init();
+
+    var pageNumber = 1;
+    var pageSize = 10;
+
+    $.plusReady(function() {
+    	checkLogin();
+
+        getUserInfoDateBase();
+
+        getList(); //审核中
+
+        getListTwo(); //审核通过
+    }, function() {
+    	$("#loadMore").css({"display":"none"});
+        $("#noMore").css({"display":"none"});
+        pageNumber = 1;
+        $(".dataList").html("");
+        $(".dataList1").html("");
+
+        getUserInfoDateBase();
+        getList();
+        getListTwo();
+    });
+
+
+    function getList(){
+        var uuid = plus.storage.getItem("uuid");
+        var dataParam = {
+            "uuid":uuid,
+            "type":1,
+            "pageSize":10000,
+            "pageNumber":1
+        }
+        postJSON(API_URL.ApiWithdrawalGetWithdrawalsList,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data.pagedata.content;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                $.each(data, function(index,item) {
+                    var money = item.money;
+                    var status = item.status;
+                    var createDate = jsDateDiff(item.createDate / 1000);
+
+                    if(item.playStatus == '已打款'){
+                        status = item.playStatus;
+                    }
+
+                    html += tmpl.replace(/{{money}}/g,money)
+                        .replace(/{{status}}/g,status)
+                        .replace(/{{time}}/g,createDate);
+                });
+                $(".dataList").html("");
+                $(".dataList").append(html);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+
+    function getListTwo(){
+        var uuid = plus.storage.getItem("uuid");
+        var dataParam = {
+            "uuid":uuid,
+            "type":2,
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
+        }
+        postJSON(API_URL.ApiWithdrawalGetWithdrawalsList,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data.pagedata.content;
+                var tmpl = $("#dataTmpl").html();
+                var html = '';
+                $.each(data, function(index,item) {
+                    var money = item.money;
+                    var status = item.status;
+
+                    if(item.playStatus == '已打款'){
+                        status = item.playStatus;
+                    }
+
+                    var createDate = jsDateDiff(item.createDate / 1000);
+                    html += tmpl.replace(/{{money}}/g,money)
+                        .replace(/{{status}}/g,status)
+                        .replace(/{{time}}/g,createDate);
+                });
+                if(1 == pageSize){
+                    $(".dataList1").html("");
+                }
+                $(".dataList1").append(html);
+
+                if(true == res.data.pagedata.last){
+                    $("#loadMore").css({"display":"none"});
+                    $("#noMore").css({"display":"block"});
+                }else{
+                    $("#loadMore").css({"display":"block"});
+                    $("#noMore").css({"display":"none"});
+                }
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getListTwo();
+    })
+
+
+    /**
+     *提现校验
+     */
+    $(".Box-tixian").click(function(){
+        var uuid = plus.storage.getItem("uuid");
+        console.log("## Box-tixian ## uuid:"+uuid);
+        if(vaildeParam(uuid)){
+            postJSON(API_URL.ApiAdmincheckWithDrawal,{"uuid":uuid},function(res){
+                if("0" == res.code){
+                    clicked("bingBank.html");
+                }else{
+                    clicked('putforward.html');
+                }
+            })
+        }else{
+            clearLogin();
+            clicked("login.html");
+        }
+    })
+
+
+
+    /**
+     * 获取用户信息
+     */
+    function getUserInfoDateBase(){
+        var uuid = plus.storage.getItem("uuid");
+        console.log("## getUserInfoDateBase ## uuid:"+uuid);
+        if(vaildeParam(uuid)){
+            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+                if("0" == res.code){
+                    var moneyAmount = res.data.moneyAmount;
+                    var bankCode = res.data.bankCode;
+                    var bank = res.data.bank;
+                    plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
+                    plus.storage.setItem( "bankCode", bankCode);
+                    plus.storage.setItem( "bank", bank);
+
+                    $("#moneyAmountBox").text(moneyAmount);
+
+                }else{
+                    layer.msg(res.msg);
+                    clearLogin();
+                    clicked("login.html");
+                }
+            })
+        }
+    }
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

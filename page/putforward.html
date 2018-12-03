@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>提现</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        .topBox{
+            background-color: #fff;
+        }
+
+        .dataList{
+            font-size: .9rem;
+        }
+        .dataList .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+            color: #EF7F35;
+            font-weight: 300;
+        }
+        .dataList .mui-badge b{
+            font-weight: 300;
+        }
+        .Box-tixian{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .mui-table-view .mui-media-object {
+            max-width: 70px;
+        }
+
+        .textBox .inputBox{
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            margin-bottom: 10px;
+           /* margin-top: 3rem;*/
+        }
+        .textBox .inputBox i{
+            font-size: 1rem;
+            position: absolute;
+            left: 10px;
+            line-height: 2.5rem;
+            color: #000;
+            margin: 0.3rem;
+        }
+
+        .textBox input{
+            -webkit-user-select:text;
+            text-align:left;
+            border: 0px;
+            border-radius: 0.5rem;
+            font-size:16px;
+            width:100%;
+            outline:none;
+            line-height: 2.5rem;
+          /*  padding-left: 10px;*/
+            padding-left: 80px;
+            margin: 0.3rem;
+        }
+        .textBox input:focus{
+            outline: none;
+        }
+
+        .Button-Img{
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .rightText{
+            position: absolute;
+            right: 10px;
+            top: .7rem;
+            color: #333;
+         /*   font-size: .8rem;*/
+        }
+    </style>
+
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">提现</h1>
+</header>
+
+<div class="btn-submit mui-bar mui-bar-tab" id="submitBtn">提交</div>
+
+<div class="mui-content">
+    
+    <div class="topBox" style="margin-top: 20px;">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-media">
+                <a href="javascript:;">
+                    <img class="mui-media-object mui-pull-left" src="../images/yinghang.png">
+                    <div class="mui-media-body">
+                        <span class="bank"></span>
+                        <p class='mui-ellipsis bankCode'></p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h5 class="mui-content-padded">可提现余额<span id="moneyAmountBox"></span>元</h5>
+    </div>
+
+
+        <div class="textBox">
+            <div class="inputBox">
+                <i class="iconfont">提现金额</i>
+                <input type="text" name="money" placeholder="请输入金额(整数)" />
+                <span class="rightText">元</span>
+            </div>
+
+            <div class="inputBox">
+                <i class="iconfont">验证码</i>
+                <input type="text" name="code" placeholder="请输入验证码" />
+                <span class="getCode rightText">获取验证码</span>
+            </div>
+
+        </div>
+
+        <!--<div style="margin-top: 50px">
+            <img class="Button-Img tixianBtn"  src="../images/tixian.png" />
+        </div>-->
+
+</div>
+
+<script type="text/javascript">
+    mui.init();
+
+    var canPostFlag = true;
+    
+    $.plusReady(function() {
+    	getUserInfoDateBase();
+
+
+        var $getCodeBtn = $(".getCode");
+        var isLock = false; //是否锁定
+        var time = 180; //倒计时
+        var timeInterval; //定时器
+        /**
+         * 定时器
+         */
+        function showTime(){
+            timeInterval = setInterval(function(){
+                time--;
+                if(time <= 0){
+                    isLock = false;
+                    time = 180;
+                    clearInterval(timeInterval);
+                    $getCodeBtn.text('获取验证码');
+                    return;
+                }else{
+                    $getCodeBtn.text(time);
+                }
+            },1000)
+        }
+
+        /**
+         * 获取
+         */
+        $(".getCode").click(function(){
+            var uuid = plus.storage.getItem("uuid");
+
+            var money = $("input[name='money']").val();
+
+            if(!vaildeParam(money)){
+                layer.msg("金额不能为空");
+                return;
+            }
+
+            if(!/^\d+$/.test(money)){
+                layer.msg("金额不是整数");
+                return;
+            }
+
+            money = parseFloat(money);
+            if(money < 10){
+                layer.msg("金额最少10元");
+                return;
+            }
+
+            if(!checkMoney(money)){
+                layer.msg("金额不足");
+                return;
+            }
+
+            if(!vaildeParam(uuid)){
+                layer.msg("用户数据异常");
+                return;
+            }
+
+            if(isLock){
+                return;
+            }
+            isLock = true;
+            $getCodeBtn.text(time);
+            showTime();
+            postJSON(API_URL.ApiWithdrawalSendCode,{"uuid":uuid,"type":"2"},function(res){
+                if("0" == res.code){
+                    layer.msg("发送成功");
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+        })
+
+
+        /**
+         * 判断金额是否购
+         */
+        function checkMoney(money){
+
+            /** 当前可用金额 */
+            var moneyAmountBox = $("#moneyAmountBox").text();
+            moneyAmountBox = parseFloat(moneyAmountBox);
+
+            console.log("## checkMoney ## moneyAmountBox:"+moneyAmountBox);
+            console.log("## checkMoney ## money:"+money);
+
+            if(money > moneyAmountBox){
+
+                console.log("余额不足");
+
+                return false;
+            }
+
+            return true;
+        }
+
+
+        /**
+         * 提现
+         */
+        $("#submitBtn").click(function(){
+            if(!canPostFlag){
+                layer.msg("已提交,不可重复提交！");
+                return;
+            }
+            canPostFlag = false;
+
+            var uuid = plus.storage.getItem("uuid");
+            var money = $("input[name='money']").val();
+            if(!vaildeParam(money)){
+                canPostFlag = true;
+                layer.msg("金额不能为空");
+                return;
+            }
+
+            if(!/^\d+$/.test(money)){
+                canPostFlag = true;
+                layer.msg("金额不是整数");
+                return;
+            }
+            money = parseFloat(money);
+
+            if(money < 10){
+                canPostFlag = true;
+                layer.msg("金额最少10元");
+                return;
+            }
+
+            var code = $("input[name='code']").val();
+            if(!vaildeParam(code)){
+                canPostFlag = true;
+                layer.msg("验证码不能为空");
+                return;
+            }
+            if(!checkFloatNum(money)){
+                canPostFlag = true;
+                layer.msg("金额必须大于零的整数");
+                return;
+            }
+            var postData = {
+                "uuid":uuid,
+                "money":money,
+                "code":code
+            }
+            postJSON(API_URL.ApiWithdrawalApplyWithdrawals,postData,function(res){
+                if("0" == res.code){
+                    setTimeout(function(){
+                        clicked('success.html')
+                    },1000);
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+        })
+    });
+
+
+
+    function getUserInfoDateBase(){
+        var uuid = plus.storage.getItem("uuid");
+        console.log("## getUserInfoDateBase ## uuid:"+uuid);
+        if(vaildeParam(uuid)){
+            postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
+                if("0" == res.code){
+                    var moneyAmount = res.data.moneyAmount;
+                    var bankCode = res.data.bankCode;
+                    var bank = res.data.bank;
+                    plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
+                    plus.storage.setItem( "bankCode", bankCode);
+                    plus.storage.setItem( "bank", bank);
+                    if(bankCode.length>8){
+                        bankCode =  bankCode.substr(0,4)+"********"+bankCode.substr(-4);
+                    }
+                    $(".bank").text(bank);
+                    $(".bankCode").text(bankCode);
+                    $("#moneyAmountBox").text(moneyAmount);
+
+                }else{
+                    layer.msg(res.msg);
+                    clearLogin();
+                    clicked("page/login.html");
+                }
+            })
+        }
+    }
+
+    function checkFloatNum(str){
+        var reg_zs = /^[1-9]\d*(\.\d+)?$/i;
+        if (!reg_zs.test(str)) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+
+
+</script>
+</body>
+</html>

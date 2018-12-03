@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>我的充电桩</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        .topInfoBox h1{
+            color: #F17E38;
+            font-size: 4rem;
+            font-weight: 400;
+        }
+        .topInfoBox small{
+            font-size: .8rem;
+            color: #9D9D9D;
+        }
+
+        .tabBox{
+            text-align: center;
+            padding-top: 20px;
+        }
+        .tabBox span{
+            display: inline-block;
+            padding: 5px 25px;
+            font-size: .8rem;
+        }
+        .tabBox span.select{
+            border-bottom: #EC8131 solid 2px;
+        }
+        .midRow{
+            background: #F0F1F3;
+            padding: 10px 15px;
+            font-size: .8rem;
+            color: #979797;
+        }
+
+        .mui-table-view{
+            font-size: .9rem;
+        }
+        .mui-table-view .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+        }
+
+        #loadMore{
+            background: #eaeaea;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: .8rem;
+            display: none;
+        }
+
+
+        .progress{
+            display: inline-block;
+            height: 10px;
+            width: 40px;
+            background: #979797;
+        }
+        .progressInner{
+            display: block;
+            height: 10px;
+            background: #E88044;
+        }
+    </style>
+
+</head>
+<body style="background: #fff">
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">片区信息</h1>
+</header>
+
+<div class="mui-content" style="background: #fff">
+    <div class="tabBox">
+        <span class="tabItem select" data-type="3">充电桩</span>
+        <span id="normal" class="tabItem " data-type="1">分成比列</span>
+        <span id="abnormal"  class="tabItem" data-type="2">收费价格</span>
+    </div>
+    <div  class="normal">
+        <div class="midRow">
+            <div class="left title-right">账号</div>
+            <div class="right title-left">比列切换时间</div>
+            <div class="clearfix"></div>
+        </div>
+        <ul class="mui-table-view dataList">
+
+        </ul>
+        <div id="loadMore" class="loadMore">加载更多</div>
+        <div id="noMore" class="noMore">没有更多了</div>
+    </div>
+
+</div>
+
+
+<script type="text/html" id="dataTmpl">
+    <li class="mui-table-view-cell">
+        <table class="mui-table" >
+            <tbody >
+            <tr>
+                <td style="width: 70%">{{name}}</td>
+                <td>{{rate1}}</td>
+                <td>{{rate2}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </li>
+</script>
+<script type="text/html" id="dataTmpl2">
+    <li class="mui-table-view-cell">
+        <table class="mui-table" >
+            <tbody >
+            <tr>
+                <td style="width: 16%"></td>
+                <td style="width: 60%">{{price}}</td>
+                <td>{{defaultTime}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </li>
+</script>
+
+<script type="text/html" id="dataTmpl3">
+    <li class="mui-table-view-cell">
+        <table class="mui-table" >
+            <tbody >
+            <tr>
+                <td style="width: 16%"></td>
+                <td style="width: 60%">{{shellId}}</td>
+                <td>{{sevenDaysUseRate}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </li>
+</script>
+
+
+<script type="text/javascript">
+    mui.init();
+
+    var pageNumber = 1;
+    var pageSize = 10;
+
+    var uuid = '';
+    var type = '3';
+
+    if(window.plus){
+        pagePlusReady();
+    }else{
+        document.addEventListener('plusready',pagePlusReady,false);
+    }
+
+    function pagePlusReady(){
+        checkLogin();
+        uuid = plus.storage.getItem("uuid");
+
+
+        $(".title-right").css('margin-left','16%')
+        $(".title-left").css('margin-right','16%')
+        $(".title-right").text("桩号");
+        $(".title-left").text("信号强度");
+        getDataList3();
+    }
+
+
+    $(".tabItem").click(function(){
+        type = $(this).attr("data-type");
+        $(".tabItem").removeClass('select');
+        $(this).addClass("select");
+        pageNumber = 1;
+        $(".dataList").html("");
+        if(type=="1"){
+            $(".title-right").css('margin-left','')
+            $(".title-left").css('margin-right','')
+            $(".title-right").text("账号");
+            $(".title-left").text("比列切换时间");
+           getDataList();
+        }
+        if(type=="2"){
+            $(".title-right").css('margin-left','16%')
+            $(".title-left").css('margin-right','16%')
+
+            $(".title-right").text("价格");
+            $(".title-left").text("时间");
+           getDataList2();
+
+        }
+        if(type=="3"){
+            $(".title-right").css('margin-left','16%')
+            $(".title-left").css('margin-right','16%')
+            $(".title-right").text("桩号");
+            $(".title-left").text("信号强度");
+            getDataList3();
+        }
+
+    });
+
+    /**
+     抓取数据
+     */
+    function getDataList(){
+
+        postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(rrr){
+
+            var userType = rrr.data.userType;
+
+            var groupID = getQueryString("id");
+            var dataParam= {
+                "groupID":groupID
+            }
+            postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupProportionsListByGroupID,dataParam,function(res){
+                if("0" == res.code){
+                    var data = res.data;
+                    var html = '';
+                    var tmpl = $("#dataTmpl").html();
+                    var rateSwitchDate;
+                    $.each(data, function(index,item) {
+
+                        if('1' == userType || item.member.id == rrr.data.id){
+                            html += tmpl.replace(/{{name}}/g,item.name)
+                                .replace(/{{rate1}}/g,item.rate1)
+                                .replace(/{{rate2}}/g,item.rate2);
+                        }
+
+                        rateSwitchDate = new Date(item.rateSwitchDate).format("yyyy-MM-dd");
+                    });
+                    console.log("rateSwitchDate"+rateSwitchDate)
+                    $(".title-left").text("比列切换时间("+rateSwitchDate+")");
+                    $(".dataList").html("");
+                    $(".dataList").append(html);
+                }else{
+                    layer.msg(res.msg);
+                }
+            })
+
+        })
+
+
+    }
+
+    function getDataList2(){
+        var groupID = getQueryString("id");
+        var dataParam= {
+            "groupID":groupID
+        }
+        postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupPriceListByGroupID,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data;
+                var html = '';
+                var tmpl = $("#dataTmpl2").html();
+                $.each(data, function(index,item) {
+                    html += tmpl.replace(/{{price}}/g,item.price+"元")
+                        .replace(/{{defaultTime}}/g,parseInt(item.defaultTime)/60+"小时")
+                });
+
+                $(".dataList").html("");
+                $(".dataList").append(html);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+    function getDataList3(){
+        var groupID = getQueryString("id");
+        var dataParam= {
+            "groupID":groupID
+        }
+        postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID,dataParam,function(res){
+            if("0" == res.code){
+                var data = res.data;
+                var html = '';
+                var tmpl = $("#dataTmpl3").html();
+                $.each(data, function(index,item) {
+                    var qos = item.qos;
+                    if(!vaildeParam(item.qos)){
+                        qos = 0;
+                    }
+
+                    var qosPrecent = (qos/31) * 100;
+
+                    var qosHtml ='<span style="display: inline-block;width: 20px;text-align: right">'+qos+'</span>:<div class="progress"><div class="progressInner" style="width: '+qosPrecent+'%"></div></div>'
+
+                    html += tmpl.replace(/{{shellId}}/g,item.shellId)
+                        .replace(/{{sevenDaysUseRate}}/g, qosHtml)
+                });
+
+                $(".dataList").html("");
+                $(".dataList").append(html);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+
+
+    $("#loadMore").click(function(){
+        pageNumber++;
+        getChargingGroup(uuid);
+    })
+
+
+</script>
+</body>
+
+</html>

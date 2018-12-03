@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>地图</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=L3L8GMqHN9GxRH8ZSS5KTaxrh3nSxYwD"></script>
+
+
+    <style type="text/css">
+
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            width: 100%;
+            height: 100%;
+        }
+        #mapBox{
+            width: 100%;
+            height: 100%;
+        }
+        .searchBox{
+            position: absolute;
+            top:10px;
+            right: 10px;
+            left: 10px;
+            z-index: 999;
+            box-shadow: 0 10px 24px 0 rgba(0,0,0,0.2);
+        }
+
+        #l-map{
+           width: 100%;
+            height: 100%;
+        }
+        #searchLocation{
+
+            outline: none;
+        }
+        #searchLocation:focus{
+            outline: none;
+        }
+
+        #panelBox{
+            position: absolute;
+            bottom:10px;
+            right: 10px;
+            left: 10px;
+            z-index: 999;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 24px 0 rgba(0,0,0,0.2);
+        }
+
+        .mui-input-group:before{
+            background-color:transparent;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div id="mapBox" style="position: relative">
+    <div id="l-map">
+    	
+    </div>
+    <div class="searchBox">
+        <input type="text" name="searchLocation" id="searchLocation" placeholder="搜索" style="margin: 0;border: none">
+    </div>
+</div>
+
+<div class="panel-body" id="panelBox">
+    <form class="mui-input-group">
+        <div class="mui-input-row">
+            <label>地理位置</label>
+            <input type="text"  name="address" id="address"  class="mui-input-clear" placeholder="地理位置">
+        </div>
+        <div class="mui-input-row">
+            <label>经度</label>
+            <input type="text" name="latitude" id="latitude"   class="mui-input-clear" placeholder="经度">
+        </div>
+        <div class="mui-input-row">
+            <label>纬度</label>
+            <input type="text" name="longitude" id="longitude" class="mui-input-clear" placeholder="纬度">
+        </div>
+        <div style="padding-top: 15px;padding-bottom: 15px;text-align: center">
+            <button id="save"  type="button" class="mui-btn mui-btn-primary" style="margin-right: 10px;background: #FF7546;border-color: #FF7546;width: 40%;line-height: 30px">确认</button>
+            <button id="backBtn"  type="button" class="mui-btn mui-btn-danger"  style="margin-left: 10px;width: 40%;line-height: 30px">取消</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+<script>
+
+    mui.init();
+    var ws=null,wo=null;
+
+    // H5 plus事件处理
+    function plusReady(){
+        if(ws||!window.plus){
+            return;
+        }
+        // 获取窗口对象
+        ws=plus.webview.currentWebview();
+        wo=ws.opener();
+
+        $("#save").click(function () {
+           var latitude =  $("#latitude").val();
+            var longitude =  $("#longitude").val();
+            var address =  $("#address").val();
+            console.log("address"+address+"latitude"+latitude+"longitude"+longitude);
+            wo.evalJS( "fullAddress('" + latitude + "','" + longitude + "','" + address +"')" );        //执行父窗口中的方法  A中的showAG方法
+            ws.close();                        //关闭B
+        });
+        $("#backBtn").click(function () {
+             ws.close();                        //关闭B
+        });
+
+
+        var latitude=parent.$("#latitude").val();
+        var longitude=parent.$("#longitude").val();
+        var address=parent.$("#address").val();
+
+        $("#latitude").val(latitude);
+        $("#longitude").val(longitude);
+        $("#address").val(address);
+
+        // 百度地图API功能
+        var map = new BMap.Map("l-map");
+
+        var geoc = new BMap.Geocoder();   //地址解析对象
+
+        var point = new BMap.Point(116.400244,39.92556);
+        if(latitude!=null&&longitude!=null&&latitude!=""&&longitude!=""){
+            point = new BMap.Point(latitude,longitude);
+        }
+
+        map.centerAndZoom(point, 12);
+
+        if(latitude!=null&&longitude!=null&&latitude!=""&&longitude!=""){
+            addMarker(point);
+        }
+
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+        var size = new BMap.Size(10, 20);
+        map.addControl(new BMap.CityListControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            offset: size,
+            // 切换城市之间事件
+            // onChangeBefore: function(){
+            //    alert('before');
+            // },
+            // 切换城市之后事件
+            // onChangeAfter:function(){
+            //   alert('after');
+            // }
+        }));
+
+        //给地图添加点击事件
+        map.addEventListener("click", showInfo);
+
+
+        //地图上标注
+        function addMarker(point) {
+            var marker = new BMap.Marker(point);
+            map.clearOverlays();
+            map.addOverlay(marker);
+        }
+
+        //智能搜索
+        function G(id) {
+            return document.getElementById(id);
+        }
+
+        //建立一个自动完成的对象
+        var ac = new BMap.Autocomplete({"input": "searchLocation", "location": map});
+        ac.addEventListener("onhighlight", function (e) { //鼠标放在下拉列表上的事件
+        });
+
+        var myValue;
+        ac.addEventListener("onconfirm", function (e) { //鼠标点击下拉列表后的事件
+            var _value = e.item.value;
+            myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+            setPlace();
+        });
+
+        function setPlace() {
+            map.clearOverlays(); //清除地图上所有覆盖物
+            function myFun() {
+                var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+                map.centerAndZoom(pp, 15);
+
+                addMarker(pp)
+
+                console.log(pp)
+
+                $("#latitude").val(pp.lng);
+                $("#longitude").val(pp.lat);
+                $("#address").val(myValue);
+
+            }
+
+            var local = new BMap.LocalSearch(map, { //智能搜索
+                onSearchComplete: myFun
+            });
+            local.search(myValue);
+        }
+
+
+        //点击地图事件处理
+        function showInfo(e) {
+            document.getElementById('latitude').value = e.point.lng;
+            document.getElementById('longitude').value =  e.point.lat;
+            geoc.getLocation(e.point, function (rs) {
+                var addComp = rs.addressComponents;
+                var address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+                document.getElementById('address').value = address;
+            });
+            addMarker(e.point);
+        }
+
+        function myFun(result){
+            var cityName = result.name;
+            map.setCenter(cityName);
+        }
+        if(latitude==null||longitude==null||latitude==""||longitude=="") {
+
+            var myCity = new BMap.LocalCity();
+            myCity.get(myFun);
+        }
+
+    }
+
+
+
+    if(window.plus){
+        plusReady();
+    }else{
+        document.addEventListener('plusready',plusReady,false);
+    }
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

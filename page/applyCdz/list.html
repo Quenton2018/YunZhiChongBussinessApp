@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>申请列表</title>
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/iconfont.css">
+    <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../plugins/layer/layer.js"></script>
+    <script src="../../js/hammer.min.js"></script>
+    <script src="../../js/jquery.hammer.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/base.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            font-weight: normal;
+            border-style: none;
+        }
+        img{display: block;}
+        .top{
+            width: 100%;
+            height: 44px;
+            background:white;
+            font-size: 16px;
+            color:white;
+            text-align: center;
+            line-height: 44px;
+            box-shadow: none;
+        }
+        .top .left{
+            float: left;
+            padding-left: 30px;
+            background: url("../../images/pianqushenqing/faihui@3x.png") 15px center no-repeat;
+            background-size: 12px 20px;
+            height: 44px;
+        }
+        .top h1{
+            z-index: -100;
+            margin: 0;
+            padding: 0;
+            color: black;
+        }
+        .conbox01{
+            margin-top: 64px;
+        }
+        .conbox{
+            margin-bottom: 20px;
+        }
+        .box01{
+            background: white;
+            border-bottom:1px #f0f1f3 dashed;
+            padding:10px 15px;
+        }
+        .box01 .imgbox{
+            float: left;
+            width:20px;
+        }
+        .imgbox img{
+            width: 100%;
+        }
+        .box01 h1{
+            margin: 0;
+            padding: 0;
+            float: left;
+            color: black;
+            font-size:15px;
+            line-height: 20px;
+            margin-left: 15px;
+        }
+        .box01 .zhuangtai02{
+            float: right;
+            background-color: rgb(229, 247, 255);
+            width:65px;
+            height: 20px;
+            font-size: 12px;
+            color: rgb(33, 181, 255);
+            text-align: center;
+            border-radius: 10px;
+        }
+        .box01 .zhuangtai01{
+            float: right;
+            width:65px;
+            height: 20px;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 10px;
+            color: rgb(255, 109, 34);
+            background-color: rgb(255, 242, 229);
+        }
+        .box01 .zhuangtai03{
+            float: right;
+            width:65px;
+            height: 20px;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 10px;
+            color: #ff2121;
+            background-color:#ffe6e6;
+        }
+        .box02{
+            background: white;
+            padding: 10px 15px;
+        }
+        .box02 h1{
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            color: black;
+            line-height:30px;
+        }
+        .dbbt{
+            background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+            height: 49px;
+            text-align: center;
+            color: white;
+            font-size:16px;
+            line-height: 49px;
+            box-shadow: none;
+        }
+
+        .loadMore{
+            text-align: center;
+            background: #fff;
+            padding: 10px;
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">申请列表</h1>
+</header>
+
+<div class="btn-submit mui-bar mui-bar-tab" onclick="clicked('apply.html')">申请充电桩</div>
+
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<ul class="conbox01 mui-table-view" id="dataListBox" style="margin-top: 20px;">
+    	
+    	</ul>
+	</div>
+    <!--<div class="loadMore" id="loadMore">加载更多</div>-->
+</div>
+
+
+    <script type="text/html" id="dataTmpl">
+        <li class="conbox mui-table-view-cell" style="padding: 0;margin: 0;">
+        	<div class="mui-slider-right mui-disabled">
+				<a class="mui-btn mui-btn-red" data-id="{{id}}">删除</a>
+			</div>
+			<div class="mui-slider-handle" onclick="clicked('detail.html?id={{id}}')">
+	            <div class="box01">
+	                <div class="imgbox">
+	                    <img src="../../images/pianqushenqing/pianqu@3x.png">
+	                </div>
+	                <h1>申请充电桩数量：<span style="color: rgb(255, 109, 34); ">{{totalCount}}</span>（实际{{realCount}}台）</h1>
+	                <div class="{{zhuangtai}}">{{status}}</div>
+	                <div class="clearfix"></div>
+	            </div>
+	            <div class="box02">
+	                <h1>sn：{{sn}}</h1>
+	                <h1>收货人电话：{{mobile}}</h1>
+	                <h1>地址：{{address}}</h1>
+	                <h1>申请时间：{{createDate}}</h1>
+	                <h1>快递单号：{{expressInfo}}</h1>
+	            </div>
+            </div>
+        </li>
+    </script>
+
+    <script type="application/javascript">
+
+        var pageNumber = 1;
+        var pageSize = 5;
+
+        var uuid = null;
+
+        var $dataListBox = $("#dataListBox");
+
+		mui.init({
+	    	pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					style:'circle',
+					offset: '70',
+					callback: function() {
+						mui('#pullrefresh').pullRefresh().refresh(true);
+						dataRefresh();
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					}
+				},
+	    		up: {
+	    			contentrefresh: '正在加载...',
+	    			auto: false,
+	    			callback: function() {
+	    				setTimeout(function() {
+	    					pageNumber++;
+							getPageData(function(len) {
+	    						mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
+							});
+	    				}, 300);
+	    			}
+	    		}
+	    	}
+	    });
+        // 刷新页面
+	    function dataRefresh(){
+	        pageNumber = 1;      
+	        getPageData();
+	    }
+	    mui.plusReady(function(){
+	    	uuid = plus.storage.getItem("uuid");
+	    	getPageData();
+	    });
+        function getPageData(callback) {
+	
+            var data = {
+                'uuid':uuid,
+                'pageSize':pageSize,
+                'pageNumber':pageNumber
+            }
+
+            postJSON(API_URL.ApiApplyCdzList,data,function (res) {
+
+                if(1 == pageNumber){
+                    $dataListBox.html('');
+                }
+
+                if('0' == res.code){
+
+//                  if(res.data.pagedata.last){
+//                      $("#loadMore").css("display",'none');
+//                  }else{
+//                      $("#loadMore").css("display",'block');
+//                  }
+
+                    var data = res.data.pagedata.content;
+					if (callback) {
+                    	callback(data.length);
+                    }
+                    var html = '';
+                    var tmpl = $("#dataTmpl").html();
+
+                    $.each(data,function (index,item) {
+
+                        var expressInfo = '暂无';
+                        if(vaildeParam(item.expressInfo)){
+                            expressInfo = item.expressInfo;
+                        }
+
+                        var zhuangtai = 'zhuangtai02'
+
+
+                        if('驳回' == item.status){
+                            zhuangtai = 'zhuangtai03'
+                        }
+
+                        html += tmpl.replace(/{{totalCount}}/g,item.totalCount)
+                            .replace(/{{id}}/g,item.id)
+                            .replace(/{{realCount}}/g,item.realCount)
+                            .replace(/{{sn}}/g,item.sn)
+                            .replace(/{{status}}/g,item.status)
+                            .replace(/{{mobile}}/g,item.mobile)
+                            .replace(/{{address}}/g,item.address)
+                            .replace(/{{createDate}}/g,new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss"))
+                            .replace(/{{expressInfo}}/g,expressInfo)
+                            .replace(/{{zhuangtai}}/g,zhuangtai)
+
+                    })
+
+                    $dataListBox.append(html);
+
+
+                }else{
+                    layer.msg(res.msg);
+                }
+
+            })
+        }
+
+		$dataListBox.on('tap', '.mui-btn', function(event) {
+			var elem = this;
+			var id = $(this).attr('data-id');
+			var btnArray=['确定','取消'];
+			mui.confirm('确定删除这个充电桩申请？', '提示', btnArray, function(e) {
+				// 确认删除
+				if (e.index == 0) {
+					handleDel(id);
+				}
+			});
+		});
+		function handleDel(id){
+			var uuid = plus.storage.getItem("uuid");
+			var params = {
+				uuid:uuid,
+				applyId:id
+			}
+			postJSON(API_URL.ApiApplyCdzDelete,params,function(res){
+				layer.msg(res.msg);
+				dataRefresh();
+			});
+		}
+//      $("#loadMore").click(function () {
+//          pageNumber++;
+//          getPageData();
+//      })
+
+
+    </script>
+</body>
+</html>

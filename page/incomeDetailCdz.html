@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>桩收入明细</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        .topBox{
+            position: relative;
+        }
+
+        .dataList{
+            font-size: .9rem;
+        }
+        .dataList .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+            color: #333;
+            font-weight: 300;
+        }
+        .dataList .mui-badge b{
+            font-weight: 300;
+        }
+
+        .topBox .row1{
+            padding: 10px;
+            color: #6F6F70;
+            font-size: .9rem;
+            padding-bottom: 0px;
+        }
+        .topBox .row2{
+            font-size: .7rem;
+            padding: 0 10px;
+            color: #A9A9AA;
+            padding-bottom: 5px;
+        }
+
+        #loadMore{
+            background: #eaeaea;
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            display: none;
+        }
+        .noMore{
+            padding: 10px;
+            text-align: center;
+            font-size: .8rem;
+            display: none;
+        }
+
+        .mui-table{
+            background: #fff;
+            text-align: center;
+            line-height: 40px;
+            font-size: .9rem;
+        }
+
+        .mui-table .dataList tr{
+            border-top: #F0F2F4 solid 1px;
+            position: relative;
+        }
+        .mui-table .dataList tr i{
+            color: #A7ABB0;
+        }
+    </style>
+
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">桩收入明细</h1>
+</header>
+
+<div class="mui-content">
+
+    <div class="topBox">
+        <div class="row1"><span class="dateBox">loading</span> </div>
+        <div class="row2">
+            <div class="left">总收入 : <span id="benyuemoney">0</span>元</div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="dataBox">
+        <table class="mui-table" id="dataTable">
+            <thead>
+                <tr>
+                    <td>桩号</td>
+                    <td>营业额</td>
+                    <td>收入</td>
+                    <td style="width: 30px">&nbsp;</td>
+                </tr>
+            </thead>
+            <tbody class="dataList">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="loadMore">加载更多</div>
+    <div id="noMore" class="noMore">没有更多了</div>
+</div>
+
+<script type="text/html" id="dataTmpl">
+    <tr class="dataItem" data-id="{{id}}" data-shellid="{{shellid}}" data-code="{{code}}" data-year="{{year}}" data-year="{{month}}" onclick="setCzDetail(this)">
+        <td>{{shellid}}</td>
+        <td class="sumMoney">加载中...</td>
+        <td class="partnerMoney">加载中...</td>
+        <td><i class="iconfont icon-youjiantou1"></i></td>
+    </tr>
+</script>
+
+<script type="text/javascript" src="../js/mui.picker.all.js"></script>
+<script type="text/javascript">
+    mui.init();
+
+    var uuid;
+
+    var chargingGroupID = getQueryString("chargingGroupID");
+    var year = getQueryString("year");
+    var month = getQueryString("month");
+    var parnterMoney = getQueryString("parnterMoney");
+
+    if(!vaildeParam(chargingGroupID) || !vaildeParam(year) || !vaildeParam(month)){
+        layer.msg("非法操作");
+        clicked("myIncome.html");
+    }
+
+    $(".dateBox").html(year+"年"+month+"月")
+    $("#benyuemoney").html(parnterMoney);
+
+
+    var monthStr = month+"";
+    if(monthStr.length == 1){
+        monthStr = "0"+monthStr;
+    }
+
+    var firstDay = year+"-"+monthStr+"-"+"01 00:00:00";
+
+    var dateLast = getLastDay(year,month);
+    console.log("## getCdz ## dateLast:"+dateLast)
+
+    var lastDay = dateLast.format("yyyy-MM-dd 23:59:59")
+
+    console.log("## getCdz ## firstDay:"+firstDay)
+    console.log("## getCdz ## lastDay:"+lastDay)
+
+	$.plusReady(function() {
+		uuid = plus.storage.getItem("uuid");
+        getCdz();
+	}, function() {
+		getCdz();
+	});
+
+    
+    function getCdz(){
+
+        var data = {
+            'startDate':firstDay,
+            'endDate':lastDay,
+            'uuid':uuid,
+            'chargingGroupID':chargingGroupID
+        }
+
+        console.log(data);
+
+        postJSON(API_URL.ApiChargingBusinessGetChargingByDivideMoneyLog,data,function (res) {
+
+            if('0' == res.code){
+
+                var dataList = res.data;
+
+                var dataTmpl = $("#dataTmpl").html();
+
+                var html = '';
+
+                $.each(dataList,function (index,item) {
+
+                    var code = item.code;
+
+                    html += dataTmpl.replace(/{{id}}/g,item.id)
+                        .replace(/{{code}}/g,item.code)
+                        .replace(/{{shellid}}/g,item.shellId)
+                        .replace(/{{year}}/g,year)
+                        .replace(/{{month}}/g,month)
+
+                })
+
+                $(".dataList").html(html);
+
+                getSumMoney();
+
+                partnerMoney();
+            }else{
+                layer.msg(res.msg)
+            }
+
+        })
+
+    }
+
+
+    function getSumMoney(){
+        var $sumMoney = $(".sumMoney");
+
+        $.each($sumMoney,function (index,item) {
+
+            var $dataItem = $(item).parents(".dataItem");
+
+            var cdzID = $dataItem.attr("data-id");
+
+            var data = {
+                "uuid":"",
+                "startDate":firstDay,
+                "endDate":lastDay,
+                "groupID":chargingGroupID,
+                "chargingID":cdzID,
+                "chargingSocketID":""
+            }
+
+
+            postJSON(API_URL.ApiAdminGetSumMoney,data,function (res) {
+                $(item).html(res.data);
+            })
+
+        })
+    }
+
+    function partnerMoney(){
+        var $sumMoney = $(".partnerMoney");
+
+        $.each($sumMoney,function (index,item) {
+
+            var $dataItem = $(item).parents(".dataItem");
+
+            var cdzID = $dataItem.attr("data-id");
+
+            var data = {
+                "uuid":uuid,
+                "startDate":firstDay,
+                "endDate":lastDay,
+                "groupID":chargingGroupID,
+                "chargingID":cdzID,
+                "chargingSocketID":""
+            }
+
+            postJSON(API_URL.ApiAdminGetSumMoney,data,function (res) {
+                $(item).html(res.data);
+            })
+
+        })
+    }
+
+
+    function setCzDetail(that) {
+
+        var $this = $(that);
+
+        var id = $this.attr("data-id");
+        var code = $this.attr("data-code");
+        var shellid = $this.attr("data-shellid");
+
+        var partnerMoney = $this.find(".partnerMoney").text();
+
+        var url = 'incomeDetailCz.html?cdzIDCode='+code
+            +'&year='+year
+            +'&month='+month
+            +"&partnerMoney="+partnerMoney
+            +"&chargingGroupID="+chargingGroupID
+            +"&cdzID="+id
+            +"&shellid="+shellid;
+
+        console.log("url : "+url)
+
+        clicked(url);
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>提现</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+        .topBox{
+            position: relative;
+            padding-top: 30px;
+           /* background-color: #fff;*/
+            padding-bottom: 20px;
+        }
+        .topBox .logo-img{
+            display: block;
+            width: 20%;
+            vertical-align: middle;
+            dispaly: block;
+            margin: 0 auto;
+        }
+        .topBox h3{
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: 300;
+            color:#333333;
+            margin-top: 10px;
+            margin-bottom: 5px;
+
+        }
+        .topBox h5{
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            color: #333333;;
+        }
+
+        .dataList{
+            font-size: .9rem;
+        }
+        .dataList .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+            color: #EF7F35;
+            font-weight: 300;
+        }
+        .dataList .mui-badge b{
+            font-weight: 300;
+        }
+        .Box-tixian{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .Button-Img{
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+        }
+        .mui-table-view .mui-media-object {
+            max-width: 70px;
+        }
+    </style>
+
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">提现</h1>
+</header>
+
+<div class="btn-submit mui-bar mui-bar-tab" onclick="clicked('myWallet.html')">完成</div>
+
+<div class="mui-content" style="padding-bottom: 60px;">
+    
+    <div class="topBox">
+        <img class="logo-img" src="../images/yesIcon.png">
+        <h3>提现申请成功</h3>
+        <h5>预计<span id="dateBox">三天后</span>到账</h5>
+
+        <!--<div class="Box-tixian" onclick="clicked('myWallet.html')">
+            <img class="Button-Img putForwardBtn"  src="../images/wancheng.png" />
+        </div>-->
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    mui.init();
+
+    $.plusReady(function() {
+    	
+    });
+</script>
+</body>
+</html>

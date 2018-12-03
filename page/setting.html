@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>设置</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plugins/layer/layer.js"></script>
+    <script src="../js/hammer.min.js"></script>
+    <script src="../js/jquery.hammer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <style type="text/css">
+
+
+        .dataList{
+            font-size: .9rem;
+        }
+        .dataList .mui-badge{
+            background: transparent;
+            font-size: .9rem;
+            color: #EF7F35;
+            font-weight: 300;
+        }
+        .dataList .mui-badge b{
+            font-weight: 300;
+        }
+
+        .mui-table-view .mui-media-object {
+            max-width: 70px;
+        }
+    </style>
+
+</head>
+<body>
+
+<header class="header header-immersed mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">设置</h1>
+</header>
+
+<div class="mui-content" style="    padding-bottom: 60px;">
+
+    <div class="">
+
+        <ul class="mui-table-view" style="margin-top: 20px;">
+            <li class="mui-table-view-cell">账号<span class="right username"></span></li>
+            <li class="mui-table-view-cell">银行卡<span class="right bankCode"></span></li>
+            <li class="mui-table-view-cell">所属银行<span class="right bank"></span></li>
+        </ul>
+
+        <ul class="mui-table-view"  style="margin-top: 20px;">
+            <li class="mui-table-view-cell" onclick="clicked('feedback.html')">
+                <a class="mui-navigate-right">意见反馈</a>
+            </li>
+            <li class="mui-table-view-cell" onclick="clickedTongYong('currencyArticleContent.html','联系我们')">
+                <a class="mui-navigate-right">联系我们</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right"  onclick="clicked('edition.html')" >检查新版本</a>
+            </li>
+        </ul>
+
+        <ul class="mui-table-view"  style="margin-top: 20px;">
+            <li class="mui-table-view-cell" onclick="clicked('customerService.html')" >
+                <a class="mui-navigate-right">客服中心</a>
+            </li>
+        </ul>
+
+
+        <ul id="logOutBtn" class="mui-table-view" style="margin-top: 20px;">
+            <li class="mui-table-view-cell" style="text-align: center; color: #FE0000">退出账号</li>
+        </ul>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    mui.init();
+    
+	var uuid = '';
+    $.plusReady(function() {
+    	checkLogin('page/login.html');
+    	uuid = plus.storage.getItem("uuid");
+        setUserInfo(uuid);
+    }, function() {
+    	setUserInfo(uuid);
+    });
+    
+    function setUserInfo(uuid) {
+        if(!vaildeParam(uuid)){
+            return;
+        }
+
+        var mobile = plus.storage.getItem("mobile");
+        var bank = plus.storage.getItem("bank");
+        var bankCode = plus.storage.getItem("bankCode");
+        if(vaildeParam(bankCode) && bankCode.length > 8){
+            bankCode = bankCode.substr(0, 4) + "********" + bankCode.substr(-4);
+        }
+        
+        $(".username").text(mobile);
+        $(".bank").text(bank);
+        $(".bankCode").text(bankCode);
+    }
+
+    //登出
+    $("#logOutBtn").click(function(){
+        plus.storage.clear();
+        layer.msg("退出登录成功");
+        setTimeout(function(){
+            clicked('login.html');
+        },1000)
+    });
+
+
+
+
+
+
+</script>
+</body>
+</html>

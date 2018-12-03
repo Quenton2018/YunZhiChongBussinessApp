@@ -1,0 +1,125 @@
+#header {
+    background-color: #ffffff;
+}
+
+
+#header img{
+    line-height: 44px;
+    float: left;
+    width: 44px;
+}
+
+
+.mui-bar-nav{
+    background: #fff;
+}
+.mui-bar-nav a{
+    color: #333;
+}
+
+
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+.clearfix{
+    clear: both;
+}
+
+.myList .right {
+    float: right;
+}
+
+.myList .listItem {
+    height: 50px;
+    line-height: 50px;
+    clear: both;
+}
+
+.myList img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.myList .listItem i {
+    color: #CECECE;
+}
+/*ul*/  
+.flex{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/*li 平均分配*/  
+.flex .flex-item{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.nodata{
+	text-align: center;
+}
+
+.header {
+	
+}
+.header-immersed {
+	padding-top: 20px;
+    padding-bottom: 44px;
+    background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+    background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+    background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+}
+.header-immersed .mui-title,
+.header-immersed .mui-icon {
+	color: #FFFFFF;
+}
+
+.btn-submit {
+	background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+    background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+    background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+    height: 49px;
+    line-height: 49px;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    box-shadow: none;
+}
+
+.mui-table-view-cell {
+	/*color: #FF6D22;*/
+}
+
+.mui-table-view-divider {
+	color: #FF6D22;
+	border-bottom: 2px solid #FF6D22;
+}
+
+.mui-radio input[type=radio]:checked:before {
+	color: #FF6D22;
+}
+
+.mui-content {
+	margin-top: 20px
+}
+
+.fixed{
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+}
+input{  		
+    -webkit-user-select: auto!important;  
+}  
