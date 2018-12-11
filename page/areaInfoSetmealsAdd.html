@@ -535,8 +535,8 @@
 					vm.chargesList.splice(index, 1);
 				},
 				addPartners:function(){
-					if(vm.partnersList.length>4){
-						layer.msg("合伙人最多5个人");
+					if(vm.partnersList[0].divideRatio <= 10){
+						layer.msg("合伙人比值为整数且相加不能超过100%");
 						return false;
 					}
 					vm.partnersList.push({
@@ -565,12 +565,13 @@
 		               	} else if (!vaildeParam(divideRatio)) {
 		               		$inputParent.find('input[name="biz"]').attr('readonly', 'readonly');
 		               	}
-						//校验是数字
-		                if(!reg.test(divideRatio)){
-//		                	layer.msg("合伙人金额与比值必须为数字");
-//		                	item.divideRatio = '';
-//							return false;
-		                }else{
+						if(divideRatio > 100){
+		                	vm.partnersList[index].divideRatio = '';
+							layer.msg("合伙人比值不能超过100%,请正确输入");
+							return false;
+						}
+		               	//校验是数字
+		                if(reg.test(divideRatio)){
 		                	if(index !== 0){
 								rateSum += parseFloat(item.divideRatio);
 							}
@@ -591,8 +592,8 @@
 					}
 					if(name == 'amount'){
 						num = 0.05;
-						if (prices < 0.11){
-		                    prices = 0;
+						if (prices < 0.05){
+		                    List[index][name] = 0;
 		                }else{
 		                    List[index][name] = (prices - num).toFixed(2);
 		                }
