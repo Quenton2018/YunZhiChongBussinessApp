@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+	<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>我的合伙人</title>
@@ -8,35 +8,176 @@
     <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
     <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
     <script src="../plugins/layer/layer.js"></script>
     <script src="../js/hammer.min.js"></script>
     <script src="../js/jquery.hammer.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
-    <style type="text/css">
-
-
+    <script src="../js/vue.min.js"></script>
+    <style type="text/css">	
+    	*{box-sizing: border-box;}
+    	.clear{clear: both;}
+		.mui-icon-extra{margin-top: 10px;}
+		.mui-icon-extra-peoples:before{margin-top: 10px;color: #fff;}
+		.partner_wrap{width: 100%;padding: 20px 35px;display: flex;justify-content:space-between}
+		.amount,.income{background-color: #fff;padding: 10px 20px 15px 20px;border-radius: 3px;text-align: center;}
+		.amount{border-bottom: 5px solid #fe4242;margin-right: 15px;}
+		.income{border-bottom: 5px solid #479afd;}
+		.num,.money{font-size: 12px;}
+		.c-color{color: #333;font-size: 16px;font-weight: 700;}
+		.num span,.money span{color: #6f6f6f;}
+		.num i:last-child,.money i:last-child{color: #9f9f9f;font-size: 10px;font-style:normal;}
+		.mean-list{padding: 0 15px 20px 15px;margin: 0 auto;}
+		.list-header{width: 100%;padding: 14px 20px;background-color: #e5e9f2;border-radius: 6px;box-shadow: 1px 1px 2px 1px #ccc;}
+		.mui-table-view{padding: 0 15px 0 8px;font-size: 14px;margin-bottom: 5px;position: relative;}
+		.list-body{margin-top: 10px;}
+		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;}
+		
+		
     </style>
 </head>
-<body>
-
-<header class="header header-immersed mui-bar mui-bar-nav">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">我的合伙人</h1>
-</header>
-
-<div class="mui-content">
-
-
-</div>
+<body background="#f0f1f3" >
+	<header class="header mui-bar header-immersed mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">我的合伙人</h1>
+	    <a class="mui-icon-extra mui-icon-extra-peoples mui-pull-right"></a>
+	</header> 
+	<div class="mui-content">
+	    <div class="partner_wrap" id="headData">
+	    	<div class="amount flex-item">
+	    		<h4 class="c-color">{{item.num}}</h4>
+	    		<p class="num">
+	    			<span>市场合伙总数</span>
+	    			<i>(个)</i>
+	    		</p>
+	    	</div>
+	    	<div class="income flex-item">
+	    		<h4 class="c-color">{{item.money}}</h4>
+	    		<p class="money">
+	    			<span>市场招商收入</span>
+	    			<i>(元)</i>
+	    		</p>
+    		</div>
+	    </div>
+	    <!--列表-->
+	    <div class="mean-list">
+	    	<div class="list-header">
+	    		<div class="c-color left">城市</div>
+	    		<div class="c-color right">合伙人数量</div>
+	    		<div class="clear"></div>
+	    	</div>
+	    	<div class="list-body">
+	    		<ul class="mui-table-view">
+				    <li class="mui-table-view-cell">南昌
+				    	<span class="mui-navigate-right"></span>
+				    	<div class="mui-badge">
+				    		<span>10</span>
+				    		<span>/</span>
+				    		<span>15</span>
+				    	</div>
+				    </li>
+				</ul>
+				<ul class="mui-table-view">
+				    <li class="mui-table-view-cell">南昌
+				    	<span class="mui-navigate-right"></span>
+			    		<div class="mui-badge">
+				    		<span>10</span>
+				    		<span>/</span>
+				    		<span>15</span>
+			    		</div>
+				    </li>
+				</ul>
+	    	</div>
+	    </div>
+	</div>
+	
+	<script type="text/html" id="headTmpl">
+		{{each list as item index}}
+		<div class="amount flex-item">
+    		<h4 class="c-color">{{item.num}}</h4>
+    		<p class="num">
+    			<span>市场合伙总数</span>
+    			<i>(个)</i>
+    		</p>
+    	</div>
+    	<div class="income flex-item">
+    		<h4 class="c-color">{{item.money}}</h4>
+    		<p class="money">
+    			<span>市场招商收入</span>
+    			<i>(元)</i>
+    		</p>
+    	</div>
+    	{{/each}}
+	</script>
 
 <script type="text/javascript">
-
-
-
+	mui.init();
+		
+		//1,调取api接口,传入条件(uuid),拿到数据,
+		//2,必要的话可以将数据转成json格式储存在本地中
+		//3,each遍历{{each list as item index}}
+		//4,文本替换
+		
+		//1,调取接口
+		var uuid='';
+		function dataRefresh(){
+			getDataList();
+		};
+		$.plusReady(function(){
+			uuid = plus.storage.getItem("uuid");
+			getDataList();
+		},function(){
+			dataRefresh();
+		},false);
+		
+		function getDataList(){
+			var params = {
+				'uuid':uuid
+			};
+			postJSON(API_URL.ApiGetApplyChargingGroupById,params,function(res){
+				if(res.code == '0'){
+					console.log(res.data);
+					var headsj = res.data;
+					getAllData(headsj[0]);
+				}else{
+					layer.msg(res.msg);
+				}
+			});
+		};
+		function getAllData(headsj){
+			var num = headsj.num;
+			if(vaildeParam(num)){
+				getheadData(num);
+			}
+		};
+		function getheadData(){
+//			var tableHtml = '';
+//	    	var tableHtml = template('tableTmpl', tableData);
+//	    	$("#tableList").html(tableHtml);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//获得头部数据
+//		function getHeadData(head){
+//			var data = {list:head};
+//			var headHTML = template('headTmpl',data);
+//			$('#headData').html(headHTML);
+//		};
+		
+	
+	
 </script>
+
 </body>
 </html>
+
