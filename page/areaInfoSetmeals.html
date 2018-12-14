@@ -415,6 +415,34 @@
         	margin-right: 4px;
         	vertical-align: 1px;
         }
+        .mui-table-view-cell.mui-collapse .mui-collapse-content{
+        	background: #e5e9f2;
+		    padding: 0;
+		    padding-top: 15px;
+        }
+        .mui-collapse-content span{
+        	margin-bottom: 15px;
+        	width: 16.666666%;
+        	height: 25px;
+        	float: left;
+        	text-align:center;
+        }
+        .mui-collapse-content i.cdzxx{
+        	background: url('../images/area/cdzxx_icon.png') no-repeat;       	
+        	width: 19px;
+        	height: 19px;
+        	background-size: 19px 19px;
+        	vertical-align: middle;
+        	display: inline-block;
+        }
+        .mui-collapse-content i.cdzing{
+        	background: url('../images/area/cdzing.png') no-repeat;
+        	width: 25px;
+        	height: 25px;
+        	background-size: 25px 25px;
+        	vertical-align: middle;
+        	display: inline-block;
+        }
     </style>
 
 </head>
@@ -593,15 +621,25 @@
 
 <script type="text/html" id="cdzTmpl">
 	{{each list as item}}
-	<li class="mui-table-view-cell">
-        <table class="mui-table" >
-            <tbody >
-            <tr>
-                <td align="left">{{if item.status == 2}}<span class="yc"></span>{{/if}}{{if item.status == 1}}<span class="zc"></span>{{/if}}{{item.shellId}}</td>
-        		<td align="right">{{item.qos}}:<span class="progress"><i style="width: {{item.qosPrecent}}%;" class="progressInner"></i></span></td>
-            </tr>
-            </tbody>
-        </table>
+	<li class="mui-table-view-cell mui-collapse">
+		<a class="mui-collapse-a" href="javascript:void(0);">
+	        <div class="left">{{if item.status == 2}}<span class="yc"></span>{{/if}}{{if item.status == 1}}<span class="zc"></span>{{/if}}{{item.shellId}}</div>
+	        <div class="right">{{item.qos}}:<span class="progress"><i style="width: {{item.qosPrecent}}%;" class="progressInner"></i></span></div>
+        </a>
+        <div class="mui-collapse-content">
+            <span><i class="cdzing"></i></span>
+            <span><i class="cdzing"></i></span>
+            <span><i class="cdzing"></i></span>
+            <span><i class="cdzxx"></i></span>
+            <span><i class="cdzxx"></i></span>
+            <span><i class="cdzxx"></i></span>
+            <span><i class="cdzing"></i></span>
+            <span><i class="cdzing"></i></span>
+            <span><i class="cdzing"></i></span>
+            <span><i class="cdzxx"></i></span>
+            <span><i class="cdzxx"></i></span>
+            <span><i class="cdzxx"></i></span>
+        </div>
    </li>
    {{/each}}
 </script>

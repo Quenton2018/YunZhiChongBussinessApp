@@ -23,34 +23,48 @@
 		.header .mui-icon {
 			color: #FFFFFF;
 		}
+		.header .mui-icon {
+			font-size: 28px;
+		}
 		.box01{
-            height: 230px;
-            background: url("images/index/beijing@3x.png") no-repeat;
+            height: 320px;
+            background: url("images/index/indexbg.jpg") no-repeat;
             background-size: 100% 100%;
             text-align: center;
-            padding-top: 40px;
+            /*padding-top: 20px;*/
+        }
+        .income-box{
+        	width: 210px;
+        	margin: 0 auto;
+        	height: 210px;
+        	background: url("images/index/index_bg1.png") no-repeat;
+    		background-size: 100% 100%;
+    		text-align: center;
+        }
+        .income-btm{
+        	margin-top: 40px;
         }
         .box01 h1{
             margin: 0;
             padding: 0;
             color: white;
-            font-size:36px;
+            font-size:28px;
+            padding-top: 50px;
         }
         .box01 h2{
             margin: 0;
-            padding: 0;
-            margin-top: 10px;
-            padding-left: 30px;
-            color: white;
-            font-size: 15px;
-            line-height: 20px;
-            background: url("images/index/shouru@3x.png")  35% center no-repeat;
-            background-size: 25px 20px;
+		    padding: 0;
+		    margin-top: 10px;
+		    padding-left: 44px;
+		    color: white;
+		    font-size: 15px;
+		    line-height: 20px;
+		    background: url(images/index/shouru@3x.png) 25% center no-repeat;
+		    background-size: 25px 20px;
         }
         .box01 .conbox01{
-            margin-top: 50px;
             float: left;
-            width: 50%;
+            width: 33.3333333%;
             text-align: center;
         }
         .conbox01 h3{
@@ -59,11 +73,11 @@
         }
         .conbox01 h4{
             margin-top: 10px;
-            font-size: 13px;
+            font-size: 14px;
             color: white;
-        }
-        
-        a img {
+            font-weight: 400;
+        }       
+        .mui-table-view-cell a img {
         	width: 44px;
         }
 	</style>
@@ -80,50 +94,64 @@
 	<div class="mui-content">
 		<!-- box01 -->
 		<div class="box01">
-	        <h1 class="totalMoney">0.00</h1>
-	        <h2>收入总计(元)</h2>
-	        <div class="conbox01">
-	            <h3 class="dayMoney">0.00</h3>
-	            <h4>今日总收入(元)</h4>
-	        </div>
-	        <div class="conbox01">
-	            <h3 class="cdzCount">0</h3>
-	            <h4>充电桩总数(台)</h4>
-	        </div>
-	        <div class="clearfix"></div>
+            <div class="income-box">
+                <h1 class="totalMoney">0.00</h1>
+                <h2>收入总计(元)</h2>
+            </div>
+			
+			<div class="income-btm mui-clearfix">
+				<div class="conbox01">
+					<h4>日收入(元)</h4>
+		            <h3 class="dayMoney">0.00</h3>	            
+		        </div>
+		        <div class="conbox01">
+		        	<h4>充电桩(台)</h4>
+		            <h3 class="cdzCount">0</h3>		            
+		        </div>
+		        <div class="conbox01">
+		        	<h4>使用率(%)</h4>
+		            <h3 class="rateCount">0</h3>	            
+		        </div>
+			</div>
 	    </div>
 		
         <ul class="mui-table-view mui-grid-view mui-grid-9" style="background-color: #FFFFFF;">
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4">
             	<a onclick="clicked('page/myCdz.html')">
                     <img src="images/index/wodecdz@3x.png">
                     <div class="mui-media-body">我的充电桩</div>
             	</a>
             </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4">
             	<a onclick="clicked('page/myIncome.html')">
                     <img src="images/index/wodeshouru@3x.png">
                     <div class="mui-media-body">我的收入</div>
             	</a>
             </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4">
             	<a onclick="clicked('page/myWallet.html')">
                     <img src="images/index/wodeqianbao@3x.png">
                     <div class="mui-media-body">我的钱包</div>
             	</a>
             </li>
-            <li style="display: none;" id="areaApplicationList" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            <li style="display: none;" id="areaApplicationList" class="mui-table-view-cell mui-media mui-col-xs-4">
             	<a onclick="clicked('page/areaApplicationList.html')">
                     <img src="images/index/pianqushenqing@3x.png">
                     <div class="mui-media-body">片区申请</div>
             	</a>
             </li>
-            <li style="display: none;" id="applyCdz" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            <li style="display: none;" id="applyCdz" class="mui-table-view-cell mui-media mui-col-xs-4">
             	<a onclick="clicked('page/applyCdz/list.html')">
                     <img src="images/index/cdzsq@3x.png">
                     <div class="mui-media-body">充电桩申请</div>
             	</a>
             </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4">
+            	<a onclick="clicked('page/myPartner.html')">
+                    <img src="images/index/wodehhr.png">
+                    <div class="mui-media-body">我的合伙人</div>
+            	</a>
+            </li>         
         </ul> 
 	</div>
 	
@@ -162,7 +190,7 @@
          * 获取用户信息
          */
        	function getUserInfo(){
-            var uuid = plus.storage.getItem("uuid");
+            var uuid = Storage.getItem("uuid");
             if(!vaildeParam(uuid)){
                 return;
             }
@@ -185,15 +213,15 @@
                             $("#areaApplicationList").css("display","inline-block");
                             $("#applyCdz").css("display","inline-block");
                         }
-                        plus.storage.setItem( "mobile", mobile);
-                        plus.storage.setItem( "headImage", headImage);
-                        plus.storage.setItem( "nickname", nickname);
-                        plus.storage.setItem( "phone", phone);
-                        plus.storage.setItem( "bankCode", bankCode);
-                        plus.storage.setItem( "bank", bank);
-                        plus.storage.setItem( "moneyAmount", moneyAmount);
-                        plus.storage.setItem( "totalIncome", totalIncome+'');
-                        plus.storage.setItem( "userType", userType);
+                        Storage.setItem( "mobile", mobile);
+                        Storage.setItem( "headImage", headImage);
+                        Storage.setItem( "nickname", nickname);
+                        Storage.setItem( "phone", phone);
+                        Storage.setItem( "bankCode", bankCode);
+                        Storage.setItem( "bank", bank);
+                        Storage.setItem( "moneyAmount", moneyAmount);
+                        Storage.setItem( "totalIncome", totalIncome+'');
+                        Storage.setItem( "userType", userType);
 
                         console.log("totalIncome : "+totalIncome)
 
@@ -217,7 +245,7 @@
          * 获取今日收入 充电桩总台数
          */
         function GetADaylyIncomeDetail(){
-            var uuid = plus.storage.getItem("uuid");
+            var uuid = Storage.getItem("uuid");
             if(!vaildeParam(uuid)){
                 return;
             }

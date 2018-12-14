@@ -176,7 +176,7 @@
          * 获取
          */
         $(".getCode").click(function(){
-            var uuid = plus.storage.getItem("uuid");
+            var uuid = Storage.getItem("uuid");
 
             var money = $("input[name='money']").val();
 
@@ -255,7 +255,7 @@
             }
             canPostFlag = false;
 
-            var uuid = plus.storage.getItem("uuid");
+            var uuid = Storage.getItem("uuid");
             var money = $("input[name='money']").val();
             if(!vaildeParam(money)){
                 canPostFlag = true;
@@ -307,7 +307,7 @@
 
 
     function getUserInfoDateBase(){
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         console.log("## getUserInfoDateBase ## uuid:"+uuid);
         if(vaildeParam(uuid)){
             postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
@@ -315,9 +315,9 @@
                     var moneyAmount = res.data.moneyAmount;
                     var bankCode = res.data.bankCode;
                     var bank = res.data.bank;
-                    plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
-                    plus.storage.setItem( "bankCode", bankCode);
-                    plus.storage.setItem( "bank", bank);
+                    Storage.setItem( "amountMoney", moneyAmount); //可提现余额
+                    Storage.setItem( "bankCode", bankCode);
+                    Storage.setItem( "bank", bank);
                     if(bankCode.length>8){
                         bankCode =  bankCode.substr(0,4)+"********"+bankCode.substr(-4);
                     }

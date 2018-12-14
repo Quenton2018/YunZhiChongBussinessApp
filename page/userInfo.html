@@ -84,12 +84,12 @@
      * 获取用户信息
      */
     function getUserInfo(){
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         if(vaildeParam(uuid)){
-            var mobile = plus.storage.getItem("mobile");
-            var headImage = plus.storage.getItem("headImage");
-            var nickname = plus.storage.getItem("nickname");
-            var phone = plus.storage.getItem("phone");
+            var mobile = Storage.getItem("mobile");
+            var headImage = Storage.getItem("headImage");
+            var nickname = Storage.getItem("nickname");
+            var phone = Storage.getItem("phone");
             $("#mobileBox").text(mobile);
             if(vaildeParam(headImage)){
                 console.log("## headImage ## : "+headImage);
@@ -111,7 +111,7 @@
      * 获取用户信息
      */
      function getUserInfoDateBase(){
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         console.log("## getUserInfoDateBase ## uuid:"+uuid);
         if(vaildeParam(uuid)){
             postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
@@ -122,12 +122,12 @@
                     var phone = res.data.mobile;
                     var bankCode = res.data.bankCode;
                     var bank = res.data.bank;
-                    plus.storage.setItem( "mobile", mobile);
-                    plus.storage.setItem( "headImage", headImage);
-                    plus.storage.setItem( "nickname", nickname);
-                    plus.storage.setItem( "phone", phone);
-                    plus.storage.setItem( "bankCode", bankCode);
-                    plus.storage.setItem( "bank", bank);
+                    Storage.setItem( "mobile", mobile);
+                    Storage.setItem( "headImage", headImage);
+                    Storage.setItem( "nickname", nickname);
+                    Storage.setItem( "phone", phone);
+                    Storage.setItem( "bankCode", bankCode);
+                    Storage.setItem( "bank", bank);
 
 
                     $("#mobileBox").text(mobile);
@@ -242,7 +242,7 @@
 
     //上传头像图片
     function uploadHead(imgPath) {
-        var uid = plus.storage.getItem("uuid");
+        var uid = Storage.getItem("uuid");
         var image = new Image();
         console.log("dengwenwuimguid"+uid);
         image.src = imgPath;

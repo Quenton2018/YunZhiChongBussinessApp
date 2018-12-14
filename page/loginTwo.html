@@ -97,22 +97,18 @@
 
 		<script type="application/javascript">
 
-            if(window.plus){
-                pagePlusReady();
-            }else{
-                document.addEventListener('plusready',pagePlusReady,false);
-            }
-
-            function pagePlusReady() {
-
+            mui.plusReady(function(){
+            	
                 plus.key.addEventListener("backbutton",function(){
 					plus.runtime.quit();
                 });
-
+				var wv=plus.webview.currentWebview();
+				// 关闭侧滑返回功能
+				wv.setStyle({'popGesture':'none'});
                 /**
                  * 登入
                  */
-                $(".loingBtn").click(function(){
+                $(".loingBtn").on('click',function(){
                     var mobile = $("input[name='regMobile']").val();
                     if(!vaildeParam(mobile)){
                         layer.msg("手机号不能为空");
@@ -146,7 +142,7 @@
 
                 })
 
-            }
+            });
 
             /**
 			 * 校验手机号码
