@@ -22,9 +22,9 @@
     	.clear{clear: both;}
 		.mui-icon-extra{margin-top: 10px;}
 		.mui-icon-extra-peoples:before{margin-top: 10px;color: #fff;}
-		.partner_wrap{width: 100%;padding: 20px 35px;display: flex;justify-content:space-between}
+		.partner_wrap{width: 100%;padding: 20px 10px;display: flex;justify-content:space-around}
 		.amount,.income{background-color: #fff;padding: 10px 20px 15px 20px;border-radius: 3px;text-align: center;}
-		.amount{border-bottom: 5px solid #fe4242;margin-right: 15px;}
+		.amount{border-bottom: 5px solid #fe4242;margin-right: 0;}
 		.income{border-bottom: 5px solid #479afd;}
 		.num,.money{font-size: 12px;}
 		.c-color{color: #333;font-size: 16px;font-weight: 700;}
@@ -93,89 +93,11 @@
 	    	</div>
 	    </div>
 	</div>
-	
-	<script type="text/html" id="headTmpl">
-		{{each list as item index}}
-		<div class="amount flex-item">
-    		<h4 class="c-color">{{item.num}}</h4>
-    		<p class="num">
-    			<span>市场合伙总数</span>
-    			<i>(个)</i>
-    		</p>
-    	</div>
-    	<div class="income flex-item">
-    		<h4 class="c-color">{{item.money}}</h4>
-    		<p class="money">
-    			<span>市场招商收入</span>
-    			<i>(元)</i>
-    		</p>
-    	</div>
-    	{{/each}}
-	</script>
 
 <script type="text/javascript">
 	mui.init();
 		
-		//1,调取api接口,传入条件(uuid),拿到数据,
-		//2,必要的话可以将数据转成json格式储存在本地中
-		//3,each遍历{{each list as item index}}
-		//4,文本替换
-		
-		//1,调取接口
-		var uuid='';
-		function dataRefresh(){
-			getDataList();
-		};
-		$.plusReady(function(){
-			uuid = plus.storage.getItem("uuid");
-			getDataList();
-		},function(){
-			dataRefresh();
-		},false);
-		
-		function getDataList(){
-			var params = {
-				'uuid':uuid
-			};
-			postJSON(API_URL.ApiGetApplyChargingGroupById,params,function(res){
-				if(res.code == '0'){
-					console.log(res.data);
-					var headsj = res.data;
-					getAllData(headsj[0]);
-				}else{
-					layer.msg(res.msg);
-				}
-			});
-		};
-		function getAllData(headsj){
-			var num = headsj.num;
-			if(vaildeParam(num)){
-				getheadData(num);
-			}
-		};
-		function getheadData(){
-//			var tableHtml = '';
-//	    	var tableHtml = template('tableTmpl', tableData);
-//	    	$("#tableList").html(tableHtml);
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//获得头部数据
-//		function getHeadData(head){
-//			var data = {list:head};
-//			var headHTML = template('headTmpl',data);
-//			$('#headData').html(headHTML);
-//		};
-		
-	
-	
+
 </script>
 
 </body>
