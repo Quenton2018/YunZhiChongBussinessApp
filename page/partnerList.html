@@ -22,9 +22,9 @@
 		.list-wrap{display: flex;justify-content: space-between;}
 		.mui-icon-extra-peoples{color: #ff6d22;width: 30px;}
 		.city_wrap,.amount,.cost{margin-top: 8px;}
-		.list-wrap .name_wrap .username{font-size: 14px;}
-		.list-wrap .tel_wrap{padding: 5px 0 0 0;text-align: center;}
-		.list-wrap .username{line-height: 26px;}
+		.amount{padding-top: 3px;}
+		.list-wrap .name_wrap .username{font-size: 14px;line-height: 26px;}
+		.list-wrap .tel_wrap{padding: 2px 0 0 0;text-align: center;}
 		.list-wrap .tel span{color: #333;font-size: 16px;}
 		.list-wrap .pass{border: 1px solid #21b5ff;border-radius: 15px;text-align: center;}
 		.list-wrap .pass span{color: #21b5ff;font-size: 12px;};
@@ -34,7 +34,8 @@
 		.mui-table-view-cell .time{font-size: 12px;}
 		.pass_wrap{text-align: right;}
 		.mui-table-view-cell:after{left: 0;right: 0;}
-		.mui-table-view{margin-bottom: 15px;}
+		.mui-table-view{margin-bottom: 15px;box-shadow: 1px 1px 2px 1px #ccc;}
+		.li-padd{padding: 5px 15px;}
     </style>
 </head>
 <body background="#f0f1f3" >
@@ -78,7 +79,7 @@
 	    			</div>
 	    		</div>
 		    </li>
-		    <li class="mui-table-view-cell">
+		    <li class="mui-table-view-cell li-padd">
 		    	<div class="time">
 		    		<span>申请时间:</span>
 		    		<span>2018-12-14 15:30</span>
