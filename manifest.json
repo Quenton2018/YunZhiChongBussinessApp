@@ -228,7 +228,8 @@
 					"page/areaApplicationList.html",
 					"page/applyCdz/list.html",
 					"index2.html",
-					"page/edition.html"
+					"page/edition.html",
+					"page/myPartner.html"
 				],
 				"priority": 0
 			},
@@ -315,7 +316,8 @@
 				"resources": [],
 				"refer": [
 					"page/putforward.html",
-					"page/bingBank.html"
+					"page/bingBank.html",
+					"page/login.html"
 				],
 				"priority": 0
 			},

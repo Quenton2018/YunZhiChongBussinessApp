@@ -9,36 +9,79 @@
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
     <script src="../plugins/layer/layer.js"></script>
-    <script src="../js/hammer.min.js"></script>
-    <script src="../js/jquery.hammer.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery/progresscircle.js"></script>
     <style type="text/css">
+    	.box-content{
+    		background: #FFFFFF;
+    		padding: 20px 0px 2px;
+    	}
         .topInfoBox{
+            width: 120px;
+            height: 120px;
+            border-radius: 100%;
+            background: #7dfadc;
+            margin: 0 auto;
+            border: 10px solid #dcfdf6;
             text-align: center;
-            padding-top: 10px;
+            margin-bottom: 20px;
         }
         .topInfoBox h1{
-            color: #F17E38;
-            font-size: 4rem;
+            color: #333;
+            font-size: 2rem;
             font-weight: 400;
+            margin-top: 20px;
         }
         .topInfoBox small{
-            font-size: 14px;
-            color: #9D9D9D;
+            font-size: 12px;
+            color: #333;
+            position: relative;
+            top: -6px;
         }
-
+		.utilizationBox{
+			border: 1px solid #c4c4c4;
+			border-width: 1px 0;
+			margin: 0 10px;
+		}
+		.rate-item{
+			/*width: 50%;
+			float: left;*/
+			text-align: center;
+			position: relative;
+			padding: 12px 0;
+		}
+		.rate-left:after{
+			position: absolute;
+			right: 0;
+			top: 0;
+			height: 100%;
+			width: 1px;
+			background: #C4C4C4;
+			content: '';
+		}
+		.rate-item h3{
+			color: #666;
+			font-size: 12px;
+			font-weight: 400;
+		}
         .tabBox{
             text-align: center;
-            padding-top: 20px;
+            margin: 18px 0;
         }
         .tabBox span{
             display: inline-block;
-            padding: 5px 10px 16px 10px;
+            padding: 5px 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;
             font-size: 14px;
+            margin-right: 8px;
+        }
+        .tabBox span:last-child{
+        	margin-right: 0;
         }
         .tabBox span em{
         	padding: 0 5px;
@@ -46,7 +89,8 @@
         	font-style: normal;
         }
         .tabBox span.select{
-            border-bottom: #EC8131 solid 2px;
+        	background: #ff6d22;
+        	color: #fff;
         }
         .midRow{
             /*background: #F0F1F3;
@@ -102,6 +146,53 @@
             font-size: 14px;
             display: none;
         }
+        .circlechart{
+        	width: 72px;
+		  	height: 72px;
+		  	border-radius: 50%;
+		  	border: 6px solid #e9ecf3;
+		  	display: inline-block;
+        }
+        .circle-chart {
+		   width: 100%;
+		   height: 100%;
+		}
+		.circle-outside {
+		  stroke: #faf8fb;
+		  stroke-width: 4;
+		  fill: none; 
+		}
+		.circle-inside {
+		  /*stroke: red;*/
+		  stroke-width: 4;
+		  stroke-linecap: square;
+		  fill: #e9ecf3;
+		  animation: circle-chart-fill 1.5s reverse; /* 1 */
+		 -webkit-animation: circle-chart-fill 1.5s reverse; 
+		  transform: rotate(-90deg); /* 2, 3 */
+		  transform-origin: center; /* 4 */
+		}
+				
+		.circle-negative {
+		  transform: rotate(-90deg) scale(1,-1); /* 1, 2, 3 */
+		}
+				
+		.circle-percent {
+		  alignment-baseline: central;
+		  text-anchor: middle;
+		  font-size: 6px;
+		  fill:#4c4c4c;
+		}
+			
+		@keyframes circle-chart-fill {
+		  to { stroke-dasharray: 0 100; }
+		}
+		@-webkit-keyframes circle-chart-fill {
+		  to { stroke-dasharray: 0 100; }
+		}
+		.mui-pull-caption{
+        	font-weight: normal;
+        }
     </style>
 
 </head>
@@ -112,32 +203,50 @@
     <h1 class="mui-title">我的充电桩</h1>
 </header>
 
-<div class="mui-content" style="background: #FFFFFF">
-
-    <div class="topInfoBox">
-        <h1 id="countAll">0</h1>
-        <small>我的充电桩总数(台)</small>
-    </div>
-
-    <div class="tabBox">
-        <span id="normal" class="tabItem select" data-type="0">充电桩详情</span>
-        <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<em id="countInvalid">0</em>)</span>
-        <span class="tabItem" data-type="3" >未安装(<em id="countUnInstall">0</em>)</span>
-    </div>
-    
-	<div class="midBox">
-	    <div class="midRow">
-	        <div class="left" id="midInfoBox">片区(<span id="groupCount">0</span>)</div>
-	        <div class="right" id="midInfoBoxRight">台数</div>
-	        <div class="clearfix"></div>
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<div class="box-content">
+		    <div class="topInfoBox">
+				<h1 id="countAll">0</h1>
+		    	<small>充电桩(台)</small>
+		    </div>
+			
+			<div class="utilizationBox mui-row">
+				<div class="rate-item rate-left mui-col-xs-6">
+					<div class="circlechart" data-percentage="200.00" data-color="#ff6e0d"></div>
+					<h3>总充电桩使用率</h3>
+				</div>
+				<div class="rate-item rate-right mui-col-xs-6">
+					<div class="circlechart" data-percentage="62.00" data-color="#0d7aff"></div>
+					<h3>上月充电桩使用率</h3>
+				</div>
+			</div>
+		
+		    <div class="tabBox">
+		        <span id="normal" class="tabItem select" data-type="0">充电桩详情</span>
+		        <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<em id="countInvalid">0</em>)</span>
+		        <span class="tabItem" data-type="3" >未安装(<em id="countUnInstall">0</em>)</span>
+		    </div>
+		    
+		</div>
+		<div class="midBox">
+		    <div class="midRow">
+		        <div class="left" id="midInfoBox">片区(<span id="groupCount">0</span>)</div>
+		        <div class="right" id="midInfoBoxRight">台数</div>
+		        <div class="clearfix"></div>
+		    </div>
+		    <div class="normal">
+		        <ul class="mui-table-view dataList">
+		        	<li class="mui-table-view-cell">
+				        <a class="mui-navigate-right" onclick="{{jumpHtml}}" data-id="{{id}}"> <!-- areaList-->
+				            <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
+				            {{groupName}}
+				        </a>
+				    </li>
+		        </ul>
+		    </div>
 	    </div>
-	    <div class="normal">
-	        <ul class="mui-table-view dataList"></ul>
-	        <div id="loadMore" class="loadMore">加载更多</div>
-	        <div id="noMore" class="noMore">没有更多了</div>
-	    </div>
-    </div>
-
+	</div>
 </div>
 
 
@@ -145,7 +254,7 @@
     <li class="mui-table-view-cell">
         <a class="mui-navigate-right" onclick="{{jumpHtml}}" data-id="{{id}}"> <!-- areaList-->
             <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
-            {{groupName}}-{{sn}}
+            {{groupName}}
         </a>
     </li>
 </script>
@@ -168,35 +277,59 @@
 
 
 <script type="text/javascript">
-    mui.init();
-
-    var btnType ="0";  //正常：0 异常：1
+	var btnType ="0";  //正常：0 异常：1
     var pageNumber = 1;
     var pageSize = 10;
     var type = 0;
     var uuid = '';
-
-    $.plusReady(function() {
-        uuid = plus.storage.getItem("uuid");
-        
+    
+//  mui.init();
+	mui.init({
+    	pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				style:'circle',
+				offset: '75px',
+				callback: function() {
+					mui('#pullrefresh').pullRefresh().refresh(true);
+					$('.mui-pull-caption').html('');
+					dataRefresh();
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+				}
+			},
+    		up: {
+    			contentrefresh: '正在加载...',
+    			auto: false,
+    			callback: function() {
+    				setTimeout(function() {
+    					pageNumber++;
+        				getChargingGroup(uuid);
+    				}, 300);
+    			}
+    		}
+    	}
+    });
+    
+	
+    mui.plusReady(function() {
+        uuid = getUUId();      
     	checkLogin();
         getChargingCountByPartner(uuid);
         getChargingGroup(uuid);
-    }, function() {
-    	var type = $('.select').attr('data-type');
-        if (type == 3) {
-        	$(".tabItem").removeClass('select');
-        	$('#normal').addClass("select");
-        }
+       
+    });
+	
+	// 刷新页面
+    function dataRefresh(){
         pageNumber=1;
         getChargingCountByPartner(uuid);
         getChargingGroup(uuid);
-    });
-
+    }
     /**
      * 获取充电桩数量
      */
     function getChargingCountByPartner(uuid) {
+    	$('.circlechart').circlechart();
         var param = {
             'uuid':uuid
         }
@@ -256,6 +389,11 @@
                     $(".dataList").html('');
                 }
                 var data = res.data;
+                
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(data.length == 0);
+                if (data.length == 0 && pageNumber > 1) {
+                	return;
+                }
 
                 getChargingGroupCount(dataParam);
 
@@ -291,14 +429,6 @@
                 $(".dataList").append(html);
 
                 getCount();
-
-                if(falgLast){
-                    $("#loadMore").css({"display":"none"});
-                    $("#noMore").css({"display":"block"});
-                }else{
-                    $("#loadMore").css({"display":"block"});
-                    $("#noMore").css({"display":"none"});
-                }
 
             }else{
                 layer.msg(res.msg);

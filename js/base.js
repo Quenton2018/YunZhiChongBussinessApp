@@ -178,16 +178,16 @@ function postJSON(url, data, callback){
 	
 	url += "?"+postDataFormat(data);
 	
-	console.log("## postJSON ## url : "+url)
+//	console.log("## postJSON ## url : "+url)
 	var load_index = layer.load();
 	var xhr = new plus.net.XMLHttpRequest();
 	xhr.onreadystatechange = function () {
-		console.log("## postJSON ## readyState : "+xhr.readyState)
+			console.log("## postJSON ## readyState : "+xhr.readyState)
 	    switch ( xhr.readyState ) {
 	        case 4:
 	            if ( xhr.status == 200 ) {
 	            		var responseText = xhr.responseText;
-	            		console.log("## postJSON ## responseText : "+responseText)
+	            		console.log("## url: "+url+" #### responseText: "+responseText)
 	            	 	// var json = eval("(" + responseText + ")");
 	            	 	var json = JSON.parse(responseText);
 	            		callback(json);
@@ -208,7 +208,7 @@ function postJSONNoIcon(url, data, callback){
 
     url += "?"+postDataFormat(data);
 
-    console.log("## postJSONNoIcon ## url : "+url)
+//  console.log("## postJSONNoIcon ## url : "+url)
     var xhr = new plus.net.XMLHttpRequest();
     xhr.onreadystatechange = function () {
         console.log("## postJSON ## readyState : "+xhr.readyState)
@@ -216,7 +216,7 @@ function postJSONNoIcon(url, data, callback){
             case 4:
                 if ( xhr.status == 200 ) {
                     var responseText = xhr.responseText;
-                    console.log("## postJSON ## responseText : "+responseText)
+                    console.log("## url: "+url+" #### responseText: "+responseText)
                     var json = eval("(" + responseText + ")");
                     console.log("## postJSON ## json : "+json)
                     callback(json);
@@ -237,9 +237,9 @@ function postJSONNoIcon(url, data, callback){
  */
 function checkLogin(page){
 	
-	var uuid = plus.storage.getItem("uuid");
-	var mobile = plus.storage.getItem("mobile");
-	var loginDate = plus.storage.getItem("login_date");
+	var uuid = Storage.getItem("uuid");
+	var mobile = Storage.getItem("mobile");
+	var loginDate = Storage.getItem("login_date");
 	
 	console.log("## checkLogin ## uuid : " + uuid);
 	console.log("## checkLogin ## mobile : " + mobile);
@@ -267,9 +267,9 @@ function setLoginData(uuid,mobile){
 	var date = formatDate(new Date(),"yyyy-mm-dd HH-mm-ss");
 	console.log("## setLoginData ## date : " + date);
 	
-	plus.storage.setItem( "uuid", uuid);
-	plus.storage.setItem( "mobile", mobile );
-	plus.storage.setItem( "login_date", date);
+	Storage.setItem( "uuid", uuid);
+	Storage.setItem( "mobile", mobile );
+	Storage.setItem( "login_date", date);
 	
 }
 /**
@@ -289,20 +289,20 @@ function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode,moneyAmount){
     var date = formatDate(new Date(),"yyyy-mm-dd HH-mm-ss");
     console.log("## setLoginData ## date : " + date);
 
-    plus.storage.setItem( "uuid", uuid);
-    plus.storage.setItem( "mobile", mobile );
-    plus.storage.setItem( "headImage", headImage);
-    plus.storage.setItem( "phone", phone);
-    plus.storage.setItem( "bank", bank);
-    plus.storage.setItem( "bankCode", bankCode);
-    plus.storage.setItem( "amountMoney", moneyAmount);
-    plus.storage.setItem( "login_date", date);
+    Storage.setItem( "uuid", uuid);
+    Storage.setItem( "mobile", mobile );
+    Storage.setItem( "headImage", headImage);
+    Storage.setItem( "phone", phone);
+    Storage.setItem( "bank", bank);
+    Storage.setItem( "bankCode", bankCode);
+    Storage.setItem( "amountMoney", moneyAmount);
+    Storage.setItem( "login_date", date);
 
 }
 
 
 function clearLogin() {
-    plus.storage.clear();
+    Storage.clear();
 }
 
 
@@ -338,27 +338,27 @@ function postDataFormat(obj){
 }
 
  /** 美化时间显示*/
-    function jsDateDiff(publishTime){
-        var d_minutes,d_hours,d_days;
-        var timeNow = parseInt(new Date().getTime()/1000);
-        var d;
-        d = timeNow - publishTime;
-        d_days = parseInt(d/86400);
-        d_hours = parseInt(d/3600);
-        d_minutes = parseInt(d/60);
-        if(d_days>0 && d_days<4){
-            return d_days+"天前";
-        }else if(d_days<=0 && d_hours>0){
-            return d_hours+"小时前";
-        }else if(d_hours<=0 && d_minutes>0){
-            return d_minutes+"分钟前";
-        }else if(d_days<=0 && d_hours<=0 && d_minutes<=0){
-            return parseInt(d,10)+"秒前";
-        }else{
-            var s = new Date(publishTime*1000);
-            return s.getFullYear()+"年"+(s.getMonth()+1)+"月"+s.getDate()+"日";
-        }
+function jsDateDiff(publishTime){
+    var d_minutes,d_hours,d_days;
+    var timeNow = parseInt(new Date().getTime()/1000);
+    var d;
+    d = timeNow - publishTime;
+    d_days = parseInt(d/86400);
+    d_hours = parseInt(d/3600);
+    d_minutes = parseInt(d/60);
+    if(d_days>0 && d_days<4){
+        return d_days+"天前";
+    }else if(d_days<=0 && d_hours>0){
+        return d_hours+"小时前";
+    }else if(d_hours<=0 && d_minutes>0){
+        return d_minutes+"分钟前";
+    }else if(d_days<=0 && d_hours<=0 && d_minutes<=0){
+        return parseInt(d,10)+"秒前";
+    }else{
+        var s = new Date(publishTime*1000);
+        return s.getFullYear()+"年"+(s.getMonth()+1)+"月"+s.getDate()+"日";
     }
+}
 
 /**
  * 日期格式化
@@ -493,7 +493,7 @@ function uploadLoginInfo(loginPagePath){
     checkLogin(loginPagePath);
 
     setInterval(function () {
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         if(vaildeParam(uuid)){
 
             var osName = plus.os.name;
@@ -551,7 +551,7 @@ function getQueryString(name) {
  */
 function clickedTongYong(item,categoryName){
     console.log(item+":"+categoryName);
-    plus.storage.setItem( "categoryName", categoryName);
+    Storage.setItem( "categoryName", categoryName);
     clicked(item);
 }
 
@@ -736,4 +736,29 @@ function isInArray(arr,value){
         }
     }
     return false;
+}
+
+//本地存储数据
+var Storage = {
+	//存储
+	setItem:function(key, value) {
+	  plus.storage.setItem(key, value);
+	},
+	//取出数据
+	getItem:function(key) {
+	   return plus.storage.getItem(key);
+	},
+	// 删除数据
+	removeItem:function(key) {
+	  plus.storage.removeItem(key);
+	},
+	clear:function(){
+	  plus.storage.clear();
+	}
+}
+/**
+*获取用户uuid
+*/
+function getUUId(){
+  return Storage.getItem("uuid");
 }

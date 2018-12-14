@@ -20,9 +20,8 @@
 
         .topBox{
             position: relative;
-            padding-top: 30px;
+            padding: 30px 0 25px;
             background-color: #fff;
-            padding-bottom: 20px;
         }
         .topBox .logo-img{
             display: block;
@@ -52,14 +51,11 @@
         .dataList .mui-badge b{
             font-weight: 300;
         }
-        .Box-tixian{
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
         .Button-Img{
-            width: 80%;
+            width: 90%;
             display: block;
             margin: 0 auto;
+            border-radius: 49px;
         }
         .mui-table-view .mui-media-object {
             max-width: 70px;
@@ -88,6 +84,35 @@
             font-size: .8rem;
             display: none;
         }
+        .Product-box{
+        	padding: 10px 0;
+        	margin: 25px 0;
+        	box-shadow: 0px 3px 7px 3px rgba(0,0,0,.22);
+        }
+        .product-item{
+        	float: left;
+        	width: 33.3333333%;
+        	text-align: center;
+        	position: relative;
+        }
+        .line:after{
+        	content: '';
+		    position: absolute;
+		    top: 25%;
+		    height: 50%;
+		    width: 1px;
+		    background: #c4c4c4;
+		    right: 0;
+        }
+        .product-item h3{
+        	font-size: 14px;
+        	color: #808080;
+        }
+        .product-item h4{	
+        	font-size: 18px;
+        	color: #333333;
+        	margin-top: 5px;
+        }
     </style>
 
 </head>
@@ -98,16 +123,34 @@
     <h1 class="mui-title">我的钱包</h1>
 </header>
 
-<div class="mui-content" style="    padding-bottom: 60px;">
+<div class="mui-content">
     
     <div class="topBox">
         <img class="logo-img" src="../images/qianbao2.png">
         <h3>我的钱包</h3>
         <h1>&yen;<span id="moneyAmountBox"></span></h1>
-
+		
+		<div class="Product-box mui-clearfix">
+			<div class="product-item line">
+				<h3>产品保证金</h3>
+				<h4>10000.00</h4>
+			</div>
+			<div class="product-item line">
+				<h3>产品运维费</h3>
+				<h4>3800.00</h4>
+			</div>
+			<div class="product-item">
+				<h3>可提现金额</h3>
+				<h4>556.00</h4>
+			</div>			
+		</div> 
         <div class="Box-tixian">
-            <img class="Button-Img putForwardBtn"  src="../images/tixian.png" />
+            <!--<img class="Button-Img putForwardBtn"  src="../images/tixian.png" />-->
+            <div class="btn-submit Button-Img">
+				<span>提现</span>
+			</div>
         </div>
+        
 
     </div>
 
@@ -170,7 +213,7 @@
 
 
     function getList(){
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         var dataParam = {
             "uuid":uuid,
             "type":1,
@@ -205,7 +248,7 @@
 
 
     function getListTwo(){
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         var dataParam = {
             "uuid":uuid,
             "type":2,
@@ -258,7 +301,7 @@
      *提现校验
      */
     $(".Box-tixian").click(function(){
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         console.log("## Box-tixian ## uuid:"+uuid);
         if(vaildeParam(uuid)){
             postJSON(API_URL.ApiAdmincheckWithDrawal,{"uuid":uuid},function(res){
@@ -280,7 +323,7 @@
      * 获取用户信息
      */
     function getUserInfoDateBase(){
-        var uuid = plus.storage.getItem("uuid");
+        var uuid = Storage.getItem("uuid");
         console.log("## getUserInfoDateBase ## uuid:"+uuid);
         if(vaildeParam(uuid)){
             postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
@@ -288,9 +331,9 @@
                     var moneyAmount = res.data.moneyAmount;
                     var bankCode = res.data.bankCode;
                     var bank = res.data.bank;
-                    plus.storage.setItem( "amountMoney", moneyAmount); //可提现余额
-                    plus.storage.setItem( "bankCode", bankCode);
-                    plus.storage.setItem( "bank", bank);
+                    Storage.setItem( "amountMoney", moneyAmount); //可提现余额
+                    Storage.setItem( "bankCode", bankCode);
+                    Storage.setItem( "bank", bank);
 
                     $("#moneyAmountBox").text(moneyAmount);
 

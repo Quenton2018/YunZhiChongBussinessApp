@@ -62,12 +62,12 @@
 			})
 			
 			function getArticleContent(){
-                var uuid = plus.storage.getItem("uuid");
-        		var categoryName = plus.storage.getItem("categoryName");
+                var uuid = Storage.getItem("uuid");
+        		var categoryName = Storage.getItem("categoryName");
         		var dataParam = {
                     "uuid":uuid,
-				   "categoryName":categoryName
-			}
+				    "categoryName":categoryName
+			    }
         		postJSON(API_URL.ApiArticleContentBYName,dataParam,function(res){
 				if("0" == res.code){
 					if(null!=res.data){

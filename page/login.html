@@ -103,10 +103,10 @@
 				</div>
 				<h5 class="mui-content-padded" style="text-align: center;padding: 10px;">或</h5>
 				<div style="margin:0 15px">
-					<img class="Button-Img registerBtn"  src="../images/jiaruBtn.png" onclick="clicked('applyPartner.html')" style="width: 100%" />
+					<img class="Button-Img JumpUrl"  src="../images/jiaruBtn.png" onclick="clicked('applyPartner.html');" style="width: 100%" />
 				</div>
 				<h5 class="mui-content-padded " style="text-align: center;padding: 10px;">或</h5>
-				<div class="loginTwo" style="margin:0 15px" onclick="clicked('loginTwo.html')">
+				<div class="loginTwo JumpUrl" style="margin:0 15px" onclick="clicked('loginTwo.html');">
 					<span>使用密码登入</span>
 				</div>
 				<!--<h5 class="mui-content-padded " style="text-align: center;padding: 10px;">或</h5>
@@ -117,9 +117,7 @@
 
 
 		<script type="application/javascript">
-			
-			$.plusReady();
-			
+						
             var $getCodeBtn = $(".getCode");
             var isLock = false; //是否锁定
             var time = 180; //倒计时
@@ -141,11 +139,10 @@
                     }
                 },1000)
             }
-
             /**
              * 获取
              */
-            $(".getCode").click(function(){
+            $('.getCode').on('click',function(){
                 var mobile = $("input[name='regMobile']").val();
                 if(!vaildeParam(mobile)){
                     layer.msg("手机号不能为空");
@@ -165,24 +162,19 @@
                         layer.msg(res.msg);
                     }
                 })
-            })
-
-            if(window.plus){
-                pagePlusReady();
-            }else{
-                document.addEventListener('plusready',pagePlusReady,false);
-            }
-
-            function pagePlusReady() {
+            });
+            mui.plusReady(function(){
 
                 plus.key.addEventListener("backbutton",function(){
 					plus.runtime.quit();
                 });
-
+				var wv=plus.webview.currentWebview();
+				// 关闭侧滑返回功能
+				wv.setStyle({'popGesture':'none'});
                 /**
                  * 登入
                  */
-                $(".loingBtn").click(function(){
+                $('.loingBtn').on('click',function(){
                     var mobile = $("input[name='regMobile']").val();
                     if(!vaildeParam(mobile)){
                         layer.msg("手机号不能为空");
@@ -203,20 +195,20 @@
                         "code":code
                     }
                     postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
-                        if("0" == res.code){
-                            layer.msg("登入成功，正在跳转...");
-                            setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
-                            setTimeout(function(){
-                                clicked('../index.html')
-                            },2000);
-                        }else{
-                            layer.msg(res.msg);
-                        }
+                    if("0" == res.code){
+                        layer.msg("登入成功，正在跳转...");
+                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+                        setTimeout(function(){
+                            clicked('../index.html')
+                        },2000);
+                    }else{
+                        layer.msg(res.msg);
+                    }
                     })
 
                 })
 
-            }
+            });
 
             /**
 			 * 校验手机号码
