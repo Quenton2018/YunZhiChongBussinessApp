@@ -1083,5 +1083,35 @@ $.plusReady = function(pageReady, pageRefresh, useRefresh) {
         ws.endPullToRefresh();
     }
 }
-
+/**
+ * 下拉刷新
+ * @param {Object} downCallback
+ * @param {Object} upCallback
+ */
+$.pullRefresh = function(downCallback,upCallback){
+	if (!downCallback) {
+		downCallback = function() {}
+	}
+	if (!upCallback) {
+		upCallback = function() {}
+	}
+	mui.init({
+    	pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				style:'circle',
+				offset: '75px',
+				callback: function() {
+					mui('#pullrefresh').pullRefresh().refresh(true);
+					downCallback();
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+				}
+			},
+    		up: {
+    			contentrefresh: '正在加载...',
+    			callback: upCallback
+    		}
+    	}
+    });
+}
 			
