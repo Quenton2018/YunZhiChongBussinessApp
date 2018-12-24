@@ -6,7 +6,7 @@
     <title>申请列表</title>
     <link rel="stylesheet" href="../../css/mui.min.css">
     <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../../js/jquery-3.3.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../plugins/layer/layer.js"></script>
@@ -163,12 +163,10 @@
     var $dataListBox = $("#dataListBox");
     
 	$.pullRefresh(dataRefresh,function() {
-		setTimeout(function() {
-			pageNumber++;
-			getPageData(function(len) {
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
-			});
-		}, 300);
+		pageNumber++;
+		getPageData(function(len) {
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
+		});
 	});
 
     // 刷新页面

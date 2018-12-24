@@ -209,13 +209,11 @@
     var pageSize = 5;
     var shareUrl = null;
 
-	$.pullRefresh(dataRefresh,function() {
-		setTimeout(function() {
-			pageNumber++;
-			getList(function(len) {
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
-			});
-		}, 300);
+	$.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+		getList(function(len) {
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
+		});	
 	});
   	
 	mui.plusReady(getList);

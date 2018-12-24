@@ -1089,12 +1089,6 @@ $.plusReady = function(pageReady, pageRefresh, useRefresh) {
  * @param {Object} upCallback
  */
 $.pullRefresh = function(downCallback,upCallback){
-	if (!downCallback) {
-		downCallback = function() {}
-	}
-	if (!upCallback) {
-		upCallback = function() {}
-	}
 	mui.init({
     	pullRefresh: {
 			container: '#pullrefresh',
@@ -1103,13 +1097,16 @@ $.pullRefresh = function(downCallback,upCallback){
 				offset: '75px',
 				callback: function() {
 					mui('#pullrefresh').pullRefresh().refresh(true);
-					downCallback();
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					downCallback && downCallback();								
 				}
 			},
     		up: {
-    			contentrefresh: '正在加载...',
-    			callback: upCallback
+    			callback: function(){
+    				setTimeout(function() {
+    					upCallback && upCallback();	
+    				}, 300);
+    			}
     		}
     	}
     });
