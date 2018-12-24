@@ -1,7 +1,7 @@
 var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.3";
 apiHost = "http://39.106.62.16:8181";
-
+//apiHost = "http://192.168.1.124:8181";
 
 
 var API_URL = {};
