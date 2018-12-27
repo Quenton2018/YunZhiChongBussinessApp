@@ -117,17 +117,20 @@
 
 <div class="btn-submit mui-bar mui-bar-tab" onclick="clicked('apply.html')">申请充电桩</div>
 
-<div class="mui-content"> 
-	<div id="pullrefresh" class="mui-scroll-wrapper">
-		<div class="mui-scroll">
-			<ul class="conbox01 mui-table-view" id="dataListBox" style="margin-top: 15px;">
-	    	
-	    	</ul>
-		</div>
-	    <!--<div class="loadMore" id="loadMore">加载更多</div>-->
+<div id="J_refresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<ul class="mui-table-view" id="dataListBox" style="margin-top: 15px;"></ul>
 	</div>
 </div>
-
+<div id="nodata" style="display: none;">
+	<div class="nodata-img">
+		<img src="../../images/area/null.png" />
+	</div>
+	<div class="nodata-p">
+		<p>你目前还没有充电桩</p>
+		<p>请前往申请充电桩吧</p>
+	</div>
+</div>
 <script type="text/html" id="dataTmpl">
     <li class="conbox mui-table-view-cell" style="padding: 0;margin: 0;">
     	<div class="mui-slider-right mui-disabled">
@@ -157,16 +160,12 @@
 
     var pageNumber = 1;
     var pageSize = 5;
-
     var uuid = null;
-
     var $dataListBox = $("#dataListBox");
     
 	$.pullRefresh(dataRefresh,function() {
 		pageNumber++;
-		getPageData(function(len) {
-			mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
-		});
+		getPageData();
 	});
 
     // 刷新页面
@@ -178,42 +177,43 @@
     	uuid = Storage.getItem("uuid");
     	getPageData();
     });
-    function getPageData(callback) {
-
-        var data = {
+    function getPageData() {
+        var params = {
             'uuid':uuid,
             'pageSize':pageSize,
             'pageNumber':pageNumber
         }
-
-        postJSON(API_URL.ApiApplyCdzList,data,function (res) {
-
-            if(1 == pageNumber){
-                $dataListBox.html('');
-            }
-
+        postJSON(API_URL.ApiApplyCdzList,params,function (res) {
             if('0' == res.code){
                 var data = res.data.pagedata.content;
-				if (callback) {
-                	callback(data.length);
+                
+				$.stopRefresh(data.length,pageSize);
+				
+				if(1 == pageNumber){
+	                $dataListBox.html('');
+	            }
+				if (data.length == 0 && pageNumber > 1) {
+                	return;
                 }
+				
+				if(!vaildeParam(data)){
+                	mui("#J_refresh").pullRefresh().setStopped(true);
+                	$("#nodata").show();                   	
+                }else{
+                	$("#nodata").hide();
+                }			
                 var html = '';
                 var tmpl = $("#dataTmpl").html();
 
                 $.each(data,function (index,item) {
-
                     var expressInfo = '暂无';
                     if(vaildeParam(item.expressInfo)){
                         expressInfo = item.expressInfo;
                     }
-
                     var zhuangtai = 'zhuangtai02'
-
-
                     if('驳回' == item.status){
                         zhuangtai = 'zhuangtai03'
                     }
-
                     html += tmpl.replace(/{{totalCount}}/g,item.totalCount)
                         .replace(/{{id}}/g,item.id)
                         .replace(/{{realCount}}/g,item.realCount)
@@ -226,14 +226,10 @@
                         .replace(/{{zhuangtai}}/g,zhuangtai)
 
                 })
-
                 $dataListBox.append(html);
-
-
             }else{
                 layer.msg(res.msg);
             }
-
         })
     }
 

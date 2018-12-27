@@ -132,15 +132,15 @@
 		<div class="Product-box mui-clearfix">
 			<div class="product-item line">
 				<h3>产品保证金</h3>
-				<h4>10000.00</h4>
+				<h4 id="deposiMoney">0</h4>
 			</div>
 			<div class="product-item line">
 				<h3>产品运维费</h3>
-				<h4>3800.00</h4>
+				<h4 id="operationalMoney">0</h4>
 			</div>
 			<div class="product-item">
 				<h3>可提现金额</h3>
-				<h4>556.00</h4>
+				<h4 id="moneyAmount">0</h4>
 			</div>			
 		</div> 
         <div class="Box-tixian">
@@ -327,13 +327,19 @@
         if(vaildeParam(uuid)){
             postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                 if("0" == res.code){
+                	var deposiMoney = res.data.deposiMoney;
+                	var operationalMoney = res.data.operationalMoney;
+                	
                     var moneyAmount = res.data.moneyAmount;
                     var bankCode = res.data.bankCode;
                     var bank = res.data.bank;
                     Storage.setItem( "amountMoney", moneyAmount); //可提现余额
                     Storage.setItem( "bankCode", bankCode);
                     Storage.setItem( "bank", bank);
-
+					
+					$("#deposiMoney").text(deposiMoney);
+					$("#operationalMoney").text(operationalMoney);
+					$("#moneyAmount").text(moneyAmount);
                     $("#moneyAmountBox").text(moneyAmount);
 
                 }else{

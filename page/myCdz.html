@@ -12,45 +12,18 @@
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
-    <script src="../js/jquery/progresscircle.js"></script>
     <style type="text/css">
     	.box-content{
     		background: #FFFFFF;
-    		padding: 20px 0px 2px;
     	}
-        .topInfoBox{
-            width: 120px;
-            height: 120px;
-            border-radius: 100%;
-            background: #7dfadc;
-            margin: 0 auto;
-            border: 10px solid #dcfdf6;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .topInfoBox h1{
-            color: #333;
-            font-size: 2rem;
-            font-weight: 400;
-            margin-top: 20px;
-        }
-        .topInfoBox small{
-            font-size: 12px;
-            color: #333;
-            position: relative;
-            top: -6px;
-        }
-		.utilizationBox{
+		.topBox{
 			border: 1px solid #c4c4c4;
 			border-width: 1px 0;
-			margin: 0 10px;
 		}
 		.rate-item{
-			/*width: 50%;
-			float: left;*/
 			text-align: center;
 			position: relative;
-			padding: 12px 0;
+			padding: 25px 0;
 		}
 		.rate-left:after{
 			position: absolute;
@@ -61,26 +34,51 @@
 			background: #C4C4C4;
 			content: '';
 		}
-		.rate-item h3{
-			color: #666;
+		.rate-item .icon{
+			width: 34px;
+			height: 34px;
+			display: inline-block;
+			margin-right: 14px;
+		}
+		.rate-item .icon img{
+			display: block;
+   			width: 100%;
+		}
+		.rate-item .text-right{
+			display: inline-block;
+		}
+		.rate-item h2{
+			color: #ff6e0d;
+			font-size: 22px;
+		}
+		.rate-item h2 sub{
 			font-size: 12px;
-			font-weight: 400;
+			vertical-align: 4px;
+			margin-left: 2px;
+		}
+		.rate-item h3{
+			color: #333;
+			font-size: 13px;
+			font-weight: 400;			
 		}
         .tabBox{
             text-align: center;
-            margin: 18px 0;
+            margin: 10px 0;
+            border: 1px solid #ff6d22;        
+            border-radius: 6px;
+            overflow: hidden;
         }
         .tabBox span{
             display: inline-block;
-            padding: 5px 10px;
-            background: #f5f5f5;
-            border-radius: 4px;
-            box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;
+            padding:8px 0;
+            background: #fff;
+            border-right: 1px solid #ff6d22;
             font-size: 14px;
-            margin-right: 8px;
+            text-align: center;
+            color: #333;
         }
         .tabBox span:last-child{
-        	margin-right: 0;
+        	border-right:none;
         }
         .tabBox span em{
         	padding: 0 5px;
@@ -91,10 +89,7 @@
         	background: #ff6d22;
         	color: #fff;
         }
-        .midRow{
-            /*background: #F0F1F3;
-            padding: 10px 15px;
-            font-size: 14px;*/    
+        .midRow{   
             background: #EEE;
 		    padding: 15px;
 		    font-size: 14px;
@@ -126,72 +121,12 @@
         .mui-table-view .mui-badge{
             background: transparent;
             font-size: .9rem;
+            text-align: right;
         }
+		.list-row{
+			overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+		}
 
-        #loadMore{
-            background: #eaeaea;
-            margin-top: 10px;
-            padding: 10px;
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-            display: none;
-        }
-        .noMore{
-            margin-top: 10px;
-            padding: 10px;
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-            display: none;
-        }
-        .circlechart{
-        	width: 72px;
-		  	height: 72px;
-		  	border-radius: 50%;
-		  	border: 6px solid #e9ecf3;
-		  	display: inline-block;
-        }
-        .circle-chart {
-		   width: 100%;
-		   height: 100%;
-		}
-		.circle-outside {
-		  stroke: #faf8fb;
-		  stroke-width: 4;
-		  fill: none; 
-		}
-		.circle-inside {
-		  /*stroke: red;*/
-		  stroke-width: 4;
-		  stroke-linecap: square;
-		  fill: #e9ecf3;
-		  animation: circle-chart-fill 1.5s reverse; /* 1 */
-		 -webkit-animation: circle-chart-fill 1.5s reverse; 
-		  transform: rotate(-90deg); /* 2, 3 */
-		  transform-origin: center; /* 4 */
-		}
-				
-		.circle-negative {
-		  transform: rotate(-90deg) scale(1,-1); /* 1, 2, 3 */
-		}
-				
-		.circle-percent {
-		  alignment-baseline: central;
-		  text-anchor: middle;
-		  font-size: 6px;
-		  fill:#4c4c4c;
-		}
-			
-		@keyframes circle-chart-fill {
-		  to { stroke-dasharray: 0 100; }
-		}
-		@-webkit-keyframes circle-chart-fill {
-		  to { stroke-dasharray: 0 100; }
-		}
-		.mui-pull-caption{
-        	font-weight: normal;
-        }
     </style>
 
 </head>
@@ -202,46 +137,45 @@
     <h1 class="mui-title">我的充电桩</h1>
 </header>
 
-<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+<div id="J_refresh" class="mui-content mui-scroll-wrapper">
 	<div class="mui-scroll">
-		<div class="box-content">
-		    <div class="topInfoBox">
-				<h1 id="countAll">0</h1>
-		    	<small>充电桩(台)</small>
-		    </div>
-			
-			<div class="utilizationBox mui-row">
+		<div class="box-content">	
+			<div class="topBox mui-row">
 				<div class="rate-item rate-left mui-col-xs-6">
-					<div class="circlechart" data-percentage="200.00" data-color="#ff6e0d"></div>
-					<h3>总充电桩使用率</h3>
+					<div class="icon">
+						<img src="../images/partner/cdz_sum.png">
+					</div>
+					<div class="text-right">
+						<h2><span id="countAll">0</span><sub>台</sub></h2>
+						<h3>充电桩总数</h3>
+					</div>		
 				</div>
 				<div class="rate-item rate-right mui-col-xs-6">
-					<div class="circlechart" data-percentage="62.00" data-color="#0d7aff"></div>
-					<h3>上月充电桩使用率</h3>
+					<div class="icon">
+						<img src="../images/partner/cdz_rate.png">
+					</div>
+					<div class="text-right">
+						<h2>50<sub>%</sub></h2>
+						<h3>充电桩使用率</h3>
+					</div>			
 				</div>
-			</div>
-		
-		    <div class="tabBox">
-		        <span id="normal" class="tabItem select" data-type="0">充电桩详情</span>
-		        <span id="abnormal"  class="tabItem " data-type="2">异常充电桩(<em id="countInvalid">0</em>)</span>
-		        <span class="tabItem" data-type="3" >未安装(<em id="countUnInstall">0</em>)</span>
-		    </div>
-		    
+			</div>		    
 		</div>
+		
 		<div class="midBox">
-		    <div class="midRow">
-		        <div class="left" id="midInfoBox">片区(<span id="groupCount">0</span>)</div>
-		        <div class="right" id="midInfoBoxRight">台数</div>
-		        <div class="clearfix"></div>
+			<div class="tabBox flex">
+		        <span id="normal" class="tabItem select mui-col-xs-4" data-type="0">充电桩详情</span>
+		        <span id="abnormal"  class="tabItem mui-col-xs-4" data-type="2">异常充电桩(<em id="countInvalid">0</em>)</span>
+		        <span class="tabItem mui-col-xs-4" data-type="3" >未安装(<em id="countUnInstall">0</em>)</span>
+		    </div>
+		    <div class="midRow mui-row">
+		        <div class="mui-col-xs-6" id="leftBox">片区(<span id="groupCount">0</span>)</div>
+		        <div class="mui-col-xs-3" id="rateBox" style="text-align: right;">使用率</div>
+		        <div class="mui-col-xs-3" id="rightBox" style="text-align: right;padding-right: 10px;">台数</div>
 		    </div>
 		    <div class="normal">
 		        <ul class="mui-table-view dataList">
-		        	<li class="mui-table-view-cell">
-				        <a class="mui-navigate-right" onclick="{{jumpHtml}}" data-id="{{id}}"> <!-- areaList-->
-				            <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
-				            {{groupName}}
-				        </a>
-				    </li>
+		        	
 		        </ul>
 		    </div>
 	    </div>
@@ -251,9 +185,10 @@
 
 <script type="text/html" id="dataTmpl">
     <li class="mui-table-view-cell">
-        <a class="mui-navigate-right" onclick="{{jumpHtml}}" data-id="{{id}}"> <!-- areaList-->
-            <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
-            {{groupName}}
+        <a class="mui-navigate-right mui-row" onclick="{{jumpHtml}}" data-id="{{id}}"> <!-- areaList-->
+            <span class="list-row mui-col-xs-6">{{groupName}}</span>
+            <span class="list-row mui-col-xs-3" style="text-align: right;">50%</span>
+            <span class="list-row mui-col-xs-3 mui-badge countBox" data-id="{{id}}">{{money}}</span>				            
         </a>
     </li>
 </script>
@@ -276,46 +211,23 @@
 
 
 <script type="text/javascript">
+	
 	var btnType ="0";  //正常：0 异常：1
     var pageNumber = 1;
     var pageSize = 10;
     var type = 0;
     var uuid = '';
     
-//  mui.init();
-	mui.init({
-    	pullRefresh: {
-			container: '#pullrefresh',
-			down: {
-				style:'circle',
-				offset: '75px',
-				callback: function() {
-					mui('#pullrefresh').pullRefresh().refresh(true);
-					$('.mui-pull-caption').html('');
-					dataRefresh();
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-				}
-			},
-    		up: {
-    			contentrefresh: '正在加载...',
-    			auto: false,
-    			callback: function() {
-    				setTimeout(function() {
-    					pageNumber++;
-        				getChargingGroup(uuid);
-    				}, 300);
-    			}
-    		}
-    	}
-    });
-    
+    $.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+        getChargingGroup(uuid);
+	});
 	
     mui.plusReady(function() {
         uuid = getUUId();      
     	checkLogin();
         getChargingCountByPartner(uuid);
-        getChargingGroup(uuid);
-       
+        getChargingGroup(uuid);      
     });
 	
 	// 刷新页面
@@ -328,14 +240,10 @@
      * 获取充电桩数量
      */
     function getChargingCountByPartner(uuid) {
-    	$('.circlechart').circlechart();
         var param = {
             'uuid':uuid
-        }
-        
-        postJSON(API_URL.ApiChargingGetChargingCountByPartner, {
-        	'uuid' : uuid
-        }, function(res){
+        }      
+        postJSON(API_URL.ApiChargingGetChargingCountByPartner, param, function(res){
             if("0" == res.code){
                 $("#countAll").text(res.data.countAll);
                 $("#countValid").text(res.data.countValid);
@@ -358,12 +266,18 @@
         pageNumber = 1;
 		
         if(type != 3){
-            $("#midInfoBox").html('片区(<span id="groupCount">0</span>)');
-            $("#midInfoBoxRight").html("台数");
+            $("#leftBox").html('片区(<span id="groupCount">0</span>)');
+            if(type == 0){
+            	$("#rateBox").html("使用率");
+            }else{
+            	$("#rateBox").html("");
+            }       
+            $("#rightBox").html("台数");
             getChargingGroup(uuid);
         }else{
-            $("#midInfoBox").html("充电桩编号");
-            $("#midInfoBoxRight").html("发货时间");
+            $("#leftBox").html("充电桩编号");
+            $("#rateBox").html("");
+            $("#rightBox").html("发货时间");
             getApplyCdzDataUnInstall();
         }
 
@@ -371,8 +285,8 @@
 
 
     /**
-     抓取数据
-     */
+     	抓取数据
+    */
     function getChargingGroup(uuid){
 
         var dataParam= {
@@ -389,7 +303,8 @@
                 }
                 var data = res.data;
                 
-                mui('#pullrefresh').pullRefresh().endPullupToRefresh(data.length == 0);
+                mui('#J_refresh').pullRefresh().endPullupToRefresh(data.length == 0);
+                
                 if (data.length == 0 && pageNumber > 1) {
                 	return;
                 }
@@ -399,7 +314,7 @@
                 var html = '';
                 var tmpl = $("#dataTmpl").html();
                 if(2 == type){
-                    var tmpl = $("#dataTmpl2").html();
+                	var tmpl = $("#dataTmpl2").html();
                 }
                 var ids = '';
                 var falgLast = true;
@@ -468,10 +383,6 @@
         }
 
         postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall,data,function (res) {
-
-            // $("#loadMore").css({"display":"block"});
-            $("#noMore").css({"display":"none"});
-
             if("0" == res.code){
 
                 if(1 == pageNumber){
@@ -494,7 +405,6 @@
 
                 $(".dataList").append(html);
 
-
                 getTransDate();
 
             }else{
@@ -503,40 +413,22 @@
 
         })
 
-
     }
-
-
-    $("#loadMore").click(function(){
-        pageNumber++;
-        getChargingGroup(uuid);
-    })
-
-    
+   
     function getTransDate() {
         var $transDate = $(".transDate");
-
         $.each($transDate,function (index,item) {
-
             var id = $(item).attr("data-id");
-
             if("加载中" == $(item).text()){
-
                 postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataTransDate,{"id":id},function (res) {
-
                     if(vaildeParam(res.data)){
                         $(item).text(res.data)
                     }else{
                         $(item).text('-')
                     }
-
                 })
-
             }
-
-
-        })
-        
+        })        
     }
     
 

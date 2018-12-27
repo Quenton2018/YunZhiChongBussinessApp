@@ -14,20 +14,21 @@
     <script src="../../js/common.js"></script>
     <script src="../../js/base.js"></script>
     <script src="../../js/mui.min.js"></script>
-
+    <script src="../../js/artTemplate.min.js"></script>
     <style type="text/css">	
-    	.clear{clear: both;}
 		.mui-icon-extra{margin-top: 10px;}
 		.mui-icon-extra-peoples:before{margin-top: 10px;color: #fff;}
 		.mui-table-view{font-size: 14px;background: #efeff4;}		
 		.mui-table-view-cell{padding: 12px 0;margin-bottom: 10px;background: #fff;border-radius: 6px;overflow: hidden;box-shadow: inset #999 0px -1px 3px 0px;}
 		.mui-table-view:after,.mui-table-view:before{height: 0;}
-		.mean-list{padding: 15px;margin: 0 auto;}
+		
+		.mean-list{padding: 15px 15px 0px;margin: 0 auto;}
 		.list-header{width: 100%;padding: 14px 0;background-color: #e5e9f2;border-radius: 6px;box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;}
-		.list-th,.list-td{text-align: center;font-size: 14px;font-weight: 400;}
+		.list-th,.list-td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align: center;font-size: 14px;font-weight: 400;}
     	.list-td i{font-style: normal;font-size: 14px;color: #bbb;margin-left: 2px;vertical-align: middle;}
 		.list-body{margin-top: 10px;}
-		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;}		
+		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;}
+				
     </style>
 </head>
 <body background="#f0f1f3" >
@@ -35,52 +36,86 @@
 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	    <h1 class="mui-title">我的合伙人</h1>
 	    <a class="mui-icon-extra mui-icon-extra-peoples mui-pull-right" onclick="clicked('myPartner/partnerList.html')"></a>
-	</header> 
-	<div class="mui-content">
-	    <!--列表-->
-	    <div class="mean-list">
-	    	<div class="list-header mui-row">
-	    		<h3 class="list-th mui-col-xs-3">合伙人</h3>
-	    		<h3 class="list-th mui-col-xs-3">招商收入</h3>
-	    		<h3 class="list-th mui-col-xs-3">充电桩</h3>
-	    		<h3 class="list-th mui-col-xs-3">片区</h3>
-	    	</div>
-	    	<div class="list-body">
-	    		<ul class="mui-table-view">
-				    <li class="mui-table-view-cell mui-row" onclick="clicked('partnerArea.html')">
-				    	<span class="list-td mui-col-xs-3">小小明</span>
-				    	<span class="list-td mui-col-xs-3">13800</span>
-				    	<span class="list-td mui-col-xs-3">23</span>
-				    	<span class="list-td mui-col-xs-3">2<i class="mui-icon mui-icon-arrowright"></i></span>
-				    </li>
-				    <li class="mui-table-view-cell mui-row" onclick="clicked('partnerArea.html')">
-				    	<span class="list-td mui-col-xs-3">小小明</span>
-				    	<span class="list-td mui-col-xs-3">13800</span>
-				    	<span class="list-td mui-col-xs-3">23</span>
-				    	<span class="list-td mui-col-xs-3">2<i class="mui-icon mui-icon-arrowright"></i></span>
-				    </li>
-				    <li class="mui-table-view-cell mui-row" onclick="clicked('partnerArea.html')">
-				    	<span class="list-td mui-col-xs-3">小小明</span>
-				    	<span class="list-td mui-col-xs-3">13800</span>
-				    	<span class="list-td mui-col-xs-3">23</span>
-				    	<span class="list-td mui-col-xs-3">2<i class="mui-icon mui-icon-arrowright"></i></span>
-				    </li>
-				    <li class="mui-table-view-cell mui-row" onclick="clicked('partnerArea.html')">
-				    	<span class="list-td mui-col-xs-3">小小明</span>
-				    	<span class="list-td mui-col-xs-3">13800</span>
-				    	<span class="list-td mui-col-xs-3">23</span>
-				    	<span class="list-td mui-col-xs-3">2<i class="mui-icon mui-icon-arrowright"></i></span>
-				    </li>
-				</ul>
-
-	    	</div>
-	    </div>
+	</header>
+	
+	<div id="J_refresh" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
+		    <div class="mean-list">
+		    	<div class="list-header mui-row">
+		    		<h3 class="list-th mui-col-xs-6" style="text-align: left;padding-left: 15px;">合伙人</h3>
+		    		<h3 class="list-th mui-col-xs-3">招商收入</h3>
+		    		<h3 class="list-th mui-col-xs-3">片区</h3>
+		    	</div>
+		    	<div class="list-body">
+		    		<ul class="mui-table-view itemList"></ul>
+		    	</div>
+		    </div>
+		</div>
 	</div>
 
-<script type="text/javascript">
-	mui.init();
-		
+<script type="text/html" id="itemTmpl">
+	{{each list as item}}
+	<li class="mui-table-view-cell mui-row list-item" data-id="{{item.uuid}}" data-num="{{item.chargingGroupNumbers}}">
+    	<span class="list-td mui-col-xs-6" style="text-align: left;padding-left: 15px;">{{item.realname}}</span>
+    	<span class="list-td mui-col-xs-3">{{item.depositIncome+item.maintenanceFeeIncome}}</span>
+    	<span class="list-td mui-col-xs-3">{{item.chargingGroupNumbers}}<i class="mui-icon mui-icon-arrowright"></i></span>
+    </li>
+    {{/each}}
+</script>
 
+<script type="text/javascript">
+	var uuid = '';
+	var cityCode = '';
+	var pageNumber = 1;
+    var pageSize = 10;
+    
+	mui.plusReady(function() {
+        uuid = getUUId();      
+    	checkLogin();
+        getList();      
+    });
+
+	$.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+		getList();	
+	});
+		
+	// 刷新页面
+    function dataRefresh(){
+        pageNumber = 1;
+        getList();
+    }
+	function getList(){
+		var params = {
+			'uuid':uuid,
+			'city_code':Storage.getItem('cityCode'),
+			'page_number':pageNumber,
+			'page_size':pageSize
+		};
+		postJSON(API_URL.ApiGetCityPartner,params,function(res){
+			if(res.code == 0){
+				var length = res.data.length;
+		    	$.stopRefresh(length,pageSize);
+		    	
+				if(1 == pageNumber){
+                    $(".itemList").html('');
+                }
+				var itemHtml = '';
+		    	var data = {'list':res.data};
+		    	var itemHtml = template('itemTmpl', data);
+		    	$(".itemList").append(itemHtml);
+			}else{
+                layer.msg(res.msg);
+            }
+		});
+	}
+	$(".itemList").on('tap','.list-item',function(){
+		var partnerUserid = $(this).attr("data-id");
+		var areaNums = $(this).attr("data-num");
+		Storage.setItem('partnerUserid',partnerUserid);
+		Storage.setItem('areaNums',areaNums);
+		clicked('partnerArea.html');
+	});
 </script>
 
 </body>

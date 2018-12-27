@@ -108,6 +108,18 @@ API_URL.ApiChargingBusinessupdateSetmeal = apiHost + "/api/setmeal/updateSetmeal
 API_URL.ApiChargingBusinessAddSetmeal = apiHost + "/api/setmeal/saveSetmeal";
 API_URL.ApiChargingBusinessdeleteChargingGroup = apiHost + "/api/applyChargingGroup/deleteChargingGroup";
 
+API_URL.ApiCountPartnerManager = apiHost + "/api/partnermanager/countPartnerManager"; //管理合伙人的收入
+API_URL.ApiGetPartnerCities = apiHost + "/api/partnermanager/getCities"; //管理合伙人的城市
+API_URL.ApiGetCityPartner = apiHost + "/api/partnermanager/getCityPartner"; //管理合伙人城市的市场合伙人
+API_URL.ApiGetPartnerLeadChargingGroup = apiHost + "/api/chargingStatistics/getPartnerLeadChargingGroup"; //合伙人的片区信息
+API_URL.ApiGetPartnerChargingGroup = apiHost + "/api/chargingStatistics/getPartnerChargingGroup"; //合伙人分成片区
+API_URL.ApiGetPartnerChargingStatistics = apiHost + "/api/chargingStatistics/getPartnerChargingStatistics"; //合伙人的充电桩统计 
+API_URL.ApiGetInvestmentPartner = apiHost + "/api/partnermanager/getInvestmentPartner";//管理合伙人
+API_URL.ApiSaveInvestmentPartner = apiHost + "/api/partnermanager/saveInvestmentPartner"; //管理合伙人添加市场合伙人
+API_URL.ApiDelInvestmentPartner = apiHost + "/api/partnermanager/deleteInvestmentPartner";//管理合伙人删除市场合伙人
+
+
+API_URL.ApiUploadfileByBase64 = apiHost + "/api/common/uploadfileByBase64";//Base64文件上传接口
 
 
 var WX_URL = {};
@@ -721,20 +733,23 @@ function isInArray(arr,value){
 
 //本地存储数据
 var Storage = {
+	getStorage:function(){
+		return plus.storage;
+	},
 	//存储
 	setItem:function(key, value) {
-	  plus.storage.setItem(key, value);
+	  this.getStorage().setItem(key, value);
 	},
 	//取出数据
 	getItem:function(key) {
-	   return plus.storage.getItem(key);
+	  return this.getStorage().getItem(key);
 	},
 	// 删除数据
 	removeItem:function(key) {
-	  plus.storage.removeItem(key);
+	  this.getStorage().removeItem(key);
 	},
 	clear:function(){
-	  plus.storage.clear();
+	  this.getStorage().clear();
 	}
 }
 /**

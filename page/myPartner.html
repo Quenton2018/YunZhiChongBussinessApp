@@ -15,18 +15,18 @@
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
-    <script src="../js/vue.min.js"></script>
+    <script src="../js/artTemplate.min.js"></script>
     <style type="text/css">	
     	.clear{clear: both;}
 		.partner_wrap{padding: 15px;display: flex;justify-content:space-around}
-		.amount,.income{position:relative;background-color: #fff;padding: 10px 20px 6px 20px;border-radius: 3px;text-align: center;}
+		.amount,.income{position:relative;background-color: #fff;padding: 5px 24px 5px 24px;border-radius: 3px;text-align: center;}
 		.amount{border-bottom: 5px solid #fe4242;margin-right: 0;}
 		.income{border-bottom: 5px solid #479afd;}
 		.amount h4,.income h4{font-size: 22px;color: #333;font-weight: 500;}
 		.num,.money{font-size: 14px;}
 		.c-color{color: #333;font-size: 15px;font-weight: 400;}
 		.num span,.money span{color: #6f6f6f;}
-		.num i,.money i{color: #9f9f9f;font-size: 10px;font-style:normal;}
+		.num i,.money i{color: #9f9f9f;font-size: 11px;font-style:normal;}
 		
 		
 		.mui-table-view{border-radius: 6px;overflow: hidden;font-size: 14px;margin-bottom: 5px;background: #efeff4;}
@@ -36,9 +36,9 @@
 		.mean-list{padding: 0 15px 20px 15px;margin: 0 auto;}
 		.list-header{width: 100%;padding: 14px 15px;background-color: #e5e9f2;border-radius: 6px;box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;}
 		.list-body{margin-top: 10px;}
-		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;}
+		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;font-size: 13px;}
 		.jl_icon{background: url(../images/partner/jiao_icon_1.png) no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -3px;right: -2px;}
-		.jr_icon{background: url(../images/partner/jiao_icon_2.png) no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -3px;right: -2px;}
+		.jr_icon{background: url(../images/partner/jiao_icon_2.png) no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -5px;right: -2px;}
     </style>
 </head>
 <body background="#f0f1f3" >
@@ -50,7 +50,7 @@
 	<div class="mui-content">
 	    <div class="partner_wrap" id="headData">
 	    	<div class="amount flex-item">
-	    		<h4>230</h4>
+	    		<h4 id="partnerNumbers">0</h4>
 	    		<p class="num">
 	    			<span>市场合伙人</span>
 	    			<i>(个)</i>
@@ -58,9 +58,9 @@
 	    		</p>
 	    	</div>
 	    	<div class="income flex-item">
-	    		<h4>44356.56</h4>
+	    		<h4 id="investmentIncome">0</h4>
 	    		<p class="money">
-	    			<span>市场招商收入</span>
+	    			<span>招商收入</span>
 	    			<i>(元)</i>
 	    			<i class="jr_icon"></i>
 	    		</p>
@@ -74,32 +74,66 @@
 	    		<div class="clear"></div>
 	    	</div>
 	    	<div class="list-body">
-	    		<ul class="mui-table-view">
-				    <li class="mui-table-view-cell" onclick="clicked('myPartner/partners.html')">南昌
-				    	<span class="mui-navigate-right"></span>
-				    	<div class="mui-badge">
-				    		<span>10</span>
-				    		<span>/</span>
-				    		<span>15</span>
-				    	</div>
-				    </li>
-				    <li class="mui-table-view-cell" onclick="clicked('myPartner/partners.html')">南昌
-				    	<span class="mui-navigate-right"></span>
-			    		<div class="mui-badge">
-				    		<span>10</span>
-				    		<span>/</span>
-				    		<span>15</span>
-			    		</div>
-				    </li>
+	    		<ul class="mui-table-view" id="itemList">
+				    
 				</ul>
 	    	</div>
 	    </div>
 	</div>
 
-<script type="text/javascript">
-	mui.init();
-		
+<script type="text/html" id="itemTmpl">
+	{{each list as item}}
+	<li class="mui-table-view-cell list-item" data-code="{{item.cityCode}}">{{item.cityName}}
+    	<span class="mui-navigate-right"></span>
+    	<div class="mui-badge">
+    		<span>{{item.selfPartnerNumbers}}</span>
+    		<span>/</span>
+    		<span>{{item.partnerNumbers}}</span>
+    	</div>
+    </li>
+    {{/each}}
+</script>
 
+<script type="text/javascript">
+	var uuid = '';
+	$.plusReady(function(){
+		uuid = Storage.getItem('uuid');
+		getCountPartner();
+		getPartnerCities();
+	},function(){
+		uuid = Storage.getItem('uuid');
+		getCountPartner();
+		getPartnerCities();
+	});
+	function getCountPartner(){
+		var params = {
+			uuid:uuid
+		}
+		postJSON(API_URL.ApiCountPartnerManager,params,function(res){
+			if(res.code == 0){
+				$("#partnerNumbers").text(res.data.partnerNumbers);
+				$("#investmentIncome").text(res.data.investmentIncome);
+			}
+		});
+	}
+	function getPartnerCities(){
+		var params = {
+			uuid:uuid
+		}
+		postJSON(API_URL.ApiGetPartnerCities,params,function(res){
+			if(res.code == 0){
+				var itemHtml = '';
+		    	var data = {'list':res.data};
+		    	var itemHtml = template('itemTmpl', data);
+		    	$("#itemList").html(itemHtml);
+			}
+		});
+	}
+	$("#itemList").on('tap','.list-item',function(){
+		var cityCode = $(this).attr("data-code");
+		Storage.setItem('cityCode',cityCode);
+		clicked('myPartner/partners.html');
+	});
 </script>
 
 </body>

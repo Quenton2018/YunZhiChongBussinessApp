@@ -3,7 +3,7 @@
 	<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>片区信息</title>
+    <title>合伙人的片区信息</title>
     <link rel="stylesheet" href="../../css/mui.min.css">
     <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
@@ -14,14 +14,24 @@
     <script src="../../js/common.js"></script>
     <script src="../../js/base.js"></script>
     <script src="../../js/mui.min.js"></script>
-
-    <style type="text/css">	
+	<script src="../../js/artTemplate.min.js"></script>
+	
+    <style type="text/css">
+		.mean-top{margin:15px;height:100px;padding:20px 0;border-radius:6px;background-image:-moz-linear-gradient(135deg,rgb(240,130,0) 0%,rgb(255,105,78) 100%);background-image:-webkit-linear-gradient(135deg,rgb(240,130,0) 0%,rgb(255,105,78) 100%);background-image:-ms-linear-gradient(135deg,rgb(240,130,0) 0%,rgb(255,105,78) 100%);}
+		.list-row{border-right:1px dashed #e5e9f2;color:#fff;text-align:center;position:relative;top:10px;}
+		.list-row:last-child{border:none;text-align:left;position:relative;left:-10px;}
+		.list-row h2{font-size:24px;margin-top:-8px;font-weight:400;}
+		.list-row h2 sub{font-size:14px;font-weight:400;vertical-align:4px;}
+		.list-row h3{font-size:15px;font-weight:400;position:relative;top:10px;}
+		.list-row h4:first-child{margin-top:-18px;}
+		.list-row h4 span{background:#fff;color:#ff8848;width:48px;height:20px;line-height:20px;font-size:12px;font-weight:400;display:inline-block;text-align:center;border-radius:2px;}
+		.list-row h4 em{font-style:normal;padding-right:14px;font-size:14px;float:right;line-height:22px;}
 		.mui-table-view{font-size: 14px;background: #efeff4;}		
 		.mui-table-view-cell{padding: 12px 10px;margin-bottom: 10px;background: #fff;border-radius: 6px;overflow: hidden;box-shadow: inset #999 0px -1px 3px 0px;}
 		.mui-table-view:after,.mui-table-view:before{height: 0;}
-		.mean-list{padding: 15px;margin: 0 auto;}
+		.mean-list{padding: 0 15px;margin: 0 auto;}
 		.list-header{width: 100%;padding: 14px 0;background-color: #e5e9f2;border-radius: 6px;box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;}
-		.list-th,.list-td{text-align: center;font-size: 14px;font-weight: 400;}
+		.list-th,.list-td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align: center;font-size: 14px;font-weight: 400;}
     	.list-td i{font-style: normal;font-size: 14px;color: #bbb;margin-left: 15px;vertical-align: middle;}
 		.list-body{margin-top: 10px;}
 		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;}		
@@ -30,49 +40,117 @@
 <body background="#f0f1f3" >
 	<header class="header mui-bar header-immersed mui-bar-nav">
 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	    <h1 class="mui-title">片区信息</h1>
+	    <h1 class="mui-title">合伙人的片区信息</h1>
 	    <a class="mui-icon-extra mui-icon-extra-peoples mui-pull-right" onclick="clicked('myPartner/partnerList.html')"></a>
 	</header> 
-	<div class="mui-content">
-	    <!--列表-->
-	    <div class="mean-list">
-	    	<div class="list-header mui-row">
-	    		<h3 class="list-th mui-col-xs-4">片区名称</h3>
-	    		<h3 class="list-th mui-col-xs-4">使用率</h3>
-	    		<h3 class="list-th mui-col-xs-4">充电桩数量</h3>
-	    	</div>
-	    	<div class="list-body">
-	    		<ul class="mui-table-view">
-				    <li class="mui-table-view-cell mui-row">
-				    	<span class="list-td mui-col-xs-4">慧谷创意产业园</span>
-				    	<span class="list-td mui-col-xs-4">33%</span>
-				    	<span class="list-td mui-col-xs-4">20</span>
-				    </li>
-				    <li class="mui-table-view-cell mui-row">
-				    	<span class="list-td mui-col-xs-4">慧谷创意产业园</span>
-				    	<span class="list-td mui-col-xs-4">33%</span>
-				    	<span class="list-td mui-col-xs-4">20</span>
-				    </li>
-				    <li class="mui-table-view-cell mui-row">
-				    	<span class="list-td mui-col-xs-4">慧谷创意产业园</span>
-				    	<span class="list-td mui-col-xs-4">33%</span>
-				    	<span class="list-td mui-col-xs-4">20</span>
-				    </li>
-				    <li class="mui-table-view-cell mui-row">
-				    	<span class="list-td mui-col-xs-4">慧谷创意产业园</span>
-				    	<span class="list-td mui-col-xs-4">33%</span>
-				    	<span class="list-td mui-col-xs-4">20</span>
-				    </li>
-				</ul>
-
-	    	</div>
-	    </div>
+	
+	<div id="J_refresh" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
+		    <!--列表-->
+		    <div class="mean-top mui-row">
+		    	<div class="list-row mui-col-xs-3">
+		    		<h2 id="areaNums">0</h2>
+		    		<h3>片区</h3>
+		    	</div>
+		    	<div class="list-row mui-col-xs-3">
+		    		<h2><span id="utilizationRatio">0</span><sub>%</sub></h2>
+		    		<h3>使用率</h3>
+		    	</div>
+		    	<div class="list-row mui-col-xs-3" style="border: none;">
+		    		<h2 id="total">0</h2>
+		    		<h3>充电桩</h3>
+		    	</div>
+		    	<div class="list-row mui-col-xs-3">
+		    		<h4><span>在线</span><em id="valid">0</em></h4>
+		    		<h4><span>异常</span><em id="invalid">0</em></h4>
+		    		<h4><span>未安装</span><em id="unInstall">0</em></h4>
+		    	</div>
+		    </div>
+		    <div class="mean-list">
+		    	<div class="list-header mui-row">
+		    		<h3 class="list-th mui-col-xs-6" style="text-align: left;padding-left: 15px;">片区名称</h3>
+		    		<h3 class="list-th mui-col-xs-3">使用率</h3>
+		    		<h3 class="list-th mui-col-xs-3">充电桩数量</h3>
+		    	</div>
+		    	<div class="list-body">
+		    		<ul class="mui-table-view" id="itemList">
+				    
+					</ul>
+		    	</div>
+		    </div>
+		</div>
 	</div>
-
+<script type="text/html" id="itemTmpl">
+	{{each list as item}}
+	<li class="mui-table-view-cell mui-row">
+    	<span class="list-td mui-col-xs-6" style="text-align: left;">{{item.chargingGroup.name}}</span>
+    	<span class="list-td mui-col-xs-3">{{item.utilizationRatio}}%</span>
+    	<span class="list-td mui-col-xs-3">{{item.chargingNumber}}</span>
+    </li>
+    {{/each}}
+</script>
 <script type="text/javascript">
-	mui.init();
-		
 
+	var pageNumber = 1;
+    var pageSize = 10;
+    
+	$.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+		getList();	
+	});
+
+	mui.plusReady(function() {
+		getCharging();
+        getList();      
+    });
+	
+	// 刷新页面
+    function dataRefresh(){
+        pageNumber = 1;
+        getCharging();
+        getList();
+    }
+	function getList(){
+		var userid = Storage.getItem('partnerUserid');
+		var params = {
+			uuid:userid,
+			page_number:pageNumber,
+			page_size:pageSize
+		};
+		postJSON(API_URL.ApiGetPartnerLeadChargingGroup,params,function(res){
+			if(res.code == 0){
+				var length = res.data.length;				
+		    	$.stopRefresh(length,pageSize);
+		    	
+				if(1 == pageNumber){
+                    $("#itemList").html('');
+               }
+				var itemHtml = '';
+		    	var data = {'list':res.data};
+		    	var itemHtml = template('itemTmpl', data);
+                $("#itemList").append(itemHtml);
+			}else{
+                layer.msg(res.msg);
+            }
+		});
+	}	
+	function getCharging(){
+		var userid = Storage.getItem('partnerUserid');
+		var params = {
+			uuid:userid
+		};
+		postJSON(API_URL.ApiGetPartnerChargingStatistics,params,function(res){
+			if(res.code == 0){
+				var areaNums = Storage.getItem('areaNums');
+				$("#areaNums").text(areaNums);
+				$("#utilizationRatio").text(res.data.utilizationRatio);
+				$("#total").text(res.data.total);
+				$("#valid").text(res.data.valid);
+				$("#invalid").text(res.data.invalid);
+				$("#unInstall").text(res.data.unInstall);
+			}
+		});
+	}
 </script>
 
 </body>

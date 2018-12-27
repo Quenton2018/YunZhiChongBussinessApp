@@ -5,7 +5,6 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>片区申请列表</title>
     <link rel="stylesheet" href="../css/mui.min.css">
-    <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
@@ -127,21 +126,11 @@
             right: 10px;
             bottom: 20px;
             font-size: 3rem;
-        }
-
-        .nodata-img img{
-        	width: 60%;
-        	margin: 0 auto;
-        	margin-bottom: 45px;
-        }
-        .nodata-p{
-        	text-align: center;
-        	font-size: 14px;
-        }
-        
+        }       
         .conbox {
         	margin-bottom: 20px;
         }
+        .mui-table-view:after,.mui-table-view:before{height: 0;}
     </style>
 
 </head>
@@ -155,7 +144,7 @@
 	<span>申请片区</span>
 </footer>
 
-<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+<div id="J_refresh" class="mui-content mui-scroll-wrapper">
 	<div class="mui-scroll">
     	<ul class="dataList mui-table-view" style="margin-top: 15px;"></ul>
    	</div>
@@ -211,9 +200,7 @@
 
 	$.pullRefresh(dataRefresh,function() {	
 		pageNumber++;
-		getList(function(len) {
-			mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
-		});	
+		getList();	
 	});
   	
 	mui.plusReady(getList);
@@ -285,7 +272,7 @@
         });
     }
 
-    function getList(callback){
+    function getList(){
         var uuid = Storage.getItem("uuid");
         if(vaildeParam(uuid)){
             var dataParam = {
@@ -296,9 +283,9 @@
             postJSON(API_URL.ApiGetApplyChargingGroupList,dataParam,function(res){
                 if("0" == res.code){
                     var data = res.data.pagedata.content;
-                    if (callback) {
-                    	callback(data.length);
-                    }
+                    
+                    $.stopRefresh(data.length,pageSize);
+
                     if(1 == pageNumber){
                         $(".dataList").html('');
                     }
@@ -307,7 +294,8 @@
                     }
                     
                     if(!vaildeParam(data)){
-                    	$("#nodata").show();
+                    	mui("#J_refresh").pullRefresh().setStopped(true);
+                    	$("#nodata").show();                   	
                     }else{
                     	$("#nodata").hide();
                     }

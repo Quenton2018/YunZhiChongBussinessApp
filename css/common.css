@@ -120,8 +120,19 @@
 .nodata{
 	text-align: center;
 }
-
-
+.nodata-img img{
+	width: 60%;
+	margin: 0 auto;
+	margin-bottom: 45px;
+	display: block;
+}
+.nodata-p{
+	text-align: center;
+	font-size: 14px;
+}
+.mui-pull-caption{
+  font-weight: normal;
+}
 
 .mui-table-view-cell {
 	/*color: #FF6D22;*/

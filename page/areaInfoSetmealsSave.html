@@ -584,32 +584,7 @@
 		};
 		postJSON(API_URL.ApiApplyChargingGroupSaveChargingGroup,params,function(res){
 			if(res.code == '0'){
-	            var ws = plus.webview.currentWebview();
-	            var wo = ws.opener();
-	            do {
-	            	if (wo.getURL().endsWith("areaApplicationList.html")) {
-	            		break;
-	            	}
-	            	
-	            	var temp = wo.opener();
-	            	wo.close("none");
-	            	wo = temp;
-	            } while (true);
-		
-				setTimeout(function() {
-					wo.evalJS("dataRefresh()");
-					ws.close();
-				}, 300);
-		
-				/*var ws = plus.webview.currentWebview();
-				var wo = ws.opener();
-				var wlist = wo.opener();
-				wo.close("none");
-				setTimeout(function() {
-					wlist.evalJS("dataRefresh()");
-					ws.close();
-				}, 300);*/
-//				clicked('areaApplicationList.html');
+				returnWindow("areaApplicationList.html");
 			}else{
 				layer.msg(res.msg);
 			}
