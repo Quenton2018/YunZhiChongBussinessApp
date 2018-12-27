@@ -12,6 +12,7 @@
     <script src="../js/common.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/mui.min.js"></script>
+    <script src="../js/artTemplate.min.js"></script>
     <style type="text/css">
     	.box-content{
     		background: #FFFFFF;
@@ -147,7 +148,7 @@
 					</div>
 					<div class="text-right">
 						<h2><span id="countAll">0</span><sub>台</sub></h2>
-						<h3>充电桩总数</h3>
+						<h3>充电桩</h3>
 					</div>		
 				</div>
 				<div class="rate-item rate-right mui-col-xs-6">
@@ -155,7 +156,7 @@
 						<img src="../images/partner/cdz_rate.png">
 					</div>
 					<div class="text-right">
-						<h2>50<sub>%</sub></h2>
+						<h2>0<sub>%</sub></h2>
 						<h3>充电桩使用率</h3>
 					</div>			
 				</div>
@@ -182,23 +183,31 @@
 	</div>
 </div>
 
-
 <script type="text/html" id="dataTmpl">
+	{{each list as item}}
     <li class="mui-table-view-cell">
-        <a class="mui-navigate-right mui-row" onclick="{{jumpHtml}}" data-id="{{id}}"> <!-- areaList-->
-            <span class="list-row mui-col-xs-6">{{groupName}}</span>
-            <span class="list-row mui-col-xs-3" style="text-align: right;">50%</span>
-            <span class="list-row mui-col-xs-3 mui-badge countBox" data-id="{{id}}">{{money}}</span>				            
+    	{{if item.chargingGroup.method}}
+        <a class="mui-navigate-right mui-row" onclick="clicked('areaDataXinxi.html?id={{item.chargingGroup.id}}')">
+        {{else}}
+        <a class="mui-navigate-right mui-row" onclick="clicked('areaInfoSetmeals.html?code={{item.chargingGroup.id}}')">
+        {{/if}}
+            <span class="list-row mui-col-xs-6">{{item.chargingGroup.name}}</span>
+            <span class="list-row mui-col-xs-3" style="text-align: right;">{{item.utilizationRatio}}%</span>
+            <span class="list-row mui-col-xs-3 mui-badge countBox">{{item.chargingNumber}}</span>				            
         </a>
     </li>
+    {{/each}}
 </script>
+
 <script type="text/html" id="dataTmpl2">
+	{{each list as item}}
     <li class="mui-table-view-cell">
-        <a class="mui-navigate-right" onclick="clicked('areaListUnNormal.html?id={{id}}')" data-id="{{id}}">
-            <span class="mui-badge countBox" data-id="{{id}}">{{money}}</span>
-            {{groupName}}
+        <a class="mui-navigate-right" onclick="clicked('areaListUnNormal.html?id={{item.id}}')" data-id="{{item.id}}">
+            <span class="mui-badge countBox" data-id="{{item.id}}"><img src="../images/5-121204194028.gif" height="15"></span>
+            {{item.name}}
         </a>
     </li>
+    {{/each}}
 </script>
 <script type="text/html" id="dataTmpl3">
     <li class="mui-table-view-cell">
@@ -257,12 +266,9 @@
 
 
     $(".tabItem").click(function(){
-
         type = $(this).attr("data-type");
-
-        $(".tabItem").removeClass('select');
-        $(this).addClass("select");
-
+        $(this).addClass("select").siblings().removeClass('select');
+		$.enableRefresh();
         pageNumber = 1;
 		
         if(type != 3){
@@ -280,76 +286,83 @@
             $("#rightBox").html("发货时间");
             getApplyCdzDataUnInstall();
         }
-
     })
 
-
-    /**
-     	抓取数据
-    */
-    function getChargingGroup(uuid){
-
-        var dataParam= {
-            "uuid":uuid,
-            "pageSize":pageSize,
-            "pageNumber":pageNumber,
-            "type":type
-        }
-
-        postJSON(API_URL.ApiGetChargingGroup,dataParam,function(res){
+	//获取片区
+    function getChargingGroup(uuid){ 	
+		if(type == 0){
+			var dataParam= {
+	            "uuid":uuid,
+	            "page_size":pageSize,
+	            "page_number":pageNumber,
+	            "type":type
+	        }
+			getPartnerChargingGroup(dataParam);
+		}else if(type == 2){
+			var dataParam= {
+	            "uuid":uuid,
+	            "pageSize":pageSize,
+	            "pageNumber":pageNumber,
+	            "type":type
+	        }
+			invalidCharging(dataParam);
+		}    
+    }
+	//充电桩详情
+	function getPartnerChargingGroup(dataParam){		
+		postJSON(API_URL.ApiGetPartnerChargingGroup,dataParam,function(res){
             if("0" == res.code){
                 if(1 == pageNumber){
                     $(".dataList").html('');
                 }
-                var data = res.data;
                 
-                mui('#J_refresh').pullRefresh().endPullupToRefresh(data.length == 0);
+                var data = res.data;            
+                $.stopRefresh(data.length,pageSize);
                 
                 if (data.length == 0 && pageNumber > 1) {
                 	return;
                 }
 
                 getChargingGroupCount(dataParam);
-
-                var html = '';
-                var tmpl = $("#dataTmpl").html();
-                if(2 == type){
-                	var tmpl = $("#dataTmpl2").html();
-                }
-                var ids = '';
-                var falgLast = true;
-                var jumpHtml = '';
-                $.each(data, function(index,item) {
-                    var createDate = new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss");
-                    if(item.method){
-                    	jumpHtml = "clicked('areaDataXinxi.html?id={{id}}')";
-                    }else{
-                    	jumpHtml = "clicked('areaInfoSetmeals.html?code={{id}}')";
-                    }                
-                    html += tmpl.replace(/{{createDate}}/g,createDate)
-                        .replace(/{{groupName}}/g,item.name)
-                        .replace(/{{jumpHtml}}/g,jumpHtml)
-                        .replace(/{{sn}}/g,item.sn)
-                        .replace(/{{id}}/g,item.id)
-                        .replace(/{{money}}/g,'<img src="../images/5-121204194028.gif" height="15">');
-                    ids += item.id+",";
-                    if(index<9){
-                        falgLast =true;
-                    }else{
-                        falgLast =false;
-                    }
-                });
-
-                $(".dataList").append(html);
-
-                getCount();
-
+                
+				var itemHtml = '';
+		    	var data = {'list':res.data};
+		    	var itemHtml = template('dataTmpl', data);
+		    	$(".dataList").append(itemHtml);
+		    	
             }else{
                 layer.msg(res.msg);
             }
         })
-    }
+	}
+	
+	//异常充电桩
+	function invalidCharging(dataParam){
+		postJSON(API_URL.ApiGetChargingGroup,dataParam,function(res){
+            if("0" == res.code){
+                if(1 == pageNumber){
+                    $(".dataList").html('');
+                }
+                var data = res.data;            
+                $.stopRefresh(data.length,pageSize);
+                
+                if (data.length == 0 && pageNumber > 1) {
+                	return;
+                }
 
+                getChargingGroupCount(dataParam);
+                
+				var itemHtml = '';
+		    	var data = {'list':res.data};
+		    	var itemHtml = template('dataTmpl2', data);
+		    	$(".dataList").append(itemHtml);
+                getCount();
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+	}
+	
     function getChargingGroupCount(dataParam) {
         postJSON(API_URL.ApiGetChargingGroupCount,dataParam,function (res) {
             $("#groupCount").text(res.data);
@@ -357,22 +370,16 @@
     }
 
     function getCount(){
-
         var $countBox = $(".countBox");
-
         $.each($countBox,function (index,item) {
-
             var id = $(item).attr("data-id");
-
             postJSON(API_URL.ApiChargingGetChargingCountByGroupID,{"partnerUUID":"","groupID":id,"type":type},function (res) {
                 $(".countBox[data-id='"+id+"']").html(res.data);
             })
-
         })
-
     }
 
-
+	//未安装充电桩
     function getApplyCdzDataUnInstall(){
 		var unInstallNum = parseInt($('#countUnInstall').html());
 		unInstallNum = isNaN(unInstallNum) ? 10 : unInstallNum;
@@ -381,40 +388,29 @@
             "pageSize":unInstallNum,
             "pageNumber":1
         }
-
         postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall,data,function (res) {
             if("0" == res.code){
-
                 if(1 == pageNumber){
                     $(".dataList").html('');
                 }
                 var data = res.data;
-
                 if(data.length == 0){
                     layer.msg("没有更多了")
                 }
-
                 var html = '';
-
                 var dataTmpl3 = $("#dataTmpl3").html();
-
                 $.each(data,function (index,item) {
                     html +=dataTmpl3.replace(/{{code}}/g,item.shellId)
                         .replace(/{{id}}/g,item.id);
                 })
-
                 $(".dataList").append(html);
-
                 getTransDate();
-
             }else{
                 layer.msg(res.msg);
             }
-
         })
-
     }
-   
+   	//获取发货时间
     function getTransDate() {
         var $transDate = $(".transDate");
         $.each($transDate,function (index,item) {

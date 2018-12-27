@@ -13,15 +13,19 @@
 		<script src="../js/common.js"></script>
 		<script src="../js/base.js"></script>
 		<style type="text/css">
-			body{
-				margin:0 ;
-				padding: 0;
-				width: 100%;
+			html,
+			body {
 				height: 100%;
+				margin: 0px;
+				padding: 0px;
 				overflow: hidden;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
 			}
 			.mui-content{
+				height: 100%;
 				background-color: #ffffff;
+				overflow: hidden;
 			}
 			.loginBox{
 				overflow: hidden;
@@ -163,7 +167,9 @@
                 })
             });
             mui.plusReady(function(){
-
+				plus.webview.currentWebview().setStyle({
+					softinputMode: "adjustResize"
+				});
                 plus.key.addEventListener("backbutton",function(){
 					plus.runtime.quit();
                 });

@@ -234,24 +234,26 @@
     }
 
 	$dataListBox.on('tap', '.mui-btn', function(event) {
-		var elem = this;
+		var $elem = $(this);
 		var id = $(this).attr('data-id');
 		var btnArray=['确定','取消'];
 		mui.confirm('确定删除这个充电桩申请？', '提示', btnArray, function(e) {
 			// 确认删除
 			if (e.index == 0) {
-				handleDel(id);
+				handleDel($elem,id);
 			}
 		});
 	});
-	function handleDel(id){
+	function handleDel($elem,id){
 		var params = {
 			uuid:uuid,
 			applyId:id
 		}
 		postJSON(API_URL.ApiApplyCdzDelete,params,function(res){
 			layer.msg(res.msg);
-			dataRefresh();
+			if(res.code == '0'){
+				$elem.parents("li").remove();
+			}
 		});
 	}
 

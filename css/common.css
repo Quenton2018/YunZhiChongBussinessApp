@@ -79,7 +79,9 @@
 .clearfix{
     clear: both;
 }
-
+.hide{
+	display: none;
+}
 .myList .right {
     float: right;
 }

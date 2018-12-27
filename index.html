@@ -72,10 +72,9 @@
 	</style>
 </head>
 
-<body style="background-color: #FFFFFF;">
-
+<body style="background-color: #FFF;">
 	<header class="header header-immersed mui-bar mui-bar-nav">
-	    <a class="mui-icon mui-icon-person" id="userInfo"></a>
+	    <a class="mui-icon mui-icon-person" onclick="clicked('page/menu.html')"></a>
 	    <h1 class="mui-title">云智充</h1>
 	    <a class="mui-icon mui-icon-gear mui-icon-right-nav mui-pull-right" onclick="clicked('page/setting.html')"></a>
 	</header>
@@ -123,19 +122,19 @@
                     <div class="mui-media-body">我的钱包</div>
             	</a>
             </li>
-            <li style="display: none;" id="areaApplicationList" class="mui-table-view-cell mui-media mui-col-xs-4">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-hidden" id="areaApplicationList">
             	<a onclick="clicked('page/areaApplicationList.html')">
                     <img src="images/index/pianqushenqing@3x.png">
                     <div class="mui-media-body">片区申请</div>
             	</a>
             </li>
-            <li style="display: none;" id="applyCdz" class="mui-table-view-cell mui-media mui-col-xs-4">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-hidden" id="applyCdz" >
             	<a onclick="clicked('page/applyCdz/list.html')">
                     <img src="images/index/cdzsq@3x.png">
                     <div class="mui-media-body">充电桩申请</div>
             	</a>
             </li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-hidden" id="myPartner">
             	<a onclick="clicked('page/myPartner.html')">
                     <img src="images/index/wodehhr.png">
                     <div class="mui-media-body">我的合伙人</div>
@@ -168,13 +167,7 @@
     		getUserInfo();
             GetADaylyIncomeDetail();
     	});
-    	
-    	var userInfo = document.getElementById('userInfo');
-    	userInfo.addEventListener('click', function() {
-    		// mui('#offCanvasWrapper').offCanvas().show();
-    		clicked('page/menu.html');
-    	}, false);
-    	
+    	  	
     	/**
          * 获取用户信息
          */
@@ -198,9 +191,13 @@
                         var moneyAmount = res.data.moneyAmount;
                         var userType = res.data.userType;
                         var totalIncome = res.data.totalIncome;
+                        var partnerManager = res.data.partnerManager;
                         if("1"==userType){
-                            $("#areaApplicationList").css("display","inline-block");
-                            $("#applyCdz").css("display","inline-block");
+                            $("#areaApplicationList").removeClass('mui-hidden');
+                            $("#applyCdz").removeClass('mui-hidden');
+                        }
+                        if(partnerManager){
+                        	$("#myPartner").removeClass('mui-hidden');
                         }
                         Storage.setItem( "mobile", mobile);
                         Storage.setItem( "headImage", headImage);

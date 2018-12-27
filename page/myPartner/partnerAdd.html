@@ -18,84 +18,28 @@
     <script src="../../js/vue.min.js"></script>
     <script src="../../js/mui.picker.all.js"></script>
 	<script src="../../js/data.city.js"></script>
-    <style type="text/css">	
-    	.mui-input-group .mui-input-row {
-		    height: 50px;
-		}
-		.mui-input-row label{
-			line-height: 25px;
-    		font-size: 14px;
-    		padding: 14px 15px;
-		}
-		.mui-input-row input{
-			line-height: 25px;
-		    height: 50px;
-		    font-size: 14px;
-		}
-		.form-title{
-			font-size: 16px;
-    		padding: 8px 15px;
-    		font-weight: 400;   		
-		}
-		.form-title span{
-			display: inline-block;
-			padding-left: 8px;
-		}
-		.form-title span:after{
-			content: '';
-		    width: 6px;
-		    height: 15px;
-		    background: #ff6d22;
-		    display: inline-block;
-		    border-radius: 4px;
-		    position: absolute;
-		    left: 12px;
-		}
-		.htBox{
-			padding: 20px 15px;
-			height: 150px;
-			background: #fff;
-			margin-bottom: 20px;
-		}
-		.img-item{
-			width: 23%;
+    <style type="text/css">
+    	html,body {
 			height: 100%;
-			margin-right: 2%;
-			float: left;
-			position: relative;
-			text-align: center;
-			border: 1px dashed #c4c4c4;
-		}
-		.img-item img{
-			width: 100%;
-			height: 100%;
-		}
-		.close-img{
-			position: absolute;
-			right: -10px;
-			top: -10px;
-			background: #ff0000;
-			z-index: 10;
-			color: #fff;
-			font-size: 30px;
-			border-radius: 50%;
+			margin: 0px;
 			padding: 0px;
-			display: none;
-		}
-		.mui-btn-blue, .mui-btn-primary, input[type=submit]{
-			border: 1px solid #FF6D22;
-    		background-color: #FF6D22;
-		}
-		.upload .mui-icon-camera{
-			font-size: 40px;
-			color: #C4C4C4;
-			margin-top: 20px;
-		}
-		.upload-text{
-			font-size: 14px;
-			color: #C4C4C4;
-			display: block;
-		}
+			overflow: hidden;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+		}	
+		.mui-input-group .mui-input-row{height:50px;}
+		.mui-input-row label{line-height:25px;font-size:14px;padding:14px 15px;}
+		.mui-input-row input{line-height:25px;height:50px;font-size:14px;}
+		.form-title{font-size:16px;padding:8px 15px;font-weight:400;}
+		.form-title span{display:inline-block;padding-left:8px;}
+		.form-title span:after{content:'';width:6px;height:15px;background:#ff6d22;display:inline-block;border-radius:4px;position:absolute;left:12px;}
+		.htBox{padding:20px 15px;height:150px;background:#fff;margin-bottom:20px;}
+		.img-item{width:23%;height:100%;margin-right:2%;float:left;position:relative;text-align:center;border:1px dashed #c4c4c4;}
+		.img-item img{width:100%;height:100%;}
+		.close-img{position:absolute;right:-10px;top:-10px;background:#ff0000;z-index:10;color:#fff;font-size:30px;border-radius:50%;padding:0px;display:none;}
+		.mui-btn-blue,.mui-btn-primary,input[type=submit]{border:1px solid #FF6D22;background-color:#FF6D22;}
+		.upload .mui-icon-camera{font-size:40px;color:#C4C4C4;margin-top:20px;}
+		.upload-text{font-size:14px;color:#C4C4C4;display:block;}
     </style>
 </head>
 <body background="#f0f1f3" >
@@ -158,8 +102,23 @@
 <script type="text/javascript">
 	mui.init();
 	var uuid = '';
+	
+	if(mui.os.ios){
+		// 解决在ios上fixed元素focusin时位置出现错误的问题 
+		document.addEventListener('DOMContentLoaded',function(){
+			var footerDom = document.querySelector('footer');
+			
+			document.addEventListener('focusin', function() {
+				footerDom.style.position = 'absolute';
+			});
+			document.addEventListener('focusout', function() {
+				footerDom.style.position = 'fixed';
+			});
+		});
+	}
 	mui.plusReady(function() {
 		uuid =getUUId();
+
 		/*点击上传按钮触发*/
 	    mui('.mui-content').on('tap', '.upload',function() {
 	        if(mui.os.plus) {

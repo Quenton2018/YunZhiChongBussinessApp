@@ -25,12 +25,17 @@
 		.list-wrap .name_wrap .username{font-size: 14px;line-height: 26px;}
 		.list-wrap .tel_wrap{padding: 2px 0 8px 0;text-align: center;}
 		.list-wrap .tel span{color: #333;font-size: 16px;}
-		.list-wrap .pass{border: 1px solid #21b5ff;border-radius: 15px;text-align: center;}
-		.list-wrap .pass span{color: #21b5ff;font-size: 12px;};
-		.city_wrap span{font-size: 13px;}
+		
+		.list-wrap .pass_wrap{text-align: right;}
+		.list-wrap .pass{text-align: center;}
+		.pass_wrap .pass span{font-size: 12px;border-radius: 15px;padding: 3px 8px;}
+		.pass_wrap .pass span.span-pass{color: #21b5ff;border: 1px solid #21b5ff;}
+		.pass_wrap .pass span.span-wait{color: #ff6d22;border: 1px solid #ff6d22;}
+		.pass_wrap .pass span.span-rejecj{color: #a8a8a8;border: 1px solid #a8a8a8;}
+		
 		.city_wrap span{font-size: 13px;}
 		.list-wrap .amount span,.list-wrap .cost span{font-size: 13px;}	
-		.list-wrap .pass_wrap{text-align: right;}
+
 		.li-padd{padding-top: 10px;border-top: 1px dashed #f0f1f3;}
 		.li-padd .time{font-size: 13px;}
 		
@@ -61,7 +66,7 @@
 		    <div class="mui-slider-right mui-disabled">
 				<a class="mui-btn mui-btn-red" data-id="{{item.partner.uuid}}">删除</a>
 			</div>
-			<div class="mui-slider-handle">
+			<div class="list-box {{if item.status !== 'AUDIT_PASS'}}mui-slider-handle{{/if}}">
 	    		<div class="list-wrap">
 	    			<div class="name_wrap">
 	    				<div>
@@ -86,7 +91,11 @@
 	    			<div class="pass_wrap">
 	    				<div class="pass">
 	    					{{if item.status == "AUDIT_PASS"}}
-	    					<span>审核通过</span>
+	    					<span class="span-pass">审核通过</span>
+	    					{{else if item.status == "AUDIT_WAITING"}}
+	    					<span class="span-wait">等待审核</span>
+	    					{{else if item.status == "AUDIT_REJECT"}}
+	    					<span class="span-rejecj">审核驳回</span>
 	    					{{/if}}
 	    				</div>
 	    				<div class="cost">
@@ -153,23 +162,26 @@
 		});
 	}
 	$(".itemList").on('tap', '.mui-btn', function(event) {
+		var $elem = $(this);
 		var id = $(this).attr('data-id');
 		var btnArray=['确定','取消'];
 		mui.confirm('确定删除这个市场合伙人？', '提示', btnArray, function(e) {
 			// 确认删除
 			if (e.index == 0) {
-				handleDel(id);
+				handleDel($elem,id);
 			}
 		});
 	});
-	function handleDel(id){
+	function handleDel($elem,id){
 		var params = {
 			uuid:uuid,
 			partner_uuid:id
 		}
 		postJSON(API_URL.ApiDelInvestmentPartner,params,function(res){
 			layer.msg(res.msg);
-			dataRefresh();
+			if(res.code == '0'){
+				$elem.parents("li").remove();
+			}
 		});
 	}
 </script>

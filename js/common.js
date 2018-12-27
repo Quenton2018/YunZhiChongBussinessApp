@@ -1144,3 +1144,9 @@ $.stopRefresh = function(length,pageSize){
 		mui('#J_refresh').pullRefresh().endPullupToRefresh(true);
 	}	
 }
+/**
+ * 启用刷新
+ */
+$.enableRefresh = function(){
+	mui('#J_refresh').pullRefresh().refresh(true);
+}
