@@ -19,7 +19,6 @@
     <script src="../js/vue.min.js"></script>
     <style type="text/css">
 		input{-webkit-user-select:auto!important;}
-		.setmeal_wrap{    		/*display: none;*/}
 		.setmeal_box{padding:10px;}
 		.charges_tap{margin:0 30px 10px;border:1px solid #ff6d22;border-radius:6px;}
 		.tap_list{width:50%;padding:10px 0;text-align:center;font-size:0.9rem;}
@@ -32,7 +31,7 @@
 		.setmeal_tap_header span i{font-size:0.8rem;color:#acacac;font-style:normal;}
 		.table_ul{padding:0;margin:0;}
 		.table_list{padding:12px 0;border-bottom:1px dashed #808080;list-style:none;overflow:hidden;position:relative;}
-		.table_list:last-child{    		/*border-bottom: none;*/}
+
 		.table_list span{text-align:center;font-size:1rem;}
 		.table_list span.first_span{text-align:left;padding-left:18px;}
 		.table_list .circle{width:16px;height:16px;line-height:14px;border-radius:50%;box-sizing:border-box;border:1px solid #ff6d22;text-align:center;display:inline-block;font-size:12px;color:#ff6d22;vertical-align:1px;font-style:normal;position:absolute;top:22px;left:0;}
@@ -46,7 +45,7 @@
 		input.yellow-input{width:32px;padding:2px 4px;margin:0 2px;height:24px;line-height:20px;text-align:center;}
 		.addCharges{float:right;font-size:0.8rem;padding:0 6px;}
 		.addCharges .mui-icon{font-size:18px;padding-right:4px;color:#ff6d22;font-weight:bold;}
-		.mui-numboxs{position:relative;display:inline-block;overflow:hidden;width:100%;height:35px;		    /*padding: 0 30px;*/vertical-align:top;vertical-align:middle;border:solid 1px #bbb;border-radius:3px;background-color:#efeff4;}
+		.mui-numboxs{position:relative;display:inline-block;overflow:hidden;width:100%;height:35px;vertical-align:top;vertical-align:middle;border:solid 1px #bbb;border-radius:3px;background-color:#efeff4;}
 		.mui-numboxs [class*=btn-numbox],
 		.mui-numboxs [class*=numbox-btn]{font-size:18px;font-weight:400;line-height:100%;position:absolute;top:0;overflow:hidden;width:28%;height:100%;padding:0;color:#555;border:none;border-radius:0;background-color:#f9f9f9;background-color:#ff6d22;color:#fff;}
 		.mui-numboxs .mui-numbox-btn-minuss{left:0;border-top-left-radius:3px;border-bottom-left-radius:3px;}
@@ -56,14 +55,11 @@
 		.mui-numboxs .mui-numbox-input{display:inline-block;overflow:hidden;width:100%!important;height:100%;margin:0;padding:0 3px!important;text-align:center;text-overflow:ellipsis;word-break:normal;border:none!important;background:#eeeeee;border-radius:0!important;font-size:1rem;}
 		.fullstop-item{float:left;text-align:center;font-size:1rem;}
 		.table_list .fullstop-item{line-height:40px;}
-		.fullstop-item input{padding:0 10px;margin:0;text-align:center;    		/*color: #969696;
-			    		background: #eeeeee;*/border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
-			#partners .partners-item{width:25%;float:left;text-align:left;display:inline-block;font-size:0.9rem;padding:3px 3px;margin-right:1%;margin-bottom:0;}
-			#partners input.partners-item{			/*color: #969696;
-							background: #eeeeee;*/
-			border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
-			#partners input[readonly]{background:#fff;border:none;color:#4d4d4d;}
-			#partners .list-del span{right:0px;top:18px;}
+		.fullstop-item input{padding:0 10px;margin:0;text-align:center;border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
+		#partners .partners-item{width:25%;float:left;text-align:left;display:inline-block;font-size:0.9rem;padding:3px 3px;margin-right:1%;margin-bottom:0;}
+		#partners input.partners-item{border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
+		#partners input[readonly]{background:#fff;border:none;color:#4d4d4d;}
+		#partners .list-del span{right:0px;top:18px;}
 		
     </style>
 </head>
