@@ -20,133 +20,37 @@
     <script src="../js/artTemplate.min.js"></script>
     <script src="../js/px2rem.js"></script>
     <style type="text/css">
-    	.address_wrap{
-    		margin: 15px 0;
-    		background-color: #fff;
-    		border-top: 1px solid #dce1e6;
-    		border-bottom: 1px solid #dce1e6;
-    	}
-    	.address{
-    		padding: 15px 20px;
-    		overflow: hidden;
-    	}
-    	.address_left{
-    		float: left;
-    	}
-    	.address_left span{
-    		color: #7a7d80;
-    		font-size: 0.3rem;
-    	}
-    	.address_right{
-    		float: right;
-    	}
-    	.address_right span{
-    		font-size: 0.3rem;
-    	}
-    	.setmeal_wrap{
-    		display: none;
-    	}
-    	.setmeal_top{
-    		background: #fff;
-    		border-top: 1px solid #dce1e6;
-    	}
-    	.setmeal{
-    		padding: 12px 20px;
-    	}
-    	.setmeal_Sel{
-    		color: #ff6d22;
-    		font-size: 0.3rem;
-    		padding: 10px;
-    	}
-    	.setmeal_icon{
-    		color: #737373;
-    		font-size: 0.34rem;
-    	}
-    	.setmeal_state{
-    		margin-left: 0.4rem;
-    		color: #7a7d80;
-    		font-size: 0.26rem;
-    	}
-    	.setmeal_header_wrap{
-    		background: #fff;  		
-    		padding: 12px 0 0;
-    		border-top: 1px solid #dce1e6;
-    		border-bottom: 2px solid #ff6d22;
-    		margin-bottom: 15px;
-    	}
-    	.setmeal_tap_list{
-    		text-align: center;
-    		color: #808080;
-    		font-size: 0.26rem;
-    	}
-    	.setmeal_tap_list.select{
-    		background: url(../images/area/trapezoid.png) center no-repeat;
-			background-size: 100%;
-			color: #fff;
-			padding-top: 6px;
-    	}
-    	.setmeal_tap_list.select span{
-    		position: relative;
-    		top: -4px;
-    	}
-    	.setmeal_table_wrap{
-    		background: #fff;
-    		border-top: 1px solid #dce1e6;
-    		border-bottom: 1px solid #dce1e6;
-    	}
-    	.setmeal_tap_header{
-    		padding: 15px;	
-    	}
-    	.setmeal_tap_header span{
-    		color: #7a7d80;
-    		text-align: center;
-    		font-size: 0.26rem;
-    	}
-    	.table_ul{
-    		padding: 0 15px;
-    		margin: 0;
-    		margin-top: -15px;
-    	}
-    	.table_list{
-    		padding: 12px 0;
-    		border-bottom: 1px dashed #808080;
-    	}
-    	.table_list:last-child{
-    		border-bottom: none;
-    	}
-    	.table_list span{
-    		text-align: center;
-    		font-size: 0.3rem;
-    	}
-    	.setmeal_tap_header span.first_span,.table_list span.first_span{
-    		text-align: left;
-    		padding-left: 4px;
-    	}
-    	.table_list span.circle {
-			width: 14px;
-			height: 14px;
-			line-height: 12px;
-			border-radius: 50%;
-			box-sizing: border-box;
-			border: 1px solid #484848;
-			text-align: center;
-			display: inline-block;
-			font-size: 0.24rem;
-			position: relative;
-			top: 0px;
-			margin-right: 4px;
-		}
-		.mui-bar span.compose{
-			float: right;
-		}
-		.mui-btn-blue, .mui-btn-primary, input[type=submit]{
-			border: 1px solid #FF6D22;
-    		background-color: #FF6D22;
-		}
-		#statedesc{
-			font-size: 0.26rem;
-			color: #7a7d80;
-		}
+		.address_wrap{margin:15px 0;background-color:#fff;border-top:1px solid #dce1e6;border-bottom:1px solid #dce1e6;}
+		.address{padding:15px 20px;overflow:hidden;}
+		.address_left{float:left;}
+		.address_left span{color:#7a7d80;font-size:0.3rem;}
+		.address_right{float:right;}
+		.address_right span{font-size:0.3rem;}
+		.setmeal_wrap{display:none;}
+		.setmeal_top{background:#fff;border-top:1px solid #dce1e6;}
+		.setmeal{padding:12px 20px;}
+		.setmeal_Sel{color:#ff6d22;font-size:0.3rem;padding:10px;}
+		.setmeal_icon{color:#737373;font-size:0.34rem;}
+		.setmeal_state{margin-left:0.4rem;color:#7a7d80;font-size:0.26rem;}
+		.setmeal_header_wrap{background:#fff;padding:12px 0 0;border-top:1px solid #dce1e6;border-bottom:2px solid #ff6d22;margin-bottom:15px;}
+		.setmeal_tap_list{text-align:center;color:#808080;font-size:0.26rem;}
+		.setmeal_tap_list.select{background:url(../images/area/trapezoid.png) center no-repeat;background-size:100%;color:#fff;padding-top:6px;}
+		.setmeal_tap_list.select span{position:relative;top:-4px;}
+		.setmeal_table_wrap{background:#fff;border-top:1px solid #dce1e6;border-bottom:1px solid #dce1e6;}
+		.setmeal_tap_header{padding:15px;}
+		.setmeal_tap_header span{color:#7a7d80;text-align:center;font-size:0.26rem;}
+		.table_ul{padding:0 15px;margin:0;margin-top:-15px;}
+		.table_list{padding:12px 0;border-bottom:1px dashed #808080;}
+		.table_list:last-child{border-bottom:none;}
+		.table_list span{text-align:center;font-size:0.3rem;}
+		.setmeal_tap_header span.first_span,
+		.table_list span.first_span{text-align:left;padding-left:4px;}
+		.table_list span.circle{width:14px;height:14px;line-height:12px;border-radius:50%;box-sizing:border-box;border:1px solid #484848;text-align:center;display:inline-block;font-size:0.24rem;position:relative;top:0px;margin-right:4px;}
+		.mui-bar span.compose{float:right;}
+		.mui-btn-blue,
+		.mui-btn-primary,
+		input[type=submit]{border:1px solid #FF6D22;background-color:#FF6D22;}
+		#statedesc{font-size:0.26rem;color:#7a7d80;}
     </style>
 </head>
 <body background="#f0f1f3">

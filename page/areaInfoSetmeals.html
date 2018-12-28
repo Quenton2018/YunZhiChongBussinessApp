@@ -19,429 +19,91 @@
     <script src="../js/mui.picker.all.js"></script>
     <script src="../js/artTemplate.min.js"></script>
     <style type="text/css">
-        .tabBox{
-            text-align: center;
-            padding: 20px 0;
-        }
-        .tabBox span{
-            display: inline-block;
-            padding: 5px 20px;
-            font-size: 14px;
-            line-height: 50px;
-        }
-        .tabItem img{
-        	width: 50px;
-        	height: 50px;
-        	vertical-align: top;
-        	margin-right: 10px;
-        }
-        .normal{
-        	padding: 10px;
-        	background: #F0F1F3;
-        	display: none;
-        }
-        .normal.on{
-        	display: block;
-        }
-        .midRow{      
-            background: #EEE;
-		    padding: 5px 15px;
-		    font-size: .8rem;
-		    border-radius: 6px;
-		    box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;
-		    overflow: hidden;
-        }
-		.midLeft{
-			width: 28%;
-		    float: left;
-		    /*box-shadow: #999 0px 1px 19px 1px;*/
-		    margin-top: 15px;
-		    border-radius: 6px;
-		    overflow: hidden;
-		    padding: 3px;
-    		box-shadow: inset #999 0px -1px 5px 0px;
-		}
-		.midRight{
-			width: calc(72% - 10px);
-		    margin-left: 10px;
-		    float: left;
-		    margin-top: 15px;		    
-		}
-		.mui-head-view{
-        	background: #fff;
-        	overflow: hidden;
-        	padding: 10px 0;
-        	border-radius: 6px;
-        	box-shadow: inset #999 0px -1px 5px 0px;
-        }
-		.mui-head-list{
-			text-align: center;
-			font-size: 14px;
-			position: relative;
-		}
-		.mui-head-list:after{
-			content: '';
-			position: absolute;
-			right: 0;
-			top: 0;
-			width: 1px;
-			height: 100%;
-			background: #E0E0E0;
-		}
-		.mui-head-list:last-child:after{
-			width: 0;
-		}
-		.mui-head-list span{
-			display: inline-block;
-			width: 100%;
-		}
-		.mui-head-list span.dw{
-			font-size: 0.7rem;
-			color: #B7B7B7;
-		}
-		.midContent{
-			overflow: hidden;
-			display: none;
-		}
-        .midLeft .mui-table-view{
-            font-size: .9rem;
-        }
-        .midLeft .mui-table-view li{
-        	background: #EEEEEE;
-        	padding: 15px 15px;
-        	text-align: center;
-        	font-size: 12px;
-        }
-        .midLeft .mui-table-view li.select{
-        	background: #fff;
-        	color: #FF6D22;
-        	border-left: 4px solid #FF6D22;
-        	top: -1px;
-        	left: -3px;
-    		position: relative;
-        }
-        .midLeft .mui-table-view .mui-badge{
-            background: transparent;
-            font-size: .9rem;
-        }
-		.dataList .mui-table-view-cell:after,.midRight .mui-table-view-cell:after,.mui-table-view:after,.mui-table-view li.select:after,.mui-table-view:before{
-			height:0;
-		}
-		.midLeft .mui-table-view-cell:after{
-			right: 15px;
-		}
-		.midRight .mui-table-view{
-            font-size: .9rem;
-            margin-top: 10px;
-            background: none;
-        }
-        .midRight .mui-table-view li{
-        	margin-bottom: 5px;
-        	background: #fff;
-        	border-radius: 6px;
-        	font-size: 14px;
-        	padding: 10px 0;
-        	box-shadow: inset #999 0px -1px 3px 0px;
-        }
-        /*.midRight .mui-table-view li.sx{
-        	background: #F0F1F3;
-        }*/
-        .midRight .mui-table-view li span{
-        	text-align: center;
-        }
-        .midRight .mui-table-view .mui-badge{
-            background: transparent;
-            font-size: .9rem;
-        }
-		.title-right{
-			position: relative;
-			padding: 10px;
-		}
-		.title-no{
-			padding: 10px;
-		}
-		.title-strong{
-			padding: 10px;
-		}
-		.title-left{
-			top: 10px;
-			right: 35px;
-			position: relative;
-		}
-		.title-left span:before{
-			position: absolute;
-		    top: 10px;
-		    left: -40px;
-		    height: 1px;
-		    width: 30px;
-		    background: #000;
-		    content: '';
-		}
-		.title-left span:after{
-			position: absolute;
-		    top: 10px;
-		    right: -40px;
-		    height: 1px;
-		    width: 30px;
-		    background: #000;
-		    content: '';
-		}
+		.tabBox{text-align:center;padding:20px 0;}
+		.tabBox span{display:inline-block;padding:5px 20px;font-size:14px;line-height:50px;}
+		.tabItem img{width:50px;height:50px;vertical-align:top;margin-right:10px;}
+		.normal{padding:10px;background:#F0F1F3;display:none;}
+		.normal.on{display:block;}
+		.midRow{background:#EEE;padding:5px 15px;font-size:.8rem;border-radius:6px;box-shadow:inset rgba(0,0,0,.16) 0px -3px 4px 1px;overflow:hidden;}
+		.midLeft{width:28%;float:left;		    /*box-shadow: #999 0px 1px 19px 1px;*/margin-top:15px;border-radius:6px;overflow:hidden;padding:3px;box-shadow:inset #999 0px -1px 5px 0px;}
+		.midRight{width:calc(72% - 10px);margin-left:10px;float:left;margin-top:15px;}
+		.mui-head-view{background:#fff;overflow:hidden;padding:10px 0;border-radius:6px;box-shadow:inset #999 0px -1px 5px 0px;}
+		.mui-head-list{text-align:center;font-size:14px;position:relative;}
+		.mui-head-list:after{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:#E0E0E0;}
+		.mui-head-list:last-child:after{width:0;}
+		.mui-head-list span{display:inline-block;width:100%;}
+		.mui-head-list span.dw{font-size:0.7rem;color:#B7B7B7;}
+		.midContent{overflow:hidden;display:none;}
+		.midLeft .mui-table-view{font-size:.9rem;}
+		.midLeft .mui-table-view li{background:#EEEEEE;padding:15px 15px;text-align:center;font-size:12px;}
+		.midLeft .mui-table-view li.select{background:#fff;color:#FF6D22;border-left:4px solid #FF6D22;top:-1px;left:-3px;position:relative;}
+		.midLeft .mui-table-view .mui-badge{background:transparent;font-size:.9rem;}
+		.dataList .mui-table-view-cell:after,
+		.midRight .mui-table-view-cell:after,
+		.mui-table-view:after,
+		.mui-table-view li.select:after,
+		.mui-table-view:before{height:0;}
+		.midLeft .mui-table-view-cell:after{right:15px;}
+		.midRight .mui-table-view{font-size:.9rem;margin-top:10px;background:none;}
+		.midRight .mui-table-view li{margin-bottom:5px;background:#fff;border-radius:6px;font-size:14px;padding:10px 0;box-shadow:inset #999 0px -1px 3px 0px;}
+
+		/*.midRight .mui-table-view li.sx{
+			background: #F0F1F3;
+		}*/
+		.midRight .mui-table-view li span{text-align:center;}
+		.midRight .mui-table-view .mui-badge{background:transparent;font-size:.9rem;}
+		.title-right{position:relative;padding:10px;}
+		.title-no{padding:10px;}
+		.title-strong{padding:10px;}
+		.title-left{top:10px;right:35px;position:relative;}
+		.title-left span:before{position:absolute;top:10px;left:-40px;height:1px;width:30px;background:#000;content:'';}
+		.title-left span:after{position:absolute;top:10px;right:-40px;height:1px;width:30px;background:#000;content:'';}
+
 		/*箭头向下*/
-		.title-right:before {
-			position: absolute;
-		    width: 0;
-		    height: 0;
-		    border-left: 8px solid transparent;
-		    border-right: 8px solid transparent;
-		    border-top: 10px solid #FF6D22;
-		    right: -25px;
-		    top: 15px;
-		    content: '';
-		}
-        #loadMore{
-            background: #eaeaea;
-            margin-top: 10px;
-            padding: 10px;
-            text-align: center;
-            margin-top: 10px;
-            font-size: .8rem;
-            display: none;
-        }
-        .noMore{
-            margin-top: 10px;
-            padding: 10px;
-            text-align: center;
-            margin-top: 10px;
-            font-size: .8rem;
-            display: none;
-        }
-        .progress{
-            display: inline-block;
-            height: 12px;
-            width: 40px;
-            background: #C4C4C4;
-            vertical-align: -1px;
-    		margin-left: 3px;
-        }
-        .progressInner{
-            display: block;
-            height: 12px;
-            background: #FF6D22;
-            float: left;
-        }
-		.setmeal i{
-			background: url('../images/areaInfo/areaInfo_01.png') no-repeat center;
-			background-size: 100%;
-			width: 50px;
-			height: 50px;
-			display: inline-block;
-			vertical-align: top;
-			margin-right: 10px;
-		}
-		.setmeal.select i{
-			background: url('../images/areaInfo/areaInfo_02.png') no-repeat center;
-			background-size: 100%;
-		}
-		.cdz i{
-			background: url('../images/areaInfo/areaInfo_03.png') no-repeat center;
-			background-size: 100%;
-			width: 50px;
-			height: 50px;
-			display: inline-block;
-			vertical-align: top;
-			margin-right: 10px;
-		}
-		.cdz.select i{
-			background: url('../images/areaInfo/areaInfo_04.png') no-repeat center;
-			background-size: 100%;
-		}
-		.mui-table-view.dataList{
-            font-size: .9rem;
-            margin-top: 10px;
-            background: none;
-        }
-        .mui-table-view.dataList li{
-        	margin-bottom: 5px;
-        	background: #fff;
-        	border-radius: 6px;
-        }
-		.lindex{
-			font-style: normal;
-		    border: 1px solid #000;
-		    border-radius: 100%;
-		    width: 16px;
-		    height: 16px;
-		    display: inline-block;
-		    line-height: 16px;
-		    text-align: center;
-		}
-		.flex-top{
-			border-bottom: 1px dashed #c4c4c4;
-			padding-bottom: 5px;
-		}
-		.flex-mobile{
-			color: #000;
-		}
-		.glay{
-			font-style: normal;
-			color: #999999;
-			font-size: 14px;
-		}
-		.sx-icon{
-			background: url(../images/areaInfo/sx_icon.png) no-repeat center;
-		    background-size: 100%;
-		    position: absolute;
-		    top: 8px;
-		    left: 44%;
-		    width: 35px;
-		    height: 22px;
-		    z-index: 2;
-		}
-		.sx{
-			position: absolute;
-		    top: 0;
-		    left: 0;
-		    width: 100%;
-		    height: 100%;
-		    background: rgba(240, 241, 243,.6);
-		}
-		.midRight .mui-table-view li.members-li{
-			padding: 10px 0 5px 10px;
-			position: relative;
-		}
-		.handle-icon{
-			position: absolute;
-		    right: 10px;
-		    top: 5px;
-		    z-index: 2;
-		}
-		.handle-icon img{
-			padding: 4px;
-		}
-		.xg-icon{
-			margin-right: 10px;
-		}
-		.addmember{
-			color: #333333;
-			font-size: 1rem;
-			padding:30px 40px 30px;
-			display: none;
-		}
-		.add-icon{
-			width: 22px;
-			height: 22px;
-			line-height: 22px;
-			vertical-align: top;
-			display: inline-block;
-		}
-		.memberbox{
-			background: #fff;
-    		padding: 15px 10px;
-    		border-radius: 6px;
-    		box-shadow: inset #999 0px -1px 5px 0px;
-    		display: none;
-    		position: relative;
-		}
-		.memberbox h2{
-		    font-size: 16px;
-		    line-height: 15px;
-		    margin-bottom: 15px;
-		    color: #282828;
-		}
-		.memberbox .form-group{
-			height: 40px;
-			overflow: hidden;
-			border-bottom: 1px dashed #c4c4c4;
-		}
-		.memberbox .form-group .mui-icon{
-			color: #828282;
-    		line-height: 40px;
-    		font-size: 1.2rem;
-		}
-		.memberbox .form-button{
-			text-align: center;
-    		margin-top: 10px;
-		}
-		.memberbox .form-button .mui-btn{
-			background: #ff6d22;
-			padding: 6px 20px;
-		}
-		.memberbox .form-laber{
-			/*width: 40%;
-			float: left;*/
-			font-size: 14px;
-			line-height: 40px;
-			margin: 0;
-    		padding: 0;
-		}
-		.memberbox input{
-			font-size: 14px;
-			line-height: 30px;
-			border: 0;
-			text-align: right;
-			padding: 10px;
-		}
-		#updataSetmeal{
-			display: none;
-		}
-		.mui-btn-blue, .mui-btn-primary, input[type=submit]{
-			border: 1px solid #FF6D22;
-    		background-color: #FF6D22;
-		}
-        .form-close{
-           position: absolute;
-           top: 0px;
-           right: 0px;
-           font-size: 2rem;
-           padding: 10px;
-        }
-        .yc{
-        	width: 8px;
-		    height: 8px;
-		    display: inline-block;
-		    background: red;
-		    border-radius: 100%;
-		    margin-right: 4px;
-		    vertical-align: 1px;
-		    box-shadow: 0px 0px 6px 2px rgba(241,76,37,.6);;
-        }
-        .zc{
-        	width: 8px;
-        	height: 8px;
-        	display: inline-block;
-        	background: green;
-        	border-radius: 100%;
-        	margin-right: 4px;
-        	vertical-align: 1px;
-        }
-        .mui-table-view-cell.mui-collapse .mui-collapse-content{
-        	background: #e5e9f2;
-		    padding: 0;
-		    padding-top: 15px;
-        }
-        .mui-collapse-content span{
-        	margin-bottom: 15px;
-        	width: 16.666666%;
-        	height: 25px;
-        	float: left;
-        	text-align:center;
-        }
-        .mui-collapse-content i.cdzxx{
-        	background: url('../images/area/cdzxx_icon.png') no-repeat;       	
-        	width: 19px;
-        	height: 19px;
-        	background-size: 19px 19px;
-        	vertical-align: middle;
-        	display: inline-block;
-        }
-        .mui-collapse-content i.cdzing{
-        	background: url('../images/area/cdzing.png') no-repeat;
-        	width: 25px;
-        	height: 25px;
-        	background-size: 25px 25px;
-        	vertical-align: middle;
-        	display: inline-block;
-        }
+		.title-right:before{position:absolute;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid #FF6D22;right:-25px;top:15px;content:'';}
+		#loadMore{background:#eaeaea;margin-top:10px;padding:10px;text-align:center;margin-top:10px;font-size:.8rem;display:none;}
+		.noMore{margin-top:10px;padding:10px;text-align:center;margin-top:10px;font-size:.8rem;display:none;}
+		.progress{display:inline-block;height:12px;width:40px;background:#C4C4C4;vertical-align:-1px;margin-left:3px;}
+		.progressInner{display:block;height:12px;background:#FF6D22;float:left;}
+		.setmeal i{background:url('../images/areaInfo/areaInfo_01.png') no-repeat center;background-size:100%;width:50px;height:50px;display:inline-block;vertical-align:top;margin-right:10px;}
+		.setmeal.select i{background:url('../images/areaInfo/areaInfo_02.png') no-repeat center;background-size:100%;}
+		.cdz i{background:url('../images/areaInfo/areaInfo_03.png') no-repeat center;background-size:100%;width:50px;height:50px;display:inline-block;vertical-align:top;margin-right:10px;}
+		.cdz.select i{background:url('../images/areaInfo/areaInfo_04.png') no-repeat center;background-size:100%;}
+		.mui-table-view.dataList{font-size:.9rem;margin-top:10px;background:none;}
+		.mui-table-view.dataList li{margin-bottom:5px;background:#fff;border-radius:6px;}
+		.lindex{font-style:normal;border:1px solid #000;border-radius:100%;width:16px;height:16px;display:inline-block;line-height:16px;text-align:center;}
+		.flex-top{border-bottom:1px dashed #c4c4c4;padding-bottom:5px;}
+		.flex-mobile{color:#000;}
+		.glay{font-style:normal;color:#999999;font-size:14px;}
+		.sx-icon{background:url(../images/areaInfo/sx_icon.png) no-repeat center;background-size:100%;position:absolute;top:8px;left:44%;width:35px;height:22px;z-index:2;}
+		.sx{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(240,241,243,.6);}
+		.midRight .mui-table-view li.members-li{padding:10px 0 5px 10px;position:relative;}
+		.handle-icon{position:absolute;right:10px;top:5px;z-index:2;}
+		.handle-icon img{padding:4px;}
+		.xg-icon{margin-right:10px;}
+		.addmember{color:#333333;font-size:1rem;padding:30px 40px 30px;display:none;}
+		.add-icon{width:22px;height:22px;line-height:22px;vertical-align:top;display:inline-block;}
+		.memberbox{background:#fff;padding:15px 10px;border-radius:6px;box-shadow:inset #999 0px -1px 5px 0px;display:none;position:relative;}
+		.memberbox h2{font-size:16px;line-height:15px;margin-bottom:15px;color:#282828;}
+		.memberbox .form-group{height:40px;overflow:hidden;border-bottom:1px dashed #c4c4c4;}
+		.memberbox .form-group .mui-icon{color:#828282;line-height:40px;font-size:1.2rem;}
+		.memberbox .form-button{text-align:center;margin-top:10px;}
+		.memberbox .form-button .mui-btn{background:#ff6d22;padding:6px 20px;}
+		.memberbox .form-laber{			/*width: 40%;
+				float: left;*/
+		font-size:14px;line-height:40px;margin:0;padding:0;}
+		.memberbox input{font-size:14px;line-height:30px;border:0;text-align:right;padding:10px;}
+		#updataSetmeal{display:none;}
+		.mui-btn-blue,
+		.mui-btn-primary,
+		input[type=submit]{border:1px solid #FF6D22;background-color:#FF6D22;}
+		.form-close{position:absolute;top:0px;right:0px;font-size:2rem;padding:10px;}
+		.yc{width:8px;height:8px;display:inline-block;background:red;border-radius:100%;margin-right:4px;vertical-align:1px;box-shadow:0px 0px 6px 2px rgba(241,76,37,.6);}
+		.zc{width:8px;height:8px;display:inline-block;background:green;border-radius:100%;margin-right:4px;vertical-align:1px;}
+		.mui-table-view-cell.mui-collapse .mui-collapse-content{background:#e5e9f2;padding:0;padding-top:15px;}
+		.mui-collapse-content span{margin-bottom:15px;width:16.666666%;height:25px;float:left;text-align:center;}
+		.mui-collapse-content i.cdzxx{background:url('../images/area/cdzxx_icon.png') no-repeat;width:19px;height:19px;background-size:19px 19px;vertical-align:middle;display:inline-block;}
+		.mui-collapse-content i.cdzing{background:url('../images/area/cdzing.png') no-repeat;width:25px;height:25px;background-size:25px 25px;vertical-align:middle;display:inline-block;}
     </style>
 
 </head>
