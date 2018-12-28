@@ -21,12 +21,13 @@
     <style type="text/css">
 		html,
 		body{height:100%;margin:0px;padding:0px;overflow:hidden;-webkit-touch-callout:none;-webkit-user-select:none;}
+		.mui-content{height:100%;overflow: auto;}
 		.mui-input-group .mui-input-row{height:50px;}
 		.mui-input-row label{line-height:25px;font-size:14px;padding:14px 15px;}
 		.mui-input-row input{line-height:25px;height:50px;font-size:14px;}
 		.form-title{font-size:16px;padding:8px 15px;font-weight:400;}
 		.form-title span{display:inline-block;padding-left:8px;}
-		.form-title span:after{content:'';width:6px;height:15px;background:#ff6d22;display:inline-block;border-radius:4px;position:absolute;left:12px;}
+		.form-title i{width:6px;height:15px;background:#ff6d22;display:inline-block;border-radius:4px;vertical-align: ;}
 		.htBox{padding:20px 15px;height:150px;background:#fff;margin-bottom:20px;}
 		.img-item{width:23%;height:100%;margin-right:2%;float:left;position:relative;text-align:center;border:1px dashed #c4c4c4;}
 		.img-item img{width:100%;height:100%;}
@@ -45,7 +46,7 @@
 		<span>提交审核</span>
 	</footer>
 	<div class="mui-content">
-		<h2 class="form-title"><span>基本信息</span></h2>
+		<h2 class="form-title"><i></i><span>基本信息</span></h2>
 		<input id="cityCode" type="hidden" value="">
 		<input id="contract" type="hidden" value="">
 		<form class="mui-input-group">
@@ -62,7 +63,7 @@
 		    	<input id="remark" type="text" class="mui-input-clear" placeholder="请输入备注">
 		    </div>
 		</form>
-		<h2 class="form-title"><span>地区</span></h2>
+		<h2 class="form-title"><i></i><span>地区</span></h2>
 		<form class="mui-input-group">
 		    <div class="mui-input-row" style="position: relative">
 	            <label>城市</label>
@@ -70,7 +71,7 @@
 	            <input type="text" placeholder="请选择省市区" name="address" id="address" readonly="true">          
 	        </div>
 		</form>
-		<h2 class="form-title"><span>费用</span></h2>
+		<h2 class="form-title"><i></i><span>费用</span></h2>
 		<form class="mui-input-group">
 		    <div class="mui-input-row">
 		        <label>产品保证金</label>
@@ -81,10 +82,7 @@
 		    	<input id="maintenanceFee" type="number" class="mui-input-clear" placeholder="请输入产品运维费" value="3800">
 		    </div>
 		</form>
-		<h2 class="form-title mui-clearfix">
-			<span>上传合同</span>
-			<!--<button type="button" class="mui-btn mui-btn-primary" id="upload">上传</button>-->
-		</h2>
+		<h2 class="form-title"><i></i><span>上传合同</span></h2>
 		<div class="htBox mui-clearfix">
 			<div class="img-item upload">		
 				<i class="mui-icon mui-icon-camera"></i>
@@ -94,14 +92,28 @@
 	</div>
 	    
 <script type="text/javascript">
-	mui.init();
 	var uuid = '';
-	
+	mui.init({
+		gestureConfig: {
+			tap: true, //默认为true
+			doubletap: true, //默认为false
+			longtap: true, //默认为false
+			swipe: true, //默认为true
+			drag: true, //默认为true
+			hold: true, //默认为false，不监听
+			release: true //默认为false，不监听
+		}
+	});
+	view = new plus.nativeObj.View('test',{top:'0px',left:'0px',height:'44px',width:'100%'},
+	[{tag:'img',id:'img',src:'nbg.png',position:{top:'0px',left:'0px',width:'100%',height:'100%'}},
+	{tag:'rect',id:'rect',color:'#FF0000',position:{top:'0px',left:'0px',width:'100%',height:'1px'}},
+	{tag:'font',id:'font',text:'原生控件',textStyles:{size:'18px'}}
+	]);
+	view.show();
 	if(mui.os.ios){
 		// 解决在ios上fixed元素focusin时位置出现错误的问题 
 		document.addEventListener('DOMContentLoaded',function(){
-			var footerDom = document.querySelector('footer');
-			
+			var footerDom = document.querySelector('footer');	
 			document.addEventListener('focusin', function() {
 				footerDom.style.position = 'absolute';
 			});
@@ -112,7 +124,10 @@
 	}
 	mui.plusReady(function() {
 		uuid =getUUId();
-
+		//页面滚动隐藏键盘
+		$(".mui-content").on('scroll',function(){
+		    plus.key.hideSoftKeybord();   
+		});
 		/*点击上传按钮触发*/
 	    mui('.mui-content').on('tap', '.upload',function() {
 	        if(mui.os.plus) {
@@ -300,11 +315,11 @@
 				remark = $("#remark").val(),
 				contract = $("#contract").val();
 			if(!vaildeParam(name)){
-                layer.msg("请输入姓名");
+                layer.msg("请输入市场合伙人姓名");
                 return;
             }
 			if(!vaildeParam(mobile)){
-                layer.msg("请输入手机号");
+                layer.msg("请输入市场合伙人手机号");
                 return;
             }
 			if(!vaildeParam(cityCode)){

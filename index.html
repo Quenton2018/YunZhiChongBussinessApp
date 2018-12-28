@@ -106,6 +106,9 @@
     	mui.init();
         
     	$.plusReady(function() {
+    		plus.webview.currentWebview().setStyle({
+				popGesture:'none' // 关闭侧滑返回功能
+			});
     		checkLogin('page/login.html');
     		
             getUserInfo();

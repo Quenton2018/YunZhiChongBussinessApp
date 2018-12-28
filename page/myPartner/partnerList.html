@@ -64,7 +64,7 @@
 	{{each list as item}}	
 	    <li class="mui-table-view-cell">
 		    <div class="mui-slider-right mui-disabled">
-				<a class="mui-btn mui-btn-red" data-id="{{item.partner.uuid}}">删除</a>
+				<a class="mui-btn mui-btn-red" data-id="{{item.id}}">删除</a>
 			</div>
 			<div class="list-box {{if item.status !== 'AUDIT_PASS'}}mui-slider-handle{{/if}}">
 	    		<div class="list-wrap">
@@ -75,7 +75,7 @@
 	    				</div>
 	    				<div class="city_wrap">
 		    				<span class="city">城市:</span>
-		    				<span class="city">暂无</span>
+		    				<span class="city">{{item.partner.region.name}}</span>
 		    			</div>
 	    			</div>
 	    			<div class="tel_wrap">
@@ -175,7 +175,7 @@
 	function handleDel($elem,id){
 		var params = {
 			uuid:uuid,
-			partner_uuid:id
+			income_id:id
 		}
 		postJSON(API_URL.ApiDelInvestmentPartner,params,function(res){
 			layer.msg(res.msg);
