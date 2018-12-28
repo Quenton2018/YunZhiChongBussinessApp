@@ -39,6 +39,7 @@
 			.weixin h6::before{left:40px;}
 			.weixin h6::after{right:40px;}
 			.weixin-img{width:50px;margin:10px;}
+			.passWord{display: none;}
 		</style>
 	</head>
 	<body style="background: #ffffff;">
@@ -53,12 +54,16 @@
 						<i class="iconfont"><img src="../images/tel.png"/></i>
 						<input type="tel" name="regMobile" placeholder="+86 请输入手机号" />
 					</div>
-					<div class="inputBox">
+					<div class="inputBox quick">
 						<i class="iconfont"><img class="protect" src="../images/protect.png"/></i>
 						<input type="text" name="code" placeholder="请输入验证码" />
 						<span class="getCode">获取验证码</span>
 					</div>
-					<div class="loginTwo JumpUrl" style="margin:0 15px" onclick="clicked('loginTwo.html');">
+					<div class="inputBox passWord">
+						<i class="iconfont"><img src="../images/possword.png"/></i>
+						<input type="password" name="password"  placeholder="请输入密码"/>
+					</div>
+					<div class="loginTwo JumpUrl" id="psdLogin" style="margin:0 15px">
 						<span>密码登录</span>
 					</div>
 				</div>
@@ -123,6 +128,21 @@
                     }
                 })
             });
+            //密码与快捷登录切换
+            var psd = true;
+            $('#psdLogin').click(function(){
+            	if(psd){
+            		$(this).text('手机快捷登录');
+            		$('.quick').hide();
+            		$('.passWord').show();
+            		psd = false;
+            	}else{
+            		$(this).text('密码登录');
+            		$('.quick').show();
+            		$('.passWord').hide();
+            		psd = true;
+            	}
+            });
             mui.plusReady(function(){
 				plus.webview.currentWebview().setStyle({
 					softinputMode: "adjustResize"
@@ -137,37 +157,57 @@
                  * 登入
                  */
                 $('.loingBtn').on('click',function(){
-                    var mobile = $("input[name='regMobile']").val();
+                	var mobile = $("input[name='regMobile']").val();
                     if(!vaildeParam(mobile)){
                         layer.msg("手机号不能为空");
                         return;
-                    }
-                    var code = $("input[name='code']").val();
-                    if(!vaildeParam(code)){
-                        layer.msg("验证码不能为空");
-                        return;
-                    }
-
-
-                    var clientInfo = plus.push.getClientInfo().clientid;
-
-                    var postData = {
-                        "clientInfo":clientInfo,
-                        "mobile":mobile,
-                        "code":code
-                    }
-                    postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
-                    if("0" == res.code){
-                        layer.msg("登入成功，正在跳转...");
-                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
-                        setTimeout(function(){
-                            clicked('../index.html')
-                        },2000);
-                    }else{
-                        layer.msg(res.msg);
-                    }
-                    })
-
+                    };
+                	var clientInfo = plus.push.getClientInfo().clientid;
+                	if(psd){
+	                    var code = $("input[name='code']").val();
+	                    if(!vaildeParam(code)){
+	                        layer.msg("验证码不能为空");
+	                        return;
+	                    };
+	                    var postData = {
+	                        "clientInfo":clientInfo,
+	                        "mobile":mobile,
+	                        "code":code
+	                    }
+	                    postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
+		                    if("0" == res.code){
+		                        layer.msg("登入成功，正在跳转...");
+		                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+		                        setTimeout(function(){
+		                            clicked('../index.html')
+		                        },2000);
+		                    }else{
+		                        layer.msg(res.msg);
+		                    }
+	                    });
+                	}else{
+	                    var password = $("input[name='password']").val();
+	                    if(!vaildeParam(password)){
+	                        layer.msg("密码不能为空");
+	                        return;
+	                    }
+	                    var postData = {
+	                        "clientInfo":clientInfo,
+	                        "mobile":mobile,
+	                        "password":password
+	                    }
+	                    postJSON(API_URL.ApiAdminPasswordlogin,postData,function(res){
+	                        if("0" == res.code){
+	                            layer.msg("登入成功，正在跳转...");
+	                            setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+	                            setTimeout(function(){
+	                                clicked('../index.html')
+	                            },2000);
+	                        }else{
+	                            layer.msg(res.msg);
+	                        }
+	                    })
+                	}
                 })
 
             });
@@ -184,7 +224,8 @@
                 } else {
                     return true;
                 }
-            }
+            };
+            
 
 		</script>
 		
