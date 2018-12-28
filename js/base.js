@@ -1,7 +1,7 @@
 var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.3";
 apiHost = "http://39.106.62.16:8181";
-
+//apiHost = "http://192.168.1.124:8181";
 
 
 var API_URL = {};
@@ -30,7 +30,7 @@ API_URL.ApiHonorGetHonorList = apiHost + "/api/honor/getHonorList"; //获取荣�
 
 API_URL.ApiGetChargingGroup = apiHost + "/api/chargingBusiness/getChargingGroup"; //获取合伙人片区
 API_URL.ApiGetChargingGroupCount = apiHost + "/api/chargingBusiness/getChargingGroupCount"; //获取合伙人片区
-API_URL.ApiChargingGetChargingCountByPartner = apiHost + "/api/charging/getChargingCountByPartner"; //获取合伙人片区
+API_URL.ApiChargingGetChargingCountByPartner = apiHost + "/api/charging/getChargingCountByPartner"; //获取合伙充电桩数量 
 API_URL.ApiGetSumMoney = apiHost + "/api/admin/getSumMoney"; //获取合伙人片区
 API_URL.ApiGetChargingByGroupID = apiHost + "/api/charging/getChargingByGroupID"; //根据片区ID获取充电桩
 API_URL.ApiGetChargingList = apiHost + "/api/charging/getChargingList"; //根据片区ID获取充电桩
@@ -108,6 +108,18 @@ API_URL.ApiChargingBusinessupdateSetmeal = apiHost + "/api/setmeal/updateSetmeal
 API_URL.ApiChargingBusinessAddSetmeal = apiHost + "/api/setmeal/saveSetmeal";
 API_URL.ApiChargingBusinessdeleteChargingGroup = apiHost + "/api/applyChargingGroup/deleteChargingGroup";
 
+API_URL.ApiCountPartnerManager = apiHost + "/api/partnermanager/countPartnerManager"; //管理合伙人的收入
+API_URL.ApiGetPartnerCities = apiHost + "/api/partnermanager/getCities"; //管理合伙人的城市
+API_URL.ApiGetCityPartner = apiHost + "/api/partnermanager/getCityPartner"; //管理合伙人城市的市场合伙人
+API_URL.ApiGetPartnerLeadChargingGroup = apiHost + "/api/chargingStatistics/getPartnerLeadChargingGroup"; //合伙人的片区信息
+API_URL.ApiGetPartnerChargingGroup = apiHost + "/api/chargingStatistics/getPartnerChargingGroup"; //合伙人分成片区
+API_URL.ApiGetPartnerChargingStatistics = apiHost + "/api/chargingStatistics/getPartnerChargingStatistics"; //合伙人的充电桩统计 
+API_URL.ApiGetInvestmentPartner = apiHost + "/api/partnermanager/getInvestmentPartner";//管理合伙人
+API_URL.ApiSaveInvestmentPartner = apiHost + "/api/partnermanager/saveInvestmentPartner"; //管理合伙人添加市场合伙人
+API_URL.ApiDelInvestmentPartner = apiHost + "/api/partnermanager/deleteInvestmentPartner";//管理合伙人删除市场合伙人
+
+
+API_URL.ApiUploadfileByBase64 = apiHost + "/api/common/uploadfileByBase64";//Base64文件上传接口
 
 
 var WX_URL = {};
@@ -173,13 +185,13 @@ function vaildeParam(param) {
  * @param {Object} url 接口地址
  * @param {Object} data 参数连接的方式
  * @param {Object} callback 回调函数
+ * @param {Boolean} isIcon  选填（是否显示loging）
  */
-function postJSON(url, data, callback){
-	
+function postJSON(url, data, callback,isIcon){
 	url += "?"+postDataFormat(data);
-	
-//	console.log("## postJSON ## url : "+url)
-	var load_index = layer.load();
+	if(!isIcon){
+		var load_index = layer.load();
+	}
 	var xhr = new plus.net.XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 			console.log("## postJSON ## readyState : "+xhr.readyState)
@@ -187,14 +199,15 @@ function postJSON(url, data, callback){
 	        case 4:
 	            if ( xhr.status == 200 ) {
 	            		var responseText = xhr.responseText;
-	            		console.log("## url: "+url+" #### responseText: "+responseText)
+	            		console.log("## postJSON ## url : "+url)
+	            		console.log("## responseText: "+responseText)
 	            	 	// var json = eval("(" + responseText + ")");
 	            	 	var json = JSON.parse(responseText);
 	            		callback(json);
 	            } else {
 	            		layer.msg("请求失败");
 	            }
-	            layer.close(load_index);
+	            !isIcon && layer.close(load_index);
 	            break;
 	        default :
 	            break;
@@ -202,34 +215,6 @@ function postJSON(url, data, callback){
     }
 	xhr.open( "POST", url ,true);
 	xhr.send(null);
-}
-
-function postJSONNoIcon(url, data, callback){
-
-    url += "?"+postDataFormat(data);
-
-//  console.log("## postJSONNoIcon ## url : "+url)
-    var xhr = new plus.net.XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        console.log("## postJSON ## readyState : "+xhr.readyState)
-        switch ( xhr.readyState ) {
-            case 4:
-                if ( xhr.status == 200 ) {
-                    var responseText = xhr.responseText;
-                    console.log("## url: "+url+" #### responseText: "+responseText)
-                    var json = eval("(" + responseText + ")");
-                    console.log("## postJSON ## json : "+json)
-                    callback(json);
-                } else {
-                    layer.msg("请求失败");
-                }
-                break;
-            default :
-                break;
-        }
-    }
-    xhr.open( "POST", url ,true);
-    xhr.send(null);
 }
 
 /**
@@ -516,7 +501,7 @@ function uploadLoginInfo(loginPagePath){
                 "clientInfo":clientInfo,
                 "deviceUuid":deviceUuid
             }
-            postJSONNoIcon(API_URL.updateLoginInfo,data,function(res){
+            postJSON(API_URL.updateLoginInfo,data,function(res){
                 if("0" == res.code){
                     console.log("上传用户登录信息成功")
                 }else if('6003' == res.code){
@@ -528,7 +513,7 @@ function uploadLoginInfo(loginPagePath){
                 }else{
                     layer.msg(res.msg);
                 }
-            })
+            },true)
         }
 
     },5000)
@@ -623,12 +608,20 @@ function NumberToChinese(num){
 }
 
 /**
+ * 千分位显示 常用于价格
+ * @param {Number} num
+ */
+function toThousands(num) {
+    return parseFloat(num).toFixed(2).replace(/(\d{1,3})(?=(\d{3})+(?:\.))/g, "$1,");
+}
+
+/**
  * wgt html/css/js
  * wgtu 差量更新,需要对照appStore或应用宝中的升级
  */
 function heatUpdate(appType) {
 	appType = appType + "HeatUpdate";
-	postJSONNoIcon(API_URL.AppVersionPartnerGetNewest, {
+	postJSON(API_URL.AppVersionPartnerGetNewest, {
 		'appType': appType
 	}, function(res) {
 		if('0' == res.code && vaildeParam(res.data)) {
@@ -641,7 +634,7 @@ function heatUpdate(appType) {
 				});
 			}
 		}
-	});
+	},true);
 }
 
 function compareVersion(version) {
@@ -740,20 +733,23 @@ function isInArray(arr,value){
 
 //本地存储数据
 var Storage = {
+	getStorage:function(){
+		return plus.storage;
+	},
 	//存储
 	setItem:function(key, value) {
-	  plus.storage.setItem(key, value);
+	  this.getStorage().setItem(key, value);
 	},
 	//取出数据
 	getItem:function(key) {
-	   return plus.storage.getItem(key);
+	  return this.getStorage().getItem(key);
 	},
 	// 删除数据
 	removeItem:function(key) {
-	  plus.storage.removeItem(key);
+	  this.getStorage().removeItem(key);
 	},
 	clear:function(){
-	  plus.storage.clear();
+	  this.getStorage().clear();
 	}
 }
 /**

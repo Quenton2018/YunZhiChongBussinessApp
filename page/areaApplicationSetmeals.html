@@ -304,7 +304,7 @@
 								clicked('areaInfoSetmealsSave.html');
 							}
 						}else{//申请片区
-							postJSONNoIcon(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
+							postJSON(API_URL.ApiApplyChargingGroupCheckChargingGroup, {
 								uuid: uuid,
 								name: name
 							}, function(res) {
@@ -313,7 +313,7 @@
 								} else {
 									layer.msg(res.msg);
 								}
-							});
+							},true);
 						}
 					}
 				}

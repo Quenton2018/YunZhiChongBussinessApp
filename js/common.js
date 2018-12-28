@@ -927,6 +927,27 @@ w.clicked=function(id,wa,ns,ws){
 	return null;
 };
 
+/**
+ * 关闭当前窗口返回上个窗口并刷新
+ * @param {Object} page
+ */
+w.returnWindow = function(page){
+    var ws = plus.webview.currentWebview();
+    var wo = ws.opener();
+    do {
+    	if (wo.getURL().endsWith(page)) {
+    		break;
+    	}	
+    	var temp = wo.opener();
+    	wo.close("none");
+    	wo = temp;
+    } while (true);
+
+	setTimeout(function() {
+		wo.evalJS("dataRefresh()");
+		ws.close();
+	}, 300);
+}
 
 w.openDoc=function(t,c){
 	var d=plus.webview.getWebviewById('document');
@@ -1083,5 +1104,49 @@ $.plusReady = function(pageReady, pageRefresh, useRefresh) {
         ws.endPullToRefresh();
     }
 }
-
-			
+/**
+ * 上拉刷新下拉加载
+ * @param {Object} downCallback
+ * @param {Object} upCallback
+ */
+$.pullRefresh = function(downCallback,upCallback){
+	mui.init({
+    	pullRefresh: {
+			container: '#J_refresh',
+			down: {
+				style:'circle',
+				offset: '75px',
+				callback: function() {
+					mui('#J_refresh').pullRefresh().refresh(true);
+					mui('#J_refresh').pullRefresh().endPulldownToRefresh();
+					downCallback && downCallback();								
+				}
+			},
+    		up: {
+    			callback: function(){
+    				setTimeout(function() {
+    					upCallback && upCallback();	
+    				}, 300);
+    			}
+    		}
+    	}
+    });
+}
+/**
+ * 停止刷新数据
+ * @param {Object} length
+ * @param {Object} pageSize
+ */
+$.stopRefresh = function(length,pageSize){
+	if(length && pageSize){
+		mui('#J_refresh').pullRefresh().endPullupToRefresh(length < pageSize);
+	}else{
+		mui('#J_refresh').pullRefresh().endPullupToRefresh(true);
+	}	
+}
+/**
+ * 启用刷新
+ */
+$.enableRefresh = function(){
+	mui('#J_refresh').pullRefresh().refresh(true);
+}

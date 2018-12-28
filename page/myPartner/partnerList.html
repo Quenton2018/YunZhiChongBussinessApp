@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>市场合伙人列表</title>
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../plugins/layer/layer.js"></script>
+    <script src="../../js/hammer.min.js"></script>
+    <script src="../../js/jquery.hammer.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/base.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/artTemplate.min.js"></script>
+    
+    <style type="text/css">	
+		.list-wrap{display: flex;justify-content: space-between;}
+		.mui-icon-extra-peoples{color: #ff6d22;width: 30px;}
+		.city_wrap,.amount,.cost{margin-top: 8px;}
+		.amount{padding-top: 3px;}
+		.list-wrap .name_wrap .username{font-size: 14px;line-height: 26px;}
+		.list-wrap .tel_wrap{padding: 2px 0 8px 0;text-align: center;}
+		.list-wrap .tel span{color: #333;font-size: 16px;}
+		
+		.list-wrap .pass_wrap{text-align: right;}
+		.list-wrap .pass{text-align: center;}
+		.pass_wrap .pass span{font-size: 12px;border-radius: 15px;padding: 3px 8px;}
+		.pass_wrap .pass span.span-pass{color: #21b5ff;border: 1px solid #21b5ff;}
+		.pass_wrap .pass span.span-wait{color: #ff6d22;border: 1px solid #ff6d22;}
+		.pass_wrap .pass span.span-rejecj{color: #a8a8a8;border: 1px solid #a8a8a8;}
+		
+		.city_wrap span{font-size: 13px;}
+		.list-wrap .amount span,.list-wrap .cost span{font-size: 13px;}	
+
+		.li-padd{padding-top: 10px;border-top: 1px dashed #f0f1f3;}
+		.li-padd .time{font-size: 13px;}
+		
+		.mui-table-view{background: #f0f1f3;}
+		.mui-table-view:after,.mui-table-view:before{height: 0;}
+		.mui-table-view-cell{margin-bottom: 15px;background: #fff}
+		.mui-table-view-cell:last-child{margin-bottom: 0;}
+		.mui-table-view-cell:after{left: 0;right: 0;}		
+    </style>
+</head>
+<body background="#f0f1f3" >
+	<header class="header mui-bar header-immersed mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">市场合伙人列表</h1>
+	</header> 
+	<footer class="mui-bar mui-bar-footer btn-submit" onclick="clicked('partnerAdd.html')">
+		<span>添加市场合伙人</span>
+	</footer>
+	<div id="J_refresh" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<ul class="mui-table-view itemList" style="margin-top: 15px;"></ul>
+		</div>
+	</div>
+	
+<script type="text/html" id="itemTmpl">
+	{{each list as item}}	
+	    <li class="mui-table-view-cell">
+		    <div class="mui-slider-right mui-disabled">
+				<a class="mui-btn mui-btn-red" data-id="{{item.partner.uuid}}">删除</a>
+			</div>
+			<div class="list-box {{if item.status !== 'AUDIT_PASS'}}mui-slider-handle{{/if}}">
+	    		<div class="list-wrap">
+	    			<div class="name_wrap">
+	    				<div>
+	    					<span class="mui-icon-extra mui-icon-extra-peoples mui-pull-left"></span>
+	    					<span class="username">{{item.partner.realname}}</span>
+	    				</div>
+	    				<div class="city_wrap">
+		    				<span class="city">城市:</span>
+		    				<span class="city">暂无</span>
+		    			</div>
+	    			</div>
+	    			<div class="tel_wrap">
+	    				<div>
+	    					<span>{{item.partner.username}}</span>
+	    				</div>
+	    				<div class="amount">
+		    				<span>保证金:</span>
+		    				<span>{{item.partner.deposiMoney}}</span>
+		    				<span>元</span>
+		    			</div>
+	    			</div>
+	    			<div class="pass_wrap">
+	    				<div class="pass">
+	    					{{if item.status == "AUDIT_PASS"}}
+	    					<span class="span-pass">审核通过</span>
+	    					{{else if item.status == "AUDIT_WAITING"}}
+	    					<span class="span-wait">等待审核</span>
+	    					{{else if item.status == "AUDIT_REJECT"}}
+	    					<span class="span-rejecj">审核驳回</span>
+	    					{{/if}}
+	    				</div>
+	    				<div class="cost">
+		    				<span>运维费:</span>
+		    				<span>{{item.partner.operationalMoney}}</span>
+		    				<span>元</span>
+		    			</div>
+	    			</div>
+	    		</div>
+	    		<div class="li-padd">
+	    			<div class="time">
+			    		<span>申请时间:</span>
+			    		<span>{{item.partner.joinDate | dateFormat:'yyyy-MM-dd'}}</span>
+			    	</div>
+	    		</div>
+	    	</div>
+	    </li>
+    {{/each}}
+</script>
+
+<script type="text/javascript">
+//	mui.init();	
+	var uuid = '';
+	var pageNumber = 1;
+    var pageSize = 5;
+   
+	$.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+		getList();	
+	});
+	
+	mui.plusReady(function() {
+        uuid = getUUId();      
+    	checkLogin();
+        getList();      
+    });
+	
+	// 刷新页面
+    function dataRefresh(){
+        pageNumber = 1;
+        getList();
+    }
+	function getList(){
+		var params = {
+			uuid:uuid,
+			page_number:pageNumber,
+			page_size:pageSize
+		};
+		postJSON(API_URL.ApiGetInvestmentPartner,params,function(res){
+			if(res.code == 0){		
+		    	var length = res.data.length;
+		    	$.stopRefresh(length,pageSize);
+		    	
+		    	if(1 == pageNumber){
+                    $(".itemList").html('');
+               }
+		    	var itemHtml = '';
+		    	var data = {'list':res.data};
+		    	var itemHtml = template('itemTmpl', data);
+		    	$(".itemList").append(itemHtml);
+			}else{
+                layer.msg(res.msg);
+            }
+		});
+	}
+	$(".itemList").on('tap', '.mui-btn', function(event) {
+		var $elem = $(this);
+		var id = $(this).attr('data-id');
+		var btnArray=['确定','取消'];
+		mui.confirm('确定删除这个市场合伙人？', '提示', btnArray, function(e) {
+			// 确认删除
+			if (e.index == 0) {
+				handleDel($elem,id);
+			}
+		});
+	});
+	function handleDel($elem,id){
+		var params = {
+			uuid:uuid,
+			partner_uuid:id
+		}
+		postJSON(API_URL.ApiDelInvestmentPartner,params,function(res){
+			layer.msg(res.msg);
+			if(res.code == '0'){
+				$elem.parents("li").remove();
+			}
+		});
+	}
+</script>
+
+</body>
+</html>
+

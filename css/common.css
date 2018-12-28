@@ -32,26 +32,42 @@
 
 .icon-tianjia:before { content: "\e61a"; }
 
-#header {
-    background-color: #ffffff;
-}
-
-
-#header img{
-    line-height: 44px;
-    float: left;
-    width: 44px;
-}
-
 
 .mui-bar-nav{
-    background: #fff;
+  background: #fff;
 }
 .mui-bar-nav a{
-    color: #333;
+  color: #333;
 }
 .mui-icon{
 	font-size: 16px;
+}
+
+.header {
+	
+}
+.header-immersed {
+	padding-top: 20px;
+	padding-bottom: 44px;
+	background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+	background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+	background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+}
+.header-immersed .mui-title,
+.header-immersed .mui-icon {
+	color: #FFFFFF;
+}
+
+.btn-submit {
+	background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+	background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+	background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);   
+	height: 49px;
+	line-height: 49px;
+	font-size: 16px;
+	color: #FFFFFF;
+	text-align: center;
+	box-shadow: none;
 }
 
 .left{
@@ -63,7 +79,9 @@
 .clearfix{
     clear: both;
 }
-
+.hide{
+	display: none;
+}
 .myList .right {
     float: right;
 }
@@ -104,32 +122,18 @@
 .nodata{
 	text-align: center;
 }
-
-.header {
-	
+.nodata-img img{
+	width: 60%;
+	margin: 0 auto;
+	margin-bottom: 45px;
+	display: block;
 }
-.header-immersed {
-	padding-top: 20px;
-    padding-bottom: 44px;
-    background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
-    background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
-    background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
+.nodata-p{
+	text-align: center;
+	font-size: 14px;
 }
-.header-immersed .mui-title,
-.header-immersed .mui-icon {
-	color: #FFFFFF;
-}
-
-.btn-submit {
-	background-image: -moz-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
-    background-image: -webkit-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
-    background-image: -ms-linear-gradient( 135deg, rgb(240,130,0) 0%, rgb(255,117,70) 100%);
-    height: 49px;
-    line-height: 49px;
-    font-size: 16px;
-    color: #FFFFFF;
-    text-align: center;
-    box-shadow: none;
+.mui-pull-caption{
+  font-weight: normal;
 }
 
 .mui-table-view-cell {

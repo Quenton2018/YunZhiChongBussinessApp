@@ -90,7 +90,7 @@
         }
         .product-item{
         	float: left;
-        	width: 33.3333333%;
+        	width: 50%;
         	text-align: center;
         	position: relative;
         }
@@ -132,16 +132,22 @@
 		<div class="Product-box mui-clearfix">
 			<div class="product-item line">
 				<h3>产品保证金</h3>
-				<h4>10000.00</h4>
-			</div>
-			<div class="product-item line">
-				<h3>产品运维费</h3>
-				<h4>3800.00</h4>
+				<div class="item-dis">
+					<h4>****</h4>
+					<h4 id="deposiMoney" style="display: none;">0</h4>
+				</div>
 			</div>
 			<div class="product-item">
+				<h3>产品运维费</h3>
+				<div class="item-dis">
+					<h4>****</h4>
+					<h4 id="operationalMoney" style="display: none;">0</h4>
+				</div>			
+			</div>
+			<!--<div class="product-item">
 				<h3>可提现金额</h3>
-				<h4>556.00</h4>
-			</div>			
+				<h4 id="moneyAmount">0</h4>
+			</div>			-->
 		</div> 
         <div class="Box-tixian">
             <!--<img class="Button-Img putForwardBtn"  src="../images/tixian.png" />-->
@@ -327,13 +333,19 @@
         if(vaildeParam(uuid)){
             postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                 if("0" == res.code){
+                	var deposiMoney = res.data.deposiMoney;
+                	var operationalMoney = res.data.operationalMoney;
+                	
                     var moneyAmount = res.data.moneyAmount;
                     var bankCode = res.data.bankCode;
                     var bank = res.data.bank;
                     Storage.setItem( "amountMoney", moneyAmount); //可提现余额
                     Storage.setItem( "bankCode", bankCode);
                     Storage.setItem( "bank", bank);
-
+					
+					$("#deposiMoney").text(deposiMoney);
+					$("#operationalMoney").text(operationalMoney);
+					$("#moneyAmount").text(moneyAmount);
                     $("#moneyAmountBox").text(moneyAmount);
 
                 }else{

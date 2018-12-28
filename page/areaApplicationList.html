@@ -5,7 +5,6 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>片区申请列表</title>
     <link rel="stylesheet" href="../css/mui.min.css">
-    <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../js/jquery-3.3.1.min.js"></script>
@@ -27,33 +26,7 @@
             border-style: none;
         }
         img{display: block;}
-        .top{
-            width: 100%;
-            height: 44px;
-            background:white;
-            font-size: 16px;
-            color:white;
-            text-align: center;
-            line-height: 44px;
-            box-shadow: none;
-        }
-        .top .left{
-            float: left;
-            padding-left: 30px;
-            background: url("../images/pianqushenqing/faihui@3x.png") 15px center no-repeat;
-            background-size: 15px 22px;
-            height: 44px;
-        }
-        .top h1{
-            z-index: -100;
-            margin: 0;
-            padding: 0;
-            color: black;
-        }
-        .conbox01{
-            margin-top: 64px;
-            padding-bottom: 70px;
-        }
+
         .conbox{
             margin-bottom: 20px;
             position: relative;
@@ -153,23 +126,11 @@
             right: 10px;
             bottom: 20px;
             font-size: 3rem;
-        }
-        .dataList{
-        	padding: 20px 0 0 0;
-        }
-        .nodata-img img{
-        	width: 60%;
-        	margin: 0 auto;
-        	margin-bottom: 45px;
-        }
-        .nodata-p{
-        	text-align: center;
-        	font-size: 14px;
-        }
-        
+        }       
         .conbox {
         	margin-bottom: 20px;
         }
+        .mui-table-view:after,.mui-table-view:before{height: 0;}
     </style>
 
 </head>
@@ -182,19 +143,13 @@
 <footer class="btn-submit mui-bar mui-bar-tab" id="submitBtn">
 	<span>申请片区</span>
 </footer>
-<div class="mui-content">
 
-<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+<div id="J_refresh" class="mui-content mui-scroll-wrapper">
 	<div class="mui-scroll">
-    	<ul class="dataList mui-table-view" style="margin: 0; padding: 0;"></ul>
+    	<ul class="dataList mui-table-view" style="margin-top: 15px;"></ul>
    	</div>
 </div>
 
-    <!--<div id="loadMore" class="loadMore">加载更多</div>-->
-    <div id="noMore" class="noMore">没有更多了</div>
-
-
-</div>
 <div id="nodata" style="display: none;">
 	<div class="nodata-img">
 		<img src="../images/area/null.png" />
@@ -239,74 +194,30 @@
 
 <script type="text/javascript">
 	
-    mui.init({
-    	pullRefresh: {
-			container: '#pullrefresh',
-			down: {
-				style:'circle',
-				offset: '75px',
-				callback: function() {
-					mui('#pullrefresh').pullRefresh().refresh(true);
-					$('.mui-pull-caption').html('');
-					dataRefresh();
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-				}
-			},
-    		up: {
-    			contentrefresh: '正在加载...',
-    			auto: false,
-    			callback: function() {
-    				setTimeout(function() {
-    					pageNumber++;
-						getList(function(len) {
-    						mui('#pullrefresh').pullRefresh().endPullupToRefresh(len == 0);
-						});
-    				}, 300);
-    			}
-    		}
-    	}
-    });
-    
-    $('.dataList').on('tap', '.mui-btn', function(event) {
-		var $elem = $(this);
-		var id = $(this).attr('data-id');
-		var btnArray=['确定','取消'];
-		mui.confirm('确定删除这个片区申请？', '提示', btnArray, function(e) {
-			// 确认删除
-			if (e.index == 0) {
-				handleDel($elem,id);
-			}
-		});
-	});
-	
-	mui.plusReady(getList);
-
-    var pageNumber = 1;
+	var pageNumber = 1;
     var pageSize = 5;
     var shareUrl = null;
+
+	$.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+		getList();	
+	});
+  	
+	mui.plusReady(getList);
+
 
     // 刷新页面
     function dataRefresh(){
         pageNumber = 1;
-        
-        getList(function() {
-        	$(".dataList").html("");
-        });
+        getList();
     }
-    
-    /*$.plusReady(function() {
-    	getList();
-    }, function() {
-    	dataRefresh();
-    });*/
 
     //跳转详情页
     function areaApplicationDeatil(that) {
-        console.log("that=========="+that);
         var data_id = $(that).attr("data-id")+''; //片区id*/
         console.log("areaId=========="+data_id);
         //服务校验参数 然后保存
-        plus.storage.setItem( "areaId", data_id);
+        Storage.setItem( "areaId", data_id);
         clicked('areaApplicationDetail.html');
     }
 
@@ -361,8 +272,8 @@
         });
     }
 
-    function getList(callback){
-        var uuid = plus.storage.getItem("uuid");
+    function getList(){
+        var uuid = Storage.getItem("uuid");
         if(vaildeParam(uuid)){
             var dataParam = {
                 "uuid":uuid,
@@ -372,16 +283,19 @@
             postJSON(API_URL.ApiGetApplyChargingGroupList,dataParam,function(res){
                 if("0" == res.code){
                     var data = res.data.pagedata.content;
-                    if (callback) {
-                    	callback(data.length);
-                    }
                     
+                    $.stopRefresh(data.length,pageSize);
+
+                    if(1 == pageNumber){
+                        $(".dataList").html('');
+                    }
                     if (data.length == 0 && pageNumber > 1) {
                     	return;
                     }
                     
                     if(!vaildeParam(data)){
-                    	$("#nodata").show();
+                    	mui("#J_refresh").pullRefresh().setStopped(true);
+                    	$("#nodata").show();                   	
                     }else{
                     	$("#nodata").hide();
                     }
@@ -429,18 +343,8 @@
                             .replace(/{{areaid}}/g,id)
                             .replace(/{{id}}/g,keid);
                     });
-                    if(1 == pageSize){
-                        $(".dataList").html("");
-                    }
                     $(".dataList").append(html);
-                    //   bindItemClick();
-                    if(true == res.data.pagedata.last){
-                        $("#loadMore").css({"display":"none"});
-//                      $("#noMore").css({"display":"block"});
-                    }else{
-                        $("#loadMore").css({"display":"block"});
-//                      $("#noMore").css({"display":"none"});
-                    }
+
                 }else{
                     layer.msg(res.msg);
                 }
@@ -454,16 +358,22 @@
      });
      qrcode.makeCode("${setting.siteUrl}/wx/member/bind.html?invitationCode=${member.myinvitationCode}");*/
 
-    $("#loadMore").click(function(){
-        pageNumber++;
-        getList();
-    });
-	  $("#submitBtn").click(function(){
-		//clicked('areaApplication.html');
+	$("#submitBtn").click(function(){
 		clicked('areaApplicationSetmeals.html');
     });
+    $('.dataList').on('tap', '.mui-btn', function(event) {
+		var $elem = $(this);
+		var id = $(this).attr('data-id');
+		var btnArray=['确定','取消'];
+		mui.confirm('确定删除这个片区申请？', '提示', btnArray, function(e) {
+			// 确认删除
+			if (e.index == 0) {
+				handleDel($elem,id);
+			}
+		});
+	});
 	function handleDel($elem,id){
-		var uuid = plus.storage.getItem("uuid");
+		var uuid = Storage.getItem("uuid");
 		var params = {
 			uuid:uuid,
 			areaId:id
