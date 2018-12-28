@@ -10,65 +10,17 @@
 	<link rel="stylesheet" href="css/common.css" />
 	<link rel="stylesheet" href="plugins/layer/theme/default/layer.css" />
 	<style>
-		.header {
-			box-shadow: none;
-		}
-		.header .mui-icon {
-			font-size: 28px;
-		}
-		.box01{
-            height: 320px;
-            background: url("images/index/indexbg.jpg") no-repeat;
-            background-size: 100% 100%;
-            text-align: center;
-        }
-        .income-box{
-        	width: 210px;
-        	margin: 0 auto;
-        	height: 210px;
-        	background: url("images/index/index_bg1.png") no-repeat;
-    		background-size: 100% 100%;
-    		text-align: center;
-        }
-        .income-btm{
-        	margin-top: 40px;
-        }
-        .box01 h1{
-            margin: 0;
-            padding: 0;
-            color: white;
-            font-size:28px;
-            padding-top: 50px;
-        }
-        .box01 h2{
-            margin: 0;
-		    padding: 0;
-		    margin-top: 10px;
-		    padding-left: 44px;
-		    color: white;
-		    font-size: 15px;
-		    line-height: 20px;
-		    background: url(images/index/shouru@3x.png) 25% center no-repeat;
-		    background-size: 25px 20px;
-        }
-        .box01 .conbox01{
-            float: left;
-            width: 33.3333333%;
-            text-align: center;
-        }
-        .conbox01 h3{
-            font-size: 24px;
-            color: white;
-        }
-        .conbox01 h4{
-            margin-top: 10px;
-            font-size: 14px;
-            color: white;
-            font-weight: 400;
-        }       
-        .mui-table-view-cell a img {
-        	width: 44px;
-        }
+        .header{box-shadow:none;}
+        .header .mui-icon{font-size:28px;}
+        .main-box{height:320px;background:url("images/index/indexbg.jpg") no-repeat;background-size:100% 100%;text-align:center;}
+        .income-box{width:210px;margin:0 auto;height:210px;background:url("images/index/index_bg1.png") no-repeat;background-size:100% 100%;text-align:center;}
+        .income-btm{margin-top:40px;}
+        .income-box h1{margin:0;padding:0;color:white;font-size:28px;padding-top:50px;}
+        .income-box h2{margin:0;padding:0;margin-top:10px;padding-left:44px;color:white;font-size:15px;line-height:20px;background:url(images/index/shouru@3x.png) 25% center no-repeat;background-size:25px 20px;}
+        .list-col{float:left;text-align:center;}
+        .list-col h3{font-size:24px;color:white;}
+        .list-col h4{margin-top:10px;font-size:14px;color:white;font-weight:400;}
+        .mui-table-view-cell a img{width:44px;}
 	</style>
 </head>
 
@@ -81,29 +33,29 @@
 	
 	<div class="mui-content">
 		<!-- box01 -->
-		<div class="box01">
+		<div class="main-box">
             <div class="income-box">
                 <h1 class="totalMoney">0.00</h1>
                 <h2>收入总计(元)</h2>
             </div>
 			
 			<div class="income-btm mui-clearfix">
-				<div class="conbox01">
+				<div class="list-col mui-col-xs-4">
 					<h4>日收入(元)</h4>
 		            <h3 class="dayMoney">0.00</h3>	            
 		        </div>
-		        <div class="conbox01">
+		        <div class="list-col mui-col-xs-4">
 		        	<h4>充电桩(台)</h4>
 		            <h3 class="cdzCount">0</h3>		            
 		        </div>
-		        <div class="conbox01">
+		        <div class="list-col mui-col-xs-4">
 		        	<h4>使用率(%)</h4>
 		            <h3 class="rateCount">0</h3>	            
 		        </div>
 			</div>
 	    </div>
 		
-        <ul class="mui-table-view mui-grid-view mui-grid-9" style="background-color: #FFFFFF;">
+        <ul class="mui-table-view mui-grid-view mui-grid-9" style="background-color: #FFF;">
             <li class="mui-table-view-cell mui-media mui-col-xs-4">
             	<a onclick="clicked('page/myCdz.html')">
                     <img src="images/index/wodecdz@3x.png">
