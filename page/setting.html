@@ -34,6 +34,13 @@
         .mui-table-view .mui-media-object {
             max-width: 70px;
         }
+        .mui-popover{top: 0;right: 0;bottom: 0;left: 0;margin: auto;width: 230px;display: block;padding: 0 15px;height: 165px;}
+        .mui-popover h4{padding: 23px 0 0 0}
+        .mui-popover p{padding: 20px 0 0 0;}
+        .mui-popover .sure{width: 100%;background-color: rgb(245,126,24);text-align: center;padding: 5px 0;color: #fff;}
+        .popup{position: relative;}
+        .popup .close{width: 20px;height: 20px;border-radius: 50%;background-color: rgb(245,126,24);text-align: center;
+        	position: absolute;top: -15px;right: -25px;font-size: 20px;color: #fff;}
     </style>
 
 </head>
@@ -64,6 +71,11 @@
             <li class="mui-table-view-cell">
                 <a class="mui-navigate-right"  onclick="clicked('edition.html')" >检查新版本</a>
             </li>
+            <li class="mui-table-view-cell">绑定微信
+                <div class="mui-switch">
+				  <div class="mui-switch-handle"></div>
+				</div>
+            </li>
         </ul>
 
         <ul class="mui-table-view"  style="margin-top: 20px;">
@@ -77,6 +89,19 @@
             <li class="mui-table-view-cell" style="text-align: center; color: #FE0000">退出账号</li>
         </ul>
     </div>
+    
+    <!--弹出框-->
+    <div id="popover" class="mui-popover">
+		<!--<div class="mui-popover-arrow"></div>-->
+		<div class="popup">
+			<h4>确认解除绑定</h4>
+			<p>解除绑定，您将无法通过此授权方式登录当前账号</p>
+			<div class="sure" onclick="bind()">
+				确认
+			</div>
+			<div class="close" onclick="bind()">×</div>
+		</div> 
+	</div>
 
 
 </div>
@@ -119,7 +144,15 @@
         },1000)
     });
 
-
+	//开关按钮
+	function bind(){
+		mui("#popover").popover('toggle', document.getElementById("div"));
+	};
+	$('.mui-switch').click(function(){
+		if($('.mui-active').length ==0){
+			bind()
+		}
+	});
 
 
 

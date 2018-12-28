@@ -22,6 +22,7 @@
 			}
 			.mui-content{
 				background-color: #ffffff;
+				padding: 0 15px;
 			}
 			.loginBox{
 				overflow: hidden;
@@ -69,49 +70,75 @@
 			}
 			.loginTwo{
 				margin: 0 15px;
-				text-align: center;
-				padding-top: 10px;
+				text-align: right;
 				padding-bottom: 10px;
-				color: #FF7546;
+				color: rgb(255,195,131);
+				font-size: 12px;
 			}
+			.loingBtn,.join{text-align: center;background-color: rgb(245,126,24);padding: 10px 0;color: #fff;border-radius: 6px;box-sizing: border-box;}
+			.join{background-color: #fff;color: rgb(245,126,24);border: 1px solid rgb(245,126,24);}
+			.loginBox input{border-radius: 0;background-color: #fff;border-bottom: 1px solid #eae5e0;}
+			.iconfont img{width: 20px;margin-top: 1px;}
+			.iconfont .protect{margin-top: 7px;}
+			.iconfont::after{
+				content: " ";
+				position: absolute;
+				height: 20px;
+				width: 1px;
+				right: 0;
+				bottom: 15px;
+				left:40px;
+				background-color: #E9E9E9;
+			}
+			.weixin{margin-top: 100px;text-align: center;}
+			.weixin h6{width: 100%;text-align: center;position: relative;}
+			.weixin h6::before,.weixin h6::after{
+				content: " ";
+				position: absolute;
+				height: 1px;
+				width: 30%;
+				right: 0;
+				bottom: 5px;
+				background-color: #E9E9E9;
+			}
+			.weixin h6::before{left:40px;}
+			.weixin h6::after{right: 40px;}
+			.weixin-img{width: 50px;margin: 10px;}
 		</style>
 	</head>
 	<body style="background: #ffffff;">
             <header class="header header-immersed mui-bar mui-bar-nav">
-              <!--  <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
-                <h1 class="mui-title">手机快捷登入</h1>
+                <!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+                <h1 class="mui-title">手机快捷登录</h1>
             </header>
 
 			<div class="mui-content">
 
 				<div class="loginBox">
 					<div class="inputBox">
-						<i class="iconfont">手机号</i>
-						<input type="tel" name="regMobile" placeholder="请输入手机号" />
+						<i class="iconfont"><img src="../images/tel.png"/></i>
+						<input type="tel" name="regMobile" placeholder="+86 请输入手机号" />
 					</div>
 					<div class="inputBox">
-						<i class="iconfont">验证码</i>
+						<i class="iconfont"><img class="protect" src="../images/protect.png"/></i>
 						<input type="text" name="code" placeholder="请输入验证码" />
 						<span class="getCode">获取验证码</span>
 					</div>
-					<h5 class="mui-content-padded" style="text-align: center">云智充合伙人可直接登入,无需注册</h5>
+					<div class="loginTwo JumpUrl" style="margin:0 15px" onclick="clicked('loginTwo.html');">
+						<span>密码登录</span>
+					</div>
 				</div>
 
-				<div style="margin:0 15px;margin-top: 30px">
-					<img class="Button-Img loingBtn"  src="../images/loginBtn.png" style="width: 100%" />
+				<div style="margin:0 15px;margin-top: 30px" class="loingBtn">
+					登录
 				</div>
-				<h5 class="mui-content-padded" style="text-align: center;padding: 10px;">或</h5>
-				<div style="margin:0 15px">
-					<img class="Button-Img JumpUrl"  src="../images/jiaruBtn.png" onclick="clicked('applyPartner.html');" style="width: 100%" />
+				<div style="margin:25px 15px" onclick="clicked('applyPartner.html');" class="JumpUrl join">
+					我要加入云智充 立即共享赚钱>>
 				</div>
-				<h5 class="mui-content-padded " style="text-align: center;padding: 10px;">或</h5>
-				<div class="loginTwo JumpUrl" style="margin:0 15px" onclick="clicked('loginTwo.html');">
-					<span>使用密码登入</span>
+				<div class="weixin">
+					<h6>微信登录</h6>
+					<img src="../images/weixin.png" class="weixin-img" onclick="clicked('weixinLogin.html')"/>
 				</div>
-				<!--<h5 class="mui-content-padded " style="text-align: center;padding: 10px;">或</h5>
-				<div class="loginTwo" style="margin:0 15px">
-					<span id="wxLogin">微信登陆</span>
-				</div>-->
 			</div>
 
 
