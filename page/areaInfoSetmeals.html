@@ -98,8 +98,9 @@
 		.mui-btn-primary,
 		input[type=submit]{border:1px solid #FF6D22;background-color:#FF6D22;}
 		.form-close{position:absolute;top:0px;right:0px;font-size:2rem;padding:10px;}
-		.yc{width:8px;height:8px;display:inline-block;background:red;border-radius:100%;margin-right:4px;vertical-align:1px;box-shadow:0px 0px 6px 2px rgba(241,76,37,.6);}
-		.zc{width:8px;height:8px;display:inline-block;background:green;border-radius:100%;margin-right:4px;vertical-align:1px;}
+		/*.yc{width:8px;height:8px;display:inline-block;background:red;border-radius:100%;margin-right:4px;vertical-align:1px;box-shadow:0px 0px 6px 2px rgba(241,76,37,.6);}*/
+		.yc{width:21px;height:21px;display:inline-block;background: url(../images/area/yccdz.png) no-repeat center;background-size: 100%;vertical-align: top;margin-right: 4px;}
+		.zc{width:12px;height:12px;display:inline-block;background: url(../images/area/zccdz.png) no-repeat center;background-size: 100%;vertical-align: -1px;margin-right: 4px;}
 		.mui-table-view-cell.mui-collapse .mui-collapse-content{background:#e5e9f2;padding:0;padding-top:15px;}
 		.mui-collapse-content span{margin-bottom:15px;width:16.666666%;height:25px;float:left;text-align:center;}
 		.mui-collapse-content i.cdzxx{background:url('../images/area/cdzxx_icon.png') no-repeat;width:19px;height:19px;background-size:19px 19px;vertical-align:middle;display:inline-block;}
@@ -282,25 +283,18 @@
 
 <script type="text/html" id="cdzTmpl">
 	{{each list as item}}
-	<li class="mui-table-view-cell mui-collapse">
+	<li class="mui-table-view-cell {{if item.status == 1}}mui-collapse{{/if}}">
 		<a class="mui-collapse-a" href="javascript:void(0);">
 	        <div class="left">{{if item.status == 2}}<span class="yc"></span>{{/if}}{{if item.status == 1}}<span class="zc"></span>{{/if}}{{item.shellId}}</div>
 	        <div class="right">{{item.qos}}:<span class="progress"><i style="width: {{item.qosPrecent}}%;" class="progressInner"></i></span></div>
         </a>
+        {{if item.status == 1}}
         <div class="mui-collapse-content">
-            <span><i class="cdzing"></i></span>
-            <span><i class="cdzing"></i></span>
-            <span><i class="cdzing"></i></span>
-            <span><i class="cdzxx"></i></span>
-            <span><i class="cdzxx"></i></span>
-            <span><i class="cdzxx"></i></span>
-            <span><i class="cdzing"></i></span>
-            <span><i class="cdzing"></i></span>
-            <span><i class="cdzing"></i></span>
-            <span><i class="cdzxx"></i></span>
-            <span><i class="cdzxx"></i></span>
-            <span><i class="cdzxx"></i></span>
+        	{{each item.chargingSockets as v}}
+            <span><i class="{{if v.status== 2}}cdzing{{else}}cdzxx{{/if}}"></i></span>
+            {{/each}}
         </div>
+        {{/if}}
    </li>
    {{/each}}
 </script>
@@ -588,10 +582,10 @@
         }     
 	});
 	function getcdzList(){
-		var dataParam = {
-			"groupID": code
+		var params = {
+			"group_id": code
 		}
-		postJSON(API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID,dataParam,function(res){
+		postJSON(API_URL.ApiGetChargings,params,function(res){
             if("0" == res.code){
                 var data = res.data;
                 var cdzHtml = '';
@@ -600,11 +594,7 @@
                     if(!vaildeParam(item.qos)){
                         item.qos = 0;
                     }
-
                     item.qosPrecent = (qos/31) * 100;
-
-					//var qosHtml ='<span style="display: inline-block;width: 20px;text-align: right">'+qos+'</span>:<div class="progress"><div class="progressInner" style="width: '+qosPrecent+'%"></div></div>'
-
                 });
                 var cdzData = {'list':data};
     			var cdzHtml = template('cdzTmpl', cdzData);

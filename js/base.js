@@ -108,6 +108,9 @@ API_URL.ApiChargingBusinessupdateSetmeal = apiHost + "/api/setmeal/updateSetmeal
 API_URL.ApiChargingBusinessAddSetmeal = apiHost + "/api/setmeal/saveSetmeal";
 API_URL.ApiChargingBusinessdeleteChargingGroup = apiHost + "/api/applyChargingGroup/deleteChargingGroup";
 
+API_URL.ApiGetChargings = apiHost + "/api/chargingGroupProportions/getChargings";  //片区充电桩
+
+
 API_URL.ApiCountPartnerManager = apiHost + "/api/partnermanager/countPartnerManager"; //管理合伙人的收入
 API_URL.ApiGetPartnerCities = apiHost + "/api/partnermanager/getCities"; //管理合伙人的城市
 API_URL.ApiGetCityPartner = apiHost + "/api/partnermanager/getCityPartner"; //管理合伙人城市的市场合伙人

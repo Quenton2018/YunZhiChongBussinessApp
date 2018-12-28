@@ -299,7 +299,26 @@
 				maintenanceFee = $("#maintenanceFee").val(),
 				remark = $("#remark").val(),
 				contract = $("#contract").val();
-				
+			if(!vaildeParam(name)){
+                layer.msg("请输入姓名");
+                return;
+            }
+			if(!vaildeParam(mobile)){
+                layer.msg("请输入手机号");
+                return;
+            }
+			if(!vaildeParam(cityCode)){
+                layer.msg("请选择省市区");
+                return;
+            }
+			if(!vaildeParam(deposit)){
+                layer.msg("请输入产品保证金");
+                return;
+            }
+			if(!vaildeParam(maintenanceFee)){
+                layer.msg("请输入产品运维费");
+                return;
+            }
 			var params = {
 				'uuid':uuid,
 				'name':name,
