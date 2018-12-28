@@ -2,7 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>我的充电桩</title>
     <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
@@ -216,7 +218,9 @@
 	            "type":type
 	        }
 			invalidCharging(dataParam);
-		}    
+		}else{
+			getApplyCdzDataUnInstall();
+		}
     }
 	//充电桩详情
 	function getPartnerChargingGroup(dataParam){		
@@ -293,20 +297,23 @@
     function getApplyCdzDataUnInstall(){
 		var unInstallNum = parseInt($('#countUnInstall').html());
 		unInstallNum = isNaN(unInstallNum) ? 10 : unInstallNum;
-        var data = {
+        var params = {
             "uuid":uuid,
-            "pageSize":unInstallNum,
-            "pageNumber":1
+            "pageSize":pageSize,
+            "pageNumber":pageNumber
         }
-        postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall,data,function (res) {
+        postJSON(API_URL.ApiChargingBusinessGetApplyCdzDataUnInstall,params,function (res) {
             if("0" == res.code){
                 if(1 == pageNumber){
                     $(".dataList").html('');
                 }
-                var data = res.data;
-                if(data.length == 0){
-                    layer.msg("没有更多了")
+                var data = res.data;            
+                $.stopRefresh(data.length,pageSize);
+                
+                if (data.length == 0 && pageNumber > 1) {
+                	return;
                 }
+                
                 var html = '';
                 var dataTmpl3 = $("#dataTmpl3").html();
                 $.each(data,function (index,item) {
