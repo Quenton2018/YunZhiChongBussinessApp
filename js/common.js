@@ -1150,3 +1150,81 @@ $.stopRefresh = function(length,pageSize){
 $.enableRefresh = function(){
 	mui('#J_refresh').pullRefresh().refresh(true);
 }
+/**
+ * 原生导航栏
+ * @param {Object} that
+ * @param {Object} href
+ */
+var openNativeTitle = function(that,href){
+	//非plus环境，直接走href跳转
+	if(!mui.os.plus) {
+		location.href = href;
+		return;
+	}
+	var id = that.getAttribute("data-wid");
+	if(!id) {
+		id = href;
+	}
+	if(href && ~href.indexOf('.html')) {
+		//打开窗口的相关参数
+		var options = {
+			styles:{
+				popGesture: "close"
+			},
+			extras:{}
+		};
+		//如下场景不适用下拉回弹：
+		//1、单webview下拉刷新；2、底部有fixed定位的div的页面
+		if(!~id.indexOf('pullrefresh.html') && !~href.indexOf("partnerAdd.html") && !~href.indexOf("list-to-detail/listview.html")) {
+			options.styles.bounce = "vertical";
+		}
+		//图标页面需要启动硬件加速
+		//if(~id.indexOf('icons.html') || ~id.indexOf("echarts.html")) {
+		//	options.styles.hardwareAccelerated = true;
+		//}
+		if(~id.indexOf('im-chat.html')) {
+			options.extras.acceleration = "none";
+		}
+		
+		var titleType = that.getAttribute("data-title-type");
+		if(titleType && titleType.indexOf("native") > -1) {//原生导航
+			options.styles.titleNView = {
+				autoBackButton:true,
+				backgroundColor:'#f47e13',
+				titleColor:'#fff',
+				titleWeight: 'bold',
+				titleText:that.innerHTML.trim()
+			};
+			
+			options.show = {
+				event:'loaded'
+			}
+			//有原生标题的情况下，就不需要waiting框了
+			options.waiting = {
+				autoShow:false
+			}
+			
+			//透明渐变导航,增加类型设置
+			if(titleType == "transparent_native") {
+				options.styles.titleNView.type = "transparent";
+			}
+			
+		}else{
+			//非原生导航，需要设置顶部状态栏占位
+			options.styles.statusbar = {
+				background: "#f47e13"
+			}
+		}	
+		//侧滑菜单需动态控制一下zindex值；
+		//if(~id.indexOf('offcanvas-')) {
+		//	options.styles.zindex = 9998;
+		//	options.styles.popGesture = ~id.indexOf('offcanvas-with-right') ? "close" : "none";
+		//}
+		//强制启用截屏
+		//if(id && id == "viewgroup") { 
+		//	options.extras.acceleration = "capture";
+		//}
+		//打开新窗口
+		mui.openWindow(href,id,options);
+	}
+}

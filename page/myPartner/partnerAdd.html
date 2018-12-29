@@ -5,6 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>添加市场合伙人</title>
     <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/app.css">
     <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
@@ -23,8 +24,9 @@
 		body{height:100%;margin:0px;padding:0px;overflow:hidden;-webkit-touch-callout:none;-webkit-user-select:none;}
 		.mui-content{height:100%;overflow: auto;}
 		.mui-input-group .mui-input-row{height:50px;}
-		.mui-input-row label{line-height:25px;font-size:14px;padding:14px 15px;}
+		.mui-input-row label{line-height:28px;font-size:14px;}
 		.mui-input-row input{line-height:25px;height:50px;font-size:14px;}
+		.mui-input-row .mui-input-clear~.mui-icon-clear{top: 15px;}
 		.form-title{font-size:16px;padding:8px 15px;font-weight:400;}
 		.form-title span{display:inline-block;padding-left:8px;}
 		.form-title i{width:6px;height:15px;background:#ff6d22;display:inline-block;border-radius:4px;vertical-align: ;}
@@ -37,7 +39,7 @@
 		.upload-text{font-size:14px;color:#C4C4C4;display:block;}
     </style>
 </head>
-<body background="#f0f1f3" >
+<body background="#f47e13" >
 	<header class="header mui-bar header-immersed mui-bar-nav">
 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	    <h1 class="mui-title">添加市场合伙人</h1>
@@ -93,23 +95,7 @@
 	    
 <script type="text/javascript">
 	var uuid = '';
-	mui.init({
-		gestureConfig: {
-			tap: true, //默认为true
-			doubletap: true, //默认为false
-			longtap: true, //默认为false
-			swipe: true, //默认为true
-			drag: true, //默认为true
-			hold: true, //默认为false，不监听
-			release: true //默认为false，不监听
-		}
-	});
-	view = new plus.nativeObj.View('test',{top:'0px',left:'0px',height:'44px',width:'100%'},
-	[{tag:'img',id:'img',src:'nbg.png',position:{top:'0px',left:'0px',width:'100%',height:'100%'}},
-	{tag:'rect',id:'rect',color:'#FF0000',position:{top:'0px',left:'0px',width:'100%',height:'1px'}},
-	{tag:'font',id:'font',text:'原生控件',textStyles:{size:'18px'}}
-	]);
-	view.show();
+
 	if(mui.os.ios){
 		// 解决在ios上fixed元素focusin时位置出现错误的问题 
 		document.addEventListener('DOMContentLoaded',function(){
@@ -125,9 +111,9 @@
 	mui.plusReady(function() {
 		uuid =getUUId();
 		//页面滚动隐藏键盘
-		$(".mui-content").on('scroll',function(){
-		    plus.key.hideSoftKeybord();   
-		});
+//		$(".mui-content").on('scroll',function(){
+//		    plus.key.hideSoftKeybord();   
+//		});
 		/*点击上传按钮触发*/
 	    mui('.mui-content').on('tap', '.upload',function() {
 	        if(mui.os.plus) {
@@ -155,7 +141,7 @@
 	                }
 	            })
 	        }
-	    }, false);
+	    });
 	
 	    //拍照
 	    function getImage() {
@@ -294,16 +280,19 @@
 	    var addressPicker = new mui.PopPicker({
 	        layer: 3
 	    });
+	    var _getParam = function(obj, param) {
+			return obj[param] || '';
+		};
 	    $("#address").on("click", function() {
 	    	addressPicker.setData(cityData3);
 			var adressStr = '';
-	        addressPicker.show(function (selectItems) {
+	        addressPicker.show(function (items) {
 	            //将选择的省、市、区显示到屏幕上
-	            for (var i = 0; i < selectItems.length; i++) {
-	                adressStr += selectItems[i].text;
+	            for (var i = 0; i < items.length; i++) {
+	                adressStr += _getParam(items[i], 'text');
 	            }
 	            $("#address").val(adressStr);
-	            $("#cityCode").val(selectItems[1].value);
+	            $("#cityCode").val(items[1].value);
 	        });
 	    });
 	    $('.btn-submit').on('click',function(){
