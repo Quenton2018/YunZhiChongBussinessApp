@@ -58,7 +58,7 @@
 		"distribute": {
 			"plugins": {
 				"oauth": {
-					"weixin": {"appid":"wx78a9e9e640aa4367","appsecret":"992674aa65ccce89466d27f9bbac516c"}
+					"weixin": {"appid":"wx09ed31fa8da2814d","appsecret":"1ebc62a6826cec776ba90dc8383f748c"}
 				},
 				"maps": {
 					"baidu": {
