@@ -1,7 +1,7 @@
 var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.3";
 apiHost = "http://39.106.62.16:8181";
-apiHost = "http://192.168.1.17:8181";
+//apiHost = "http://192.168.1.17:8181";
 
 
 var API_URL = {};
@@ -731,50 +731,4 @@ var Storage = {
 */
 function getUUId(){
   return Storage.getItem("uuid");
-}
-/**
- * 微信授权登录
- */
-var wxAuth = {
-    _getServices: function(fun) {
-        mui.plusReady(function() {
-            plus.oauth.getServices(function(services) {
-                fun(services);
-            }, function(e) {
-                console.log("获取分享服务列表失败：" + e.message + " - " + e.code);
-                return null;
-            });
-        })
-    },
-    login: function(success) {
-        this._getServices(function(auths) {
-            var s = auths[0];
-            for (i = 0; i <auths.length; i++) {
-            	if(auths[i].id == "weixin"){
-            		var s = auths[i];
-            	}
-            }
-            if(!s.authResult) {
-                s.login(function(e) {
-                    // 获取登录操作结果
-                    s.getUserInfo(function(e) {
-                        console.log("获取用户信息成功："  + JSON.stringify(s.userInfo));
-                        success && success(s.userInfo);
-                    }, function(e) {
-                        layer.msg("获取用户信息失败：" + e.message + " - " + e.code);
-                    });
-                }, function(e) {
-                    layer.msg("登录认证失败！"+ JSON.stringify(e));
-                });
-								//s.logout(function(e){
-								//	layer.msg("注销登录：" + JSON.stringify(e));
-								//}, function(e) {
-								//	layer.msg("注销登录授权认证失败！");
-								//});
-            } else {
-                console.log("已经登录认证！");
-            }
-        })
-
-    }
 }
