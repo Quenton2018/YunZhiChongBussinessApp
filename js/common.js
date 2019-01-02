@@ -1050,11 +1050,6 @@ w.ultZeroize=function(v,l){
 };
 })(window);
 
-//document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
-//window.onresize = function(){
-// document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
-//}
-
 $.plusReady = function(pageReady, pageRefresh, useRefresh) {
 	if (!pageReady) {
 		pageReady = function() {}
@@ -1182,3 +1177,4 @@ var openNativeTitle = function(that,href){
 		mui.openWindow(href,id,options);
 	}
 }
+

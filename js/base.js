@@ -137,29 +137,6 @@ function checkNumber(theObj) {
   return false;
 }
 
-
-Date.prototype.format = function(fmt) {
-    var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
-    };
-    if(/(y+)/.test(fmt)) {
-        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-    }
-    for(var k in o) {
-        if(new RegExp("("+ k +")").test(fmt)){
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-        }
-    }
-    return fmt;
-}
-
-
 function getHeadImg(img) {
     return vaildeParam(img)?img:"../img/user_profile/app_10.png";
 }
@@ -252,7 +229,7 @@ function setLoginData(uuid,mobile){
 	
 	console.log("## setLoginData ## uuid : " + uuid);
 	console.log("## setLoginData ## mobile : " + mobile);
-	var date = formatDate(new Date(),"yyyy-mm-dd HH-mm-ss");
+	var date = new Date().formatDate("yyyy-MM-dd hh-mm-ss");
 	console.log("## setLoginData ## date : " + date);
 	
 	Storage.setItem( "uuid", uuid);
@@ -274,7 +251,7 @@ function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode,moneyAmount){
     console.log("## setLoginData ## bank : " + bank);
     console.log("## setLoginData ## bankCode : " + bankCode);
     console.log("## setLoginData ## moneyAmount : " + moneyAmount);
-    var date = formatDate(new Date(),"yyyy-mm-dd HH-mm-ss");
+    var date = new Date().formatDate("yyyy-MM-dd hh-mm-ss");
     console.log("## setLoginData ## date : " + date);
 
     Storage.setItem( "uuid", uuid);
@@ -307,9 +284,10 @@ function writeObj(obj){
  	console.log(description);
 }
 
-
-// post请求
-// 格式化 post 传递的数据
+/**
+ * 参数序列化
+ * @param {Object} obj
+ */
 function postDataFormat(obj){
     if(typeof obj != "object" ) {
         alert("输入的参数必须是对象");
@@ -350,37 +328,29 @@ function jsDateDiff(publishTime){
 
 /**
  * 日期格式化
- * @param {Object} date
- * @param {Object} str
+ *
+ * @param {Object} fmt yyyy-MM-dd hh-mm-ss
  */
-function formatDate(date,str){
-    var mat={};
-    mat.M=date.getMonth()+1;//月份记得加1
-    mat.H=date.getHours();
-    mat.s=date.getSeconds();
-    mat.m=date.getMinutes();
-    mat.Y=date.getFullYear();
-    mat.D=date.getDate();
-    mat.d=date.getDay();//星期几
-    mat.d=check(mat.d);
-    mat.H=check(mat.H);
-    mat.M=check(mat.M);
-    mat.D=check(mat.D);
-    mat.s=check(mat.s);
-    mat.m=check(mat.m);
-    console.log(typeof mat.D)
-    if(str.indexOf(":")>-1){
-　　　　　mat.Y=mat.Y.toString().substr(2,2);
-　　　　 return mat.Y+"/"+mat.M+"/"+mat.D+" "+mat.H+":"+mat.m+":"+mat.s;
+Date.prototype.formatDate = function(fmt) {
+    var o = {
+        "M+" : this.getMonth()+1,                 //月份
+        "d+" : this.getDate(),                    //日
+        "h+" : this.getHours(),                   //小时
+        "m+" : this.getMinutes(),                 //分
+        "s+" : this.getSeconds(),                 //秒
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度
+        "S"  : this.getMilliseconds()             //毫秒
+    };
+    if(/(y+)/.test(fmt)) {
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
     }
-    if(str.indexOf("/")>-1){
-        return mat.Y+"/"+mat.M+"/"+mat.D+" "+mat.H+"/"+mat.m+"/"+mat.s;
+    for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        }
     }
-    if(str.indexOf("-")>-1){
-        return mat.Y+"-"+mat.M+"-"+mat.D+" "+mat.H+"-"+mat.m+"-"+mat.s;
-    }
+    return fmt;
 }
-
 /**
  * 检查是不是两位数字，不足补全
  * @param {Object} str
@@ -479,7 +449,6 @@ function randomString(len) {
  */
 function uploadLoginInfo(loginPagePath){
     checkLogin(loginPagePath);
-
     setInterval(function () {
         var uuid = Storage.getItem("uuid");
         if(vaildeParam(uuid)){
@@ -520,7 +489,6 @@ function uploadLoginInfo(loginPagePath){
         }
 
     },5000)
-
 }
 
 
@@ -542,8 +510,6 @@ function clickedTongYong(item,categoryName){
     Storage.setItem( "categoryName", categoryName);
     clicked(item);
 }
-
-
 /**
  * 获取当前月的第一天
  * @returns {Date}
@@ -760,4 +726,50 @@ var Storage = {
 */
 function getUUId(){
   return Storage.getItem("uuid");
+}
+/**
+ * 微信授权登录
+ */
+var wxAuth = {
+    _getServices: function(fun) {
+        mui.plusReady(function() {
+            plus.oauth.getServices(function(services) {
+                fun(services);
+            }, function(e) {
+                console.log("获取分享服务列表失败：" + e.message + " - " + e.code);
+                return null;
+            });
+        })
+    },
+    login: function(success) {
+        this._getServices(function(auths) {
+            var s = auths[0];
+            for (i = 0; i <auths.length; i++) {
+            	if(auths[i].id == "weixin"){
+            		var s = auths[i];
+            	}
+            }
+            if(!s.authResult) {
+                s.login(function(e) {
+                    // 获取登录操作结果
+                    s.getUserInfo(function(e) {
+                        console.log("获取用户信息成功："  + JSON.stringify(s.userInfo));
+                        success && success(s.userInfo);
+                    }, function(e) {
+                        layer.msg("获取用户信息失败：" + e.message + " - " + e.code);
+                    });
+                }, function(e) {
+                    layer.msg("登录认证失败！"+ JSON.stringify(e));
+                });
+								//s.logout(function(e){
+								//	layer.msg("注销登录：" + JSON.stringify(e));
+								//}, function(e) {
+								//	layer.msg("注销登录授权认证失败！");
+								//});
+            } else {
+                console.log("已经登录认证！");
+            }
+        })
+
+    }
 }

@@ -685,7 +685,7 @@
     	var time = $(this).attr('data-time');
     	var electricity = $(this).attr('data-electricity');
     	var expired = parseInt($(this).attr('expired'));
-    	var date = new Date(expired).format("yyyy-MM-dd");
+    	var date = new Date(expired).formatDate("yyyy-MM-dd");
     	$('#dateSel').val(date);
     	$('#saveSetmeal').hide();
     	$('#updataSetmeal').show();

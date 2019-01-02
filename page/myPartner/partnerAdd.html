@@ -16,7 +16,6 @@
     <script src="../../js/common.js"></script>
     <script src="../../js/base.js"></script>
     <script src="../../js/mui.min.js"></script>
-    <script src="../../js/vue.min.js"></script>
     <script src="../../js/mui.picker.all.js"></script>
 	<script src="../../js/data.city.js"></script>
     <style type="text/css">
@@ -252,7 +251,7 @@
 	        var ctx = canvas.getContext("2d");
 	        ctx.drawImage(img, 0, 0, width, height); /*绘图*/
 	        var dataURL = canvas.toDataURL("image/png", 0.8);
-//	        return dataURL.replace("data:image/png;base64,", "");
+			//return dataURL.replace("data:image/png;base64,", "");
 	        return dataURL;
 	    }	
 	
@@ -293,7 +292,6 @@
 	    	addressPicker.setData(cityData3);
 			var adressStr = '';
 	        addressPicker.show(function (items) {
-	            //将选择的省、市、区显示到屏幕上
 	            for (var i = 0; i < items.length; i++) {
 	                adressStr += _getParam(items[i], 'text');
 	            }

@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>荣誉榜</title>
-    <link rel="stylesheet" href="../css/mui.min.css">
-    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../plugins/layer/layer.js"></script>
-    <script src="../js/hammer.min.js"></script>
-    <script src="../js/jquery.hammer.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/base.js"></script>
-    <script src="../js/mui.min.js"></script>
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../plugins/layer/layer.js"></script>
+    <script src="../../js/hammer.min.js"></script>
+    <script src="../../js/jquery.hammer.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/base.js"></script>
+    <script src="../../js/mui.min.js"></script>
     <style type="text/css">
         #dataTable{white-space:nowrap;text-align:center;font-size:.8rem;}
         #dataTable img{width:20px;vertical-align:middle;}
@@ -35,8 +34,6 @@
 </header>
 
 <div class="mui-content" style="background: #fff">
-
-
     <table class="mui-table" id="dataTable">
         <thead>
             <tr>
@@ -45,28 +42,22 @@
                 <td>合伙人收入</td>
             </tr>
         </thead>
-        <tbody class="dataList">	
-        	
-        		<tr>
-        			<td colspan="3" style="text-align: center;">暂未开放</td>
-        		</tr>
-
+        <tbody class="dataList">	      	
+    		<tr>
+    			<td colspan="3" style="text-align: center;">暂未开放</td>
+    		</tr>
         </tbody>
     </table>
     <div id="loadMore">加载更多</div>
     <div id="noMore" class="noMore">没有更多了</div>
-
 </div>
-
 <script type="text/html" id="dataTmpl">
-        <tr>
-            <td>{{ranking}}</td>
-            <td>{{username}}</td>
-            <td class="colorTd">{{money}}</td>
-        </tr>
+    <tr>
+        <td>{{ranking}}</td>
+        <td>{{username}}</td>
+        <td class="colorTd">{{money}}</td>
+    </tr>
 </script>
-
-
 <script type="text/javascript">
     mui.init();
 	
@@ -97,11 +88,11 @@
                     var count =  (pageNumber-1)*pageSize;
                     index =index+count;
                     if(1==index){
-                        imgText = '<img src="../images/1.png">';
+                        imgText = '<img src="../../images/1.png">';
                     }else if(2==index) {
-                        imgText = '<img src="../images/2.png">';
+                        imgText = '<img src="../../images/2.png">';
                     }else if(3==index) {
-                        imgText = '<img src="../images/3.png">';
+                        imgText = '<img src="../../images/3.png">';
                     }else{
                         imgText =index;
                     }
@@ -145,12 +136,7 @@
     $("#loadMore").click(function(){
         pageNumber++;
         getList();
-    })
-
-
-
-
-
+    });
 </script>
 </body>
 </html>

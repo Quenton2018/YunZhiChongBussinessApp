@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>片区申请</title>
-    <link rel="stylesheet" href="../css/mui.min.css">
-    <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../plugins/layer/layer.js"></script>
-    <script src="../js/hammer.min.js"></script>
-    <script src="../js/jquery.hammer.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/base.js"></script>
-    <script src="../js/mui.min.js"></script>
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../plugins/layer/layer.js"></script>
+    <script src="../../js/hammer.min.js"></script>
+    <script src="../../js/jquery.hammer.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/base.js"></script>
+    <script src="../../js/mui.min.js"></script>
     <style type="text/css">
         *{margin:0;padding:0;text-decoration:none;list-style:none;font-weight:normal;border-style:none;}
         body{background:#ececec;}
@@ -53,22 +52,22 @@
 <body>
 <header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">申请片区</h1>
+    <h1 class="mui-title">申请片区修改</h1>
 </header>
 
 <div class="mui-content">
-    <div class="box01" style="margin-top: 20px;">
+    <div class="box01">
         <div class="zhuangtai" style="background: #ff6d22;color:#ffcaaf;">
-            <img src="../images/pianqushenqing/pianqumingchen02.png">
+            <img src="../../images/pianqushenqing/pianqumingchen02.png">
             片区申请
         </div>
         <div class="zhuangtai"style="background: #ff6d22;color: white">
             <div class="zhuanjiao"></div>
-            <img src="../images/pianqushenqing/hehuoren02@3x.png">
+            <img src="../../images/pianqushenqing/hehuoren02@3x.png">
             合伙人设置
         </div>
         <div class="zhuangtai">
-            <img src="../images/pianqushenqing/dianjia@3x.png">
+            <img src="../../images/pianqushenqing/dianjia@3x.png">
             电价设置
         </div>
         <div class="clearfix"></div>
@@ -77,97 +76,11 @@
         合伙人手机为平台账号，比例为合伙人分成比例百分比
     </div>
     <div  id="dataList">
-        <div class="box03 memberItem">
-            <div class="line01">
-                <div class="biaozhu"></div>
-                <h1>合伙人信息</h1>
-                <div class="shanchu" style="display: none">
-                    <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="line02">
-                <h1>合伙人姓名</h1>
-                <input type="text" class="companyName" placeholder="请填写姓名"  name="users"  disabled="true"/>
-                <div class="clearfix"></div>
-            </div>
-            <div class="line02">
-                <h1>合伙人手机</h1>
-                <input type="text" class="companyMobile" placeholder="请填写电话号码" name="mobile" disabled="true" />
-                <div class="clearfix"></div>
-            </div>
-            <div class="line03">
-                <h1>第一年比例</h1>
-                <div class="bilibox">
-                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
-                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number"  name="rate1" value="10" />
-                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="line03" style="border: none;">
-                <h1>第二年比例</h1>
-                <div class="bilibox">
-                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
-                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number"  name="rate2" value="20"/>
-                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="box03 memberItem">
-            <div class="line01">
-                <div class="biaozhu"></div>
-                <h1>合伙人信息</h1>
-                <div class="shanchu" style="display: none">
-                    <img src="../images/pianqushenqing/guanbi@3x.png"style="width: 15px;height: 15px;">
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="line02">
-                <h1>合伙人姓名</h1>
-                <input type="text"  class="username" placeholder="请填写姓名"  name="users"  disabled="true"/>
-                <div class="clearfix"></div>
-            </div>
-            <div class="line02">
-                <h1>合伙人手机</h1>
-                <input type="text" class="usersmobile" placeholder="请填写电话号码" name="mobile" disabled="true" />
-                <div class="clearfix"></div>
-            </div>
-            <div class="line03">
-                <h1>第一年比例</h1>
-                <div class="bilibox">
-                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
-                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number"  name="rate1" value="90" />
-                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="line03" style="border: none;">
-                <h1>第二年比例</h1>
-                <div class="bilibox">
-                    <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
-                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number"  name="rate2" value="80" />
-                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+
+
     </div>
     <div class="xinzengbox addHeHuoRen">
-        <img src="../images/pianqushenqing/xinzeng.png">
+        <img src="../../images/pianqushenqing/xinzeng.png">
         新增一个合伙人
     </div>
 </div>
@@ -223,12 +136,75 @@
 </script>
 
 
+<script type="text/html" id="heHuoRenTmplTwo">
+    <div class="box03 memberItem">
+        <div class="line01">
+            <div class="biaozhu"></div>
+            <h1>合伙人信息</h1>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line02">
+            <h1>合伙人姓名</h1>
+            <input type="text" placeholder="请填写姓名"  name="users"  value="{{users}}"  disabled="true"/>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line02">
+            <h1>合伙人手机</h1>
+            <input type="text" placeholder="请填写电话号码" name="mobile"  value="{{mobile}}"  disabled="true"/>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line03">
+            <h1>第一年比例</h1>
+            <div class="bilibox">
+                <div class="mui-numbox"  data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
+                    <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                    <input class="mui-numbox-input" type="number" value="{{rate1}}" name="rate1" />
+                    <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="line03" style="border: none;">
+            <h1>第二年比例</h1>
+            <div class="bilibox">
+                <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
+                    <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                    <input class="mui-numbox-input" type="number" value="{{rate2}}"  name="rate2" />
+                    <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
+
+
 <script type="text/javascript">
     mui.init();
 
     $.plusReady(function() {
-    	GetCompanyAccount();
-        getUserInfoDateBase();
+    	var  memberListJson =  plus.storage.getItem( "memberListJson");
+        var memberListJsonObj =  JSON.parse(memberListJson);
+
+        var tmpl = $("#heHuoRenTmplTwo").html();
+        var html = '';
+        for(var i=0;i<memberListJsonObj.length;i++){
+            var users =memberListJsonObj[i].users;
+            var mobile =memberListJsonObj[i].mobile;
+            var rate1 =memberListJsonObj[i].rate1;
+            var rate2 =memberListJsonObj[i].rate2;
+            html += tmpl.replace(/{{users}}/g,users)
+                .replace(/{{mobile}}/g,mobile)
+                .replace(/{{rate1}}/g,rate1)
+                .replace(/{{rate2}}/g,rate2);
+        }
+        $("#dataList").append(html);
+        mui('.mui-numbox').numbox();
+
+        console.log("memberListJsonObj:"+memberListJsonObj);
+
+
 
         $("#submitBtn").click(function(){ //下一步
             //服务校验参数 然后保存
@@ -325,10 +301,11 @@
             memberListJson = JSON.stringify(memberList);
             console.log("memberListJson"+memberListJson);
             plus.storage.setItem( "memberListJson", memberListJson);
-            clicked('electricityPrice.html');  //下一步
+            clicked('electricityPriceEdit.html');  //下一步
 
         });
     });
+
 
 
 
@@ -376,7 +353,7 @@
         layer.confirm("是否确定删除",function (index) {
             updateFalgNumbers();
             console.log("falgNumbers==="+falgNumbers);
-            $this.parents(".box03").remove();
+            $this.parents(".memberItem").remove();
             layer.close(index);
         })
     }
@@ -393,7 +370,8 @@
                     $(".companyMobile").val(mobile);
                 }else{
                     layer.msg(res.msg);
-                    //clicked("login.html");
+                    clearLogin();
+                    clicked("page/login.html");
                 }
             })
         }
@@ -416,7 +394,8 @@
                     $(".usersmobile").val(mobile);
                 }else{
                     layer.msg(res.msg);
-                    clicked("login.html");
+                    clearLogin();
+                    clicked("page/login.html");
                 }
             })
         }

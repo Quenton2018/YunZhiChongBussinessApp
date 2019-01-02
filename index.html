@@ -196,7 +196,7 @@
                         var parnterMoneyToTal = res.data.parnterMoneyToTal;
                         var countAll = res.data.countAll;
 						if (!vaildeParam(parnterMoneyToTal)) {
-					           parnterMoneyToTal = 0;
+					        parnterMoneyToTal = 0;
 				        }
                         $(".dayMoney").text(parnterMoneyToTal.toFixed(2));
                         $(".cdzCount").text(res.data.countAll);
