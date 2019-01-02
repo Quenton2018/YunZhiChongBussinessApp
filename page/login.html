@@ -63,8 +63,8 @@
 						<i class="iconfont"><img src="../images/possword.png"/></i>
 						<input type="password" name="password"  placeholder="请输入密码"/>
 					</div>
-					<div class="loginTwo JumpUrl" id="psdLogin" style="margin:0 15px">
-						<span>密码登录</span>
+					<div class="loginTwo JumpUrl" style="margin:0 15px">
+						<span id="psdLogin">密码登录</span>
 					</div>
 				</div>
 
@@ -76,7 +76,7 @@
 				</div>
 				<div class="weixin">
 					<h6>微信登录</h6>
-					<img src="../images/weixin.png" class="weixin-img" id="wxLogin"/>
+					<img src="../images/weixin.png" class="weixin-img" id="wxLogin" onclick="wxlogin()" />
 				</div>
 			</div>
 
@@ -115,13 +115,14 @@
                     return;
                 }
                 isLock = true;
-                $getCodeBtn.text(time);
-                showTime();
                 postJSON(API_URL.ApiAdminSendCode,{"mobile":mobile,"type":"1"},function(res){
                     if("0" == res.code){
                         layer.msg("发送成功");
+		                $getCodeBtn.text(time);
+		                showTime();
                     }else{
                         layer.msg(res.msg);
+            			isLock = false;
                     }
                 })
             });
@@ -140,14 +141,19 @@
             		psd = true;
             	}
             });
+            
+            var wxAuthService = null;
+            
             mui.plusReady(function(){
 				plus.webview.currentWebview().setStyle({
-					popGesture:'none' // 关闭侧滑返回功能
+					softinputMode: "adjustResize"
 				});
-						
                 plus.key.addEventListener("backbutton",function(){
 					plus.runtime.quit();
                 });
+				var wv=plus.webview.currentWebview();
+				// 关闭侧滑返回功能
+				wv.setStyle({'popGesture':'none'});
                 /**
                  * 登入
                  */
@@ -204,13 +210,67 @@
 	                    })
                 	}
                 })
+				
+				plus.oauth.getServices(function(services) {
+					for (var i in services) {
+						if (services[i].id == 'weixin') {
+							wxAuthService = services[i];
+						}
+					}
+				}, function(e) {
+					console.log("获取分享服务列表失败：" + e.message + " - " + e.code);
+				});
+            });
 
-            });
-            $("#wxLogin").on('click',function(){
-            	wxAuth.login(function(data){
-            		
-            	});
-            });
+            /**
+			 * 校验手机号码
+             * @param str
+             * @returns {boolean}
+             */
+            function isPoneAvailable(str) {
+                var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                if (!myreg.test(str)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            };
+            
+			function wxlogin() {
+				if(!wxAuthService){
+					layer.msg("当前环境不支持微信登录");
+					return;
+				}
+				wxAuthService.authorize(function(e) {
+					console.log(JSON.stringify(e));
+					wxLoginSuccessCallback(e.code, e.state);
+				}, function(e) {
+					console.log('授权失败');
+				}, {
+					scope : 'snsapi_userinfo',
+					state : 'yzc' + Math.random()
+				});
+			}
+			function wxLoginSuccessCallback(code, state) {
+				console.log(code + " : " + state);
+				postJSON(API_URL.ApiWeChatLogin, {
+					'code' : code,
+					'state' : state
+				}, function(res) {
+					if("0" == res.code){
+                        layer.msg("登入成功，正在跳转...");
+                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+                        setTimeout(function(){
+                            clicked('../index.html')
+                        },2000);
+                    } else if ("1010" == res.code) {
+                    	plus.storage.setItem('openId', res.msg);
+                    	clicked('weixinBinding.html');
+                    } else {
+                        layer.msg(res.msg);
+                    }
+				})
+			}
 		</script>
 		
 	</body>

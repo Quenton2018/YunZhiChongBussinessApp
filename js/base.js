@@ -1,7 +1,7 @@
 var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.3";
 apiHost = "http://39.106.62.16:8181";
-//apiHost = "http://192.168.1.124:8181";
+apiHost = "http://192.168.1.17:8181";
 
 
 var API_URL = {};
@@ -124,6 +124,11 @@ API_URL.ApiDelInvestmentPartner = apiHost + "/api/partnermanager/deleteInvestmen
 
 API_URL.ApiUploadfileByBase64 = apiHost + "/api/common/uploadfileByBase64";//Base64文件上传接口
 
+API_URL.ApiWeChatLogin = apiHost + "/api/admin/wechatLogin";
+API_URL.ApiWeChatGetSign = apiHost + "/api/admin/wechat/getSign";
+API_URL.ApiWeChatBinding = apiHost + "/api/admin/wechat/binding";
+API_URL.ApiWeChatUnbound = apiHost + "/api/admin/wechat/unbound";
+API_URL.ApiWeChatIsbound = apiHost + "/api/admin/wechat/isbound";
 
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接

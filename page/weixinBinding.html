@@ -49,7 +49,7 @@
 					</div>
 				</div>
 				<div style="margin:0 15px;margin-top: 30px" class="loingBtn">
-					登录
+					绑定手机号码
 				</div>				
 			</div>
 
@@ -91,13 +91,14 @@
                     return;
                 }
                 isLock = true;
-                $getCodeBtn.text(time);
-                showTime();
                 postJSON(API_URL.ApiAdminSendCode,{"mobile":mobile,"type":"1"},function(res){
                     if("0" == res.code){
                         layer.msg("发送成功");
+		                $getCodeBtn.text(time);
+		                showTime();
                     }else{
                         layer.msg(res.msg);
+                		isLock = false;
                     }
                 })
             });
@@ -126,15 +127,17 @@
 
 
                     var clientInfo = plus.push.getClientInfo().clientid;
+					var openId = plus.storage.getItem("openId");
 
                     var postData = {
                         "clientInfo":clientInfo,
+                        "openId":openId,
                         "mobile":mobile,
                         "code":code
                     }
-                    postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
+                    postJSON(API_URL.ApiWeChatBinding,postData,function(res){
                     if("0" == res.code){
-                        layer.msg("登入成功，正在跳转...");
+                        layer.msg("绑定成功，正在跳转...");
                         setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
                         setTimeout(function(){
                             clicked('../index.html')
