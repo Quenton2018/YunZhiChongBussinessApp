@@ -136,15 +136,15 @@
                         "code":code
                     }
                     postJSON(API_URL.ApiWeChatBinding,postData,function(res){
-                    if("0" == res.code){
-                        layer.msg("绑定成功，正在跳转...");
-                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
-                        setTimeout(function(){
-                            clicked('../index.html')
-                        },2000);
-                    }else{
-                        layer.msg(res.msg);
-                    }
+	                    if("0" == res.code){
+	                        layer.msg("绑定成功，正在跳转...");
+	                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+	                        setTimeout(function(){
+	                            clicked('../index.html')
+	                        },2000);
+	                    }else{
+	                        layer.msg(res.msg);
+	                    }
                     })
                 })
             });

@@ -55,7 +55,7 @@
                 <a class="mui-navigate-right"  onclick="clicked('edition.html')" >检查新版本</a>
             </li>
             <li class="mui-table-view-cell">绑定微信
-                <div class="mui-switch">
+                <div id="wxBound" class="mui-switch mui-disabled" style="opacity: 1;">
 				  <div class="mui-switch-handle"></div>
 				</div>
             </li>
@@ -91,12 +91,26 @@
 
 <script type="text/javascript">
     mui.init();
-    
+    var wxAuthService = null;
 	var uuid = '';
     $.plusReady(function() {
     	checkLogin('page/login.html');
     	uuid = plus.storage.getItem("uuid");
         setUserInfo(uuid);
+        postJSON(API_URL.ApiWeChatIsbound, {'uuid':uuid}, function(res) {
+        	if (res.code == '0' && res.data) {
+        		$('#wxBound').addClass('mui-active');
+        	}
+        }, true);
+        plus.oauth.getServices(function(services) {
+			for (var i in services) {
+				if (services[i].id == 'weixin') {
+					wxAuthService = services[i];
+				}
+			}
+		}, function(e) {
+			console.log("获取分享服务列表失败：" + e.message + " - " + e.code);
+		});
     }, function() {
     	setUserInfo(uuid);
     });
@@ -126,16 +140,57 @@
             clicked('login.html');
         },1000)
     });
+    
+    // 微信绑定
+    $('#wxBound').click(function(e) {
+    	// 绑定
+    	if ($('.mui-active').length ==0 ) {
+    		if(!wxAuthService){
+				layer.msg("当前环境不支持微信登录");
+				return;
+			}
+			wxAuthService.authorize(function(e) {
+				console.log(JSON.stringify(e));
+				postJSON(API_URL.ApiWeChatGetSign,{"code":e.code,"state":e.state},function(res) {
+					if (res.code == '0') {
+						postJSON(API_URL.ApiWeChatBinding, {"uuid":uuid,"openId":res.data},function(res) {
+							if (res.code == '0') {
+								$('#wxBound').addClass('mui-active');
+							} else {
+								layer.msg(res.msg);
+							}
+						}, true);
+					} else {
+						layer.msg(res.msg);
+					}
+				});
+			}, function(e) {
+				console.log('授权失败');
+			}, {
+				scope : 'snsapi_userinfo',
+				state : 'yzc' + Math.random()
+			});
+    	}
+    	// 解除绑定
+    	else {
+    		postJSON(API_URL.ApiWeChatUnbound, {"uuid":uuid}, function(res) {
+    			layer.msg(res.msg);
+    			if (res.code == '0') {
+    				$('#wxBound').removeClass('mui-active');
+    			}
+    		});
+    	}
+    });
 
 	//开关按钮
-	function bind(){
+	/*function bind(){
 		mui("#popover").popover('toggle', document.getElementById("div"));
 	};
 	$('.mui-switch').click(function(){
 		if($('.mui-active').length ==0){
 			bind()
 		}
-	});
+	});*/
 </script>
 </body>
 </html>
