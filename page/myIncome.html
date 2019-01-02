@@ -23,13 +23,11 @@
     <h1 class="mui-title">我的收入</h1>
 </header>
 
-<div class="mui-content" style="background: #fff; margin-top: 18px;">
-    
+<div class="mui-content"> 
     <div class="topBox">
         <img src="../images/shouru2.png" style="display: block;width: 100%">
         <h1><small>&yen;</small> <span id="totalIncomeBox"></span></h1>
     </div>
-
     <ul class="mui-table-view dataListNow">
         <li class="mui-table-view-cell" onclick="clickedMonthNow('incomeDetail.html')">
             <a class="mui-navigate-right">
@@ -38,23 +36,17 @@
         </li>
         <li class="mui-table-view-divider" style="text-align: center;font-size: .8rem">历史月收入</li>
     </ul>
-
     <ul class="mui-table-view dataList">
 
     </ul>
-
-
 </div>
 
-
 <script type="text/html" id="dataTmpl">
-
     <li class="mui-table-view-cell" onclick="clickedMonth('incomeDetail.html','{{montt}}','{{parnterMoney}}')">
         <a class="mui-navigate-right">
             {{montt}}月份 <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
         </a>
-    </li>
-
+   </li>
 </script>
 
 <script src="../js/jquery-3.3.1.min.js"></script>
@@ -69,12 +61,11 @@
 
     $.plusReady(function() {
     	checkLogin();
-
         getUserInfoDateBase();
-
         getList();
     }, function() {
     	$(".dataList").html("");
+    	getUserInfoDateBase();
         getList();
     });
 
@@ -83,7 +74,6 @@
         var dataParam = {
             "uuid":uuid
         }
-
         postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncome,dataParam,function(res){
             if("0" == res.code){
 
@@ -112,21 +102,13 @@
         })
     }
 
-
-
-
-
-
     /**
      * 获取用户信息
      */
     function getUserInfoDateBase(){
         var totalIncome = plus.storage.getItem("totalIncome");
-        console.log("totalIncome:"+totalIncome);
         $("#totalIncomeBox").text(totalIncome);
         var uuid = plus.storage.getItem("uuid");
-        console.log("## getUserInfoDateBase ## uuid:"+uuid);
-
         if(vaildeParam(uuid)){
             postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                 if("0" == res.code){
@@ -142,17 +124,20 @@
         }
     }
 
-
-
-
-
     /**
      * 绑定的点击事件
      * @param {Object} item 跳转路径 ， 以及存好文章名称
      * @param {Object} dataId
      */
     function clickedMonth(item,Month,parnterMoney){
-        console.log("clickedMonth"+item+":"+Month);
+        if (Month.indexOf("(") > -1 && Month.indexOf(")") > 0 ) {
+        	var year = Month.substring(1, 5);
+        	plus.storage.setItem( "year", year);
+        	Month = Month.substring(Month.indexOf(")")+1);
+        }else{
+        	var year = new Date().getFullYear()+"";
+        	plus.storage.setItem( "year", year);
+        }
         plus.storage.setItem( "month", Month);
         plus.storage.setItem( "parnterMoney", parnterMoney);
         clicked(item);
@@ -164,15 +149,14 @@
      */
     function clickedMonthNow(item){
         var Month =  new Date().getMonth()+1+"";
-        console.log("clickedMonth"+item+"Month:"+Month);
+        var year =  new Date().getFullYear()+"";
         var parnterMoney =  $("#benyuemoney").text();
-        plus.storage.setItem( "month", Month+"");
-        plus.storage.setItem( "parnterMoney", parnterMoney);
+        console.log("clickedMonth"+year,Month,parnterMoney)
+        plus.storage.setItem("year", year);
+        plus.storage.setItem("month", Month);
+        plus.storage.setItem("parnterMoney", parnterMoney);
         clicked(item);
     }
-
-
-
 </script>
 </body>
 </html>

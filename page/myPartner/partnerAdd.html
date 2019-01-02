@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>添加市场合伙人</title>
-    <link rel="stylesheet" href="../../css/mui.min.css">
-    <link rel="stylesheet" href="../../css/app.css">
+    <link rel="stylesheet" href="../../css/mui.min.css" type="text/css" charset="utf-8">
     <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/app.css" type="text/css" charset="utf-8">
     <link rel="stylesheet" href="../../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <script src="../../js/jquery-3.3.1.min.js"></script>
@@ -29,7 +29,7 @@
 		.mui-input-row .mui-input-clear~.mui-icon-clear{top: 15px;}
 		.form-title{font-size:16px;padding:8px 15px;font-weight:400;}
 		.form-title span{display:inline-block;padding-left:8px;}
-		.form-title i{width:6px;height:15px;background:#ff6d22;display:inline-block;border-radius:4px;vertical-align: ;}
+		.form-title i{width:6px;height:15px;background:#ff6d22;display:inline-block;border-radius:4px;vertical-align: top;}
 		.htBox{padding:20px 15px;height:150px;background:#fff;margin-bottom:20px;}
 		.img-item{width:23%;height:100%;margin-right:2%;float:left;position:relative;text-align:center;border:1px dashed #c4c4c4;}
 		.img-item img{width:100%;height:100%;}
@@ -39,8 +39,8 @@
 		.upload-text{font-size:14px;color:#C4C4C4;display:block;}
     </style>
 </head>
-<body background="#f47e13" >
-	<header class="header mui-bar header-immersed mui-bar-nav">
+<body style="background: #f47e13;">
+	<header class="mui-bar mui-bar-nav header-immersed">
 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	    <h1 class="mui-title">添加市场合伙人</h1>
 	</header> 
@@ -84,30 +84,30 @@
 		    	<input id="maintenanceFee" type="number" class="mui-input-clear" placeholder="请输入产品运维费" value="3800">
 		    </div>
 		</form>
-		<h2 class="form-title"><i></i><span>上传合同</span></h2>
+		<!--<h2 class="form-title"><i></i><span>上传合同</span></h2>
 		<div class="htBox mui-clearfix">
 			<div class="img-item upload">		
 				<i class="mui-icon mui-icon-camera"></i>
 				<span class="upload-text">上传图片</span>
 			</div>
-		</div>
+		</div>-->
 	</div>
 	    
 <script type="text/javascript">
 	var uuid = '';
 
-	if(mui.os.ios){
-		// 解决在ios上fixed元素focusin时位置出现错误的问题 
-		document.addEventListener('DOMContentLoaded',function(){
-			var footerDom = document.querySelector('footer');	
-			document.addEventListener('focusin', function() {
-				footerDom.style.position = 'absolute';
-			});
-			document.addEventListener('focusout', function() {
-				footerDom.style.position = 'fixed';
-			});
-		});
-	}
+//	if(mui.os.ios){
+//		// 解决在ios上fixed元素focusin时位置出现错误的问题 
+//		document.addEventListener('DOMContentLoaded',function(){
+//			var footerDom = document.querySelector('footer');	
+//			document.addEventListener('focusin', function() {
+//				footerDom.style.position = 'absolute';
+//			});
+//			document.addEventListener('focusout', function() {
+//				footerDom.style.position = 'fixed';
+//			});
+//		});
+//	}
 	mui.plusReady(function() {
 		uuid =getUUId();
 		//页面滚动隐藏键盘
@@ -280,9 +280,15 @@
 	    var addressPicker = new mui.PopPicker({
 	        layer: 3
 	    });
-	    var _getParam = function(obj, param) {
+	    function _getParam(obj, param) {
 			return obj[param] || '';
 		};
+		function isEmptyObject(obj){
+	      	for(var key in obj){
+	           	return false
+	      	};
+     		return true
+ 		}
 	    $("#address").on("click", function() {
 	    	addressPicker.setData(cityData3);
 			var adressStr = '';
@@ -291,8 +297,16 @@
 	            for (var i = 0; i < items.length; i++) {
 	                adressStr += _getParam(items[i], 'text');
 	            }
-	            $("#address").val(adressStr);
-	            $("#cityCode").val(items[1].value);
+	            $("#address").val(adressStr);      
+	            if(!isEmptyObject(items[2])){
+	            	var cityCode = items[2].value;
+	            }else if(!isEmptyObject(items[1])){
+	            	var cityCode = items[1].value;
+	            }else{
+	            	var cityCode = items[0].value;
+	            }
+				//console.log("cityCode"+cityCode+JSON.stringify(items))
+	            $("#cityCode").val(cityCode);
 	        });
 	    });
 	    $('.btn-submit').on('click',function(){
@@ -311,6 +325,10 @@
                 layer.msg("请输入市场合伙人手机号");
                 return;
             }
+			if(mobile.length!==11){
+			   	layer.msg("市场合伙人手机号码11位");
+                return;
+			}
 			if(!vaildeParam(cityCode)){
                 layer.msg("请选择省市区");
                 return;
