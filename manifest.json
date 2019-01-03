@@ -50,7 +50,7 @@
 		},
 		"XMLHttpRequest": {
 			"description": "跨域网络访问"
-		}
+		},"Push":{}
 	},
 	"plus": {
 		"statusbar": {
@@ -78,7 +78,12 @@
 					}
 				},
 				"push": {
-
+					"mipush": {
+						"appid_android": "2882303761517542346",
+						"appkey_android": "5771754257346",
+						"appid_ios": "2882303761517786047",
+						"appkey_ios": "5441778696047"
+					}
 				}
 			},
 			"apple": {
@@ -105,7 +110,7 @@
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
 				"targetSdkVersion": 23,
-				"permissions": ["<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
+				"permissions": ["<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.GET_TASKS\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-permission android:name=\"android.permission.INTERACT_ACROSS_USERS_FULL\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.GET_TOP_ACTIVITY_INFO\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
 			},
 			"orientation": [
 				"portrait-primary"
@@ -221,7 +226,8 @@
 				"refer": [
 					"page/applyPartner.html",
 					"index.html",
-					"page/loginTwo.html"
+					"page/loginTwo.html",
+					"page/weixinBinding.html"
 				],
 				"priority": 0
 			},

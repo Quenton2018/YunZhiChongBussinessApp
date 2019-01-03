@@ -245,7 +245,12 @@
 					console.log(JSON.stringify(e));
 					wxLoginSuccessCallback(e.code, e.state);
 				}, function(e) {
-					console.log('授权失败');
+					console.log('授权失败:'+JSON.stringify(e));
+					if(e.code == '-8'){
+						layer.msg("授权失败,客户端未安装");
+					}else{
+						layer.msg(e.message);
+					}
 				}, {
 					scope : 'snsapi_userinfo',
 					state : 'yzc' + Math.random()
