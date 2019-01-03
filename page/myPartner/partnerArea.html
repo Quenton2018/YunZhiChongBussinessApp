@@ -139,7 +139,7 @@
 		var params = {
 			uuid:userid
 		};
-		postJSON(API_URL.ApiGetPartnerChargingStatistics,params,function(res){
+		postJSON(API_URL.ApiGetPartnerLeadChargingStatistics,params,function(res){
 			if(res.code == 0){
 				var areaNums = Storage.getItem('areaNums');
 				$("#areaNums").text(areaNums);

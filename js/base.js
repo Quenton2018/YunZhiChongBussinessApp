@@ -116,10 +116,13 @@ API_URL.ApiGetPartnerCities = apiHost + "/api/partnermanager/getCities"; //管�
 API_URL.ApiGetCityPartner = apiHost + "/api/partnermanager/getCityPartner"; //管理合伙人城市的市场合伙人
 API_URL.ApiGetPartnerLeadChargingGroup = apiHost + "/api/chargingStatistics/getPartnerLeadChargingGroup"; //合伙人的片区信息
 API_URL.ApiGetPartnerChargingGroup = apiHost + "/api/chargingStatistics/getPartnerChargingGroup"; //合伙人分成片区
-API_URL.ApiGetPartnerChargingStatistics = apiHost + "/api/chargingStatistics/getPartnerChargingStatistics"; //合伙人的充电桩统计 
+API_URL.ApiGetPartnerChargingStatistics = apiHost + "/api/chargingStatistics/getPartnerChargingStatistics"; //合伙人的充电桩统计，包含参与分成的片区
+API_URL.ApiGetPartnerLeadChargingStatistics = apiHost + "/api/chargingStatistics/getPartnerLeadChargingStatistics";//合伙人的充电桩统计
 API_URL.ApiGetInvestmentPartner = apiHost + "/api/partnermanager/getInvestmentPartner";//管理合伙人
 API_URL.ApiSaveInvestmentPartner = apiHost + "/api/partnermanager/saveInvestmentPartner"; //管理合伙人添加市场合伙人
 API_URL.ApiDelInvestmentPartner = apiHost + "/api/partnermanager/deleteInvestmentPartner";//管理合伙人删除市场合伙人
+API_URL.getCityAndCounty = apiHost + "/api/partnermanager/getCityAndCounty";//管理合伙人的市县
+
 
 
 API_URL.ApiUploadfileByBase64 = apiHost + "/api/common/uploadfileByBase64";//Base64文件上传接口

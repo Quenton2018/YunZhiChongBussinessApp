@@ -113,6 +113,7 @@
     		
             getUserInfo();
             GetADaylyIncomeDetail();
+            getCharging();
             
             // 热更新
         	heatUpdate(plus.os.name);
@@ -121,6 +122,7 @@
     	}, function() {
     		getUserInfo();
             GetADaylyIncomeDetail();
+            getCharging();
     	});
     	  	
     	/**
@@ -134,9 +136,7 @@
             if(vaildeParam(uuid)){
                 postJSON(API_URL.ApiAdminInfo,{"uuid":uuid},function(res){
                     if("0" == res.code){
-
-                        console.log(JSON.stringify(res))
-
+                        console.log(JSON.stringify(res.data))
                         var mobile = res.data.username;
                         var headImage = res.data.headImage;
                         var nickname = res.data.realname;
@@ -163,15 +163,11 @@
                         Storage.setItem( "moneyAmount", moneyAmount);
                         Storage.setItem( "totalIncome", totalIncome+'');
                         Storage.setItem( "userType", userType);
-
                         console.log("totalIncome : "+totalIncome)
-
 					 	if (!vaildeParam(totalIncome)) {
 					 	    totalIncome = 0;
 				        }
-
                         $(".totalMoney").text(totalIncome.toFixed(2));
-
                     }else{
                         layer.msg(res.msg);
                         clearLogin();
@@ -180,16 +176,12 @@
                 })
             }
         }
-		
-
         /**
          * 获取今日收入 充电桩总台数
          */
         function GetADaylyIncomeDetail(){
             var uuid = Storage.getItem("uuid");
-            if(!vaildeParam(uuid)){
-                return;
-            }
+            if(!vaildeParam(uuid)){return;}
             if(vaildeParam(uuid)){
                 postJSON(API_URL.ApiChargingBusinessGetADaylyIncomeDetail,{"uuid":uuid},function(res){
                     if("0" == res.code){
@@ -208,31 +200,34 @@
                 })
             }
         }
-
-
-
+		function getCharging(){
+			var uuid = Storage.getItem("uuid");
+			var params = {
+				uuid:uuid
+			};
+			postJSON(API_URL.ApiGetPartnerLeadChargingStatistics,params,function(res){
+				if(res.code == 0){
+					$(".rateCount").text(res.data.utilizationRatio);
+				}
+			});
+		}
         /**
          * 检查版本
          */
         function checkVersion() {
             var osName = plus.os.name;
             var version = appVersion;
-
             postJSON(API_URL.AppVersionPartnerGetNewest,{"appType":osName},function (res) {
-
                 if('0' == res.code){
                     if(vaildeParam(res.data)){
-                        var v = res.data.version;
-						
+                        var v = res.data.version;						
 						if (compareVersion(res.data.version)) {
 							clicked("page/edition.html");
 						}
                     }
                 }
             })
-        }
-        
-        
+        }       
     </script>
 </body>
 </html>

@@ -217,7 +217,7 @@
 		<li class="mui-table-view-cell flex">
 			<span class="flex-item">
 				<!--<i class="lindex">{{$index+1}}</i>-->
-				{{if item.min >= 1200 }}1200以上{{else if item.min == 0}}{{item.max}}以下{{else}}{{item.min}}-{{item.max}}{{/if}}</span>
+				{{if item.min > 1200 }}{{item.max}}以上{{else if item.min <= 0}}{{item.max}}以下{{else}}{{item.min}}-{{item.max}}{{/if}}</span>
 			<span class="flex-item">{{item.cost}}</span>
 			<span class="flex-item">{{item.amount}}</span>
 		</li>

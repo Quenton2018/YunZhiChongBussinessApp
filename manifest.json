@@ -198,7 +198,7 @@
 					"xhdpi": "images/qidong/qd_750x1334.png",
 					"xxhdpi": "images/qidong/qd_750x1334.png"
 				}
-			},"debug":true
+			},"debug":false
 		}
 	},
 	"dependencies": {

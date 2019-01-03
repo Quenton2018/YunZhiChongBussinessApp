@@ -68,7 +68,7 @@
 						<img src="../images/partner/cdz_rate.png">
 					</div>
 					<div class="text-right">
-						<h2>0<sub>%</sub></h2>
+						<h2><span class="rateCount">0</span><sub>%</sub></h2>
 						<h3>充电桩使用率</h3>
 					</div>			
 				</div>
@@ -148,7 +148,8 @@
         uuid = getUUId();      
     	checkLogin();
         getChargingCountByPartner(uuid);
-        getChargingGroup(uuid);      
+        getChargingGroup(uuid);
+        getCharging();
     });
 	
 	// 刷新页面
@@ -156,6 +157,7 @@
         pageNumber=1;
         getChargingCountByPartner(uuid);
         getChargingGroup(uuid);
+        getCharging();
     }
     /**
      * 获取充电桩数量
@@ -175,7 +177,18 @@
             }
         });
     }
-
+    //获取充电使用率
+	function getCharging(){
+		var uuid = Storage.getItem("uuid");
+		var params = {
+			uuid:uuid
+		};
+		postJSON(API_URL.ApiGetPartnerLeadChargingStatistics,params,function(res){
+			if(res.code == 0){
+				$(".rateCount").text(res.data.utilizationRatio);
+			}
+		});
+	}
 
     $(".tabItem").click(function(){
         type = $(this).attr("data-type");
@@ -343,8 +356,6 @@
             }
         })        
     }
-    
-
 </script>
 </body>
 

@@ -137,9 +137,9 @@
 					<ul class="table_ul" id="ElesList">
 						<li class="table_list flex" v-for="(item, index) in elesList">
 							<i class="circle">{{index+1}}</i>
-							<span class="eles-item first_span" style="width: 30%;" v-if="item.max>1200">1200以上</span>
+							<span class="eles-item first_span" style="width: 30%;" v-if="item.max>1200">{{item.max}}以上</span>
 
-							<span class="eles-item first_span" style="width: 30%;" v-else-if="item.min <=0">100以下</span>
+							<span class="eles-item first_span" style="width: 30%;" v-else-if="item.min <=0">{{item.max}}以下</span>
 
 							<span class="eles-item first_span" v-else style="width: 30%;">{{item.min}}-{{item.max}}</span>
 

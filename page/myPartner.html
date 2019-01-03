@@ -38,6 +38,7 @@
 		.mean-list{padding: 0 15px 20px 15px;margin: 0 auto;}
 		.list-header{width: 100%;padding: 14px 15px;background-color: #e5e9f2;border-radius: 6px;box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;}
 		.list-body{margin-top: 10px;}
+		em.red{font-style: normal;color: red;}
 		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;font-size: 13px;}
 		.jl_icon{background: url(../images/partner/jiao_icon_1.png) no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -3px;right: -2px;}
 		.jr_icon{background: url(../images/partner/jiao_icon_2.png) no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -5px;right: -2px;}
@@ -85,13 +86,17 @@
 
 <script type="text/html" id="itemTmpl">
 	{{each list as item}}
-	<li class="mui-table-view-cell list-item" data-code="{{item.cityCode}}">{{item.cityName}}
+	<li class="mui-table-view-cell {{if item.status == 'CONTRACT'}}list-item{{/if}}" data-code="{{item.cityCode}}">
+		{{item.cityName}}
+		{{if item.status == "TRANSFER"}}<div class="mui-badge"><em class="red">已转让</em></div>
+		{{else}}
     	<span class="mui-navigate-right"></span>
     	<div class="mui-badge">
     		<span>{{item.selfPartnerNumbers}}</span>
     		<span>/</span>
     		<span>{{item.partnerNumbers}}</span>
     	</div>
+    	{{/if}}
     </li>
     {{/each}}
 </script>

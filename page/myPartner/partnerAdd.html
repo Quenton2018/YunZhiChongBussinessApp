@@ -48,6 +48,7 @@
 	</footer>
 	<div class="mui-content">
 		<h2 class="form-title"><i></i><span>基本信息</span></h2>
+		<input id="cityData" type="hidden" value="">
 		<input id="cityCode" type="hidden" value="">
 		<input id="contract" type="hidden" value="">
 		<form class="mui-input-group">
@@ -288,8 +289,24 @@
 	      	};
      		return true
  		}
+		function getCityData(){
+			var params = {
+				uuid:uuid
+			}
+			postJSON(API_URL.getCityAndCounty,params,function(res){
+				if(res.code == "0"){
+					var cityNewData = JSON.stringify(res.data).replace(/name/g,"text").replace(/code/g,"value");
+		    		$("#cityData").val(cityNewData);
+				}else{
+					layer.msg(res.msg);
+				}			
+			});		    
+		}
+		getCityData();
 	    $("#address").on("click", function() {
-	    	addressPicker.setData(cityData3);
+	    	var cityData = $("#cityData").val();
+			//console.log(cityData);
+	    	addressPicker.setData(JSON.parse(cityData));
 			var adressStr = '';
 	        addressPicker.show(function (items) {
 	            for (var i = 0; i < items.length; i++) {
@@ -297,8 +314,18 @@
 	            }
 	            $("#address").val(adressStr);      
 	            if(!isEmptyObject(items[2])){
-	            	var cityCode = items[2].value;
+	            	if(items[2].value == items[1].value){
+	            		$("#deposit").val(30000);
+	            	}else{
+	            		$("#deposit").val(10000);
+	            	}
+	            	var cityCode = items[2].value;	            	
 	            }else if(!isEmptyObject(items[1])){
+	            	if(items[1].value == items[0].value){
+	            		$("#deposit").val(30000);
+	            	}else{
+	            		$("#deposit").val(10000);
+	            	}
 	            	var cityCode = items[1].value;
 	            }else{
 	            	var cityCode = items[0].value;
@@ -308,6 +335,8 @@
 	        });
 	    });
 	    $('.btn-submit').on('click',function(){
+	    	var mobileReg = /^1(2|3|4|5|6|7|8|9)\d{9}$/;
+	    	var moneyReg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
 			var name = $("#name").val(),
 				mobile = $("#mobile").val(),
 				cityCode = $("#cityCode").val(),
@@ -323,6 +352,10 @@
                 layer.msg("请输入市场合伙人手机号");
                 return;
             }
+			if(!mobileReg.test(mobile)){
+				layer.msg("请输入正确的手机号码");
+		        return;
+			}
 			if(mobile.length!==11){
 			   	layer.msg("市场合伙人手机号码11位");
                 return;
@@ -335,10 +368,18 @@
                 layer.msg("请输入产品保证金");
                 return;
             }
+			if(!moneyReg.test(deposit)){
+				layer.msg("产品保证金输入正确的数字");
+                return;
+			}
 			if(!vaildeParam(maintenanceFee)){
                 layer.msg("请输入产品运维费");
                 return;
             }
+			if(!moneyReg.test(maintenanceFee)){
+				layer.msg("产品运维费请输入正确的数字");
+                return;
+			}
 			var params = {
 				'uuid':uuid,
 				'name':name,
