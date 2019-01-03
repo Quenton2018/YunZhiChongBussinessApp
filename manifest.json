@@ -21,27 +21,36 @@
 		"url": ""
 	},
 	"permissions": {
-
 		"Cache": {
 			"description": "管理应用缓存"
 		},
 		"Console": {
 			"description": "跟踪调试输出日志"
 		},
-
 		"Events": {
 			"description": "应用扩展事件"
+		},		
+		"Maps": {
+			"description": "管理地图插件"
 		},
-		
-		"Maps": {},
 		"OAuth": {
 			"description": "登录授权"
 		},
-		"Storage": {},
-		"Webview": {},
-		"NativeUI": {},
-		"Navigator": {},
-		"XMLHttpRequest": {}
+		"Storage": {
+			"description": "管理应用本地数据"
+		},
+		"Webview": {
+			"description": "窗口管理"
+		},
+		"NativeUI": {
+			"description": "原生UI控件"
+		},
+		"Navigator": {
+			"description": "浏览器信息"
+		},
+		"XMLHttpRequest": {
+			"description": "跨域网络访问"
+		}
 	},
 	"plus": {
 		"statusbar": {
