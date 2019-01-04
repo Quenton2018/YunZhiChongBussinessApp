@@ -145,7 +145,7 @@
                         .replace(/{{status}}/g,item.status)
                         .replace(/{{mobile}}/g,item.mobile)
                         .replace(/{{address}}/g,item.address)
-                        .replace(/{{createDate}}/g,new Date(item.createDate).format("yyyy-MM-dd hh:mm:ss"))
+                        .replace(/{{createDate}}/g,new Date(item.createDate).formatDate("yyyy-MM-dd hh:mm:ss"))
                         .replace(/{{expressInfo}}/g,expressInfo)
                         .replace(/{{zhuangtai}}/g,zhuangtai)
 

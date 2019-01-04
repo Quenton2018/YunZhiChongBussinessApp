@@ -260,7 +260,7 @@
                 || data.status == '已收货'
                 || data.status == '驳回'
             ){
-                $(".progressItem1 .date").text(new Date(data.submitDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem1 .date").text(new Date(data.submitDate).formatDate("yyyy-MM-dd hh:mm:ss"))
                 $(".progressItem1").addClass('activeProgress');
             }
 
@@ -268,21 +268,21 @@
                 || data.status == '已发货'
                 || data.status == '已收货'
             ){
-                $(".progressItem2 .date").text(new Date(data.checkDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem2 .date").text(new Date(data.checkDate).formatDate("yyyy-MM-dd hh:mm:ss"))
                 $(".progressItem2").addClass('activeProgress');
-                $(".progressItem3 .date").text(new Date(data.checkDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem3 .date").text(new Date(data.checkDate).formatDate("yyyy-MM-dd hh:mm:ss"))
                 $(".progressItem3").addClass('activeProgress');
             }
 
             if(data.status == '已发货'
                 || data.status == '已收货'
             ){
-                $(".progressItem4 .date").text(new Date(data.transDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem4 .date").text(new Date(data.transDate).formatDate("yyyy-MM-dd hh:mm:ss"))
                 $(".progressItem4").addClass('activeProgress');
             }
 
             if(data.status == '已收货'){
-                $(".progressItem5 .date").text(new Date(data.getDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem5 .date").text(new Date(data.getDate).formatDate("yyyy-MM-dd hh:mm:ss"))
                 $(".progressItem5").addClass('activeProgress');
             }
 
@@ -292,7 +292,7 @@
                 $(".progressItem4").css("display","none");
                 $(".progressItem5").css("display","none");
                 $(".progressItem6").css("display","block");
-                $(".progressItem6 .date").text(new Date(data.checkDate).format("yyyy-MM-dd hh:mm:ss"))
+                $(".progressItem6 .date").text(new Date(data.checkDate).formatDate("yyyy-MM-dd hh:mm:ss"))
 
             }else{
                 $(".progressItem6").css("display","none");

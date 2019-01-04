@@ -121,7 +121,7 @@
                     if(!vaildeParam(lastUseTime)){
                         lastUseTime = '暂无';
                     }else{
-                        lastUseTime = new Date(lastUseTime).format("yyyy-MM-dd hh:mm:ss")
+                        lastUseTime = new Date(lastUseTime).formatDate("yyyy-MM-dd hh:mm:ss")
                     }
                     html += tmpl.replace(/{{shellId}}/g,item.shellId)
                         .replace(/{{id}}/g,item.id)

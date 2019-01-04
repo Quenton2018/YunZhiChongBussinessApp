@@ -189,7 +189,7 @@
                                 .replace(/{{rate2}}/g,item.rate2);
                         }
 
-                        rateSwitchDate = new Date(item.rateSwitchDate).format("yyyy-MM-dd");
+                        rateSwitchDate = new Date(item.rateSwitchDate).formatDate("yyyy-MM-dd");
                     });
                     console.log("rateSwitchDate"+rateSwitchDate)
                     $(".title-left").text("比列切换时间("+rateSwitchDate+")");

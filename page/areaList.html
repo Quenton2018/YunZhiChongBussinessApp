@@ -129,8 +129,8 @@
 
             if(vaildeParam(item)){
 
-                var startDate = new Date().format("yyyy-MM-dd") + ' 00:00:00';
-                var endDate = new Date().format("yyyy-MM-dd") + ' 23:59:59';
+                var startDate = new Date().formatDate("yyyy-MM-dd") + ' 00:00:00';
+                var endDate = new Date().formatDate("yyyy-MM-dd") + ' 23:59:59';
 
                 var param = {
                     'uuid':uuid,
@@ -165,8 +165,8 @@
 
             if(vaildeParam(item)){
 
-                var startDate = getCurrentMonthFirst().format("yyyy-MM-dd") + ' 00:00:00';
-                var endDate = getCurrentMonthLast().format("yyyy-MM-dd") + ' 23:59:59';
+                var startDate = getCurrentMonthFirst().formatDate("yyyy-MM-dd") + ' 00:00:00';
+                var endDate = getCurrentMonthLast().formatDate("yyyy-MM-dd") + ' 23:59:59';
 
                 var param = {
                     'uuid':uuid,
