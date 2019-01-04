@@ -4,7 +4,7 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "yunzhichongbusiness",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "H5670AE80",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "云智充合作测试版",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "3.3",/*应用版本名称*/
@@ -198,8 +198,8 @@
 					"xhdpi": "images/qidong/qd_750x1334.png",
 					"xxhdpi": "images/qidong/qd_750x1334.png"
 				}
-			},"debug":false
-		},"adid":"122238070711"
+			}
+		}
 	},
 	"dependencies": {
 		"pages": {
