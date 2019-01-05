@@ -24,7 +24,7 @@
 				overflow: hidden;
 			}
 			.mui-content{background-color: #fff;}
-			.call{padding: 20px 45px 0px 45px;color: rgb(245,126,24);text-align: center;line-height: 15px;}
+			.call{padding: 20px 0;color: rgb(245,126,24);text-align: center;font-size: 13px;}
 			.mui-table-view{padding: 0 30px;}
 			.mui-input-group .mui-input-row{padding: 10px 30px 0 30px;height: 50px;font-size: 14px;}
 			.mui-input-group:before,.mui-input-group:after{height: 0;}
@@ -36,7 +36,7 @@
 			.mui-numbox .mui-numbox-input{width: 35px !important;margin-left: -8px;}
 			.mui-numbox [class*=numbox-btn]{width: 30px;}
 			.mui-pull-right{color: rgb(51,51,51);position: absolute;right: 45px;bottom: 5px;}
-			.question{width: 100%;text-align: center;margin-top: 28px;text-decoration: underline;}
+			.question{width: 100%;text-align: center;margin-top: 28px;text-decoration: underline;font-size: 13px;}
 			.question a {color: rgb(106,106,106);}
 			.mui-input-row .city_text{width: 57%;font-size: 14px;margin-top: 5px;float: left;padding-left: 5px;}
 			.mui-btn-blue,.mui-btn-primary,input[type=submit]{border:1px solid #FF6D22;background-color:#FF6D22;}
@@ -48,7 +48,7 @@
             <h1 class="mui-title">申请成为合伙人</h1>
         </header>
         <div class="mui-content">
-            <h6 class="call">请正确填写信息，信息提交后，客服人员会与您联系</h6>
+            <h5 class="call">请正确填写信息，信息提交后，客服人员会与您联系</h5>
             <form class="mui-input-group">
 			    <div class="mui-input-row">
 			        <label>联系人</label>
@@ -66,10 +66,10 @@
 					   <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 					</div>
 			    </div>
-			    <div class="mui-input-row">
-			        <label>省/市/区/县</label>
+			    <div class="mui-input-row" onclick="showPick()">
+			        <label>申请发展地区</label>
 			        <a class="mui-icon mui-icon-arrowdown mui-pull-right"></a>
-			        <input type="text" name="installAddress" class="city_text" placeholder="请选择地址" id="site" onclick="showPick()" readonly/>
+			        <input type="text" name="installAddress" class="city_text" placeholder="请选择地址" id="site"  readonly/>
 			    </div>
 			</form>
 			<h6 class="question"><span onclick="clicked('articleList.html')">常见问题?</span></h6>
@@ -81,18 +81,15 @@
 	
 	
 	<script type="text/javascript">
-		$.plusReady();
+
 		function showPick(){
+			//三级联动
 			var picker = new mui.PopPicker({
-				//三级联动
 			    layer: 3
 			});
 		    picker.setData(cityData3);
 			var adressStr = '';
 			//设置默认选择地址
-			picker.pickers[0].setSelectedIndex(2);
-			picker.pickers[1].setSelectedIndex(1);
-			picker.pickers[2].setSelectedIndex(0);
 			picker.show(function(SelectedItem) {
 			  //将选择的省、市、区显示到屏幕上
 			    for (var i = 0; i < SelectedItem.length; i++) {
@@ -102,8 +99,6 @@
 			    $('.city_text').val(adressStr)
 			});
 		};
-		$.plusReady();
-
         $("#submitBtn").click(function(){
             var contacts = $("input[name='contacts']").val();
             if(!vaildeParam(contacts)){
@@ -142,8 +137,5 @@
                 }
             });
         });
-
-
-
 	</script>
 </html>

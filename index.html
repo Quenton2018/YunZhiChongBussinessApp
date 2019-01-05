@@ -150,9 +150,14 @@
                         if("1"==userType){
                             $("#areaApplicationList").removeClass('mui-hidden');
                             $("#applyCdz").removeClass('mui-hidden');
+                        }else{
+                        	$("#areaApplicationList").addClass('mui-hidden');
+                            $("#applyCdz").addClass('mui-hidden');
                         }
                         if(partnerManager){
                         	$("#myPartner").removeClass('mui-hidden');
+                        }else{
+                        	$("#myPartner").addClass('mui-hidden');
                         }
                         Storage.setItem( "mobile", mobile);
                         Storage.setItem( "headImage", headImage);

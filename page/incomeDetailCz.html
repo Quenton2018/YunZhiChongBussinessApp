@@ -133,15 +133,9 @@
             "pageSize":pageSize,
             "pageNumber":pageNumber
         }
-
-
         postJSON(API_URL.ApiDivideMoneyLogList,data,function (res) {
-
-
             if('0' == res.code){
-
                 var pagedata = res.data.pagedata;
-
                 if(pagedata.last){
                     $("#loadMore").css("display",'none');
                     $("#noMore").css("display",'block');
@@ -153,28 +147,22 @@
                 var dataTmpl = $("#dataTmpl").html();
 
                 var data = pagedata.content;
-
                 var html = '';
                 $.each(data,function (index,item) {
-
                     html += dataTmpl.replace(/{{code}}/g,item.charging.shellId.substr(0,1)+(parseInt(item.chargingSocket.code)+1))
                         .replace(/{{sumMoney}}/g,item.userChargingDetail.amount)
                         .replace(/{{partnerMoney}}/g,item.money)
                         .replace(/{{time}}/g,(new Date(item.createDate)).formatDate("MM-dd hh:mm"))
 
                 })
-
                 if(1 == pageNumber){
                     $(".dataList").html(html);
                 }else{
                     $(".dataList").append(html)
                 }
-
-
             }else{
                 layer.msg(res.msg)
             }
-
         })
     }
     

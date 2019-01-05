@@ -144,42 +144,72 @@
     }
 
     $(".selectDate").click(function () {
-
-        var dayArr = new Array();
-
-        var day = new Date().getMonth() + 1;
-
-
-        for(var i=1;i<=day;i++){
-            var dayObj = new Object();
-            dayObj.value = i+"";
-            dayObj.text = i+"月";
-            dayArr.push(dayObj);
+    	var yearArr = new Array();
+        var monthArr = new Array();
+        var monthArr2 = new Array();
+        var curYear = new Date().getFullYear();
+        var curMonth = new Date().getMonth() + 1;
+        var nextMonth = 12 - curMonth;
+        if(nextMonth==0){
+        	for(var i = 1;i <= 12; i++){
+	            var monthObj = new Object();
+	            monthObj.value = i + "";
+	            monthObj.text = i + "月";
+	            monthArr.push(monthObj);
+	        }
+            var yearObj = new Object();
+            yearObj.value = curYear + "";
+            yearObj.text = curYear + "年";
+            yearObj.children = monthArr;
+            yearArr.push(yearObj);
+        }else{
+        	for(var i = 1;i <= curMonth; i++){
+	            var monthObj = new Object();
+	            monthObj.value = i + "";
+	            monthObj.text = i + "月";
+	            monthArr.push(monthObj);
+	        }
+            var yearObj = new Object();
+            yearObj.value = curYear + "";
+            yearObj.text = curYear + "年";
+            yearObj.children = monthArr;
+            yearArr.push(yearObj);
+            
+        	for(var i = curMonth +1;i <= 12; i++){
+	            var monthObj = new Object();
+	            monthObj.value = i + "";
+	            monthObj.text = i + "月";
+	            monthArr2.push(monthObj);
+	        }
+	        for(var i = curYear-1; i >= curYear-1; i--){
+	            var yearObj = new Object();
+	            yearObj.value = i + "";
+	            yearObj.text = i + "年";
+	            yearObj.children = monthArr2;
+	            yearArr.push(yearObj);
+	        }
         }
-
+        
         var picker = new mui.PopPicker({
             layer: 2
         });
-        picker.setData( [{
-            value: year,
-            text: year+'年',
-            children: dayArr
-        }])
+        picker.setData(yearArr);
+//      console.log(monthParam)
+        picker.pickers[0].setSelectedValue(yearParam);
+        setTimeout(function(){
+        	picker.pickers[1].setSelectedValue(monthParam);
+        },200);
         picker.show(function (selectItems) {
-
             var yearNew = selectItems[0].value+"";
             var monthNew = selectItems[1].value+"";
-
             year = yearNew;
             month = monthNew;
-
             $("#loadMore").css({"display":"none"});
             $("#noMore").css({"display":"none"});
             pageNumber=1;
             $(".selectDate span").text(year+"年"+month+"月");
             $(".dataList").html("");
             getList(month,year);
-
         })
     })
 

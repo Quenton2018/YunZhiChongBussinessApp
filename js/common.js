@@ -1146,10 +1146,9 @@ $.enableRefresh = function(){
 }
 /**
  * 原生导航栏
- * @param {Object} that
  * @param {Object} href
  */
-var openNativeTitle = function(that,href){
+var openNativeTitle = function(href){
 	//非plus环境，直接走href跳转
 	if(!mui.os.plus) {
 		location.href = href;
@@ -1165,8 +1164,7 @@ var openNativeTitle = function(that,href){
 				titleNView:{
 					autoBackButton:true,
 					backgroundColor:'#f47e13',
-					titleColor:'#fff',
-					titleText:that.innerHTML.trim()
+					titleColor:'#fff'
 				}
 			},
 			waiting:{

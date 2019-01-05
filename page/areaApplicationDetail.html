@@ -30,7 +30,6 @@
         .box02 .box03{padding:15px 0;padding-right:15px;border-bottom:1px solid #dce1e6;}
         .box03 h1{float:left;margin:0;padding:0;font-size:15px;color:#7a7d80;}
         .box03 h2{float:right;text-align:right;margin:0;padding:0;font-size:15px;color:#333333;}
-        #submitBtn{display:none;}
     </style>
 
 </head>
@@ -102,15 +101,53 @@
 <script type="text/javascript">
     mui.init();
 
-    if(window.plus){
-        pagePlusReady();
-    }else{
-        document.addEventListener('plusready',pagePlusReady,false);
-    }
-    function pagePlusReady(){
-
-        getApplyChargingGroupBYID();
-    }
+    mui.plusReady(function(){
+    	getApplyChargingGroupBYID();
+    	
+    	/**
+	     * 去修改
+	     */
+	    $("#submitBtn").click(function(){
+	//      var  app_name =   plus.storage.getItem( "app_name");
+	//      var  app_address =    plus.storage.getItem( "app_address");
+	//      var  app_latitude =    plus.storage.getItem( "app_latitude");
+	//      var  app_longitude =   plus.storage.getItem( "app_longitude");
+	//      var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
+	//      var  memberListJson =  plus.storage.getItem( "memberListJson");
+	//      var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
+	//
+	//      console.log("## Detail ## areaName:"+app_name);
+	//      console.log("## Detail ## address:"+app_address);
+	//      console.log("## Detail ## latitude:"+app_latitude);
+	//      console.log("## Detail ## longitude:"+app_longitude);
+	//      console.log("## Detail ## electricPrice:"+app_electricPrice);
+	//      console.log("## Detail ## proportionsJson:"+memberListJson);
+	//      console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
+	//
+	//      clicked('areaApplicationEdit.html');
+	
+			var areaName = plus.storage.getItem( "app_name");
+			var electricPrice = plus.storage.getItem( "app_electricPrice");
+			var setmealName = "基本套餐";
+			var setmealData = [{
+				"state": "1",
+				"isSelect":true,
+				"text":'基本套餐'
+			}];
+			var setmealState = "1";
+			var areaId = plus.storage.getItem("areaId");
+			var updateGroup = {
+				'areaName': areaName,
+				'price':electricPrice,
+				'state':setmealState,
+				'setmealName':setmealName,
+				'setmealData':setmealData,
+				'areaType':'oldAdd'
+			}
+			plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
+			clicked('areaApplicationSetmeals.html?areaid='+areaId);
+	    });
+    });
 
     function getApplyChargingGroupBYID(){
         var areaId = plus.storage.getItem("areaId");
@@ -188,52 +225,6 @@
             })
         }
     }
-
-
-    /**
-     * 去修改
-     */
-    $("#submitBtn").click(function(){
-//      var  app_name =   plus.storage.getItem( "app_name");
-//      var  app_address =    plus.storage.getItem( "app_address");
-//      var  app_latitude =    plus.storage.getItem( "app_latitude");
-//      var  app_longitude =   plus.storage.getItem( "app_longitude");
-//      var  app_electricPrice = plus.storage.getItem( "app_electricPrice");
-//      var  memberListJson =  plus.storage.getItem( "memberListJson");
-//      var  dianjiaListJson =  plus.storage.getItem( "dianjiaListJson");
-//
-//      console.log("## Detail ## areaName:"+app_name);
-//      console.log("## Detail ## address:"+app_address);
-//      console.log("## Detail ## latitude:"+app_latitude);
-//      console.log("## Detail ## longitude:"+app_longitude);
-//      console.log("## Detail ## electricPrice:"+app_electricPrice);
-//      console.log("## Detail ## proportionsJson:"+memberListJson);
-//      console.log("## Detail ## dianjiaListJson:"+dianjiaListJson);
-//
-//      clicked('areaApplicationEdit.html');
-
-		var areaName = plus.storage.getItem( "app_name");
-		var electricPrice = plus.storage.getItem( "app_electricPrice");
-		var setmealName = "基本套餐";
-		var setmealData = [{
-			"state": "1",
-			"isSelect":true,
-			"text":'基本套餐'
-		}];
-		var setmealState = "1";
-		var areaId = plus.storage.getItem("areaId");
-		var updateGroup = {
-			'areaName': areaName,
-			'price':electricPrice,
-			'state':setmealState,
-			'setmealName':setmealName,
-			'setmealData':setmealData,
-			'areaType':'oldAdd'
-		}
-		plus.storage.setItem('updateGroup', JSON.stringify(updateGroup));
-		clicked('areaApplicationSetmeals.html?areaid='+areaId);
-    });
-
 </script>
 </body>
 </html>

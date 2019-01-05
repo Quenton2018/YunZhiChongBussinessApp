@@ -578,14 +578,13 @@
 			}
 		});
 	}
-    function getDataList(){
-    	
+    function getDataList(){ 	
     	var params = {
     		'uuid':uuid,
     		'state':applyGroup.state,
 			'price':applyGroup.price	
 		}
-		postJSON(API_URL.ApiChargingBusinessGetSetmealPrice,params,function(res){
+		postJSON(API_URL.ApiGetDefaultSetmealPrice,params,function(res){
 			if(res.code == '0'){			
 				var priceSetmealData = res.data;
 				priceSetmealData.name = applyGroup.applySetmealName;

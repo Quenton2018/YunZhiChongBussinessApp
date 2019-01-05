@@ -29,7 +29,6 @@
 		.setmeal_tap_header span i{font-size:0.26rem;color:#acacac;font-style:normal;}
 		.table_ul{padding:0;margin:0;}
 		.table_list{padding:12px 0;border-bottom:1px dashed #808080;list-style:none;overflow:hidden;position:relative;}
-		.table_list:last-child{    		/*border-bottom: none;*/}
 		.table_list span{text-align:center;font-size:0.3rem;}
 		.table_list span.first_span{text-align:left;padding-left:18px;}
 		.table_list .circle{width:16px;height:16px;line-height:14px;border-radius:50%;box-sizing:border-box;border:1px solid #ff6d22;text-align:center;display:inline-block;font-size:12px;color:#ff6d22;vertical-align:1px;font-style:normal;position:absolute;top:22px;left:0;}
@@ -39,8 +38,7 @@
 		.mui-numbox [class*=numbox-btn]{background-color:#ff6d22;color:#fff;}
 		.mui-numbox .mui-input-numbox,
 		.mui-numbox .mui-numbox-input{background:#eeeeee;border:none!important}
-		.yellow{color:#ff6d22;font-style:normal;}
-		input.yellow-input{width:32px;padding:2px 4px;margin:0 2px;height:24px;line-height:20px;text-align:center;}
+		.yellow{color:#ff6d22;font-style:normal;}		
 		.addCharges{float:right;font-size:14px;padding:0 6px;}
 		.addCharges .mui-icon{font-size:16px;padding-right:4px;color:#ff6d22;font-weight:bold;}
 		.mui-numboxs{position:relative;display:inline-block;overflow:hidden;width:100%;height:35px;		    /*padding: 0 30px;*/vertical-align:top;vertical-align:middle;border:solid 1px #bbb;border-radius:3px;background-color:#efeff4;}
@@ -53,15 +51,11 @@
 		.mui-numboxs .mui-numbox-input{display:inline-block;overflow:hidden;width:100%!important;height:100%;margin:0;padding:0 3px!important;text-align:center;text-overflow:ellipsis;word-break:normal;border:none!important;background:#eeeeee;border-radius:0!important;font-size:0.3rem;}
 		.fullstop-item{float:left;text-align:center;font-size:0.3rem;}
 		.table_list .fullstop-item{line-height:40px;}
-		.fullstop-item input{padding:0 10px;margin:0;text-align:center;    		/*color: #969696;
-			    		background: #eeeeee;*/border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
-			#partners .partners-item{width:25%;float:left;text-align:left;display:inline-block;font-size:0.28rem;padding:3px 3px;margin-right:1%;margin-bottom:0;}
-			#partners input.partners-item{			/*color: #969696;*/
-
-				/*background: #eeeeee;*/
-			border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
-			#partners input[readonly]{background:#fff;border:none;color:#4d4d4d;}
-			#partners .list-del span{right:0px;top:18px;}
+		.fullstop-item input{padding:0 10px;margin:0;text-align:center;border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
+		#partners .partners-item{width:25%;float:left;text-align:left;display:inline-block;font-size:0.28rem;padding:3px 3px;margin-right:1%;margin-bottom:0;}
+		#partners input.partners-item{border:none;border-radius:0;border-bottom:1px solid rgba(0,0,0,.2);}
+		#partners input[readonly]{background:#fff;border:none;color:#4d4d4d;}
+		#partners .list-del span{right:0px;top:18px;}
 		
     </style>
 </head>
@@ -214,10 +208,10 @@
      	checkLogin();
 		uuid = plus.storage.getItem("uuid");
 		applyGroup = JSON.parse(plus.storage.getItem('applyGroup'));
-        getDataList();
+        getDefault();
       	setVueData();
     },function(){
-    	getDataList();
+    	getDefault();
     },false);
     function setVueData(){
 		vm = new Vue({
@@ -225,70 +219,9 @@
 			data:{
 				state:'',
 				stateName:'',
-				chargesList:[{
-			        "state": "-1",
-			        "minutes": 240,
-			        "power": 1,
-			        "amount": 0.96
-			    },{
-			        "state": "-1",
-			        "minutes": 360,
-			        "power": 1.5,
-			        "amount": 1.45
-			    },{
-			        "state": "-1",
-			        "minutes": 480,
-			        "power": 2,
-			        "amount": 1.92
-			    },{
-			        "state": "-1",
-			        "minutes": 600,
-			        "power": 2.5,
-			        "amount": 2.4
-			    }],
-				elesList:[{
-			        "seq": 0,
-			        "min": 0,
-			        "max": 100,
-			        "cost": 0.08,
-			        "amount": 0.1
-			    },{
-			        "seq": 1,
-			        "min": 100,
-			        "max": 300,
-			        "cost": 0.24,
-			        "amount": 0.29
-			    },{
-			        "seq": 2,
-			        "min": 300,
-			        "max": 600,
-			        "cost": 0.48,
-			        "amount": 0.58
-			    },{
-			        "seq": 3,
-			        "min": 600,
-			        "max": 900,
-			        "cost": 0.72,
-			        "amount": 0.87
-			    },{
-			        "seq": 4,
-			        "min": 900,
-			        "max": 1200,
-			        "cost": 0.96,
-			        "amount": 1.16
-			    },{
-			        "seq": 5,
-			        "min": 1200,
-			        "max": 1500,
-			        "cost": 1.2,
-			        "amount": 1.44
-			    }],
-				fullStopList:{
-			      "state": "1",
-			      "minutes": 600,
-			      "power": 5,
-			      "amount": 4.8
-			    },
+				chargesList:[],
+				elesList:[],
+				fullStopList:{},
 				partnersList:[],
 				isTime:true
 			},
@@ -575,6 +508,24 @@
 			}
 		});
 	}
+	//获取默认数据
+    function getDefault(){
+    	var params = {
+    		'uuid':uuid,
+    		'state':applyGroup.state,
+			'price':applyGroup.price	
+		}
+		postJSON(API_URL.ApiGetDefaultSetmealPrice,params,function(res){
+			if(res.code == '0'){			
+			  	getAllData(res.data);
+			  	setTimeout(function(){
+			  		getDataList();
+			  	},200)
+			}else{
+				layer.msg(res.msg);
+			}
+		});
+    }
     function getDataList(){
     	var params = {
 			'areaId':areaId	
@@ -623,6 +574,7 @@
   			}
 			vm.chargesList = Charges;
   		}
+  		console.log("时长区"+JSON.stringify(vm.chargesList))
   		if(vaildeParam(partners)){
   			vm.partnersList = partners;
   		}
@@ -659,8 +611,6 @@
 			}
 		})
 	}
-
-
 </script>
 
 </body>

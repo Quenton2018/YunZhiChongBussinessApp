@@ -93,7 +93,7 @@ API_URL.ApiChargingBusinessGetApplyCdzDataTransDate = apiHost + "/api/chargingBu
 API_URL.ApiChargingBusinessGetSetmeals = apiHost + "/api/setmeal/getSetmeals"; //片区套餐
 API_URL.ApiChargingBusinessGetSetmeal = apiHost + "/api/setmeal/getSetmeal"; //单个套餐
 
-API_URL.ApiChargingBusinessGetSetmealPrice = apiHost + "/api/setmeal/getDefaultSetmealPrice"; //合伙人收费
+API_URL.ApiGetDefaultSetmealPrice = apiHost + "/api/setmeal/getDefaultSetmealPrice"; //合伙人收费
 API_URL.ApiChargingBusinessGetcheckJsonSetmeal = apiHost + "/api/applyChargingGroup/checkJsonSetmeal"; //合伙人套餐校验
 
 API_URL.updateChargingGroup = apiHost + "/api/applyChargingGroup/updateChargingGroup";
