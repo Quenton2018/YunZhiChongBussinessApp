@@ -1,7 +1,7 @@
 var apiHost = "http://api.jx9n.com";
 var appVersion = "v3.4";
 //apiHost = "http://39.106.62.16:8181";
-//apiHost = "http://192.168.1.17:8181";
+apiHost = "http://192.168.1.17:8181";
 
 
 var API_URL = {};
@@ -127,11 +127,13 @@ API_URL.getCityAndCounty = apiHost + "/api/partnermanager/getCityAndCounty";//�
 
 API_URL.ApiUploadfileByBase64 = apiHost + "/api/common/uploadfileByBase64";//Base64文件上传接口
 
-API_URL.ApiWeChatLogin = apiHost + "/api/admin/wechatLogin";
+//API_URL.ApiWeChatLogin = apiHost + "/api/admin/wechatLogin";
 API_URL.ApiWeChatGetSign = apiHost + "/api/admin/wechat/getSign";
 API_URL.ApiWeChatBinding = apiHost + "/api/admin/wechat/binding";
 API_URL.ApiWeChatUnbound = apiHost + "/api/admin/wechat/unbound";
 API_URL.ApiWeChatIsbound = apiHost + "/api/admin/wechat/isbound";
+
+API_URL.ApiWeChatLogin = apiHost + "/api/admin/wechat/login"; //合伙人微信登录
 
 var WX_URL = {};
 WX_URL.QRCode =  '/wx/addingCdz'  // 微信QRCode 链接
@@ -193,7 +195,8 @@ function postJSON(url, data, callback,isIcon){
 	            	 	var json = JSON.parse(responseText);
 	            		callback(json);
 	            } else {
-	            		layer.msg("请求失败");
+	            		layer.msg("接口请求失败");
+	            		console.log("接口请求失败"+xhr.responseText)
 	            }
 	            !isIcon && layer.close(load_index);
 	            break;
