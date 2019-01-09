@@ -81,7 +81,9 @@
 	
 	
 	<script type="text/javascript">
-
+		function _getParam(obj, param) {
+			return obj[param] || '';
+		};
 		function showPick(){
 			//三级联动
 			var picker = new mui.PopPicker({
@@ -90,12 +92,12 @@
 		    picker.setData(cityData3);
 			var adressStr = '';
 			//设置默认选择地址
-			picker.show(function(SelectedItem) {
-			  //将选择的省、市、区显示到屏幕上
-			    for (var i = 0; i < SelectedItem.length; i++) {
-			       adressStr += SelectedItem[i].text;
-			    }
-			    console.log(adressStr);
+			picker.show(function(items) {
+			  	//将选择的省、市、区显示到屏幕上
+			    for (var i = 0; i < items.length; i++) {
+	                adressStr += _getParam(items[i], 'text');
+	            }
+				//console.log(adressStr);
 			    $('.city_text').val(adressStr)
 			});
 		};

@@ -416,6 +416,9 @@
         $("#longitude").val(longitude);
         $("#address").val(address);
     }
+    function _getParam(obj, param) {
+		return obj[param] || '';
+	};
 	//选择省市区 
     var addressPicker = new mui.PopPicker({
         layer: 3
@@ -423,10 +426,10 @@
     $("#address").on("click", function() {
     	addressPicker.setData(cityData3);
 		var adressStr = '';
-        addressPicker.show(function (selectItems) {
+        addressPicker.show(function (items) {
             //将选择的省、市、区显示到屏幕上
-            for (var i = 0; i < selectItems.length; i++) {
-                adressStr += selectItems[i].text;
+            for (var i = 0; i < items.length; i++) {
+                adressStr += _getParam(items[i], 'text');
             }
             $("#address").val(adressStr);
         });
