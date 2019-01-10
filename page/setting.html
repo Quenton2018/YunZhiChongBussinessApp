@@ -34,10 +34,9 @@
     <h1 class="mui-title">设置</h1>
 </header>
 
-<div class="mui-content" style="    padding-bottom: 60px;">
+<div class="mui-content" style="padding-bottom: 60px;">
 
     <div class="">
-
         <ul class="mui-table-view" style="margin-top: 20px;">
             <li class="mui-table-view-cell">账号<span class="right username"></span></li>
             <li class="mui-table-view-cell">银行卡<span class="right bankCode"></span></li>
@@ -168,8 +167,13 @@
 	            }, function(e) {
 	                layer.msg("登录认证失败！");
 	            });
-	      	}else {	       		
-                layer.msg("已经登录认证！");
+	      }else {
+				wxAuthService.logout(function(e){
+					console.log("注销登录认证成功！");
+				}, function(e){
+					console.log("注销登录认证失败！");
+				});
+//              layer.msg("已经登录认证！");
             }
     	}
     	// 解除绑定
