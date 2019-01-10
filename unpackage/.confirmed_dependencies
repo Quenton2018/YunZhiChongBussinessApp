@@ -17,7 +17,8 @@
     "refer": [
       "page/loginTwo.html",
       "index.html",
-      "page/applyPartner.html"
+      "page/applyPartner.html",
+      "page/weixinBinding.html"
     ],
     "resources": []
   },

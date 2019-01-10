@@ -67,7 +67,7 @@
 		"distribute": {
 			"plugins": {"share":{"weixin":{"appid":"wxb1982335c772c3da","appsecret":"5fc26f7062ee444cea1c66abb160a164","description":"可选，微信分享"}},
 				"oauth": {
-					"weixin": {"appid":"wxb1982335c772c3da","appsecret":"5fc26f7062ee444cea1c66abb160a164"}
+					"weixin": {"appid":"wxb1982335c772c3da","appsecret":"626a1376ae912a167c809ca499bc5a75"}
 				},
 				"maps": {
 					"baidu": {
