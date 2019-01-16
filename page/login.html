@@ -235,14 +235,14 @@
                     layer.msg("获取用户信息失败：" + e.message + " - " + e.code);
                 });
             }, function(e) {
-                layer.msg("登录认证失败！");
+                layer.msg("登录认证失败！"+e.message);
             });
       	}else {
-//			wxAuthService.logout(function(e){
-//				console.log("注销登录认证成功！");
-//			}, function(e){
-//				console.log("注销登录认证失败！");
-//			});
+			wxAuthService.logout(function(e){
+				console.log("注销登录认证成功！");
+			}, function(e){
+				console.log("注销登录认证失败！");
+			});
 			//layer.msg("已经登录认证！");
        }
 	}
@@ -257,6 +257,9 @@
                 setTimeout(function(){
                     clicked('../index.html')
                 },2000);
+                setTimeout(function(){
+                	plus.webview.currentWebview().close();
+                },2500);
             } else if ("1010" == res.code) {
             	plus.storage.setItem('openId', res.msg);
             	clicked('weixinBinding.html');

@@ -42,8 +42,9 @@
 		<div class="mui-scroll">
 		    <div class="mean-list">
 		    	<div class="list-header mui-row">
-		    		<h3 class="list-th mui-col-xs-6" style="text-align: left;padding-left: 15px;">合伙人</h3>
+		    		<h3 class="list-th mui-col-xs-3" style="text-align: left;padding-left: 15px;">合伙人</h3>
 		    		<h3 class="list-th mui-col-xs-3">招商收入</h3>
+		    		<h3 class="list-th mui-col-xs-3">充电收入</h3>
 		    		<h3 class="list-th mui-col-xs-3">片区</h3>
 		    	</div>
 		    	<div class="list-body">
@@ -56,7 +57,8 @@
 <script type="text/html" id="itemTmpl">
 	{{each list as item}}
 	<li class="mui-table-view-cell mui-row list-item" data-id="{{item.uuid}}" data-num="{{item.chargingGroupNumbers}}">
-    	<span class="list-td mui-col-xs-6" style="text-align: left;padding-left: 15px;">{{item.realname}}</span>
+    	<span class="list-td mui-col-xs-3" style="text-align: left;padding-left: 15px;">{{item.realname}}</span>
+    	<span class="list-td mui-col-xs-3">{{item.depositIncome+item.maintenanceFeeIncome}}</span>
     	<span class="list-td mui-col-xs-3">{{item.depositIncome+item.maintenanceFeeIncome}}</span>
     	<span class="list-td mui-col-xs-3">{{item.chargingGroupNumbers}}<i class="mui-icon mui-icon-arrowright"></i></span>
     </li>

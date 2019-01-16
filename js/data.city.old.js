@@ -2725,8 +2725,7 @@ var cityData3 = [{
 			value: "320826",
 			text: "涟水县"
 		}, {
-			value: "320813
-",
+			value: "320813",
 			text: "洪泽区"
 		}, {
 			value: "320830",
