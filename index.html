@@ -103,28 +103,23 @@
 	<script src="js/base.js"></script>
     <script src="js/mui.min.js"></script>
     <script>
-    	mui.init();
-        
+    	mui.init();       
     	$.plusReady(function() {
     		plus.webview.currentWebview().setStyle({
 				popGesture:'none' // 关闭侧滑返回功能
 			});
-    		checkLogin('page/login.html');
-    		
+    		checkLogin('page/login.html'); 		
             getUserInfo();
             GetADaylyIncomeDetail();
-            getCharging();
-            
+            getCharging();        
             // 热更新
         	heatUpdate(plus.os.name);
-
             checkVersion();
     	}, function() {
     		getUserInfo();
             GetADaylyIncomeDetail();
             getCharging();
-    	});
-    	  	
+    	});   	  	
     	/**
          * 获取用户信息
          */
@@ -168,6 +163,7 @@
                         Storage.setItem( "moneyAmount", moneyAmount);
                         Storage.setItem( "totalIncome", totalIncome+'');
                         Storage.setItem( "userType", userType);
+                        Storage.setItem( "partnerManager", partnerManager);
                         console.log("totalIncome : "+totalIncome)
 					 	if (!vaildeParam(totalIncome)) {
 					 	    totalIncome = 0;

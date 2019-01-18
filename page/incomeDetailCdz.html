@@ -23,8 +23,7 @@
         .dataList .mui-badge b{font-weight:300;}
         .topBox .row1{padding:10px;color:#6F6F70;font-size:.9rem;padding-bottom:0px;}
         .topBox .row2{font-size:.7rem;padding:0 10px;color:#A9A9AA;padding-bottom:5px;}
-        #loadMore{background:#eaeaea;padding:10px;text-align:center;font-size:.8rem;display:none;}
-        .noMore{padding:10px;text-align:center;font-size:.8rem;display:none;}
+        .noMore{padding:10px;text-align:center;font-size:.8rem;}
         .mui-table{background:#fff;text-align:center;line-height:40px;font-size:.9rem;}
         .mui-table .dataList tr{border-top:#F0F2F4 solid 1px;position:relative;}
         .mui-table .dataList tr i{color:#A7ABB0;}
@@ -40,9 +39,8 @@
 </header>
 
 <div class="mui-content">
-
     <div class="topBox">
-        <div class="row1"><span class="dateBox">loading</span> </div>
+        <div class="row1 selectDate"><span class="dateBox">loading</span> <i class="mui-icon mui-icon-arrowdown"></i></div>
         <div class="row2">
             <div class="left">总收入 : <span id="benyuemoney">0</span>元</div>
             <div class="clearfix"></div>
@@ -64,8 +62,6 @@
             </tbody>
         </table>
     </div>
-
-    <div id="loadMore">加载更多</div>
     <div id="noMore" class="noMore">没有更多了</div>
 </div>
 
@@ -83,126 +79,68 @@
     mui.init();
 
     var uuid;
-
     var chargingGroupID = getQueryString("chargingGroupID");
     var year = getQueryString("year");
     var month = getQueryString("month");
     var parnterMoney = getQueryString("parnterMoney");
-
+    
     if(!vaildeParam(chargingGroupID) || !vaildeParam(year) || !vaildeParam(month)){
         layer.msg("非法操作");
         clicked("myIncome.html");
     }
 
-    $(".dateBox").html(year+"年"+month+"月")
-    $("#benyuemoney").html(parnterMoney);
+	mui.plusReady(function() {
+        checkLogin();
+        uuid = plus.storage.getItem("uuid");
+       	$(".dateBox").html(year+"年"+month+"月");
+		$("#benyuemoney").html(parnterMoney);
+        getList(month,year);     
+    });
 
-
-    var monthStr = month+"";
-    if(monthStr.length == 1){
-        monthStr = "0"+monthStr;
-    }
-
-    var firstDay = year+"-"+monthStr+"-"+"01 00:00:00";
-
-    var dateLast = getLastDay(year,month);
-    console.log("## getCdz ## dateLast:"+dateLast)
-
-    var lastDay = dateLast.formatDate("yyyy-MM-dd 23:59:59")
-
-    console.log("## getCdz ## firstDay:"+firstDay)
-    console.log("## getCdz ## lastDay:"+lastDay)
-
-	$.plusReady(function() {
-		uuid = plus.storage.getItem("uuid");
-        getCdz();
-	}, function() {
-		getCdz();
-	});
-
-    
-    function getCdz(){
-
-        var data = {
+	$.plusReady();
+  
+    function getList(month,year){
+	    var monthStr = month+"";
+	    if(monthStr.length == 1){
+	        monthStr = "0"+monthStr;
+	    }
+	    var firstDay = year + "-"+ monthStr + "-" + "01 00:00:00";
+	    var lastDay = getLastDay(year,month).formatDate("yyyy-MM-dd 23:59:59");
+	    
+        var params = {
             'startDate':firstDay,
             'endDate':lastDay,
             'uuid':uuid,
             'chargingGroupID':chargingGroupID
         }
-
-        console.log(data);
-
-        postJSON(API_URL.ApiChargingBusinessGetChargingByDivideMoneyLog,data,function (res) {
-
+        console.log(JSON.stringify(params));
+        postJSON(API_URL.ApiChargingBusinessGetChargingByDivideMoneyLog,params,function (res) {
             if('0' == res.code){
-
                 var dataList = res.data;
-
                 var dataTmpl = $("#dataTmpl").html();
-
                 var html = '';
-
                 $.each(dataList,function (index,item) {
-
                     var code = item.code;
-
                     html += dataTmpl.replace(/{{id}}/g,item.id)
                         .replace(/{{code}}/g,item.code)
                         .replace(/{{shellid}}/g,item.shellId)
                         .replace(/{{year}}/g,year)
                         .replace(/{{month}}/g,month)
-
                 })
-
                 $(".dataList").html(html);
-
-                getSumMoney();
-
-                partnerMoney();
+                getSumMoney(firstDay,lastDay);
+                partnerMoney(firstDay,lastDay);
             }else{
                 layer.msg(res.msg)
             }
-
         })
-
     }
 
-
-    function getSumMoney(){
+    function getSumMoney(firstDay,lastDay){
         var $sumMoney = $(".sumMoney");
-
         $.each($sumMoney,function (index,item) {
-
             var $dataItem = $(item).parents(".dataItem");
-
             var cdzID = $dataItem.attr("data-id");
-
-            var data = {
-                "uuid":"",
-                "startDate":firstDay,
-                "endDate":lastDay,
-                "groupID":chargingGroupID,
-                "chargingID":cdzID,
-                "chargingSocketID":""
-            }
-
-
-            postJSON(API_URL.ApiAdminGetSumMoney,data,function (res) {
-                $(item).html(res.data);
-            })
-
-        })
-    }
-
-    function partnerMoney(){
-        var $sumMoney = $(".partnerMoney");
-
-        $.each($sumMoney,function (index,item) {
-
-            var $dataItem = $(item).parents(".dataItem");
-
-            var cdzID = $dataItem.attr("data-id");
-
             var data = {
                 "uuid":uuid,
                 "startDate":firstDay,
@@ -211,25 +149,38 @@
                 "chargingID":cdzID,
                 "chargingSocketID":""
             }
-
             postJSON(API_URL.ApiAdminGetSumMoney,data,function (res) {
                 $(item).html(res.data);
             })
+        })
+    }
 
+    function partnerMoney(firstDay,lastDay){
+        var $sumMoney = $(".partnerMoney");
+        $.each($sumMoney,function (index,item) {
+            var $dataItem = $(item).parents(".dataItem");
+            var cdzID = $dataItem.attr("data-id");
+            var data = {
+                "uuid":uuid,
+                "startDate":firstDay,
+                "endDate":lastDay,
+                "groupID":chargingGroupID,
+                "chargingID":cdzID,
+                "chargingSocketID":""
+            }
+            postJSON(API_URL.ApiAdminGetSumMoney,data,function (res) {
+                $(item).html(res.data);
+            });
         })
     }
 
 
     function setCzDetail(that) {
-
         var $this = $(that);
-
         var id = $this.attr("data-id");
         var code = $this.attr("data-code");
         var shellid = $this.attr("data-shellid");
-
         var partnerMoney = $this.find(".partnerMoney").text();
-
         var url = 'incomeDetailCz.html?cdzIDCode='+code
             +'&year='+year
             +'&month='+month
@@ -237,13 +188,76 @@
             +"&chargingGroupID="+chargingGroupID
             +"&cdzID="+id
             +"&shellid="+shellid;
-
-        console.log("url : "+url)
-
+        console.log("url : "+url);
         clicked(url);
     }
 
+	$(".selectDate").click(function () {
+    	var yearArr = new Array();
+        var monthArr = new Array();
+        var monthArr2 = new Array();
+        var curYear = new Date().getFullYear();
+        var curMonth = new Date().getMonth() + 1;
+        var nextMonth = 12 - curMonth;
+        if(nextMonth==0){
+        	for(var i = 1;i <= 12; i++){
+	            var monthObj = new Object();
+	            monthObj.value = i + "";
+	            monthObj.text = i + "月";
+	            monthArr.push(monthObj);
+	        }
+            var yearObj = new Object();
+            yearObj.value = curYear + "";
+            yearObj.text = curYear + "年";
+            yearObj.children = monthArr;
+            yearArr.push(yearObj);
+        }else{
+        	for(var i = 1;i <= curMonth; i++){
+	            var monthObj = new Object();
+	            monthObj.value = i + "";
+	            monthObj.text = i + "月";
+	            monthArr.push(monthObj);
+	        }
+            var yearObj = new Object();
+            yearObj.value = curYear + "";
+            yearObj.text = curYear + "年";
+            yearObj.children = monthArr;
+            yearArr.push(yearObj);
+            
+        	for(var i = curMonth +1;i <= 12; i++){
+	            var monthObj = new Object();
+	            monthObj.value = i + "";
+	            monthObj.text = i + "月";
+	            monthArr2.push(monthObj);
+	        }
+	        for(var i = curYear-1; i >= curYear-1; i--){
+	            var yearObj = new Object();
+	            yearObj.value = i + "";
+	            yearObj.text = i + "年";
+	            yearObj.children = monthArr2;
+	            yearArr.push(yearObj);
+	        }
+        }
+        
+        var picker = new mui.PopPicker({
+            layer: 2
+        });
+        picker.setData(yearArr);
 
+        picker.pickers[0].setSelectedValue(year);
+        setTimeout(function(){
+        	picker.pickers[1].setSelectedValue(month);
+        },200);
+        picker.show(function (selectItems) {
+            var yearNew = selectItems[0].value+"";
+            var monthNew = selectItems[1].value+"";
+            year = yearNew;
+            month = monthNew;
+            $(".selectDate span").text(year+"年"+month+"月");
+            $(".dataList").html("");
+            getList(month,year);
+        })
+    })
 </script>
 </body>
 </html>

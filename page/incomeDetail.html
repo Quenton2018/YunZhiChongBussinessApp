@@ -5,7 +5,6 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>收入明细</title>
     <link rel="stylesheet" href="../css/mui.min.css">
-    <link rel="stylesheet" href="../css/iconfont.css">
     <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="../css/mui.picker.min.css" type="text/css" charset="utf-8"/>
@@ -24,8 +23,9 @@
         .dataList .mui-badge b{font-weight:300;}
         .topBox .row1{padding:10px;color:#6F6F70;font-size:.9rem;padding-bottom:0px;}
         .topBox .row2{font-size:.7rem;padding:0 10px;color:#A9A9AA;padding-bottom:5px;}
-        #loadMore{background:#eaeaea;padding:10px;text-align:center;font-size:.8rem;display:none;}
-        .noMore{padding:10px;text-align:center;font-size:.8rem;display:none;}
+		.switch{position: relative;z-index: 20;top: 12px;right: 6px;width: 52px;height: 21px;}
+        .switch{background: url("../images/switch_on.png");background-size: 100%;}
+        .switch.off{background: url("../images/switch_off.png");background-size: 100%;}
     </style>
 
 </head>
@@ -34,26 +34,23 @@
 <header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">收入明细</h1>
+    <span class="switch mui-pull-right mui-hidden" data-flag="on"></span>
 </header>
 
-<div class="mui-content">
-
-    <div class="topBox">
-        <div class="row1 selectDate"><span></span> <i class="mui-icon mui-icon-arrowdown"></i> </div>
-        <div class="row2">
-            <div class="left">总收入 : <span id="benyuemoney"></span>元</div>
-            <div class="right">明细</div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-
-    <ul class="mui-table-view dataList">
-
-
-    </ul>
-
-    <div id="loadMore">加载更多</div>
-    <div id="noMore" class="noMore">没有更多了</div>
+<div id="J_refresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+	    <div class="topBox">
+	        <div class="row1 selectDate"><span></span> <i class="mui-icon mui-icon-arrowdown"></i> </div>
+	        <div class="row2">
+	            <div class="left">总收入 : <span id="benyuemoney"></span>元</div>
+	            <div class="right">明细</div>
+	            <div class="clearfix"></div>
+	        </div>
+	    </div>
+	    <ul class="mui-table-view dataList">
+	    	
+	    </ul>
+   	</div>
 </div>
 
 <script type="text/html" id="dataTmpl">
@@ -69,47 +66,64 @@
     mui.init();
 
     var pageNumber = 1;
-    var pageSize = 10;
+    var pageSize = 14;
     var yearParam =  new Date().getFullYear();
     var monthParam = 1;
     var year;
     var month;
 
-    $.plusReady(pagePlusReady, function() {
-    	$(".dataList").html("");
-    	getList(month,year);
-    });
-
-    function pagePlusReady(){
+	mui.plusReady(function() {
         checkLogin();
-         
-        year = plus.storage.getItem("year");
-        month = plus.storage.getItem("month");
-        var parnterMoney = plus.storage.getItem("parnterMoney");
+        year = Storage.getItem("year");
+        month = Storage.getItem("month");
+        var parnterMoney = Storage.getItem("parnterMoney");
+        var partnerManager = Storage.getItem( "partnerManager");
         monthParam = month;
         yearParam = year;
 		console.log(monthParam,yearParam,year);
+		if(partnerManager){
+        	$(".switch").addClass('mui-hidden');
+        }else{
+        	$(".switch").removeClass('mui-hidden');
+        }
         $(".selectDate span").text(year+"年"+month+"月");
         $("#benyuemoney").text(parnterMoney);
-        $(".dataList").html("");
-        getList(month,year);
-    }
+        getList(month,year);     
+    });
 
+	$.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+		getList(month,year);	
+	});
+	// 刷新页面
+    function dataRefresh(){
+    	pageNumber = 1;
+    	getList(month,year);
+    }
+	
     function getList(month,year){
+    	var value = $('.switch').attr('data-flag');
+    	console.log(value)
+    	var allFalg = value==="off" ? false : true;
         var uuid = plus.storage.getItem("uuid");
         var dataParam = {
             "uuid":uuid,
             "month":month,
             "year":year,
             "pageSize":pageSize,
-            "pageNumber":pageNumber
+            "pageNumber":pageNumber,
+            "allChargingGroup":allFalg		
         }
-        console.log("getList:dataParam:"+JSON.stringify(dataParam));
-
         postJSON(API_URL.ApiChargingBusinessGetAMonthlyIncomeDetail,dataParam,function(res){
             if("0" == res.code){
                 var parnterMoneyToTal = res.data.parnterMoneyToTal;
                 var data = res.data.listRet;
+                
+                $.stopRefresh(data.length,pageSize);
+                
+                if(1 == pageNumber){
+                    $(".dataList").html('');
+                }
                 var tmpl = $("#dataTmpl").html();
                 var html = '';
                 var falgLast = true;
@@ -121,22 +135,9 @@
                         .replace(/{{yearParam}}/g,year)
                         .replace(/{{monthParam}}/g,month)
                         .replace(/{{chargingGroupName}}/g,chargingGroupName);
-
-                    if(index<9){
-                        falgLast =true;
-                    }else{
-                        falgLast =false;
-                    }
                 });
                 $("#benyuemoney").text(parnterMoneyToTal);
-                $(".dataList").append(html);
-                if(falgLast){
-                    $("#loadMore").css({"display":"none"});
-                    $("#noMore").css({"display":"block"});
-                }else{
-                    $("#loadMore").css({"display":"block"});
-                    $("#noMore").css({"display":"none"});
-                }
+                $(".dataList").append(html);              
             }else{
                 layer.msg(res.msg);
             }
@@ -194,7 +195,6 @@
             layer: 2
         });
         picker.setData(yearArr);
-//      console.log(monthParam)
         picker.pickers[0].setSelectedValue(yearParam);
         setTimeout(function(){
         	picker.pickers[1].setSelectedValue(monthParam);
@@ -218,12 +218,18 @@
         return d.getDate();
     }
 
-    $("#loadMore").click(function(){
-        pageNumber++;
-        getList(monthParam,yearParam);
-    })
-
-
+	var switchFlag = true;
+	$(".switch").on('click',function(){
+		if(switchFlag){
+			switchFlag = false;
+			$(".switch").addClass("off").attr('data-flag','off');
+		}else{
+			switchFlag = true;
+			$(".switch").removeClass("off").attr('data-flag','on');
+		}
+		$.enableRefresh();
+		dataRefresh();
+	});
 </script>
 </body>
 </html>

@@ -138,7 +138,7 @@
                     postJSON(API_URL.ApiWeChatBinding,postData,function(res){
 	                    if("0" == res.code){
 	                        layer.msg("绑定成功，正在跳转...");
-	                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+	                        setLoginData(res.data);
 	                        setTimeout(function(){
 	                            clicked('../index.html')
 	                        },2000);

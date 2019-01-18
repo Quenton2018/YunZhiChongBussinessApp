@@ -25,6 +25,7 @@
 		.mean-list{padding: 15px 15px 0px;margin: 0 auto;}
 		.list-header{width: 100%;padding: 14px 0;background-color: #e5e9f2;border-radius: 6px;box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;}
 		.list-th,.list-td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align: center;font-size: 14px;font-weight: 400;}
+    	.list-th sub{vertical-align: 2px;color: #666;}
     	.list-td i{font-style: normal;font-size: 14px;color: #bbb;margin-left: 2px;vertical-align: middle;}
 		.list-body{margin-top: 10px;}
 		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;}
@@ -43,8 +44,8 @@
 		    <div class="mean-list">
 		    	<div class="list-header mui-row">
 		    		<h3 class="list-th mui-col-xs-3" style="text-align: left;padding-left: 15px;">合伙人</h3>
-		    		<h3 class="list-th mui-col-xs-3">招商收入</h3>
-		    		<h3 class="list-th mui-col-xs-3">充电收入</h3>
+		    		<h3 class="list-th mui-col-xs-3">招商收入<sub>(元)</sub></h3>
+		    		<h3 class="list-th mui-col-xs-3">充电收入<sub>(元)</sub></h3>
 		    		<h3 class="list-th mui-col-xs-3">片区</h3>
 		    	</div>
 		    	<div class="list-body">
@@ -59,7 +60,7 @@
 	<li class="mui-table-view-cell mui-row list-item" data-id="{{item.uuid}}" data-num="{{item.chargingGroupNumbers}}">
     	<span class="list-td mui-col-xs-3" style="text-align: left;padding-left: 15px;">{{item.realname}}</span>
     	<span class="list-td mui-col-xs-3">{{item.depositIncome+item.maintenanceFeeIncome}}</span>
-    	<span class="list-td mui-col-xs-3">{{item.depositIncome+item.maintenanceFeeIncome}}</span>
+    	<span class="list-td mui-col-xs-3">{{item.totalIncome}}</span>
     	<span class="list-td mui-col-xs-3">{{item.chargingGroupNumbers}}<i class="mui-icon mui-icon-arrowright"></i></span>
     </li>
     {{/each}}

@@ -4,14 +4,14 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>登入</title>
-		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-		<link rel="stylesheet" href="../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
-		<script src="../js/jquery-3.3.1.min.js"></script>
-		<script src="../js/mui.min.js"></script>
-		<script src="../plugins/layer/layer.js"></script>
-		<script src="../js/common.js"></script>
-		<script src="../js/base.js"></script>
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="../../plugins/layer/theme/default/layer.css" type="text/css" charset="utf-8"/>
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../plugins/layer/layer.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/base.js"></script>
 		<style type="text/css">
 			html,
 			body{height:100%;margin:0px;padding:0px;overflow:hidden;-webkit-touch-callout:none;-webkit-user-select:none;}
@@ -43,11 +43,11 @@
 			<div class="loginCon">
 				<div class="loginBox">
 					<div class="inputBox">
-						<i class="iconfont"><img src="../images/tel.png"/></i>
+						<i class="iconfont"><img src="../../images/tel.png"/></i>
 						<input type="tel" name="regMobile" placeholder="请输入手机号" />
 					</div>
 					<div class="inputBox">
-						<i class="iconfont"><img src="../images/possword.png"/></i>
+						<i class="iconfont"><img src="../../images/possword.png"/></i>
 						<input type="password" name="password"  placeholder="请输入密码"/>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
                     postJSON(API_URL.ApiAdminPasswordlogin,postData,function(res){
                         if("0" == res.code){
                             layer.msg("登入成功，正在跳转...");
-                            setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+                            setLoginData(res.data);
                             setTimeout(function(){
                                 clicked('../index.html')
                             },2000);

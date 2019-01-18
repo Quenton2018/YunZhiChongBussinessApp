@@ -178,6 +178,10 @@ function vaildeParam(param) {
  * @param {Boolean} isIcon  选填（是否显示loging）
  */
 function postJSON(url, data, callback,isIcon){
+	if (plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+		layer.msg("网络异常，请检查网络设置！");
+		return false;
+	}
 	url += "?"+postDataFormat(data);
 	if(!isIcon){
 		var load_index = layer.load();
@@ -232,46 +236,28 @@ function checkLogin(page){
 }
 
 /**
- * 保存登入数据
- * @param {Object} userID
- * @param {Object} mobile
- */
-function setLoginData(uuid,mobile){
-	
-	console.log("## setLoginData ## uuid : " + uuid);
-	console.log("## setLoginData ## mobile : " + mobile);
-	var date = new Date().formatDate("yyyy-MM-dd hh-mm-ss");
-	console.log("## setLoginData ## date : " + date);
-	
-	Storage.setItem( "uuid", uuid);
-	Storage.setItem( "mobile", mobile );
-	Storage.setItem( "login_date", date);
-	
-}
-/**
  * 保存登入数据New
- * @param {Object} userID
- * @param {Object} mobile
+ * @param {Object} userData
  */
-function setLoginDataNew(uuid,mobile,headImage,phone,bank,bankCode,moneyAmount){
+function setLoginData(userData){
 
-    console.log("## setLoginData ## uuid : " + uuid);
-    console.log("## setLoginData ## mobile : " + mobile);
-    console.log("## setLoginData ## headImage : " + headImage);
-    console.log("## setLoginData ## phone : " + phone);
-    console.log("## setLoginData ## bank : " + bank);
-    console.log("## setLoginData ## bankCode : " + bankCode);
-    console.log("## setLoginData ## moneyAmount : " + moneyAmount);
+    console.log("## setLoginData ## uuid : " + userData.uuid);
+    console.log("## setLoginData ## mobile : " + userData.mobile);
+    console.log("## setLoginData ## headImage : " + userData.headImage);
+    console.log("## setLoginData ## phone : " + userData.phone);
+    console.log("## setLoginData ## bank : " + userData.bank);
+    console.log("## setLoginData ## bankCode : " + userData.bankCode);
+    console.log("## setLoginData ## moneyAmount : " + userData.moneyAmount);
     var date = new Date().formatDate("yyyy-MM-dd hh-mm-ss");
     console.log("## setLoginData ## date : " + date);
 
-    Storage.setItem( "uuid", uuid);
-    Storage.setItem( "mobile", mobile );
-    Storage.setItem( "headImage", headImage);
-    Storage.setItem( "phone", phone);
-    Storage.setItem( "bank", bank);
-    Storage.setItem( "bankCode", bankCode);
-    Storage.setItem( "amountMoney", moneyAmount);
+    Storage.setItem( "uuid", userData.uuid);
+    Storage.setItem( "mobile", userData.mobile );
+    Storage.setItem( "headImage", userData.headImage);
+    Storage.setItem( "phone", userData.phone);
+    Storage.setItem( "bank", userData.bank);
+    Storage.setItem( "bankCode", userData.bankCode);
+    Storage.setItem( "amountMoney", userData.moneyAmount);
     Storage.setItem( "login_date", date);
 
 }

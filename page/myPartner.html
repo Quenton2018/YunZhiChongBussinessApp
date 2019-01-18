@@ -19,29 +19,29 @@
     <script src="../js/mui.min.js"></script>
     <script src="../js/artTemplate.min.js"></script>
     <style type="text/css">	
-    	.clear{clear: both;}
-		.partner_wrap{padding: 15px;display: flex;justify-content:space-around}
-		.amount,.income{position:relative;background-color: #fff;padding: 5px 24px 5px 24px;border-radius: 3px;text-align: center;}
-		.amount{border-bottom: 5px solid #fe4242;margin-right: 0;}
+		.mean-top{padding: 15px;display: flex;justify-content:space-between;}
+		.mean-top h4{font-size: 20px;color: #333;font-weight: 400;}
+		.amount,.income,.charge{position:relative;background-color: #fff;padding: 5px 10px 5px 10px;border-radius: 3px;text-align: center;}
+		.amount{border-bottom: 5px solid #fe4242;}
 		.income{border-bottom: 5px solid #479afd;}
-		.amount h4,.income h4{font-size: 22px;color: #333;font-weight: 500;}
-		.num,.money{font-size: 14px;}
-		.c-color{color: #333;font-size: 15px;font-weight: 400;}
-		.num span,.money span{color: #6f6f6f;}
-		.num i,.money i{color: #9f9f9f;font-size: 11px;font-style:normal;}
-		
-		
+		.charge{border-bottom: 5px solid #25dcbd;}
+		.p-text{font-size: 14px;margin-bottom: 0;}
+		.p-text span,.money span{color: #6f6f6f;}
+		.p-text i{color: #9f9f9f;font-size: 11px;font-style:normal;}
+			
 		.mui-table-view{border-radius: 6px;overflow: hidden;font-size: 14px;margin-bottom: 5px;background: #efeff4;}
 		.mui-table-view-cell{padding: 12px 15px;margin-bottom: 10px;background: #fff;border-radius: 6px;overflow: hidden;box-shadow: inset #999 0px -1px 3px 0px;}
 		.mui-table-view:after,.mui-table-view:before{height: 0;}
 		
 		.mean-list{padding: 0 15px 20px 15px;margin: 0 auto;}
 		.list-header{width: 100%;padding: 14px 15px;background-color: #e5e9f2;border-radius: 6px;box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;}
-		.list-body{margin-top: 10px;}
-		em.red{font-style: normal;color: red;}
+		.list-header .list-th{color: #333;font-size: 15px;font-weight: 400;}
+		.list-body{margin-top: 10px;}	
 		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;font-size: 13px;}
-		.jl_icon{background: url(../images/partner/jiao_icon_1.png) no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -3px;right: -2px;}
-		.jr_icon{background: url(../images/partner/jiao_icon_2.png) no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -5px;right: -2px;}
+		.list-body  .mui-badge em.red{font-style: normal;color: red;}
+		.jl_icon{background: url("../images/partner/jiao_icon_1.png") no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -3px;right: -2px;}
+		.jm_icon{background: url("../images/partner/jiao_icon_2.png") no-repeat center;width: 16px;height: 15px;background-size: 100%;position: absolute;bottom: -5px;right: -2px;}
+		.jr_icon{background: url("../images/partner/jiao_icon_3.png") no-repeat center;width: 9px;height: 11px;background-size: 100%;position: absolute;bottom: -1px;right: 0px;}
     </style>
 </head>
 <body background="#f0f1f3" >
@@ -51,10 +51,10 @@
 	    <a class="mui-icon mui-icon-extra mui-icon-extra-addpeople mui-pull-right" onclick="clicked('myPartner/partnerList.html')"></a>
 	</header> 
 	<div class="mui-content">
-	    <div class="partner_wrap" id="headData">
+	    <div class="mean-top">
 	    	<div class="amount flex-item">
 	    		<h4 id="partnerNumbers">0</h4>
-	    		<p class="num">
+	    		<p class="p-text">
 	    			<span>市场合伙人</span>
 	    			<i>(个)</i>
 	    			<i class="jl_icon"></i>
@@ -62,8 +62,16 @@
 	    	</div>
 	    	<div class="income flex-item">
 	    		<h4 id="investmentIncome">0</h4>
-	    		<p class="money">
+	    		<p class="p-text">
 	    			<span>招商收入</span>
+	    			<i>(元)</i>
+	    			<i class="jm_icon"></i>
+	    		</p>
+    		</div>
+    		<div class="charge flex-item">
+	    		<h4 id="chargingIncome">0</h4>
+	    		<p class="p-text">
+	    			<span>充电收入</span>
 	    			<i>(元)</i>
 	    			<i class="jr_icon"></i>
 	    		</p>
@@ -71,10 +79,9 @@
 	    </div>
 	    <!--列表-->
 	    <div class="mean-list">
-	    	<div class="list-header">
-	    		<div class="c-color left">城市</div>
-	    		<div class="c-color right">合伙人数量</div>
-	    		<div class="clear"></div>
+	    	<div class="list-header mui-clearfix">
+	    		<span class="list-th left">城市</span>
+	    		<span class="list-th right">合伙人数量</span>
 	    	</div>
 	    	<div class="list-body">
 	    		<ul class="mui-table-view" id="itemList">
@@ -120,6 +127,7 @@
 			if(res.code == 0){
 				$("#partnerNumbers").text(res.data.partnerNumbers);
 				$("#investmentIncome").text(res.data.investmentIncome);
+				$("#chargingIncome").text(res.data.chargingIncome);
 			}
 		});
 	}

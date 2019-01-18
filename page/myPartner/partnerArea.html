@@ -25,14 +25,14 @@
 		.list-row h3{font-size:15px;font-weight:400;position:relative;top:10px;}
 		.list-row h4:first-child{margin-top:-18px;}
 		.list-row h4 span{background:#fff;color:#ff8848;width:48px;height:20px;line-height:20px;font-size:12px;font-weight:400;display:inline-block;text-align:center;border-radius:2px;}
-		.list-row h4 em{font-style:normal;padding-right:14px;font-size:14px;float:right;line-height:22px;}
+		.list-row h4 em{font-style:normal;padding-right:10px;font-size:14px;float:right;line-height:22px;}
 		.mui-table-view{font-size: 14px;background: #efeff4;}		
 		.mui-table-view-cell{padding: 12px 10px;margin-bottom: 10px;background: #fff;border-radius: 6px;overflow: hidden;box-shadow: inset #999 0px -1px 3px 0px;}
 		.mui-table-view:after,.mui-table-view:before{height: 0;}
 		.mean-list{padding: 0 15px;margin: 0 auto;}
 		.list-header{width: 100%;padding: 14px 0;background-color: #e5e9f2;border-radius: 6px;box-shadow: inset rgba(0,0,0,.16) 0px -3px 4px 1px;}
 		.list-th,.list-td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align: center;font-size: 14px;font-weight: 400;}
-    	.list-td i{font-style: normal;font-size: 14px;color: #bbb;margin-left: 15px;vertical-align: middle;}
+		.list-td i{font-style: normal;font-size: 14px;color: #bbb;margin-left: 2px;vertical-align: middle;}
 		.list-body{margin-top: 10px;}
 		.list-body .mui-badge{right: 25px;background-color: transparent;color: #414141;}		
     </style>
@@ -82,10 +82,10 @@
 	</div>
 <script type="text/html" id="itemTmpl">
 	{{each list as item}}
-	<li class="mui-table-view-cell mui-row">
+	<li class="mui-table-view-cell mui-row list-goincome" onclick="goincome('{{item.chargingGroup.id}}')">
     	<span class="list-td mui-col-xs-6" style="text-align: left;">{{item.chargingGroup.name}}</span>
     	<span class="list-td mui-col-xs-3">{{item.utilizationRatio}}%</span>
-    	<span class="list-td mui-col-xs-3">{{item.chargingNumber}}</span>
+    	<span class="list-td mui-col-xs-3" style="text-align: right;padding-left: 15px;">{{item.chargingNumber}}<i class="mui-icon mui-icon-arrowright"></i></span>
     </li>
     {{/each}}
 </script>
@@ -151,6 +151,18 @@
 			}
 		});
 	}
+	function goincome(chargingGroupID){
+		console.log(chargingGroupID);
+		var year = new Date().getFullYear();
+		var month = new Date().getMonth() + 1;
+		var parnterMoney = "111";
+		var url = "../incomeDetailCdz.html?chargingGroupID="+chargingGroupID
+		+"&year="+year
+		+"&month="+month
+		+"&parnterMoney="+parnterMoney;
+		clicked(url);
+	}
+
 </script>
 
 </body>

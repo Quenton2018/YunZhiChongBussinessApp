@@ -175,7 +175,7 @@
                 postJSON(API_URL.ApiAdminQuickLogin,postData,function(res){
                     if("0" == res.code){
                         layer.msg("登入成功，正在跳转...");
-                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+                        setLoginData(res.data);
                         setTimeout(function(){
                             clicked('../index.html')
                         },2000);
@@ -197,7 +197,7 @@
                 postJSON(API_URL.ApiAdminPasswordlogin,postData,function(res){
                     if("0" == res.code){
                         layer.msg("登入成功，正在跳转...");
-                        setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+                        setLoginData(res.data);
                         setTimeout(function(){
                             clicked('../index.html')
                         },2000);
@@ -253,7 +253,7 @@
 		}, function(res) {
 			if("0" == res.code){
                 layer.msg("登入成功，正在跳转...");
-                setLoginDataNew(res.data.uuid,res.data.username,res.data.headImage, res.data.mobile,res.data.bank, res.data.bankCode,res.data.moneyAmount);
+                setLoginData(res.data);
                 setTimeout(function(){
                     clicked('../index.html')
                 },2000);
