@@ -315,7 +315,7 @@
 					vm.partnersList[0].divideRatio = 100 - rateSum;			
 				},
 				btnMinus:function(List,name,index){
-					var num = 60;
+					var num = 30;
 					var prices = parseFloat(List[index][name]);
 					if(isNaN(prices)){
 						layer.msg('请输入正确的数字');
@@ -338,7 +338,7 @@
 					}				
 				},
 				btnPlus:function(List,name,index){
-					var num = 60;
+					var num = 30;
 					var prices = parseFloat(List[index][name]);
 	
 					if(isNaN(prices)){
@@ -590,22 +590,7 @@
 		postJSON(API_URL.ApiChargingBusinessupdateSetmeal,params,function(res){
 			if(res.code == '0'){
 				layer.msg(applyGroup.applySetmealName+"修改成功");
-				var ws = plus.webview.currentWebview();
-	            var wo = ws.opener();
-	            do {
-	            	if (wo.getURL().endsWith("areaInfoSetmealsDetail.html?areaid="+areaId)) {
-	            		break;
-	            	}
-	            	
-	            	var temp = wo.opener();
-	            	wo.close("none");
-	            	wo = temp;
-	            } while (true);
-		
-				setTimeout(function() {
-					wo.evalJS("dataRefresh()");
-					ws.close();
-				}, 300);
+				returnWindow("areaInfoSetmealsDetail.html?areaid="+areaId);
 			}else{
 				layer.msg(res.msg);
 			}

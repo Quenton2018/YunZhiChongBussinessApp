@@ -32,24 +32,20 @@
 		.setmeal_Sel{color:#ff6d22;font-size:0.3rem;padding:10px;}
 		.setmeal_icon{color:#737373;font-size:0.34rem;}
 		.setmeal_state{margin-left:0.4rem;color:#7a7d80;font-size:0.26rem;}
-		.setmeal_header_wrap{background:#fff;padding:12px 0 0;border-top:1px solid #dce1e6;border-bottom:2px solid #ff6d22;margin-bottom:15px;}
-		.setmeal_tap_list{text-align:center;color:#808080;font-size:0.26rem;}
-		.setmeal_tap_list.select{background:url(../images/area/trapezoid.png) center no-repeat;background-size:100%;color:#fff;padding-top:6px;}
-		.setmeal_tap_list.select span{position:relative;top:-4px;}
+		.setmeal_header_wrap{background:#fff;margin-bottom:15px;}
+		.setmeal_tap_list{padding:10px 0;text-align:center;color:#808080;font-size:0.26rem;border-top:1px solid #dce1e6;border-bottom:1px solid #dce1e6;}
+		.setmeal_tap_list.select{background:#ff6d22;color:#fff;border-color:#ff6d22;}
 		.setmeal_table_wrap{background:#fff;border-top:1px solid #dce1e6;border-bottom:1px solid #dce1e6;}
 		.setmeal_tap_header{padding:15px;}
 		.setmeal_tap_header span{color:#7a7d80;text-align:center;font-size:0.26rem;}
-		.table_ul{padding:0 15px;margin:0;margin-top:-15px;}
-		.table_list{padding:12px 0;border-bottom:1px dashed #808080;}
+		.table_ul{padding:0 12px;margin:0;}
+		.table_list{padding:12px 0;border-top:1px dashed #808080;}
 		.table_list:last-child{border-bottom:none;}
 		.table_list span{text-align:center;font-size:0.3rem;}
-		.setmeal_tap_header span.first_span,
-		.table_list span.first_span{text-align:left;padding-left:4px;}
+		.setmeal_tap_header span.first_span,.table_list span.first_span{text-align:left;padding-left:4px;}
 		.table_list span.circle{width:14px;height:14px;line-height:12px;border-radius:50%;box-sizing:border-box;border:1px solid #484848;text-align:center;display:inline-block;font-size:0.24rem;position:relative;top:0px;margin-right:4px;}
 		.mui-bar span.compose{float:right;}
-		.mui-btn-blue,
-		.mui-btn-primary,
-		input[type=submit]{border:1px solid #FF6D22;background-color:#FF6D22;}
+		.mui-btn-blue,.mui-btn-primary,input[type=submit]{border:1px solid #FF6D22;background-color:#FF6D22;}
 		#statedesc{font-size:0.26rem;color:#7a7d80;}
     </style>
 </head>
@@ -57,7 +53,7 @@
 		
 <header class="header header-immersed mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <span class="mui-icon mui-icon-compose mui-icon-right-nav mui-pull-right hide" id="updateChargingGroup"></span>
+    <span class="mui-icon mui-icon-compose mui-icon-right-nav mui-pull-right" id="updateChargingGroup"></span>
     <h1 class="mui-title" id="areaName"></h1>
 </header>
 
@@ -254,7 +250,7 @@
 				var electricPrice = res.data.electricPrice;
 				$('#areaName').html(areaName);
 				$('#site').html(address);			
-//				console.log("####详情页电价price####"+electricPrice);
+				//console.log("####详情页电价price####"+electricPrice);
 				$('#areaName').attr('elect',electricPrice);
 				if('待处理' == res.data.status || '编辑' == res.data.status ){
                     $('#updateChargingGroup').hide();

@@ -54,7 +54,7 @@
 </div>
 
 <script type="text/html" id="dataTmpl">
-    <li class="mui-table-view-cell" onclick="clicked('incomeDetailCdz.html?chargingGroupID={{chargingGroupID}}&year={{yearParam}}&month={{monthParam}}&parnterMoney={{parnterMoney}}')">
+    <li class="mui-table-view-cell" onclick="clicked('incomeDetailCdz.html?chargingGroupID={{chargingGroupID}}&year={{yearParam}}&month={{monthParam}}')">
         <a class="mui-navigate-right">
             {{chargingGroupName}} <span class="mui-badge"><b>{{parnterMoney}}</b>元</span>
         </a>
@@ -77,14 +77,14 @@
         year = Storage.getItem("year");
         month = Storage.getItem("month");
         var parnterMoney = Storage.getItem("parnterMoney");
-        var partnerManager = Storage.getItem( "partnerManager");
+        var partnerManager = Storage.getItem("partnerManager");
         monthParam = month;
         yearParam = year;
-		console.log(monthParam,yearParam,year);
-		if(partnerManager){
-        	$(".switch").addClass('mui-hidden');
-        }else{
+		console.log(monthParam,yearParam,year,partnerManager);
+		if(partnerManager == "true"){
         	$(".switch").removeClass('mui-hidden');
+        }else{
+        	$(".switch").addClass('mui-hidden');
         }
         $(".selectDate span").text(year+"年"+month+"月");
         $("#benyuemoney").text(parnterMoney);
@@ -103,7 +103,6 @@
 	
     function getList(month,year){
     	var value = $('.switch').attr('data-flag');
-    	console.log(value)
     	var allFalg = value==="off" ? false : true;
         var uuid = plus.storage.getItem("uuid");
         var dataParam = {
@@ -204,8 +203,6 @@
             var monthNew = selectItems[1].value+"";
             year = yearNew;
             month = monthNew;
-            $("#loadMore").css({"display":"none"});
-            $("#noMore").css({"display":"none"});
             pageNumber=1;
             $(".selectDate span").text(year+"年"+month+"月");
             $(".dataList").html("");

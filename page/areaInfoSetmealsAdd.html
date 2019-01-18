@@ -227,70 +227,9 @@
 			data:{
 				state:'',
 				stateName:'',
-				chargesList:[{
-			        "state": "-1",
-			        "minutes": 240,
-			        "power": 1,
-			        "amount": 0.96
-			    },{
-			        "state": "-1",
-			        "minutes": 360,
-			        "power": 1.5,
-			        "amount": 1.45
-			    },{
-			        "state": "-1",
-			        "minutes": 480,
-			        "power": 2,
-			        "amount": 1.92
-			    },{
-			        "state": "-1",
-			        "minutes": 600,
-			        "power": 2.5,
-			        "amount": 2.4
-			    }],
-				elesList:[{
-			        "seq": 0,
-			        "min": 0,
-			        "max": 100,
-			        "cost": 0.08,
-			        "amount": 0.1
-			    },{
-			        "seq": 1,
-			        "min": 100,
-			        "max": 300,
-			        "cost": 0.24,
-			        "amount": 0.29
-			    },{
-			        "seq": 2,
-			        "min": 300,
-			        "max": 600,
-			        "cost": 0.48,
-			        "amount": 0.58
-			    },{
-			        "seq": 3,
-			        "min": 600,
-			        "max": 900,
-			        "cost": 0.72,
-			        "amount": 0.87
-			    },{
-			        "seq": 4,
-			        "min": 900,
-			        "max": 1200,
-			        "cost": 0.96,
-			        "amount": 1.16
-			    },{
-			        "seq": 5,
-			        "min": 1200,
-			        "max": 1500,
-			        "cost": 1.2,
-			        "amount": 1.44
-			    }],
-				fullStopList:{
-			      "state": "1",
-			      "minutes": 600,
-			      "power": 5,
-			      "amount": 4.8
-			    },
+				chargesList:[],
+				elesList:[],
+				fullStopList:{},
 				partnersList:[],
 				isTime:true
 			},
@@ -633,39 +572,9 @@
 			if(res.code == '0'){
 				layer.msg(applyGroup.applySetmealName+"添加成功");
 				if(pageFrom){
-					var ws = plus.webview.currentWebview();
-		            var wo = ws.opener();
-		            do {
-		            	if (wo.getURL().endsWith("areaApplicationList.html")) {
-		            		break;
-		            	}
-		            	
-		            	var temp = wo.opener();
-		            	wo.close("none");
-		            	wo = temp;
-		            } while (true);
-			
-					setTimeout(function() {
-						wo.evalJS("dataRefresh()");
-						ws.close();
-					}, 300);
+					returnWindow("areaApplicationList.html");
 				}else{
-					var ws = plus.webview.currentWebview();
-		            var wo = ws.opener();
-		            do {
-		            	if (wo.getURL().endsWith("areaInfoSetmealsDetail.html?areaid="+areaId)) {
-		            		break;
-		            	}
-		            	
-		            	var temp = wo.opener();
-		            	wo.close("none");
-		            	wo = temp;
-		            } while (true);
-			
-					setTimeout(function() {
-						wo.evalJS("dataRefresh()");
-						ws.close();
-					}, 300);
+		            returnWindow("areaInfoSetmealsDetail.html?areaid="+areaId);
 				}
 			}else{
 				layer.msg(res.msg);

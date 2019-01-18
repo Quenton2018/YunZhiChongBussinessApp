@@ -70,7 +70,7 @@ API_URL.ApichargingGroupProportionsgetChargingGroupListByGroupID = apiHost +"/ap
 
 API_URL.ApiChargingBusinessGetADaylyIncomeDetail = apiHost + "/api/chargingBusiness/GetADaylyIncomeDetail"; //主页获取用户信息
 API_URL.ApiChargingBusinessGetChargingByDivideMoneyLog = apiHost + "/api/chargingBusiness/getChargingByDivideMoneyLog"; //主页获取用户信息
-
+API_URL.ApiChargingBusinessCountPartnerIncome = apiHost + "/api/chargingBusiness/countPartnerIncome";//统计合伙人的收入
 
 API_URL.ApiApplyCdzApply = apiHost + "/api/applyCdz/apply"; //合伙人申请充电桩
 API_URL.ApiApplyCdzList = apiHost + "/api/applyCdz/list"; //合伙人申请充电桩 - 列表
@@ -216,23 +216,17 @@ function postJSON(url, data, callback,isIcon){
  * 登录校验
  */
 function checkLogin(page){
-	
 	var uuid = Storage.getItem("uuid");
 	var mobile = Storage.getItem("mobile");
 	var loginDate = Storage.getItem("login_date");
 	
-	console.log("## checkLogin ## uuid : " + uuid);
-	console.log("## checkLogin ## mobile : " + mobile);
-	console.log("## checkLogin ## loginDate : " + loginDate);
-	
 	if(!vaildeParam(uuid) || !vaildeParam(mobile) || !vaildeParam(loginDate)){
 	    if(vaildeParam(page)){
-            clicked(page,true,false);
-        }else{
-            clicked('login.html',true,false);
-        }
+        clicked(page,true,false);
+	    }else{
+	      clicked('login.html',true,false);
+	    }
 	}
-
 }
 
 /**

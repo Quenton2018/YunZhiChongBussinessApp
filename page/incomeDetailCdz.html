@@ -82,8 +82,7 @@
     var chargingGroupID = getQueryString("chargingGroupID");
     var year = getQueryString("year");
     var month = getQueryString("month");
-    var parnterMoney = getQueryString("parnterMoney");
-    
+   
     if(!vaildeParam(chargingGroupID) || !vaildeParam(year) || !vaildeParam(month)){
         layer.msg("非法操作");
         clicked("myIncome.html");
@@ -93,7 +92,6 @@
         checkLogin();
         uuid = plus.storage.getItem("uuid");
        	$(".dateBox").html(year+"年"+month+"月");
-		$("#benyuemoney").html(parnterMoney);
         getList(month,year);     
     });
 
@@ -105,8 +103,7 @@
 	        monthStr = "0"+monthStr;
 	    }
 	    var firstDay = year + "-"+ monthStr + "-" + "01 00:00:00";
-	    var lastDay = getLastDay(year,month).formatDate("yyyy-MM-dd 23:59:59");
-	    
+	    var lastDay = getLastDay(year,month).formatDate("yyyy-MM-dd 23:59:59");  
         var params = {
             'startDate':firstDay,
             'endDate':lastDay,
@@ -114,6 +111,7 @@
             'chargingGroupID':chargingGroupID
         }
         console.log(JSON.stringify(params));
+        CountPartnerIncome(firstDay,lastDay);
         postJSON(API_URL.ApiChargingBusinessGetChargingByDivideMoneyLog,params,function (res) {
             if('0' == res.code){
                 var dataList = res.data;
@@ -129,8 +127,8 @@
                 })
                 $(".dataList").html(html);
                 getSumMoney(firstDay,lastDay);
-                partnerMoney(firstDay,lastDay);
-            }else{
+                partnerMoney(firstDay,lastDay);          
+			}else{
                 layer.msg(res.msg)
             }
         })
@@ -173,8 +171,19 @@
             });
         })
     }
-
-
+	//获取合伙人总收入
+	function CountPartnerIncome(firstDay,lastDay){
+        var params = {
+            "uuid":uuid,
+            "startDate":firstDay,
+            "endDate":lastDay,
+            "chargingGroupID":chargingGroupID
+        }
+        postJSON(API_URL.ApiChargingBusinessCountPartnerIncome,params,function (res) {
+        	$("#benyuemoney").html(res.data);
+        })	
+	}
+	
     function setCzDetail(that) {
         var $this = $(that);
         var id = $this.attr("data-id");
