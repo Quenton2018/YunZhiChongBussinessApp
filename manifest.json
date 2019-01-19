@@ -215,7 +215,6 @@
 					"page/setting.html",
 					"page/areaApplicationList.html",
 					"page/applyCdz/list.html",
-					"index2.html",
 					"page/edition.html",
 					"page/myPartner.html"
 				],
@@ -399,6 +398,14 @@
 				"resources": [],
 				"refer": [
 					"page/areaSettingEdit.html"
+				],
+				"priority": 0
+			},
+			"page/myPartner.html": {
+				"resources": [],
+				"refer": [
+					"page/myPartner/partners.html",
+					"page/myPartner/partnerList.html"
 				],
 				"priority": 0
 			}
