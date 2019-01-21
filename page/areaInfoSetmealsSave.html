@@ -590,10 +590,6 @@
 						//校验比值是数字
 		                if(reg.test(divideRatio) && divideRatio){		                	
 		                    rateSum += parseFloat(divideRatio);
-		                    if(divideRatio == 0){
-		                    	flagNumber2 = true;
-		                		return;
-		                    }
 		                }else{
 		                	if(divideRatio =='' && dividePrice!==''){
 								return true;
@@ -621,7 +617,7 @@
 		                return;
 		            }
 					if(flagNumber2){
-		                layer.msg("合伙人比值必须为数字且不为0");
+		                layer.msg("合伙人比值必须为数字");
 		                return;
 		            }
 					if(rateSum!=100){
