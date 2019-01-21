@@ -108,6 +108,9 @@
     		plus.webview.currentWebview().setStyle({
 				popGesture:'none' // 关闭侧滑返回功能
 			});
+			plus.key.addEventListener("backbutton",function(){
+				plus.runtime.quit();
+	        });
     		checkLogin('page/login.html'); 		
             getUserInfo();
             GetADaylyIncomeDetail();

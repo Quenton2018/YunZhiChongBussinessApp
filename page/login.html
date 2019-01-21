@@ -25,8 +25,7 @@
 			.Button-Img{width:80%;display:block;margin:0 auto;}
 			.mui-content-padded{margin:0px;}
 			.loginTwo{text-align:right;padding-bottom:10px;color:rgb(255,195,131);font-size:14px;}
-			.loingBtn,
-			.join{text-align:center;background-color:rgb(245,126,24);padding:10px 0;color:#fff;border-radius:6px;box-sizing:border-box;}
+			.loingBtn,.join{text-align:center;background-color:rgb(245,126,24);padding:10px 0;color:#fff;border-radius:6px;box-sizing:border-box;}
 			.join{background-color:#fff;color:rgb(245,126,24);border:1px solid rgb(245,126,24);margin:25px 15px;}
 			.loginBox input{border-radius:0;background-color:#fff;border-bottom:1px solid #eae5e0;}
 			.iconfont img{width:16px;}
@@ -254,12 +253,9 @@
 			if("0" == res.code){
                 layer.msg("登入成功，正在跳转...");
                 setLoginData(res.data);
-                setTimeout(function(){
+                setTimeout(function(){           	
                     clicked('../index.html')
-                },2000);
-                setTimeout(function(){
-                	plus.webview.currentWebview().close();
-                },2500);
+                },1500);
             } else if ("1010" == res.code) {
             	plus.storage.setItem('openId', res.msg);
             	clicked('weixinBinding.html');
