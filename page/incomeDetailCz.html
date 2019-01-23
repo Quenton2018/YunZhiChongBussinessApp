@@ -23,13 +23,10 @@
         .dataList .mui-badge b{font-weight:300;}
         .topBox .row1{padding:10px;color:#6F6F70;font-size:.9rem;padding-bottom:0px;}
         .topBox .row2{font-size:.7rem;padding:0 10px;color:#A9A9AA;padding-bottom:5px;}
-        #loadMore{background:#eaeaea;padding:10px;text-align:center;font-size:.8rem;display:none;}
-        .noMore{padding:10px;text-align:center;font-size:.8rem;display:none;}
         .mui-table{background:#fff;text-align:center;line-height:40px;font-size:.9rem;}
         .mui-table .dataList tr{border-top:#F0F2F4 solid 1px;position:relative;}
         .mui-table .dataList tr i{color:#A7ABB0;}
     </style>
-
 </head>
 <body>
 
@@ -38,34 +35,31 @@
     <h1 class="mui-title">桩收入明细</h1>
 </header>
 
-<div class="mui-content">
-
-    <div class="topBox">
-        <div class="row1 selectDate"><span class="dateBox">loading</span></div>
-        <div class="row2">
-            <div class="left">总收入 : <span id="partnerMoney">0</span>元</div>
-            <div class="clearfix"></div>
-        </div>
+<div id="J_refresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+	    <div class="topBox">
+	        <div class="row1 selectDate"><span class="dateBox">loading</span></div>
+	        <div class="row2">
+	            <div class="left">总收入 : <span id="partnerMoney">0</span>元</div>
+	            <div class="clearfix"></div>
+	        </div>
+	    </div>
+	    <div class="dataBox">
+	        <table class="mui-table" id="dataTable">
+	            <thead>
+	            <tr>
+	                <td>插座号</td>
+	                <td>营业额</td>
+	                <td>收入</td>
+	                <td>消费时间</td>
+	            </tr>
+	            </thead>
+	            <tbody class="dataList">
+	
+	            </tbody>
+	        </table>
+	    </div>
     </div>
-
-    <div class="dataBox">
-        <table class="mui-table" id="dataTable">
-            <thead>
-            <tr>
-                <td>插座号</td>
-                <td>营业额</td>
-                <td>收入</td>
-                <td>消费时间</td>
-            </tr>
-            </thead>
-            <tbody class="dataList">
-
-            </tbody>
-        </table>
-    </div>
-
-    <div id="loadMore">加载更多</div>
-    <div id="noMore" class="noMore">没有更多了</div>
 </div>
 
 <script type="text/html" id="dataTmpl">
@@ -80,48 +74,51 @@
 <script type="text/javascript" src="../js/mui.picker.all.js"></script>
 <script type="text/javascript">
     mui.init();
-
     var uuid;
-    var pageSize = 10;
+    var pageSize = 14;
     var pageNumber = 1;
-
-    var cdzIDCode = getQueryString("cdzIDCode");
-    var cdzID = getQueryString("cdzID");
-    var year = getQueryString("year");
-    var month = getQueryString("month");
-    var partnerMoney = getQueryString("partnerMoney");
-    var shellid = getQueryString("shellid");
-    var chargingGroupID = getQueryString("chargingGroupID");
-
-    var day = '1';
-    if(!vaildeParam(cdzIDCode) || !vaildeParam(year) || !vaildeParam(month)){
-        layer.msg("非法操作");
-        clicked("myIncome.html");
-    }
-
-    $("#partnerMoney").text(partnerMoney);
-
-    var nowDate = new Date();
-
-    $(".dateBox").html(year+"年"+month+"月")
-
+	var incomeDetailCzJSON;
+    var cdzIDCode = '';
+    var cdzID = '';
+    var year = '';
+    var month = '';
+    var partnerMoney = '';
+    var shellid = '';
+    var chargingGroupID = '';
     function mGetDate(year, month){
         var d = new Date(year, month, 0);
         return d.getDate();
     }
-	
-	$.plusReady(function() {
-		uuid = plus.storage.getItem("uuid");
-        getDivideMoneyLogList();
-	}, function() {
-		getDivideMoneyLogList();
+	$.pullRefresh(dataRefresh,function() {	
+		pageNumber++;
+		getDivideMoneyLogList(); 	
 	});
-
-
+	mui.plusReady(function() {
+		uuid = plus.storage.getItem("uuid");
+		incomeDetailCzJSON = JSON.parse(plus.storage.getItem("incomeDetailCzJSON"));
+		cdzIDCode = incomeDetailCzJSON.cdzIDCode;
+		cdzID = incomeDetailCzJSON.cdzID;
+		year = incomeDetailCzJSON.year;
+		month = incomeDetailCzJSON.month;
+		partnerMoney = incomeDetailCzJSON.partnerMoney;
+		shellid = incomeDetailCzJSON.shellid;
+		chargingGroupID = incomeDetailCzJSON.chargingGroupID;
+		if(!vaildeParam(cdzIDCode) || !vaildeParam(year) || !vaildeParam(month)){
+	        layer.msg("非法操作");
+	        clicked("myIncome.html");
+	    }
+		$("#partnerMoney").text(partnerMoney);
+    	$(".dateBox").html(year+"年"+month+"月")
+        getDivideMoneyLogList();    
+    });
+	// 刷新页面
+    function dataRefresh(){
+    	pageNumber = 1;
+    	getDivideMoneyLogList(); 
+    }
     function getDivideMoneyLogList() {
         var firstDay = year + "-" + month + "-01" +" 00:00:00";
         var lastDay = year + "-" + month + "-" +mGetDate(year,month) +" 23:59:59";
-
         var data = {
             "uuid":"",
             "partnerUuid":uuid,
@@ -136,17 +133,12 @@
         postJSON(API_URL.ApiDivideMoneyLogList,data,function (res) {
             if('0' == res.code){
                 var pagedata = res.data.pagedata;
-                if(pagedata.last){
-                    $("#loadMore").css("display",'none');
-                    $("#noMore").css("display",'block');
-                }else{
-                    $("#loadMore").css("display",'block');
-                    $("#noMore").css("display",'none');
-                }
-
                 var dataTmpl = $("#dataTmpl").html();
-
                 var data = pagedata.content;
+                $.stopRefresh(data.length,pageSize);       
+                if(1 == pageNumber){
+                    $(".dataList").html('');
+                }
                 var html = '';
                 $.each(data,function (index,item) {
                     html += dataTmpl.replace(/{{code}}/g,item.charging.shellId.substr(0,1)+(parseInt(item.chargingSocket.code)+1))
@@ -155,24 +147,12 @@
                         .replace(/{{time}}/g,(new Date(item.createDate)).formatDate("MM-dd hh:mm"))
 
                 })
-                if(1 == pageNumber){
-                    $(".dataList").html(html);
-                }else{
-                    $(".dataList").append(html)
-                }
+                $(".dataList").append(html);
             }else{
                 layer.msg(res.msg)
             }
         })
     }
-    
-    
-    $("#loadMore").click(function () {
-        pageNumber++;
-        getDivideMoneyLogList();
-    })
-
-
 </script>
 </body>
 </html>

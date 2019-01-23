@@ -23,7 +23,7 @@
         .dataList .mui-badge b{font-weight:300;}
         .topBox .row1{padding:10px;color:#6F6F70;font-size:.9rem;padding-bottom:0px;}
         .topBox .row2{font-size:.7rem;padding:0 10px;color:#A9A9AA;padding-bottom:5px;}
-        .noMore{padding:10px;text-align:center;font-size:.8rem;}
+        .noMore{padding:10px;text-align:center;font-size:.8rem;display: none;}
         .mui-table{background:#fff;text-align:center;line-height:40px;font-size:.9rem;}
         .mui-table .dataList tr{border-top:#F0F2F4 solid 1px;position:relative;}
         .mui-table .dataList tr i{color:#A7ABB0;}
@@ -181,6 +181,7 @@
         }
         postJSON(API_URL.ApiChargingBusinessCountPartnerIncome,params,function (res) {
         	$("#benyuemoney").html(res.data);
+        	$(".noMore").show();
         })	
 	}
 	
@@ -190,14 +191,17 @@
         var code = $this.attr("data-code");
         var shellid = $this.attr("data-shellid");
         var partnerMoney = $this.find(".partnerMoney").text();
-        var url = 'incomeDetailCz.html?cdzIDCode='+code
-            +'&year='+year
-            +'&month='+month
-            +"&partnerMoney="+partnerMoney
-            +"&chargingGroupID="+chargingGroupID
-            +"&cdzID="+id
-            +"&shellid="+shellid;
-        console.log("url : "+url);
+        var url = 'incomeDetailCz.html';
+        var incomeDetailCzJSON = {
+        	'cdzIDCode':code,
+        	'year':year,
+        	'month':month,
+        	'partnerMoney':partnerMoney,
+        	'chargingGroupID':chargingGroupID,
+        	'cdzID':id,
+        	'shellid':shellid
+        }
+        plus.storage.setItem("incomeDetailCzJSON",JSON.stringify(incomeDetailCzJSON));
         clicked(url);
     }
 
