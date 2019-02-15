@@ -341,7 +341,7 @@
 					var manager = res.data[0].manager;
 					var seq = res.data[0].seq;
 					var name = res.data[0].name;
-					getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager);
+					getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager,seq);
 					$('.title-right').html(name);
 				}
 
@@ -351,7 +351,7 @@
         });
     }
     //左侧tab数据
-    function getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager){
+    function getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager,seq){
     	var leftData = [];
 		var html = '';
     	var tmpl = $("#dataTmpl").html();
@@ -393,7 +393,7 @@
     		var partnersJson = JSON.stringify(partners);
     		plus.storage.setItem("partnersJson", partnersJson);
     	}
-    	if(vaildeParam(members)){
+    	if(seq != 0){
     		leftData.push({
     			type:'members',
     			leftName:'用户'
@@ -563,7 +563,7 @@
 			var members = res.data.members;
 			var manager = res.data.manager;
 			var seq = res.data.seq;
-			getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager);
+			getLeftData(eles,fullStop,advanceCharges,actualCharges,partners,members,manager,seq);
 		});
 	}
 	$('.tabBox .tabItem').on('tap',function(){

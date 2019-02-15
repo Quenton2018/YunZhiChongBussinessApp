@@ -137,7 +137,7 @@
 					<ul class="table_ul" id="ElesList">
 						<li class="table_list flex" v-for="(item, index) in elesList">
 							<i class="circle">{{index+1}}</i>
-							<span class="eles-item first_span" style="width: 30%;" v-if="item.max>1200">{{item.max}}以上</span>
+							<span class="eles-item first_span" style="width: 30%;" v-if="item.max>1000">{{item.min}}以上</span>
 
 							<span class="eles-item first_span" style="width: 30%;" v-else-if="item.min <=0">{{item.max}}以下</span>
 
@@ -263,9 +263,12 @@
 			},
 			methods:{
 				addCharges:function(){
+					var length = vm.chargesList.length;
+					var amount = parseFloat(vm.chargesList[length-1].amount) + 0.5;
+					var minutes = parseFloat(vm.chargesList[length-1].minutes) + 240;
 					vm.chargesList.push({
-						amount:0.96,
-						minutes:240,
+						amount:amount,
+						minutes:minutes,
 						power:1,
 						state:''
 					});

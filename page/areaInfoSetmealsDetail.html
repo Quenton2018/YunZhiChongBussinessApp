@@ -169,8 +169,8 @@
 	{{each list as item index}}
 		<li class="table_list flex">
 			<span class="circle">{{index+1}}</span>
-			{{if item.max > 1200}}
-				<span class="flex-item first_span">{{item.max}}以上</span>
+			{{if item.max > 1000}}
+				<span class="flex-item first_span">{{item.min}}以上</span>
 			{{else if item.min <=0}}
 				<span class="flex-item first_span">{{item.max}}以下</span>
 			{{else}}

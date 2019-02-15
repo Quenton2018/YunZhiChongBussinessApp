@@ -26,7 +26,7 @@
         .rate-item h2 sub{font-size:12px;vertical-align:4px;margin-left:2px;}
         .rate-item h3{color:#333;font-size:13px;font-weight:400;}
         .tabBox{text-align:center;margin:10px 0;border:1px solid #ff6d22;border-radius:6px;overflow:hidden;}
-        .tabBox span{display:inline-block;padding:8px 0;background:#fff;border-right:1px solid #ff6d22;font-size:14px;text-align:center;color:#333;}
+        .tabBox span{flex: auto;display:inline-block;padding:8px 0;background:#fff;border-right:1px solid #ff6d22;font-size:14px;text-align:center;color:#333;}
         .tabBox span:last-child{border-right:none;}
         .tabBox span em{padding:0 5px;font-size:14px;font-style:normal;}
         .tabBox span.select{background:#ff6d22;color:#fff;}
@@ -74,9 +74,9 @@
 		
 		<div class="midBox">
 			<div class="tabBox flex">
-		        <span id="normal" class="tabItem select mui-col-xs-4" data-type="0">充电桩详情</span>
-		        <span id="abnormal"  class="tabItem mui-col-xs-4" data-type="2">异常充电桩(<em id="countInvalid">0</em>)</span>
-		        <span class="tabItem mui-col-xs-4" data-type="3" >未安装(<em id="countUnInstall">0</em>)</span>
+		        <span id="normal" class="tabItem select" data-type="0">充电桩详情</span>
+		        <span id="abnormal"  class="tabItem" data-type="2">异常充电桩(<em id="countInvalid">0</em>)</span>
+		        <span class="tabItem" data-type="3" >未安装(<em id="countUnInstall">0</em>)</span>
 		    </div>
 		    <div class="midRow mui-row">
 		        <div class="mui-col-xs-6" id="leftBox">片区(<span id="groupCount">0</span>)</div>

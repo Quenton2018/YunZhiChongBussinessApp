@@ -108,7 +108,7 @@
 								<div class="list-item left">
 									<div class="mui-numboxs">
 							            <button class="mui-btn mui-numbox-btn-minuss" type="button" @click="btnMinus(chargesList,'amount',index)">-</button>
-							            <input class="mui-numbox-input" type="number" name="price" v-model="item.amount" readonly="true">
+							            <input class="mui-numbox-input" type="number" name="price" v-model="item.amount">
 							            <button class="mui-btn mui-numbox-btn-pluss" type="button" @click="btnPlus(chargesList,'amount',index)">+</button>
 							            <div class="clearfix"></div>
 							        </div>
@@ -116,7 +116,7 @@
 								<div class="list-item left">
 									<div class="mui-numboxs">
 							            <button class="mui-btn mui-numbox-btn-minuss" type="button" @click="btnMinus(chargesList,'minutes',index)">-</button>
-							            <input class="mui-numbox-input" type="number" name="time" :value="item.minutes/60" readonly="true">
+							            <input class="mui-numbox-input" type="number" name="time" :value="item.minutes/60">
 							            <button class="mui-btn mui-numbox-btn-pluss" type="button" @click="btnPlus(chargesList,'minutes',index)">+</button>
 							            <div class="clearfix"></div>
 							        </div>
@@ -148,7 +148,7 @@
 					<ul class="table_ul" id="ElesList">
 						<li class="table_list flex" v-for="(item, index) in elesList">
 							<i class="circle">{{index+1}}</i>
-							<span class="eles-item first_span" style="width: 30%;" v-if="item.max>1200">{{item.max}}以上</span>
+							<span class="eles-item first_span" style="width: 30%;" v-if="item.max>1000">{{item.min}}以上</span>
 
 							<span class="eles-item first_span" style="width: 30%;" v-else-if="item.min <=0">{{item.max}}以下</span>
 
@@ -361,9 +361,12 @@
 			},
 			methods:{
 				addCharges:function(){
+					var length = vm.chargesList.length;
+					var amount = parseFloat(vm.chargesList[length-1].amount) + 0.5;
+					var minutes = parseFloat(vm.chargesList[length-1].minutes) + 240;
 					vm.chargesList.push({
-						amount:0.96,
-						minutes:240,
+						amount:amount,
+						minutes:minutes,
 						power:1,
 						state:''
 					});

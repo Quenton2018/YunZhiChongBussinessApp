@@ -255,9 +255,12 @@
 			},
 			methods:{
 				addCharges:function(){
+					var length = vm.chargesList.length;
+					var amount = parseFloat(vm.chargesList[length-1].amount) + 0.5;
+					var minutes = parseFloat(vm.chargesList[length-1].minutes) + 240;
 					vm.chargesList.push({
-						amount:0.96,
-						minutes:240,
+						amount:amount,
+						minutes:minutes,
 						power:1,
 						state:''
 					});
